@@ -1,0 +1,45 @@
+/* Start Header -------------------------------------------------------
+
+	Copyright (C) 20xx DigiPen Institute of Technology.
+	Reproduction or disclosure of this file or its contents without the
+	prior written consent of DigiPen Institute of Technology is prohibited.
+
+	File Name:			GlobalManager.h
+	Purpose:			The header file for the GameObject Manager.
+						The vector used to store game objects may
+						eventually be replaced with an unordered map
+						if deemed appropriate.
+	Language:			C++, compiled using Microsoft Visual Studio 2019.
+	Platform:			Compiled using Visual Studio 2019, Windows 10.
+	Project:			JarredEagley_Milestone2
+	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
+	Creation date:		10/13/2020
+
+- End Header --------------------------------------------------------*/
+
+#pragma once
+
+#include <vector>
+
+class GameObject;
+
+class GameObjectManager
+{
+public:
+	static GameObjectManager* getInstance()
+	{
+		if (!instance)
+			instance = new GameObjectManager;
+		return instance;
+	};
+	void destroySingleton();
+
+	// TO-DO: perhaps make game objects private and use getter and setter methods...
+public:
+	std::vector<GameObject*> mGameObjects; // Vector of game objects; may become an unordered map in the future.
+private:
+	GameObjectManager(); // Constructor.
+private:
+	static GameObjectManager* instance;
+};
+

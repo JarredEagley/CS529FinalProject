@@ -1,0 +1,10 @@
+{
+    "Name": "Enemy",
+    "Type": "GameObject",
+    "Components":
+    {
+        "TYPE_TRANSFORM": [400.0, 100.0],
+        "TYPE_SPRITE": "Ship2Red.bmp",
+        "TYPE_UPDOWN": [0, 100]
+    }
+}
