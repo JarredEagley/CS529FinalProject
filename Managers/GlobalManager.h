@@ -33,7 +33,7 @@ public:
 			instance = new GlobalManager;
 		return instance;
 	};
-	void destroySingleton(); // This will destroy all child singeltons.
+	void destroySingleton(); // This will destroy all child singeltons. // TO-DO: This needs to be static I think.
 
 public:
 	static FrameRateController* getFrameRateController()	{ return pFRC->getInstance(); };

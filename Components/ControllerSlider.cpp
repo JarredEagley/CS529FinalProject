@@ -22,7 +22,7 @@
 #include "ComponentTypes.h"
 #include "../Managers/GlobalManager.h"
 
-#include "../../SDL2.0 Lib/include//SDL_scancode.h"
+#include "../../SDL2.0/include//SDL_scancode.h"
 
 ControllerSlider::ControllerSlider() : Component(ComponentTypes::TYPE_CONTROLLERSLIDER)
 {

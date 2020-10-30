@@ -116,7 +116,7 @@ int main(int argc, char* args[])
 			}
 		} // Done handling events.
 
-		// Input management.
+		// Input management. 
 		GlobalManager::getInputManager()->Update();
 
 		// Clear the window surface.
