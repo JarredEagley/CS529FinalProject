@@ -37,6 +37,9 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="mainGLTest.cpp" />
+    <ClCompile Include="Components\GLRect.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\Sprite.h">
@@ -78,6 +81,9 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Components\GLRect.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

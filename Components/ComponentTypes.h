@@ -31,6 +31,7 @@ public:
 		if (strcmp(str, "TYPE_SPRITE") == 0)			return TYPE_SPRITE;
 		if (strcmp(str, "TYPE_CONTROLLERSLIDER") == 0)	return TYPE_CONTROLLERSLIDER;
 		if (strcmp(str, "TYPE_UPDOWN") == 0)			return TYPE_UPDOWN;
+		if (strcmp(str, "TYPE_GLRECT") == 0)			return TYPE_GLRECT;
 
 		return TYPE_UNDEFINED;
 	}
@@ -42,7 +43,8 @@ public:
 		TYPE_TRANSFORM,
 		TYPE_SPRITE,
 		TYPE_CONTROLLERSLIDER,
-		TYPE_UPDOWN 
+		TYPE_UPDOWN,
+		TYPE_GLRECT,
 	};
 private:
 	// No private methods.

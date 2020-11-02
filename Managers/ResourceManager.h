@@ -20,7 +20,9 @@
 #include <unordered_map>
 //#include "SDL_surface.h" We can use forward declaration to avoid including this!
 
+
 class SDL_Surface; // All we're doing is letting this class know another class by this name exist. Reduces code size and build time.
+typedef stbi_uc;
 
 class ResourceManager
 {
@@ -36,12 +38,16 @@ public:
 	SDL_Surface* LoadSurface(const char *pFilePath);
 
 public:
-	// No public variables.
+	const std::string pathResources = ".\\Resources\\"; // The base-folder for storing resources like configs and textures.
+	const std::string pathTextures	 = pathResources + "Textures";
+	const std::string pathLevels	 = pathResources + "Levels";
+	const std::string pathArchetypes = pathResources + "Archetypes";
 private:
 	ResourceManager();
 private:
 	static ResourceManager* instance;
 	std::unordered_map<std::string, SDL_Surface* > mSurfaces = std::unordered_map<std::string, SDL_Surface* >(); // DEPRICATED.
+	std::unordered_map<std::string, stbi_uc* > mSurfaces = std::unordered_map<std::string, stbi_uc* >();
 
 	//std::unordered_map<std::string, >;
 

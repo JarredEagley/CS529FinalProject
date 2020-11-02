@@ -88,6 +88,7 @@
   <ItemGroup>
     <ClCompile Include="Components\Component.cpp" />
     <ClCompile Include="Components\ControllerSlider.cpp" />
+    <ClCompile Include="Components\GLRect.cpp" />
     <ClCompile Include="Components\Sprite.cpp" />
     <ClCompile Include="Components\Transform.cpp" />
     <ClCompile Include="Components\UpDown.cpp" />
@@ -104,6 +105,7 @@
   <ItemGroup>
     <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\ControllerSlider.h" />
+    <ClInclude Include="Components\GLRect.h" />
     <ClInclude Include="Components\Sprite.h" />
     <ClInclude Include="Components\Transform.h" />
     <ClInclude Include="Components\ComponentTypes.h" />
