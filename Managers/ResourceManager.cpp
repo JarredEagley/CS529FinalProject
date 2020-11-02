@@ -86,7 +86,7 @@ stbi_uc* ResourceManager::loadTexture(const char* pFilePath)
 	}
 	else
 	{
-		std::cout << "Failed to load image: " << pFilePath << std::endl;
+		std::cerr << "Warning: Failed to load image: " << pFilePath << std::endl;
 	}
 
 	return pTex;
