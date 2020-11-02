@@ -73,7 +73,7 @@ Component* GameObject::overwriteComponent(unsigned int Type) // TO-DO: Overwrite
 	switch (Type)
 	{
 	case(ComponentTypes::TYPE_UNDEFINED):
-		std::cerr << "Adding GameObject Component failed; TYPE_UNDEFINED\n";
+		std::cout << "Warning: Adding GameObject Component failed; TYPE_UNDEFINED" << std::endl;
 		return nullptr; // Failed to create component.
 	case (ComponentTypes::TYPE_TRANSFORM):
 		pNewComponent = new Transform();

@@ -18,34 +18,34 @@
 #include "SDL_surface.h"
 #include "SDL_image.h"
 
+#include "stb_image.h"
+
+#include <iostream>
+
 ResourceManager* ResourceManager::instance = nullptr;
 
 void ResourceManager::destroySingleton()
 {	
-	// Need to free everything in the hashmap!
-	for (auto& keyValuePair : mSurfaces) 
-		SDL_FreeSurface(keyValuePair.second);
+	// Nullcheck.
+	if ( &mSurfaces != nullptr)
+	{
+		// Need to free everything in the hashmap!
+		for (auto& keyValuePair : mSurfaces) 
+			SDL_FreeSurface(keyValuePair.second);
 
-	// Clear the hashmap too.
-	mSurfaces.clear();
-
+		// Clear the hashmap too.
+		mSurfaces.clear();
+	}
+	else
+	{
+		std::cout << "Waring: ResourceManager mSurfaces did not exist." << std::endl;
+	}
+	
 	// Delete the singleton.
 	delete instance;
 }
 
 ResourceManager::ResourceManager() {}
-
-/*
-ResourceManager::~ResourceManager()
-{
-	// Need to free everything in the hashmap!
-	for (auto &keyValuePair : mSurfaces) // Fecking C++ magic. Mimicks foreach.
-		SDL_FreeSurface(keyValuePair.second);
-
-	// Clear the hashmap too.
-	mSurfaces.clear();
-}
-*/
 
 SDL_Surface* ResourceManager::LoadSurface(const char* pFilePath)
 {

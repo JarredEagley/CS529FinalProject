@@ -1,14 +1,18 @@
-// Following modern openGL tutorial.
 
 #version 330 core
 
 in vec4 ourColor;
+in vec2 ourTexCoord;
 
-out vec4 color;
+out vec4 FragColor;
+
+uniform sampler2D ourTexture;
 
 void main()
 {
-	color = vec4(ourColor);
+	//FragColor= vec4(ourColor);
+	FragColor = texture(ourTexture, ourTexCoord) * ourColor;
+	//FragColor.rg = ourTexCoord;
 }
 
 

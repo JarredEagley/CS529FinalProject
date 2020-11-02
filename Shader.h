@@ -16,7 +16,9 @@
 class Shader
 {
 public:
-	GLuint Program;
+	// The program ID
+	GLuint ProgramID;
+
 	// Constructor. Generates the shader.
 	Shader(const GLchar *pvertexPath, const GLchar *pfragmentPath)
 	{
@@ -90,13 +92,13 @@ public:
 		}
 
 		// The Shader Program.
-		this->Program = glCreateProgram();
-		glAttachShader(this->Program, vertex);
-		glAttachShader(this->Program, fragment);
-		glLinkProgram(this->Program);
+		this->ProgramID = glCreateProgram();
+		glAttachShader(this->ProgramID, vertex);
+		glAttachShader(this->ProgramID, fragment);
+		glLinkProgram(this->ProgramID);
 
 		// Print linking errors if any occur.
-		glGetProgramiv(this->Program, GL_LINK_STATUS, &success); // Gets the link status from the progam-- is it succesful?
+		glGetProgramiv(this->ProgramID, GL_LINK_STATUS, &success); // Gets the link status from the progam-- is it succesful?
 		if (!success)
 		{
 			glGetShaderInfoLog(fragment, 512, NULL, infoLog);
@@ -111,6 +113,23 @@ public:
 	// Use the current shader.
 	void Use()
 	{
-		glUseProgram(this->Program);
+		glUseProgram(this->ProgramID);
+	}
+	void unUse()
+	{
+		glUseProgram(0);
+	}
+	// Uniform setter functions.
+	void setBool(const std::string& name, bool value) const
+	{
+		glUniform1i(glGetUniformLocation(ProgramID, name.c_str()), (int)value);
+	}
+	void setInt(const std::string& name, int value) const
+	{
+		glUniform1i(glGetUniformLocation(ProgramID, name.c_str()), value);
+	}
+	void setFloat(const std::string& name, float value) const
+	{
+		glUniform1f(glGetUniformLocation(ProgramID, name.c_str()), value);
 	}
 };

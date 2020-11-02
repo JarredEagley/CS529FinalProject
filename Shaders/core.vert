@@ -1,14 +1,15 @@
-// Part of following a modern openGL tutorial.
-// https://www.youtube.com/watch?v=aA112viAx7c&list=PLRtjMdoYXLf6zUMDJVRZYV-6g6n62vet8&index=14
 
 #version 330 core
-layout (location = 0) in vec3 position;
-layout (location = 1) in vec4 color; 
+layout (location = 0) in vec3 aPosition;
+layout (location = 1) in vec4 aColor; 
+layout (location = 2) in vec2 aTexCoord;
 
 out vec4 ourColor;
+out vec2 ourTexCoord;
 
 void main()
 {
-	gl_Position = vec4(position, 1.0);
-	ourColor = color;	
+	gl_Position = vec4(aPosition, 1.0);
+	ourColor = aColor;
+	ourTexCoord = aTexCoord;
 }

@@ -30,12 +30,16 @@ public:
 	static GlobalManager* getInstance()
 	{
 		if (!instance)
+		{
 			instance = new GlobalManager;
+			instance->initSingletons();
+		}
 		return instance;
 	};
-	void destroySingleton(); // This will destroy all child singeltons. // TO-DO: This needs to be static I think.
+	static void destroySingleton(); // This will destroy all child singeltons. // TO-DO: This needs to be static I think.
 
 public:
+	static void initSingletons();
 	static FrameRateController* getFrameRateController()	{ return pFRC->getInstance(); };
 	static GameObjectManager* getGameObjectManager()		{ return pGOM->getInstance(); };
 	static InputManager* getInputManager()					{ return pIM->getInstance(); };

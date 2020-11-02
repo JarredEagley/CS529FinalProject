@@ -16,6 +16,7 @@
 - End Header --------------------------------------------------------*/
 
 #pragma once
+
 #include <unordered_map>
 //#include "SDL_surface.h" We can use forward declaration to avoid including this!
 
@@ -33,11 +34,15 @@ public:
 	void destroySingleton();
 
 	SDL_Surface* LoadSurface(const char *pFilePath);
+
 public:
 	// No public variables.
 private:
 	ResourceManager();
 private:
 	static ResourceManager* instance;
-	std::unordered_map<std::string, SDL_Surface* > mSurfaces; // Hash map.
+	std::unordered_map<std::string, SDL_Surface* > mSurfaces = std::unordered_map<std::string, SDL_Surface* >(); // DEPRICATED.
+
+	//std::unordered_map<std::string, >;
+
 };

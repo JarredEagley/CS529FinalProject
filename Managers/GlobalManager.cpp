@@ -23,6 +23,8 @@
 #include "InputManager.h"
 #include "ResourceManager.h"
 
+#include <iostream>
+
 GlobalManager*			GlobalManager::instance = nullptr;
 FrameRateController*	GlobalManager::pFRC = nullptr;
 GameObjectManager*		GlobalManager::pGOM = nullptr;
@@ -30,6 +32,17 @@ InputManager*			GlobalManager::pIM = nullptr;
 ResourceManager*		GlobalManager::pRM = nullptr;
 Serializer*				GlobalManager::pSer = nullptr;
 
+// Fires all the getters to initialze all singletons GM is responsible for.
+void GlobalManager::initSingletons()
+{
+	instance->getFrameRateController();
+	instance->getGameObjectManager();
+	instance->getInputManager();
+	instance->getResourceManager();
+	instance->getSerializer();
+}
+
+// Call the destroy method on every singleton. 
 void GlobalManager::destroySingleton()
 {
 	// I'm sure there's a better way of doing this, but this is good enough for now.

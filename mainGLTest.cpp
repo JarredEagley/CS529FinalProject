@@ -6,6 +6,7 @@
 
 #include <string>
 #include <iostream>
+#include <Windows.h>
 
 //#define GL3_PROTOTYPES 1 // TO-DO What does this do?
 #include <gl/glew.h>
@@ -15,33 +16,17 @@
 #include "Shader.h"
 #include "Managers/GlobalManager.h"
 
+#define STB_IMAGE_IMPLEMENTATION // Couldn't find any good sources on why this is needed
+#include "stb_image.h"
+
 // Tutorial had this global. I thought it was a pretty good idea!
 std::string programName = "CS529 Final Project - Jarred Eagley";
 
-// TO-DO: I don't like what the tutorial did putting the window up here.
+// Pointer to the SDL window.
 SDL_Window* pWindow;
 
 // The OpenGL Context handle.
 SDL_GLContext context;
-
-GlobalManager globalManager;
-
-// Shader sources
-// TEMPORARY, better behavior in my old glfw implementation will be copied over later.
-/*
-const GLchar* vertexSource =
-"attribute vec4 position;    \n"
-"void main()                  \n"
-"{                            \n"
-"   gl_Position = vec4(position.xyz, 1.0);  \n"
-"}                            \n";
-const GLchar* fragmentSource =
-"precision mediump float;\n"
-"void main()                                  \n"
-"{                                            \n"
-"  gl_FragColor = vec4 (1.0, 1.0, 1.0, 1.0 );\n"
-"}                                            \n";
-*/
 
 // Some prototypes:
 bool setOpenGLAttributes();
@@ -54,6 +39,18 @@ void Cleanup();
 
 bool Init()
 {
+	// Initialize a console.
+	if (AllocConsole())
+	{
+		FILE* file;
+
+		freopen_s(&file, "CONOUT$", "wt", stdout);
+		freopen_s(&file, "CONOUT$", "wt", stderr);
+		freopen_s(&file, "CONOUT$", "wt", stdin);
+
+		SetConsoleTitle(L"Debug Console");
+	}
+
 	// Initialize SDL's Video subsystem
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -99,7 +96,7 @@ bool setOpenGLAttributes()
 	// Set OpenGL Version-- I'll do 3.2 for now. Theoretically 3.3 should also work just fine.
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2); // TO-DO: Do I need to set the color attributes and stuff?
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3); // TO-DO: Do I need to set the color attributes and stuff?
 
 	// Turn on double buffering.
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
@@ -113,68 +110,94 @@ int main(int argc, char*argv[])
 	if (!Init())
 		return EXIT_FAILURE;
 
+	// Init the singletons.
+	GlobalManager::initSingletons();
+	// Set framerate.
 	GlobalManager::getFrameRateController()->setMaxFramerate(30);
 
 	// VERTEX TEST STUFF ---------
 	// Create vertex array object.
-	GLuint vao;
+	Shader shaderTest(".\\Shaders\\core.vert", ".\\Shaders\\core.frag");
+
+
+
+	float verts[] = {
+		// positions          // colors             // texture coords
+		 0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
+		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
+		-0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f    // top left 
+	};
+	unsigned int indices[] = {
+		0,1,3, // First triangle.
+		1,2,3  // Second triangle.
+	};
+	
+	// Vertex array object, vertex buffer object, element buffer object.
+	GLuint vao, vbo, ebo;
+	// Generate
 	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
-	// Create Vertex buffer object, copy over vertex data.
-	GLuint vbo;
 	glGenBuffers(1, &vbo);
-
-	GLfloat verts[] = { 
-		-0.4f, 0.5f, 0.0f,	1.0f, 0.5f, 0.1f, 1.0f, 
-		0.5f, -0.5f, 0.0f,	1.0f, 0.5f, 0.1f, 0.3f,
-		-0.5f, -0.5f, 0.0f,	1.0f, 0.5f, 0.1f, 0.0f,
-		-0.4f, 0.5f, 0.0f,	0.1f, 0.5f, 1.0f, 1.0f, //
-		0.4, 0.5, 0.0f,		0.1f, 0.5f, 1.0f, 1.0f,
-		0.5f, -0.5f, 0.0f,	0.1f, 0.5f, 1.0f, 1.0f
-	 };
-
+	glGenBuffers(1, &ebo);
+	// Bind
+	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
 
-	Shader shaderTest("Shaders\\core.vert" , "Shaders\\core.frag");
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	/*
-	// Create and compile vertex shader.
-	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexSource, NULL); // Shaders will eventually be separated out.
-	glCompileShader(vertexShader);
-
-	// Fragment shader's turn.
-	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
-	glCompileShader(fragmentShader);
-
-	// Link vertex shader and fragment shader into a shader program.
-	GLuint shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-	glUseProgram(shaderProgram);
-
-	// Specify the layout of the vertex data.
-	GLint posAttrib = glGetAttribLocation(shaderProgram, "position");
-	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	*/
-
-	shaderTest.Use();
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)0); // position attribute.
+	int const number_of_values = 9;
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, number_of_values * sizeof(GLfloat), (GLvoid*)0); // position attribute.
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat))); // color attribute.
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, number_of_values * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat))); // color attribute.
 	glEnableVertexAttribArray(1);
 
-	/*
-	GLint colAttrib = glGetAttribLocation(shaderProgram, "color");
-	glEnableVertexAttribArray(colAttrib);
-	glVertexAttribPointer(colAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	*/
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, number_of_values * sizeof(GLfloat), (GLvoid*)(7 * sizeof(GLfloat))); // UV attribute.
+	glEnableVertexAttribArray(2);
+
+
+
+	// Texture stuff...
+
+	unsigned int texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // try linear as well...
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	
+
+	// Load image
+	int texwidth, texheight, nrChannels;
+	stbi_uc *data = stbi_load("Resources\\Ship1.png", &texwidth, &texheight, &nrChannels, STBI_rgb_alpha);
+	
+	if (data)
+	{
+		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texwidth, texheight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		//glGenerateMipmap(GL_TEXTURE_2D); // Mipmap might not be needed for my game...
+	}
+	else
+	{
+		std::cout << "FAILED TO LOAD TEXTURE!!!" << std::endl;
+	}
+	stbi_image_free(data); // We dont actually need the image anymore because its stored in openGL!
+
+	glUniform1i(glGetUniformLocation(shaderTest.ProgramID, "ourTexture"), 0);
+	//shaderTest.setInt("ourTexture", 0);
+
+	// Shader attributes.
+
+
+
+
+	shaderTest.Use();
+
+	
 
 	// Alpha blend mode.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -217,11 +240,12 @@ void gameLoop()
 
 		// Clear the buffer.
 		// The color I chose is just for fun.
-		glClearColor(0.1, 0.3, 0.5, 1.0);
+		glClearColor(0.1, 0.11, 0.14, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// VERTEX TEST
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		//glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		SDL_GL_SwapWindow(pWindow);
 
@@ -240,9 +264,8 @@ void Cleanup()
 	// Shut down SDL.
 	SDL_Quit();  // TO-DO: I think I need to do this after deleting singletons.
 
-	// TO-DO: Will need to delete singletons here.
+	// Destroy all singletons.
 	GlobalManager::destroySingleton();
-	globalManager.destroySingleton(); // TO-DO: Make name easier to use, switch over to this format so i can destroy singleton.
 }
 
 /*
