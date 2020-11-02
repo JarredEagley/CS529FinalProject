@@ -47,7 +47,7 @@ void ResourceManager::destroySingleton()
 
 ResourceManager::ResourceManager() {}
 
-SDL_Surface* ResourceManager::LoadSurface(const char* pFilePath)
+SDL_Surface* ResourceManager::loadSurface(const char* pFilePath)
 {
 	// Try to fetch from the hash map.
 	SDL_Surface* pSurface = mSurfaces[pFilePath];
@@ -65,4 +65,29 @@ SDL_Surface* ResourceManager::LoadSurface(const char* pFilePath)
 		mSurfaces[pFilePath] = pSurface;
 
 	return pSurface;
+}
+
+stbi_uc* ResourceManager::loadTexture(const char* pFilePath)
+{
+	// Try to fetch from hash map.
+	stbi_uc* pTex = mTextures[pFilePath];
+
+	// If it already exists, return it!
+	if (pTex)
+		return pTex;
+
+	// Else load it, store it, then return it.
+	int width, height, nrChannels;
+	pTex = stbi_load(pFilePath, &width, &height, &nrChannels, STBI_rgb_alpha);
+	if (pTex)
+	{
+		// Image loaded successfully, store it.
+		mTextures[pFilePath] = pTex;
+	}
+	else
+	{
+		std::cout << "Failed to load image: " << pFilePath << std::endl;
+	}
+
+	return pTex;
 }

@@ -35,19 +35,20 @@ public:
 	};
 	void destroySingleton();
 
-	SDL_Surface* LoadSurface(const char *pFilePath);
+	SDL_Surface* loadSurface(const char *pFilePath); // DEPRICATED.
+	stbi_uc* loadTexture(const char *pFilePath);
 
 public:
 	const std::string pathResources = ".\\Resources\\"; // The base-folder for storing resources like configs and textures.
-	const std::string pathTextures	 = pathResources + "Textures";
-	const std::string pathLevels	 = pathResources + "Levels";
-	const std::string pathArchetypes = pathResources + "Archetypes";
+	const std::string pathTextures	 = pathResources + "Textures\\";
+	const std::string pathLevels	 = pathResources + "Levels\\";
+	const std::string pathArchetypes = pathResources + "Archetypes\\";
 private:
 	ResourceManager();
 private:
 	static ResourceManager* instance;
 	std::unordered_map<std::string, SDL_Surface* > mSurfaces = std::unordered_map<std::string, SDL_Surface* >(); // DEPRICATED.
-	std::unordered_map<std::string, stbi_uc* > mSurfaces = std::unordered_map<std::string, stbi_uc* >();
+	std::unordered_map<std::string, stbi_uc* > mTextures = std::unordered_map<std::string, stbi_uc* >();
 
 	//std::unordered_map<std::string, >;
 
