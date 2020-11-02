@@ -1,6 +1,8 @@
 #include "GLRect.h"
+#include "../Managers/GlobalManager.h"
 #include "ComponentTypes.h"
 #include <iostream>
+//#include <string>
 
 GLRect::GLRect() : scaleX(100.0f), scaleY(100.0f), Component(ComponentTypes::TYPE_GLRECT)
 {
@@ -29,4 +31,9 @@ void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		std::cerr << "Warning: Sprite failed to deserialize. Value was not a string." << std::endl;
 		return;
 	}
+
+	const std::string imageName = inputMemberIt->value.GetString();
+	const std::string imagePath = GlobalManager::getResourceManager()->pathTextures + imageName;
+
+	mTexture = GlobalManager::getResourceManager()->loadTexture(imagePath.c_str());
 }
