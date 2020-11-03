@@ -23,15 +23,6 @@
 
 class GameObject; 
 
-/* Moved into ComponentTypes.h
-enum COMPONENT_TYPE
-{
-	TYPE_TRANSFORM,
-	TYPE_SPRITE,
-	TYPE_CONTROLLERSLIDER
-};
-*/
-
 // Abstract class because of Update() = 0...
 class Component
 {
