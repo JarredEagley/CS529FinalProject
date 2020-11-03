@@ -3,9 +3,7 @@
 #include "Component.h"
 
 #include "glm/glm.hpp"
-
-//#include "stb_image.h"
-typedef stbi_uc; // Forward declaration.
+#include "stb_image.h"
 
 struct Vertex
 {
@@ -25,8 +23,6 @@ public:
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 public:
 	stbi_uc* mTexture;
-	//float scaleX; // TO-DO: These belong in transform...
-	//float scaleY;
 private:
 	// No private methods.
 private:
@@ -42,7 +38,7 @@ private:
 		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f    // top left 
 	};
 	*/
-	unsigned int mIndices[6] = {
+	unsigned int mIndices[6] = { // TO-DO These might be wrong now...
 		0,1,3, // First triangle.
 		1,2,3  // Second triangle.
 	};

@@ -157,7 +157,6 @@ int main(int argc, char*argv[])
 
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, number_of_values * sizeof(GLfloat), (GLvoid*)(7 * sizeof(GLfloat))); // UV attribute.
 	glEnableVertexAttribArray(2);
-	*/
 
 
 
@@ -193,12 +192,14 @@ int main(int argc, char*argv[])
 	//shaderTest.setInt("ourTexture", 0);
 
 	shaderTest.Use();	
+	*/
 
 	// Alpha blend mode.
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
 
 	// END OF VERTEX TEST STUFF ---------
+	
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // TO-DO: Where does this actually belong? init?
+	glEnable(GL_BLEND);
 	
 	// Run the game loop.
 	gameLoop();

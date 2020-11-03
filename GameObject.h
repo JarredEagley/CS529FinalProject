@@ -33,9 +33,11 @@ public:
 	Component* GetComponent(unsigned int Type); // Because we need to access components. 
 public:
 	std::unordered_map<unsigned int, Component*> mComponents; // TYPE, COMPONENT
+	int getID() { return this->gameObjectID; }
 private:
 	// No private methods.
 private:
-	// No private variables.
+	int gameObjectID;
+	static int maxId; // Keeping track of how many GameObjects we've made.
 };
 

@@ -2,7 +2,6 @@
 #include "../Managers/GlobalManager.h"
 #include "ComponentTypes.h"
 #include <iostream>
-//#include <string>
 
 GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT)
 {
@@ -24,6 +23,10 @@ GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT)
 		vert.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
+GLRect::~GLRect()
+{
+	// TO-DO: Will I need to destroy a VAO here?
+}
 
 /* Old monolithic way of doing this...
 void GLRect::setColor(float r, float g, float b, float a)

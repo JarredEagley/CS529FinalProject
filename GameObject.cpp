@@ -29,6 +29,16 @@
 
 GameObject::GameObject()
 {
+	if (NULL == maxId)
+	{
+		maxId = 0;
+		this->gameObjectID = maxId;
+	}
+	else
+	{
+		++maxId;
+		this->gameObjectID = maxId;
+	}
 }
 
 GameObject::~GameObject()
