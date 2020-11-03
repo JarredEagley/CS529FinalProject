@@ -4,6 +4,7 @@
 
 #include "glm/glm.hpp"
 #include "stb_image.h"
+#include "../Shader.h"
 
 struct Vertex
 {
@@ -20,6 +21,10 @@ public:
 
 	void Update();
 	void setColor(glm::vec4); // Sets the color of the whole square. Will implement gradiant coloring if necessary.
+
+	void Draw(Shader* shader);
+	void buildVAO();
+
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 public:
 	stbi_uc* mTexture;
@@ -42,5 +47,9 @@ private:
 		0,1,3, // First triangle.
 		1,2,3  // Second triangle.
 	};
+
+	// The OpenGL identifier for the Vertex Array Object for this gameObject.
+	// VAO stuff may eventually be abstracted into its own component.
+	unsigned int vaoID;
 };
 

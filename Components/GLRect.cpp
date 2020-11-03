@@ -7,6 +7,7 @@ GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT)
 {
 	// Texture is null until loaded.
 	mTexture = nullptr;
+	vaoID = NULL;
 
 	// Vertex positions for a quad.
 	vertices[0].position = glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f);	// Top left
@@ -26,6 +27,11 @@ GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT)
 GLRect::~GLRect()
 {
 	// TO-DO: Will I need to destroy a VAO here?
+}
+
+void GLRect::Update()
+{
+
 }
 
 /* Old monolithic way of doing this...
@@ -48,6 +54,46 @@ void GLRect::setColor(glm::vec4 rgba)
 {
 	for (auto vert : vertices)
 		vert.color = rgba;
+}
+
+// Draws using the openGL vertex array object.
+void GLRect::Draw(Shader* shader)
+{
+
+}
+
+// Builds the openGL vertex array object. 
+void GLRect::buildVAO()
+{
+	// VAO
+	glGenVertexArrays(1, &vaoID);
+	glBindVertexArray(vaoID);
+
+	// VBO
+	GLuint vbo;
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 *); //?
+
+	// EBO
+
+	// Enable the vertex attribute.
+	glEnableVertexAttribArray(0);
+
+	//glVertexAttribIPointer(0, x, GL_FLOAT, GL_FALSE, 0); // 0 poitner? weird.
+	
+	glBindBuffer(GL_ARRAY_BUFFER, 0); // Is this binding that previous 0?
+
+	// Bunch of if statements
+
+	// 
+
+	GLuint indexBuff;
+	glGenBuffers(1, &indexBuff);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuff);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 3 * ); //??? 
+
+	glBindVertexArray(0); // Set back to default.
 }
 
 void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)

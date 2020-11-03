@@ -27,6 +27,9 @@
 #include "Components/ControllerSlider.h"
 #include "Components/UpDown.h"
 
+// Init the maxId.
+unsigned int GameObject::maxId = NULL;
+
 GameObject::GameObject()
 {
 	if (NULL == maxId)

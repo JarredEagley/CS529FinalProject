@@ -37,7 +37,7 @@ public:
 private:
 	// No private methods.
 private:
+	static unsigned int maxId; // Keeping track of how many GameObjects we've made.
 	int gameObjectID;
-	static int maxId; // Keeping track of how many GameObjects we've made.
 };
 

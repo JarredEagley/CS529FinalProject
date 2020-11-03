@@ -59,9 +59,9 @@ bool Init()
 		return false;
 	}
 
-
+	
 	// Create our window.
-	pWindow = SDL_CreateWindow(programName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 512, 512, SDL_WINDOW_OPENGL);
+	pWindow = SDL_CreateWindow(programName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 900, 800, SDL_WINDOW_OPENGL);
 
 	// Nullcheck the window.
 	if (!pWindow)
