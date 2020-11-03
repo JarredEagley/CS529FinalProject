@@ -4,12 +4,28 @@
 #include <iostream>
 //#include <string>
 
-GLRect::GLRect() : scaleX(100.0f), scaleY(100.0f), Component(ComponentTypes::TYPE_GLRECT)
+GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT)
 {
+	// Texture is null until loaded.
 	mTexture = nullptr;
+
+	// Vertex positions for a quad.
+	vertices[0].position = glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f);	// Top left
+	vertices[1].position = glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f);	// Bottom left
+	vertices[2].position = glm::vec4(0.5f, -0.5f, 0.0f, 1.0f);	// Bottom right
+	vertices[3].position = glm::vec4(0.5f, 0.5f, 0.0f, 1.0f);	// Top right
+	// Vertex UV's for a quad.
+	vertices[0].uv = glm::vec2(0.0f, 1.0f); 	// Top left
+	vertices[1].uv = glm::vec2(0.0f, 0.0f); 	// Bottom left
+	vertices[2].uv = glm::vec2(1.0f, 0.0f); 	// Bottom right
+	vertices[3].uv = glm::vec2(1.0f, 1.0f); 	// Top right
+	// Set all the colors to white opaque.
+	for (auto vert : vertices)
+		vert.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 
+/* Old monolithic way of doing this...
 void GLRect::setColor(float r, float g, float b, float a)
 {
 	// For each vert.
@@ -22,18 +38,71 @@ void GLRect::setColor(float r, float g, float b, float a)
 		mVertices[6 + (i * rowsize)] = a;
 	}
 }
+*/
+
+
+void GLRect::setColor(glm::vec4 rgba)
+{
+	for (auto vert : vertices)
+		vert.color = rgba;
+}
 
 void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
 	// Sanity check for serializing GLRect.
-	if (!inputMemberIt->value.IsString())
+	if (!inputMemberIt->value.IsObject())
 	{
-		std::cerr << "Warning: Sprite failed to deserialize. Value was not a string." << std::endl;
+		std::cerr << "Warning: GLRect failed to deserialize. Value was not formatted correctly.." << std::endl;
 		return;
 	}
+	// Get the GLRect object.
+	rapidjson::GenericObject<true, rapidjson::Value> rectObject = inputMemberIt->value.GetObject();
 
-	const std::string imageName = inputMemberIt->value.GetString();
-	const std::string imagePath = GlobalManager::getResourceManager()->pathTextures + imageName;
+	char* storedTexture = nullptr; // TO-DO: Do I need these? Probably not...
+	int storedColor[4]; // RGBA
 
-	mTexture = GlobalManager::getResourceManager()->loadTexture(imagePath.c_str());
+	// Try to deserialize texture.
+	if (rectObject.HasMember("Texture"))
+	{
+		if (rectObject["Texture"].IsString())
+		{
+			// Read in that texture.
+			const std::string imageName = rectObject["Texture"].GetString();
+			const std::string imagePath = GlobalManager::getResourceManager()->pathTextures + imageName;
+
+			this->mTexture = GlobalManager::getResourceManager()->loadTexture(imagePath.c_str());
+
+			if (!this->mTexture) // Sanity checker.
+				std::cout << "Warning: GLRect texture failed to deserialize!" << std::endl;
+		}
+		else
+		{
+			std::cout << "Warning: GLRect had a 'Texture' but its value was not a string!" << std::endl;
+		}
+	}
+
+	// Try to deserialize color.
+	if (rectObject.HasMember("Color"))
+	{
+		if (rectObject["Color"].IsArray())
+		{
+			// Get the array from the JSON...
+			rapidjson::GenericArray<true,rapidjson::Value> colorArray = rectObject["Color"].GetArray();
+
+			// Check array formatting.
+			if (colorArray.Capacity() == 4 && colorArray[0].IsNumber())
+			{
+				// Formatting is ok. Set color.
+				this->setColor(glm::vec4(colorArray[0].GetFloat(), colorArray[1].GetFloat(), colorArray[2].GetFloat(), colorArray[3].GetFloat()));
+			}
+			else
+			{
+				std::cout << "Warning: GLRect had a 'Color' but its array was incorrectly formatted!" << std::endl;
+			}
+		}
+		else
+		{
+			std::cout << "Warning: GLRect had a 'Color' but its value was not an array of numbers!" << std::endl;
+		}
+	}
 }

@@ -2,8 +2,17 @@
 
 #include "Component.h"
 
+#include "glm/glm.hpp"
+
 //#include "stb_image.h"
 typedef stbi_uc; // Forward declaration.
+
+struct Vertex
+{
+	glm::vec4 position; // Going to support 3D position even though I'll never use it.
+	glm::vec4 color;
+	glm::vec2 uv;
+};
 
 class GLRect : public Component
 {
@@ -12,16 +21,19 @@ public:
 	~GLRect();
 
 	void Update();
-	void setColor(float r, float g, float b, float a); // Sets the color of the whole square. Will implement gradiant coloring if necessary.
+	void setColor(glm::vec4); // Sets the color of the whole square. Will implement gradiant coloring if necessary.
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 public:
 	stbi_uc* mTexture;
-	float scaleX;
-	float scaleY;
+	//float scaleX; // TO-DO: These belong in transform...
+	//float scaleY;
 private:
 	// No private methods.
 private:
 	// A 1x1 flat white square with default uv's.
+	Vertex vertices[4]; // Initialized in constructor.
+	// Monolithic format (Depricated)
+	/*
 	float mVertices[36] = {
 	//  ( X      Y     Z  )  ( R     G     B     A  )  ( U     V  )
 		 0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
@@ -29,6 +41,7 @@ private:
 		-0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
 		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f    // top left 
 	};
+	*/
 	unsigned int mIndices[6] = {
 		0,1,3, // First triangle.
 		1,2,3  // Second triangle.

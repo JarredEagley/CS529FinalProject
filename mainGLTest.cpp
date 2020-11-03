@@ -18,6 +18,7 @@
 
 #define STB_IMAGE_IMPLEMENTATION // Couldn't find any good sources on why this is needed
 #include "stb_image.h"
+//#include "glm.hpp"
 
 // Tutorial had this global. I thought it was a pretty good idea!
 std::string programName = "CS529 Final Project - Jarred Eagley";
@@ -117,8 +118,8 @@ int main(int argc, char*argv[])
 
 	// VERTEX TEST STUFF ---------
 	// Create vertex array object.
+	/*
 	Shader shaderTest(".\\Shaders\\core.vert", ".\\Shaders\\core.frag");
-
 
 
 	float verts[] = {
@@ -156,6 +157,7 @@ int main(int argc, char*argv[])
 
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, number_of_values * sizeof(GLfloat), (GLvoid*)(7 * sizeof(GLfloat))); // UV attribute.
 	glEnableVertexAttribArray(2);
+	*/
 
 
 
@@ -190,14 +192,7 @@ int main(int argc, char*argv[])
 	glUniform1i(glGetUniformLocation(shaderTest.ProgramID, "ourTexture"), 0);
 	//shaderTest.setInt("ourTexture", 0);
 
-	// Shader attributes.
-
-
-
-
-	shaderTest.Use();
-
-	
+	shaderTest.Use();	
 
 	// Alpha blend mode.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -217,7 +212,6 @@ int main(int argc, char*argv[])
 void gameLoop()
 {
 	bool appIsRunning = true;
-
 	while (true == appIsRunning)
 	{
 		GlobalManager::getFrameRateController()->frameStart();
