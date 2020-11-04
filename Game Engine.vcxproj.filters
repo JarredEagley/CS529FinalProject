@@ -83,13 +83,13 @@
     <ClInclude Include="Managers\Serializer.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h" />
     <ClInclude Include="Components\GLRect.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Managers\GraphicsManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderProgram.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

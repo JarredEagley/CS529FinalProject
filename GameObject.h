@@ -34,6 +34,7 @@ public:
 public:
 	std::unordered_map<unsigned int, Component*> mComponents; // TYPE, COMPONENT
 	int getID() { return this->gameObjectID; }
+	const char* shaderName = "core";	// May have more shaders in the future.
 private:
 	// No private methods.
 private:

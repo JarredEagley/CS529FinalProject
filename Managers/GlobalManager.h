@@ -23,6 +23,7 @@
 #include "InputManager.h"
 #include "ResourceManager.h"
 #include "Serializer.h"
+#include "GraphicsManager.h"
 
 class GlobalManager
 {
@@ -45,6 +46,7 @@ public:
 	static InputManager* getInputManager()					{ return pIM->getInstance(); };
 	static ResourceManager* getResourceManager()			{ return pRM->getInstance(); };
 	static Serializer* getSerializer()						{ return pSer->getInstance(); };
+	static GraphicsManager* getGraphicsManager()			{ return pGraphM->getInstance();  };
 private:
 	GlobalManager();
 private:
@@ -56,5 +58,6 @@ private:
 	static InputManager* pIM;
 	static ResourceManager* pRM;
 	static Serializer* pSer;
+	static GraphicsManager* pGraphM;
 };
 

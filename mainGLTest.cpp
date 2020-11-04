@@ -13,7 +13,6 @@
 
 #include <SDL.h>
 
-#include "Shader.h"
 #include "Managers/GlobalManager.h"
 #include "Components/ComponentTypes.h"
 // TEMP

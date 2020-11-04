@@ -120,7 +120,7 @@
     <ClInclude Include="Managers\ResourceManager.h" />
     <ClInclude Include="GameObjectFactory.h" />
     <ClInclude Include="Managers\Serializer.h" />
-    <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderProgram.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\core.frag" />

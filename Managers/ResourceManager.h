@@ -36,7 +36,7 @@ public:
 	};
 	void destroySingleton();
 
-	?? loadTexture(const char *pFilePath);
+	int loadTexture(const char* texName); // Returns the id of the texture loaded (or cached)
 
 public:
 	const std::string pathResources = ".\\Resources\\"; // The base-folder for storing resources like configs and textures.
@@ -47,7 +47,7 @@ private:
 	ResourceManager();
 private:
 	static ResourceManager* instance;
-	std::unordered_map<std::string, stbiTexture* > mTextures;
+	std::unordered_map<const char*, int> mTextures; // textureName, texId
 
 	//std::unordered_map<std::string, >;
 

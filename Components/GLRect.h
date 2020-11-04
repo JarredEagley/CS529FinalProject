@@ -6,7 +6,6 @@
 
 #include "glm/glm.hpp"
 #include "stb_image.h"
-#include "../Shader.h"
 
 class GLRect : public Component
 {
@@ -17,16 +16,14 @@ public:
 	void Update();
 	void setColor(glm::vec4); // Sets the color of the whole square. Will implement gradiant coloring if necessary.
 
-	void Draw(Shader* shader) {};
-	void buildVAO();
+	void buildVAO(); // Build this component's VAO. Automatically stores vaoId.
+	unsigned int getVAO(); // Returns the iD of this component's vertex array object.
+	int getTexId() { return texID; }; // Returns the ID of the texture stored on the graphics card which we want this component to draw.
 
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
-	stbiTexture* mTexture; // TO-DO: Textures will be on the GRAPHICS CARD...
-
-	Shader shaderTest = Shader(".\\Shaders\\core.vert", ".\\Shaders\\core.frag"); // TO-DO: This is NOT the place for this!!!
-
+	// No public variables.
 private:
 	// No private methods.
 private:
@@ -52,22 +49,11 @@ private:
 		glm::vec2(1.0f, 1.0f),
 	};
 
-	// Monolithic format (Depricated)
-	/*
-	float mVertices[36] = {
-	//  ( X      Y     Z  )  ( R     G     B     A  )  ( U     V  )
-		 0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
-		 0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
-		-0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f    // top left 
-	};
-	*/
 	unsigned int mIndices[6] = {
 		0, 1, 3, // First triangle.
 		1, 2, 3	 // Second triangle.
 	};
 
-	// The OpenGL identifier for the Vertex Array Object for this gameObject.
-	// VAO stuff may eventually be abstracted into its own component.
-	unsigned int vaoID;
+	unsigned int vaoID; // The OpenGL identifier for the Vertex Array Object for this gameObject.
+	int texID; // ID of the texture we want to use; stored on the graphics card.
 };

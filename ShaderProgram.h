@@ -1,8 +1,6 @@
-// modified, based on modern openGL tutorial:
+// heavily modified, based on modern openGL tutorial:
 // https://www.youtube.com/watch?v=aA112viAx7c&list=PLRtjMdoYXLf6zUMDJVRZYV-6g6n62vet8&index=14
-
-// TO-DO: Some of this looks like it doesn't belong in a header file...
-// TO-DO: Video timestamp 8:16 references place that goes more in-depth for this code.
+// Also based on the learnopengl tutorials.
 
 #pragma once
 
@@ -13,14 +11,14 @@
 
 #include <GL/glew.h>
 
-class Shader
+class ShaderProgram
 {
 public:
 	// The program ID
 	GLuint ProgramID;
 
 	// Constructor. Generates the shader.
-	Shader(const GLchar *pvertexPath, const GLchar *pfragmentPath)
+	ShaderProgram(const GLchar *pvertexPath, const GLchar *pfragmentPath)
 	{
 		// 1. Retrieve vertex and fragment sourcecode.
 		std::string vertexCode;

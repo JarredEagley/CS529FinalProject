@@ -16,8 +16,6 @@
 
 #include "ResourceManager.h"
 #include <iostream>
-//#include "SDL_surface.h"
-//#include "SDL_image.h"
 
 #include "stb_image.h"
 
@@ -49,57 +47,29 @@ void ResourceManager::destroySingleton()
 }
 
 ResourceManager::ResourceManager() 
+{}
+
+
+int ResourceManager::loadTexture(const char* texName)
 {
-	//mTextures = std::unordered_map<std::string, stbiTexture >();
-}
+	// Test if the texture by the given name exists. If it does, return it.
+	if (mTextures.find(texName) == mTextures.end())
+		return mTextures[texName];
 
-/*
-SDL_Surface* ResourceManager::loadSurface(const char* pFilePath)
-{
-	// Try to fetch from the hash map.
-	SDL_Surface* pSurface = mSurfaces[pFilePath];
+	// Texture by that name doesn't exist. Load it using stb_image, store in vram, then store its id.
+	std::string texPath = pathTextures + texName;
 
-	// If it already exists, return it!
-	if (pSurface)
-		return pSurface;
-
-	// Else load it, store it, then return it.
-	//pSurface = SDL_LoadBMP(pFilePath);
-	pSurface = IMG_Load(pFilePath);
-
-	// If successfully loaded, store it.
-	if (pSurface)
-		mSurfaces[pFilePath] = pSurface;
-
-	return pSurface;
-}
-*/
-
-stbiTexture* ResourceManager::loadTexture(const char* pFilePath)
-{
-	// Try to fetch from hash map.
-	//stbi_uc* pTex = mTextures[pFilePath].texture; // TO-DO: I'm sleepy, may be missing some nullchecks here...
-
-	//stbiTexture &tex = mTextures;
-	
-	// If it already exists, return it!
-	if (mTextures.find(pFilePath) != mTextures.end())
-		return mTextures[pFilePath];
-
-	// Else load it, store it, then return it.
-	//int width, height, nrChannels;
-	//pTex = stbi_load(pFilePath, &mTextures[pFilePath].width, &mTextures[pFilePath].height, &mTextures[pFilePath].nrChannels, STBI_rgb_alpha);
-	stbi_uc* data = stbi_load(pFilePath, &mTextures[pFilePath]->width, &mTextures[pFilePath]->height, &mTextures[pFilePath]->nrChannels, STBI_rgb_alpha);
+	int width, height, nrChannels;
+	stbi_uc* data = stbi_load(texPath.c_str(), &width, &height, &nrChannels, STBI_rgb_alpha);
 	if (data != nullptr)
 	{
-		// Image loaded successfully, store it.
-		mTextures[pFilePath]->texture = data; // TO-DO: I think I"m getting context issues here.....
-		//mTextures[pFilePath].texture = ; // TO-DO: I think I"m getting context issues here.....
+		// Generate the texId and return it.
+		int texId;
+		glGenTextures();
 	}
 	else
 	{
-		std::cerr << "Warning: Failed to load image: " << pFilePath << std::endl;
+		// NULL will be returned.
+		std::cout << "Warning: Failed to load image: " << texPath << std::endl;
 	}
-
-	return mTextures[pFilePath];
 }
