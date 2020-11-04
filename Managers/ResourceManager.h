@@ -22,9 +22,6 @@
 
 #include "GL/glew.h" // I shouldnt need this in here. TO-DO: Do I REALLY need this in here?!
 
-//#include "SDL_surface.h" We can use forward declaration to avoid including this!
-
-
 class SDL_Surface; // All we're doing is letting this class know another class by this name exist. Reduces code size and build time.
 
 class ResourceManager
@@ -50,7 +47,4 @@ private:
 private:
 	static ResourceManager* instance;
 	std::unordered_map<const char*, GLuint> mTextures; // textureName, texId
-
-	//std::unordered_map<std::string, >;
-
 };
