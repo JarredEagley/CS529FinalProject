@@ -20,6 +20,8 @@
 #include <unordered_map>
 #include "stb_image.h"
 
+#include "GL/glew.h" // I shouldnt need this in here. TO-DO: Do I REALLY need this in here?!
+
 //#include "SDL_surface.h" We can use forward declaration to avoid including this!
 
 
@@ -36,7 +38,7 @@ public:
 	};
 	void destroySingleton();
 
-	int loadTexture(const char* texName); // Returns the id of the texture loaded (or cached)
+	GLuint loadTexture(const char* texName); // Returns the id of the texture loaded (or cached)
 
 public:
 	const std::string pathResources = ".\\Resources\\"; // The base-folder for storing resources like configs and textures.
@@ -47,7 +49,7 @@ private:
 	ResourceManager();
 private:
 	static ResourceManager* instance;
-	std::unordered_map<const char*, int> mTextures; // textureName, texId
+	std::unordered_map<const char*, GLuint> mTextures; // textureName, texId
 
 	//std::unordered_map<std::string, >;
 

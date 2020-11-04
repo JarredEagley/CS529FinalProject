@@ -50,7 +50,7 @@ ResourceManager::ResourceManager()
 {}
 
 
-int ResourceManager::loadTexture(const char* texName)
+GLuint ResourceManager::loadTexture(const char* texName)
 {
 	// Test if the texture by the given name exists. If it does, return it.
 	if (mTextures.find(texName) == mTextures.end())
@@ -61,15 +61,19 @@ int ResourceManager::loadTexture(const char* texName)
 
 	int width, height, nrChannels;
 	stbi_uc* data = stbi_load(texPath.c_str(), &width, &height, &nrChannels, STBI_rgb_alpha);
+	GLuint texId;
 	if (data != nullptr)
 	{
 		// Generate the texId and return it.
-		int texId;
-		glGenTextures();
+		glGenTextures(1, &texId);
 	}
 	else
 	{
-		// NULL will be returned.
 		std::cout << "Warning: Failed to load image: " << texPath << std::endl;
 	}
+	// Clear data.
+	stbi_image_free(data);
+
+	// Returns NULL if failed, the generated id if success.
+	return texId;
 }
