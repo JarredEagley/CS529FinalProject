@@ -104,9 +104,9 @@ void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			const std::string imageName = rectObject["Texture"].GetString();
 			const std::string imagePath = GlobalManager::getResourceManager()->pathTextures + imageName;
 
-			this->mTexture = GlobalManager::getResourceManager()->loadTexture(imagePath.c_str());
+			this->texID = GlobalManager::getResourceManager()->loadTexture(imagePath.c_str());
 
-			if (!this->mTexture->texture) // Sanity checker. // TO-DO: Will be wrong!
+			if (!this->texID) // Sanity checker. 
 				std::cout << "Warning: GLRect texture failed to deserialize!" << std::endl;
 		}
 		else
