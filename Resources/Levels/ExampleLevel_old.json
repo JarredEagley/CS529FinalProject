@@ -1,0 +1,38 @@
+{
+    "Name": "ExampleLevel",
+    "Type": "Level",
+    "GameObjects":
+    [
+        {
+            "Archetype": "Player.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM": [100,100]
+            }
+        },
+        {
+            "Archetype": "Enemy.json",
+            "Components": 
+            {
+                "TYPE_TRANSFORM": [300, 100]
+            }
+        },
+        {
+            "Archetype": "Enemy.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM": [400, 500],
+                "TYPE_UPDOWN": [1,50]
+            }
+        },
+        {
+            "Archetype": "Enemy.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM": [100, 400],
+                "TYPE_SPRITE": "GuidedMissileRed.bmp",
+                "TYPE_UPDOWN": [0, 300]
+            }
+        }
+    ]
+}

@@ -22,10 +22,13 @@
 #include "Components/Component.h"
 #include "Components/ComponentTypes.h"
 
+
 #include "Components/Sprite.h"
 #include "Components/Transform.h"
 #include "Components/ControllerSlider.h"
 #include "Components/UpDown.h"
+#include "Components/GLRect.h"
+
 
 // Init the maxId.
 unsigned int GameObject::maxId = NULL;
@@ -99,6 +102,9 @@ Component* GameObject::overwriteComponent(unsigned int Type) // TO-DO: Overwrite
 		break;
 	case (ComponentTypes::TYPE_UPDOWN):
 		pNewComponent = new UpDown();
+		break;
+	case (ComponentTypes::TYPE_GLRECT):
+		pNewComponent = new GLRect();
 		break;
 	default:
 		return nullptr; // Failed to create component.

@@ -15,23 +15,24 @@
 - End Header --------------------------------------------------------*/
 
 #include "ResourceManager.h"
+#include <iostream>
 //#include "SDL_surface.h"
 //#include "SDL_image.h"
 
 #include "stb_image.h"
-
-#include <iostream>
 
 ResourceManager* ResourceManager::instance = nullptr;
 
 void ResourceManager::destroySingleton()
 {	
 	// Nullcheck.
-	if ( &mTextures != nullptr)
+	if ( !mTextures.empty() ) // TO-DO: This is not working >:(
 	{
 		// Need to free everything in the hashmap!
-		for (auto& keyValuePair : mTextures)
-			delete keyValuePair.second; // TO-DO: Is this right?
+		for (auto keyValuePair : mTextures)
+		{
+			stbi_image_free(keyValuePair.second->texture);
+		}
 			//SDL_FreeSurface(keyValuePair.second);  
 
 		// Clear the hashmap too.
@@ -42,11 +43,15 @@ void ResourceManager::destroySingleton()
 		std::cout << "Waring: ResourceManager mTextures did not exist." << std::endl;
 	}
 	
+	
 	// Delete the singleton.
 	delete instance;
 }
 
-ResourceManager::ResourceManager() {}
+ResourceManager::ResourceManager() 
+{
+	//mTextures = std::unordered_map<std::string, stbiTexture >();
+}
 
 /*
 SDL_Surface* ResourceManager::loadSurface(const char* pFilePath)
@@ -70,27 +75,31 @@ SDL_Surface* ResourceManager::loadSurface(const char* pFilePath)
 }
 */
 
-stbi_uc* ResourceManager::loadTexture(const char* pFilePath)
+stbiTexture* ResourceManager::loadTexture(const char* pFilePath)
 {
 	// Try to fetch from hash map.
-	stbi_uc* pTex = mTextures[pFilePath];
+	//stbi_uc* pTex = mTextures[pFilePath].texture; // TO-DO: I'm sleepy, may be missing some nullchecks here...
 
+	//stbiTexture &tex = mTextures;
+	
 	// If it already exists, return it!
-	if (pTex)
-		return pTex;
+	if (mTextures.find(pFilePath) != mTextures.end())
+		return mTextures[pFilePath];
 
 	// Else load it, store it, then return it.
-	int width, height, nrChannels;
-	pTex = stbi_load(pFilePath, &width, &height, &nrChannels, STBI_rgb_alpha);
-	if (pTex)
+	//int width, height, nrChannels;
+	//pTex = stbi_load(pFilePath, &mTextures[pFilePath].width, &mTextures[pFilePath].height, &mTextures[pFilePath].nrChannels, STBI_rgb_alpha);
+	stbi_uc* data = stbi_load(pFilePath, &mTextures[pFilePath]->width, &mTextures[pFilePath]->height, &mTextures[pFilePath]->nrChannels, STBI_rgb_alpha);
+	if (data != nullptr)
 	{
 		// Image loaded successfully, store it.
-		mTextures[pFilePath] = pTex;
+		mTextures[pFilePath]->texture = data; // TO-DO: I think I"m getting context issues here.....
+		//mTextures[pFilePath].texture = ; // TO-DO: I think I"m getting context issues here.....
 	}
 	else
 	{
 		std::cerr << "Warning: Failed to load image: " << pFilePath << std::endl;
 	}
 
-	return pTex;
+	return mTextures[pFilePath];
 }

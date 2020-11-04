@@ -15,6 +15,12 @@
 
 #include "Shader.h"
 #include "Managers/GlobalManager.h"
+#include "Components/ComponentTypes.h"
+// TEMP
+#include "Components/GLRect.h"
+
+#include "GameObject.h"
+#include "GameObjectFactory.h" // TO-DO: Singleton?
 
 #define STB_IMAGE_IMPLEMENTATION // Couldn't find any good sources on why this is needed
 #include "stb_image.h"
@@ -194,6 +200,9 @@ int main(int argc, char*argv[])
 	shaderTest.Use();	
 	*/
 
+	GameObjectFactory* pGOF = new GameObjectFactory();
+	pGOF->loadLevel(".\\Resources\\Levels\\ExampleLevel.json");
+
 	// Alpha blend mode.
 
 	// END OF VERTEX TEST STUFF ---------
@@ -240,7 +249,12 @@ void gameLoop()
 
 		// VERTEX TEST
 		//glDrawArrays(GL_TRIANGLES, 0, 6);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		for (GameObject* pGO : GlobalManager::getGameObjectManager()->mGameObjects)
+		{
+			pGO->Update();
+		}
+
 
 		SDL_GL_SwapWindow(pWindow);
 

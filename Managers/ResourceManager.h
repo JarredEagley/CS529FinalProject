@@ -36,7 +36,7 @@ public:
 	};
 	void destroySingleton();
 
-	stbi_uc* loadTexture(const char *pFilePath);
+	?? loadTexture(const char *pFilePath);
 
 public:
 	const std::string pathResources = ".\\Resources\\"; // The base-folder for storing resources like configs and textures.
@@ -47,7 +47,7 @@ private:
 	ResourceManager();
 private:
 	static ResourceManager* instance;
-	std::unordered_map<std::string, stbi_uc* > mTextures = std::unordered_map<std::string, stbi_uc* >();
+	std::unordered_map<std::string, stbiTexture* > mTextures;
 
 	//std::unordered_map<std::string, >;
 

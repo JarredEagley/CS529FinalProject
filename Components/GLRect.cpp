@@ -5,23 +5,11 @@
 
 GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT)
 {
+	std::cout << "DEBUG - Rect constructor fired." << std::endl;
 	// Texture is null until loaded.
-	mTexture = nullptr;
+	//mTexture->texture = nullptr;
 	vaoID = NULL;
-
-	// Vertex positions for a quad.
-	vertices[0].position = glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f);	// Top left
-	vertices[1].position = glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f);	// Bottom left
-	vertices[2].position = glm::vec4(0.5f, -0.5f, 0.0f, 1.0f);	// Bottom right
-	vertices[3].position = glm::vec4(0.5f, 0.5f, 0.0f, 1.0f);	// Top right
-	// Vertex UV's for a quad.
-	vertices[0].uv = glm::vec2(0.0f, 1.0f); 	// Top left
-	vertices[1].uv = glm::vec2(0.0f, 0.0f); 	// Bottom left
-	vertices[2].uv = glm::vec2(1.0f, 0.0f); 	// Bottom right
-	vertices[3].uv = glm::vec2(1.0f, 1.0f); 	// Top right
-	// Set all the colors to white opaque.
-	for (auto vert : vertices)
-		vert.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	buildVAO();
 }
 
 GLRect::~GLRect()
@@ -31,7 +19,11 @@ GLRect::~GLRect()
 
 void GLRect::Update()
 {
-
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // try linear as well...
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	Draw(&shaderTest);
 }
 
 /* Old monolithic way of doing this...
@@ -52,15 +44,23 @@ void GLRect::setColor(float r, float g, float b, float a)
 
 void GLRect::setColor(glm::vec4 rgba)
 {
-	for (auto vert : vertices)
-		vert.color = rgba;
+	for (auto col : mVertCol)
+		col = rgba;
 }
 
 // Draws using the openGL vertex array object.
+/*	TO-DO: MOVE TO GRAPHICS MANAGER
 void GLRect::Draw(Shader* shader)
 {
-
+	//std::cout << "DEBUG - Drawing..." << std::endl;
+	shader->Use();
+	glBindVertexArray(vaoID);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
+	shader->unUse();
+	// TO-DO: A way to debug this call?
 }
+*/
 
 // Builds the openGL vertex array object. 
 void GLRect::buildVAO()
@@ -70,34 +70,47 @@ void GLRect::buildVAO()
 	glBindVertexArray(vaoID);
 
 	// VBO
-	GLuint vbo;
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 4 *); //?
+	GLuint vboID[3];
+	glGenBuffers(3, &vboID[0]);
+
+	// Position, color, uv
+	// TO-DO: Need a new VBO for each attb?
+	glBindBuffer(GL_ARRAY_BUFFER, vboID[0]); 
+	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertPos) , &mVertPos[0][0] , GL_STATIC_DRAW ); 
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0 );
+	glEnableVertexAttribArray(0);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vboID[1] );
+	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertCol) , &mVertCol[0][0] , GL_STATIC_DRAW );
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0 ); // TO-DO: Right stride?
+	glEnableVertexAttribArray(1);
+	//glBindBuffer(GL_ARRAY_BUFFER, 1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vboID[2]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertUV) , &mVertUV[0][0] , GL_STATIC_DRAW );
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0); // TO-DO the 2, 4 might be wrong... 
+	glEnableVertexAttribArray(2);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	// Pass in the texture...
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mTexture.width, mTexture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, mTexture.texture);
+	glUniform1i(glGetUniformLocation(shaderTest.ProgramID, "ourTexture"), 0);
+	//shaderTest.setInt("ourTexture", 0);
 
 	// EBO
-
-	// Enable the vertex attribute.
-	glEnableVertexAttribArray(0);
-
-	//glVertexAttribIPointer(0, x, GL_FLOAT, GL_FALSE, 0); // 0 poitner? weird.
-	
-	glBindBuffer(GL_ARRAY_BUFFER, 0); // Is this binding that previous 0?
-
-	// Bunch of if statements
-
-	// 
-
-	GLuint indexBuff;
-	glGenBuffers(1, &indexBuff);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuff);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 3 * ); //??? 
+	GLuint eboID;
+	glGenBuffers(1, &eboID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 3 * 2, mIndices, GL_STATIC_DRAW ); 
 
 	glBindVertexArray(0); // Set back to default.
 }
 
 void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
+	std::cout << "DEBUG - Deserializing GLRect..." << std::endl;
 	// Sanity check for serializing GLRect.
 	if (!inputMemberIt->value.IsObject())
 	{
@@ -121,7 +134,7 @@ void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 
 			this->mTexture = GlobalManager::getResourceManager()->loadTexture(imagePath.c_str());
 
-			if (!this->mTexture) // Sanity checker.
+			if (!this->mTexture->texture) // Sanity checker. // TO-DO: Will be wrong!
 				std::cout << "Warning: GLRect texture failed to deserialize!" << std::endl;
 		}
 		else

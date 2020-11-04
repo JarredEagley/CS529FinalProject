@@ -84,11 +84,11 @@ GameObject* GameObjectFactory::loadObject(const char* pFileName)
 	for (; itr != doc["Components"].GetObject().MemberEnd(); ++itr )
 	{
 		Component* pNewComponent = nullptr;
-		//std::cout << "Reading in: " << itr->name.GetString() << "\n";
+		std::cout << "Reading in: " << itr->name.GetString() << "\n";
 		// TO-DO: Handle non-string name value.
 		pNewComponent = pNewGO->AddComponent(ComponentTypes::stringToEnum(itr->name.GetString()));
 
-		//std::cout << "Done.\n";
+		std::cout << "Done.\n";
 
 		// Rapidjson didn't like me passing just the value in, so pass the whole iterator.
 		if (nullptr != pNewComponent)

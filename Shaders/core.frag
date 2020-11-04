@@ -1,4 +1,3 @@
-
 #version 330 core
 
 in vec4 ourColor;
@@ -10,8 +9,8 @@ uniform sampler2D ourTexture;
 
 void main()
 {
-	//FragColor= vec4(ourColor);
-	FragColor = texture(ourTexture, ourTexCoord) * ourColor;
+	FragColor= vec4(ourColor);
+	//FragColor = texture(ourTexture, ourTexCoord) * ourColor;
 	//FragColor.rg = ourTexCoord;
 }
 
