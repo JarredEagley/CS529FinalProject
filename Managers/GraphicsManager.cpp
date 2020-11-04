@@ -43,10 +43,13 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 
 	// Draw.
 	program->Use();
-	glBindVertexArray(vaoID);
+	glBindVertexArray(vaoID); // Bind the VAO
+	glActiveTexture(GL_TEXTURE0); // Will be needed if I one day one multiple textures on one rect.
+	glBindTexture(GL_TEXTURE_2D, pRect->getTexId()); // Bind the desired texture.
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
 	program->unUse();
 
