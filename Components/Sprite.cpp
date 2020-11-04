@@ -23,6 +23,7 @@
 
 Sprite::Sprite() : Component(ComponentTypes::TYPE_SPRITE)
 {
+	std::cerr << "Warning: 'Sprite' is a depricated component type." << std::endl;
 	mpSurface = nullptr;
 }
 
@@ -47,5 +48,5 @@ void Sprite::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	const char* imageName = inputMemberIt->value.GetString();
 	imagePath.append(imageName);
 	//std::cout << "DEBUG: Sprite name is " << imagePath.c_str() << "\n";
-	mpSurface = GlobalManager::getResourceManager()->loadSurface(imagePath.c_str());
+	// mpSurface = GlobalManager::getResourceManager()->loadSurface(imagePath.c_str()); DEPRICATED
 } 

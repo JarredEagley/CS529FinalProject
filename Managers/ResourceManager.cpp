@@ -39,7 +39,7 @@ void ResourceManager::destroySingleton()
 	}
 	else
 	{
-		std::cout << "Waring: ResourceManager mSurfaces did not exist." << std::endl;
+		std::cout << "Waring: ResourceManager mTextures did not exist." << std::endl;
 	}
 	
 	// Delete the singleton.
