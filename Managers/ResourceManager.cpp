@@ -49,7 +49,24 @@ GLuint ResourceManager::loadTexture(const char* texName)
 	if (data != nullptr)
 	{
 		// Generate the texId and return it.
+		// Generate and bind.
 		glGenTextures(1, &texId);
+		glBindTexture(GL_TEXTURE_2D, texId);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data); // Store the data.
+		
+		// 10 mipmap levels.
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 10); 
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		// Some parameters needed for textures.
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// Unbind
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 	else
 	{
