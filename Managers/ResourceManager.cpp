@@ -23,24 +23,8 @@ ResourceManager* ResourceManager::instance = nullptr;
 
 void ResourceManager::destroySingleton()
 {	
-	// Nullcheck.
-	if ( !mTextures.empty() ) // TO-DO: This is not working >:(
-	{
-		// Need to free everything in the hashmap!
-		for (auto keyValuePair : mTextures)
-		{
-			stbi_image_free(keyValuePair.second->texture);
-		}
-			//SDL_FreeSurface(keyValuePair.second);  
-
-		// Clear the hashmap too.
-		mTextures.clear();
-	}
-	else
-	{
-		std::cout << "Waring: ResourceManager mTextures did not exist." << std::endl;
-	}
-	
+	// Clear the hashmap.
+	mTextures.clear();
 	
 	// Delete the singleton.
 	delete instance;
