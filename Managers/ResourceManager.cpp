@@ -31,7 +31,8 @@ void ResourceManager::destroySingleton()
 	{
 		// Need to free everything in the hashmap!
 		for (auto& keyValuePair : mTextures)
-			//SDL_FreeSurface(keyValuePair.second);  TO-DO: Replace
+			delete keyValuePair.second; // TO-DO: Is this right?
+			//SDL_FreeSurface(keyValuePair.second);  
 
 		// Clear the hashmap too.
 		mTextures.clear();
