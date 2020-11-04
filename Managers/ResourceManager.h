@@ -36,7 +36,6 @@ public:
 	};
 	void destroySingleton();
 
-	SDL_Surface* loadSurface(const char *pFilePath); // DEPRICATED.
 	stbi_uc* loadTexture(const char *pFilePath);
 
 public:
@@ -48,7 +47,6 @@ private:
 	ResourceManager();
 private:
 	static ResourceManager* instance;
-	std::unordered_map<std::string, SDL_Surface* > mSurfaces = std::unordered_map<std::string, SDL_Surface* >(); // DEPRICATED.
 	std::unordered_map<std::string, stbi_uc* > mTextures = std::unordered_map<std::string, stbi_uc* >();
 
 	//std::unordered_map<std::string, >;

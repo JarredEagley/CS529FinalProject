@@ -15,8 +15,8 @@
 - End Header --------------------------------------------------------*/
 
 #include "ResourceManager.h"
-#include "SDL_surface.h"
-#include "SDL_image.h"
+//#include "SDL_surface.h"
+//#include "SDL_image.h"
 
 #include "stb_image.h"
 
@@ -27,14 +27,14 @@ ResourceManager* ResourceManager::instance = nullptr;
 void ResourceManager::destroySingleton()
 {	
 	// Nullcheck.
-	if ( &mSurfaces != nullptr)
+	if ( &mTextures != nullptr)
 	{
 		// Need to free everything in the hashmap!
-		for (auto& keyValuePair : mSurfaces) 
-			SDL_FreeSurface(keyValuePair.second);
+		for (auto& keyValuePair : mTextures)
+			//SDL_FreeSurface(keyValuePair.second);  TO-DO: Replace
 
 		// Clear the hashmap too.
-		mSurfaces.clear();
+		mTextures.clear();
 	}
 	else
 	{
@@ -47,6 +47,7 @@ void ResourceManager::destroySingleton()
 
 ResourceManager::ResourceManager() {}
 
+/*
 SDL_Surface* ResourceManager::loadSurface(const char* pFilePath)
 {
 	// Try to fetch from the hash map.
@@ -66,6 +67,7 @@ SDL_Surface* ResourceManager::loadSurface(const char* pFilePath)
 
 	return pSurface;
 }
+*/
 
 stbi_uc* ResourceManager::loadTexture(const char* pFilePath)
 {
