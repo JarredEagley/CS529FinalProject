@@ -21,6 +21,7 @@
 
 GameObjectManager* GameObjectManager::instance = nullptr;
 
+
 void GameObjectManager::destroySingleton()
 {
 	// Ensure mGameObjects has been initialized.
