@@ -40,7 +40,7 @@ public:
 
 	glm::vec3 getPosition() { return mPosition; };
 	float getRotation() { return mRotation; };
-	glm::mat4 getTransformationMatrix() ;
+	glm::mat4 getTransformationMatrix();
 
 	void incrementX(float delta) { mPosition.x += delta; }; // TO-DO: Maybe this should be in cpp...
 	void incrementY(float delta) { mPosition.y += delta; };
@@ -52,8 +52,8 @@ public:
 private:
 	void Transform::buildTransformationMatrix();
 private:
-	glm::vec4 mPosition;
-	float mRotation; // I'm not going to bother supporting 3D rotation.
-	glm::vec3 mScale;
-	glm::mat4 mTransMatrix;
+	glm::vec4 mPosition = glm::vec4(0.0f,0.0f,0.0f,1.0f);
+	float mRotation = 0.0f; // I'm not going to bother supporting 3D rotation.
+	glm::vec3 mScale = glm::vec3(1.0f,1.0f,1.0f);
+	glm::mat4 mTransMatrix = glm::mat4(1.0f);
 };

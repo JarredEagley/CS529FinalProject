@@ -1,0 +1,9 @@
+{
+    "Name": "Camera",
+    "Type": "GameObject",
+    "Components":
+    {
+        "TYPE_TRANSFORM": [10.0, 10.0],
+        "TYPE_CAMERA": ""
+    }
+}

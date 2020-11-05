@@ -4,6 +4,9 @@
     "GameObjects":
     [
         {
+            "Archetype": "Archetypes\\Camera.json"
+        },
+        {
             "Archetype": "Archetypes\\Player.json",
             "Components":
             {

@@ -27,7 +27,8 @@ Transform::Transform() : Component(ComponentTypes::TYPE_TRANSFORM) // Call the c
 	mPosition = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	mRotation = 0;
 	mScale = glm::vec3(1, 1, 1);
-	mTransMatrix = glm::mat4(); // Identity.
+	//mTransMatrix = glm::mat4(1.0f); // Identity.
+	buildTransformationMatrix();
 }
 
 Transform::~Transform()
@@ -77,7 +78,7 @@ void Transform::setY( float y)
 glm::mat4 Transform::getTransformationMatrix() 
 { 
 	// Do I need to nullcheck here? 
-	return mTransMatrix; 
+	return this->mTransMatrix; 
 };
 
 

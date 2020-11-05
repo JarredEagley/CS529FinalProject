@@ -2,6 +2,7 @@
 #include "ComponentTypes.h"
 #include "../GameObject.h"
 #include "Transform.h"
+#include "../Managers/GlobalManager.h"
 
 Camera::Camera() : Component(ComponentTypes::TYPE_CAMERA)
 {
@@ -49,5 +50,7 @@ void Camera::buildTransform()
 
 void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
-
+	std::cout << "DEBUG - Deserializing camera..." << std::endl;
+	// For now, I'll just auto-bind.
+	GlobalManager::getGraphicsManager()->setCurrentCamera(this->mpOwner);
 }
