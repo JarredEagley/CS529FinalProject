@@ -52,7 +52,6 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
 	program->unUse();
-
 }
 
 ShaderProgram* GraphicsManager::loadShader(const char* shaderName)
@@ -75,7 +74,7 @@ ShaderProgram* GraphicsManager::loadShader(const char* shaderName)
 		std::cerr << "Error: Shader program '" << shaderName << "' failed to build." << std::endl;
 		delete mShaderPrograms[shaderName];
 		mShaderPrograms.erase(shaderName);
-		return;
+		return nullptr;
 	}
 
 	return program;
