@@ -28,6 +28,7 @@
 #include "Components/ControllerSlider.h"
 #include "Components/UpDown.h"
 #include "Components/GLRect.h"
+#include "Components/Camera.h"
 
 
 // Init the maxId.
@@ -88,6 +89,9 @@ Component* GameObject::AddComponent(unsigned int Type)
 		break;
 	case (ComponentTypes::TYPE_GLRECT):
 		pNewComponent = new GLRect();
+		break;
+	case (ComponentTypes::TYPE_CAMERA):
+		pNewComponent = new Camera();
 		break;
 	default:
 		return nullptr; // Failed to create component.
