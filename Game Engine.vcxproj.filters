@@ -43,6 +43,9 @@
     <ClCompile Include="Managers\GraphicsManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Components\Camera.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\Sprite.h">
@@ -90,6 +93,9 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Components\Camera.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

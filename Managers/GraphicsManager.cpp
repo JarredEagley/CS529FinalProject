@@ -48,6 +48,7 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	GLRect* pRect = static_cast<GLRect*>(pGO->GetComponent(ComponentTypes::TYPE_GLRECT)); // From game object being drawn
 	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // From game object being drawn
 
+	Transform* pCameraTransform = static_cast<Transform*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 	Camera* pCamera = static_cast<Camera*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
 	if (pCurrentCamera == nullptr)
 		std::cout << "Warning: No camera GameObject currently bound to the GraphicsManager." << std::endl;
@@ -71,9 +72,16 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 
 	// transform
 	unsigned int transformLoc = glGetUniformLocation(program->ProgramID, "transform");
-	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr( pTransform->getTransformationMatrix() ) );
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr( pTransform->getTransformationMatrix() ));
+	// Cam transforms
+	unsigned int viewTransLoc = glGetUniformLocation(program->ProgramID, "viewTrans");
+	glUniformMatrix4fv(viewTransLoc, 1, GL_FALSE, glm::value_ptr( pCameraTransform->getTransformationMatrix() ));
+	unsigned int viewProjLoc = glGetUniformLocation(program->ProgramID, "viewProj");
+	glUniformMatrix4fv(viewProjLoc, 1, GL_FALSE, glm::value_ptr( pCamera->getProjMatrix() ));
+
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // <--- The actual draw call! <---
+
 
 	// unbind
 	glBindTexture(GL_TEXTURE_2D, 0);
