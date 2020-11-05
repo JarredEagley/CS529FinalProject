@@ -11,7 +11,7 @@ uniform mat4 transform;
 
 void main()
 {
-	gl_Position = transform + aPosition;
+	gl_Position = transform * aPosition;
 	ourColor = aColor;
 	ourTexCoord = aTexCoord;
 }
