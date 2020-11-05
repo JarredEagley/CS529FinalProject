@@ -5,6 +5,7 @@
 #include "../Components/ComponentTypes.h"
 #include "../Components/GLRect.h" // May rename to 'GLGraphic' or something in the future... Not sure.
 #include "../Components/Transform.h"
+#include "../Components/Camera.h"
 
 #include "glm/gtc/type_ptr.hpp"
 
@@ -23,7 +24,9 @@ void GraphicsManager::destroySingleton()
 }
 
 GraphicsManager::GraphicsManager()
-{}
+{
+	pCurrentCamera = nullptr;
+}
 
 // Draws every GameObject stored in the GameObjectManger.
 void GraphicsManager::drawAllGameObjects()
@@ -41,10 +44,15 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	// Get the shader we want to use.
 	ShaderProgram* program = loadShader(pGO->shaderName);
 
+	// Components we'll need.
+	GLRect* pRect = static_cast<GLRect*>(pGO->GetComponent(ComponentTypes::TYPE_GLRECT)); // From game object being drawn
+	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // From game object being drawn
+
+	Camera* pCamera = static_cast<Camera*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
+	if (pCurrentCamera == nullptr)
+		std::cout << "Warning: No camera GameObject currently bound to the GraphicsManager." << std::endl;
+
 	// Get the vaoID we want to draw.
-	GLRect* pRect = static_cast<GLRect*>(pGO->GetComponent(ComponentTypes::stringToEnum("TYPE_GLRECT")));
-	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::stringToEnum("TYPE_TRANSFORM")));
-	
 	unsigned int vaoID = pRect->getVAO();
 
 	if (program == nullptr)
@@ -53,17 +61,21 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 		return;
 	}
 
-	// Draw.
+	// --- Draw --- //
+
+	// bind
 	program->Use();
 	glBindVertexArray(vaoID); // Bind the VAO
 	glActiveTexture(GL_TEXTURE0); // Will be needed if I one day one multiple textures on one rect.
 	glBindTexture(GL_TEXTURE_2D, pRect->getTexId()); // Bind the desired texture.
 
+	// transform
 	unsigned int transformLoc = glGetUniformLocation(program->ProgramID, "transform");
 	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr( pTransform->getTransformationMatrix() ) );
 
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // <--- The actual draw call! <---
 
+	// unbind
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
 	program->unUse();
@@ -94,4 +106,3 @@ ShaderProgram* GraphicsManager::loadShader(const char* shaderName)
 
 	return program;
 }
-

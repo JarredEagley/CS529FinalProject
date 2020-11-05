@@ -21,6 +21,8 @@ public:
 
 	ShaderProgram* loadShader(const char* shaderName); // Loads a shader program. Creates the program if it cannot be found.
 
+	void setCurrentCamera(GameObject* pCam) { pCurrentCamera = pCam; }; // Cameras are game objects with a camera component.
+
 public:
 	std::unordered_map<const char*, ShaderProgram*> mShaderPrograms; // shaderName, ShaderProgram*
 	
@@ -28,5 +30,6 @@ private:
 	GraphicsManager();
 private:
 	static GraphicsManager *instance;
+	GameObject* pCurrentCamera;
 };
 
