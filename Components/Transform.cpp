@@ -89,6 +89,68 @@ glm::mat4 Transform::getTransformationMatrix()
 
 void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
+	// Sanity check for transform.
+	if (!inputMemberIt->value.IsObject())
+	{
+		std::cerr << "Warning: Transform component failed to deserialize. Value was not an object." << std::endl;
+		return;
+	}
+
+	// Contains the values for the transform. 
+	rapidjson::GenericObject<true, rapidjson::Value> transObj = inputMemberIt->value.GetObject();
+
+	// Check if it has translation.
+	if (transObj.HasMember("Translation"))
+	{
+		if (transObj["Translation"].IsArray() && transObj["Translation"].GetArray().Size() >= 2 && transObj["Translation"].GetArray()[0].IsNumber())
+		{
+			setX( transObj["Translation"].GetArray()[0].GetFloat() );
+			setX( transObj["Translation"].GetArray()[1].GetFloat() );
+			if (transObj["Translation"].GetArray().Size() > 2)
+				setX( transObj["Translation"].GetArray()[2].GetFloat() ); // Optional Z.
+		}
+		else
+			std::cout << "Warning: Deserialized Transform component's 'Translation' member was incorrectly formatted." << std::endl;
+	}
+	else
+	{
+		std::cout << "Warning: Deserialized Transform component did not contain a Translation member." << std::endl;
+	}
+
+	// Check if it has rotation.
+	if (transObj.HasMember("Rotation"))
+	{
+		if (transObj["Rotation"].IsNumber())
+		{
+			setRotation(transObj["Rotation"].GetFloat());
+		}
+		else
+			std::cout << "Warning: Deserialized Transform component's 'Rotation' member was incorrectly formatted." << std::endl;
+	}
+	else
+	{
+		std::cout << "Warning: Deserialized Transform component did not contain a Rotation member." << std::endl;
+	}
+
+	// Check if it has scale.
+	if (transObj.HasMember("Scale"))
+	{
+		if (transObj["Scale"].IsArray() && transObj["Scale"].GetArray().Size() >= 2 && transObj["Scale"].GetArray()[0].IsNumber())
+		{
+			this->mScale = glm::vec3( // There may be a better way of doing this.
+				transObj["Scale"].GetArray()[0].GetFloat(),
+				transObj["Scale"].GetArray()[1].GetFloat(),
+				1.0f
+			);
+		}
+		else
+			std::cout << "Warning: Deserialized Transform component's 'Scale' member was incorrectly formatted." << std::endl;
+	}
+	else
+	{
+		std::cout << "Warning: Deserialized Transform component did not contain a Scale member." << std::endl;
+	}
+
 	// TO-DO: Redo
 	/*
 	// Sanity check for transform.
