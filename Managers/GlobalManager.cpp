@@ -18,11 +18,6 @@
 
 #include "GlobalManager.h"
 
-#include "FrameRateController.h"
-#include "GameObjectManager.h"
-#include "InputManager.h"
-#include "ResourceManager.h"
-
 #include <iostream>
 
 GlobalManager*			GlobalManager::instance = nullptr;

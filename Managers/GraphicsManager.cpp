@@ -5,6 +5,8 @@
 #include "../Components/ComponentTypes.h"
 #include "../Components/GLRect.h" // May rename to 'GLGraphic' or something in the future... Not sure.
 
+GraphicsManager* GraphicsManager::instance = nullptr;
+
 void GraphicsManager::destroySingleton()
 {
 	// Destroy all shader programs.
@@ -13,7 +15,12 @@ void GraphicsManager::destroySingleton()
 
 	// Clear the hash map.
 	mShaderPrograms.clear();
+
+	delete instance;
 }
+
+GraphicsManager::GraphicsManager()
+{}
 
 // Draws every GameObject stored in the GameObjectManger.
 void GraphicsManager::drawAllGameObjects()

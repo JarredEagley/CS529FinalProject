@@ -10,13 +10,10 @@
 
 //#define GL3_PROTOTYPES 1 // TO-DO What does this do?
 #include <gl/glew.h>
-
 #include <SDL.h>
 
 #include "Managers/GlobalManager.h"
 #include "Components/ComponentTypes.h"
-// TEMP
-#include "Components/GLRect.h"
 
 #include "GameObject.h"
 #include "GameObjectFactory.h" // TO-DO: Singleton?
@@ -24,6 +21,7 @@
 #define STB_IMAGE_IMPLEMENTATION // Couldn't find any good sources on why this is needed
 #include "stb_image.h"
 //#include "glm.hpp"
+
 
 // Tutorial had this global. I thought it was a pretty good idea!
 std::string programName = "CS529 Final Project - Jarred Eagley";

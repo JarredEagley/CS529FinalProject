@@ -46,7 +46,7 @@ public:
 	static InputManager* getInputManager()					{ return pIM->getInstance(); };
 	static ResourceManager* getResourceManager()			{ return pRM->getInstance(); };
 	static Serializer* getSerializer()						{ return pSer->getInstance(); };
-	static GraphicsManager* getGraphicsManager()			{ return pGraphM->getInstance();  };
+	static GraphicsManager* getGraphicsManager()			{ return pGraphM->getInstance(); };
 private:
 	GlobalManager();
 private:
