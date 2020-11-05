@@ -47,22 +47,17 @@ void GLRect::buildVAO()
 
 	glBindBuffer(GL_ARRAY_BUFFER, vboID[1] );
 	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertCol) , &mVertCol[0][0] , GL_STATIC_DRAW );
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0 ); // TO-DO: Right stride?
+	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0 ); 
 	glEnableVertexAttribArray(1);
 	//glBindBuffer(GL_ARRAY_BUFFER, 1);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vboID[2]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertUV) , &mVertUV[0][0] , GL_STATIC_DRAW );
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0); // TO-DO the 2, 4 might be wrong... 
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0); 
 	glEnableVertexAttribArray(2);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
-	// Pass in the texture...
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mTexture.width, mTexture.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, mTexture.texture);
-	//glUniform1i(glGetUniformLocation(shaderTest.ProgramID, "ourTexture"), 0);
-	//shaderTest.setInt("ourTexture", 0);
-
 	// EBO
 	GLuint eboID;
 	glGenBuffers(1, &eboID);
