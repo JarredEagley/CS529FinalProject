@@ -7,7 +7,7 @@ layout (location = 2) in vec2 aTexCoord;
 out vec4 ourColor;
 out vec2 ourTexCoord;
 
-uniform mat4 transform;
+uniform mat4 transform, viewTrans, viewProj, viewOffset;
 
 void main()
 {
