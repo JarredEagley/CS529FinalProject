@@ -7,7 +7,7 @@
         {
             "Translation": [100.0, 100.0],
             "Rotation": 0,
-            "Scale": [10.0, 10.0]
+            "Scale": [50.0, 50.0]
         },
         "TYPE_CONTROLLERSLIDER": 0.3,
         "TYPE_GLRECT":

@@ -22,8 +22,16 @@ void GLRect::Update()
 
 void GLRect::setColor(glm::vec4 rgba)
 {
-	for (auto col : mVertCol)
+	/*
+	for (glm::vec4 col : this->mVertCol)
 		col = rgba;
+	*/
+	for (int i = 0; i < 4; ++i)
+	{
+		mVertCol[i] = rgba;
+	}
+	std::cout << "gonna build me a vao now\n";
+	buildVAO();
 }
 
 
@@ -122,7 +130,8 @@ void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			if (colorArray.Capacity() == 4 && colorArray[0].IsNumber())
 			{
 				// Formatting is ok. Set color.
-				this->setColor(glm::vec4(colorArray[0].GetFloat(), colorArray[1].GetFloat(), colorArray[2].GetFloat(), colorArray[3].GetFloat()));
+				glm::vec4 ourcolor = glm::vec4(colorArray[0].GetFloat(), colorArray[1].GetFloat(), colorArray[2].GetFloat(), colorArray[3].GetFloat());
+				this->setColor(ourcolor);
 			}
 			else
 			{
