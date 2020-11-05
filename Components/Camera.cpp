@@ -13,11 +13,11 @@ Camera::Camera() : Component(ComponentTypes::TYPE_CAMERA)
 	float top = 5.0f;
 	float bottom = 5.0f;
 	projMatrix = glm::mat4(1.0f);
+	offsetTransMatrix = glm::mat4(1.0f);
 }
 
 Camera::~Camera()
 {
-
 }
 
 void Camera::Update()
@@ -44,6 +44,7 @@ void Camera::assignParent(GameObject* pGO)
 void Camera::buildTransform()
 {
 	projMatrix = glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
+	offsetTransMatrix = glm::translate(glm::mat4(0.1f), this->offset);
 }
 
 void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
