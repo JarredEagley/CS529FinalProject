@@ -30,6 +30,6 @@ private:
 	GraphicsManager();
 private:
 	static GraphicsManager *instance;
-	GameObject* pCurrentCamera;
+	GameObject* pCurrentCamera = nullptr;;
 };
 

@@ -2,6 +2,9 @@
 #include "ComponentTypes.h"
 #include "../GameObject.h"
 #include "Transform.h"
+#include "../Managers/GlobalManager.h"
+
+#include "SDL.h" // FOR INPUT, WILL BE MOVED ELSEWHERE.
 
 Camera::Camera() : Component(ComponentTypes::TYPE_CAMERA)
 {
@@ -30,6 +33,16 @@ void Camera::Update()
 		pOwnerTransform->setPosition(pParentTransform->getPosition()); // Just set position. No need to alter camera angle.
 	}
 
+
+	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_W))
+	{
+		std::cout << "DEBUG - Trying to zoom out camera" << std::endl;
+		top = top + 10;
+		bottom = bottom + 10;
+		left = left + 10;
+		right = right + 10;
+	}
+
 	// Handle offset (todo)
 
 	// Build perspective transformation...
@@ -49,5 +62,7 @@ void Camera::buildTransform()
 
 void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
-
+	std::cout << "DEBUG - Deserializing camera..." << std::endl;
+	// For now, I'll just auto-bind.
+	GlobalManager::getGraphicsManager()->setCurrentCamera(this->mpOwner);
 }

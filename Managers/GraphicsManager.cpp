@@ -48,13 +48,24 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	GLRect* pRect = static_cast<GLRect*>(pGO->GetComponent(ComponentTypes::TYPE_GLRECT)); // From game object being drawn
 	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // From game object being drawn
 
-	Transform* pCameraTransform = static_cast<Transform*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-	Camera* pCamera = static_cast<Camera*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
+	// Can't draw something with no graphics component.
+	if (pRect == nullptr)
+		return;
+
+	Transform* pCameraTransform = nullptr;
+	Camera* pCamera = nullptr;
 	if (pCurrentCamera == nullptr)
-		std::cout << "Warning: No camera GameObject currently bound to the GraphicsManager." << std::endl;
+	{
+		std::cout << "Error: No camera GameObject currently bound to the GraphicsManager." << std::endl;
+	}
+	else
+	{
+		pCameraTransform = static_cast<Transform*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		pCamera = static_cast<Camera*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
+	}
 
 	// Get the vaoID we want to draw.
-	unsigned int vaoID = pRect->getVAO();
+	unsigned int vaoID = pRect->getVAO(); // NOT ALL OBJECTS HAVE VAOS.
 
 	if (program == nullptr)
 	{

@@ -19,19 +19,19 @@ public:
 
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 public:
-	glm::vec3 offset;
-	float clipNear;
-	float clipFar;
-	float left;
-	float right;
-	float top;
-	float bottom;
+	glm::vec3 offset = glm::vec3(0,0,0);
+	float clipNear = 0;
+	float clipFar = 0;
+	float left = 0;
+	float right = 0;
+	float top = 0;
+	float bottom = 0;
 private:
 	void buildTransform();
 private:
-	glm::mat4 projMatrix;
-	glm::mat4 offsetTransMatrix;
-	GameObject* mpParentGO; // May eventually be better placed in GameObject...
+	glm::mat4 projMatrix = glm::mat4(1.0f);
+	glm::mat4 offsetTransMatrix = glm::mat4(1.0f);
+	GameObject* mpParentGO = nullptr; // May eventually be better placed in GameObject...
 
 };
 
