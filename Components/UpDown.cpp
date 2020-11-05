@@ -46,9 +46,9 @@ void UpDown::Update()
 	if (nullptr != pT)
 	{
 		if (mGoingUp)
-			pT->incrementY(0.5f * GlobalManager::getFrameRateController()->getFrameTime());
+			pT->incrementY(0.2f * GlobalManager::getFrameRateController()->getFrameTime());
 		else
-			pT->incrementY(-0.5f * GlobalManager::getFrameRateController()->getFrameTime());
+			pT->incrementY(-0.2f * GlobalManager::getFrameRateController()->getFrameTime());
 	}
 }
 

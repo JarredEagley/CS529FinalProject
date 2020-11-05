@@ -49,13 +49,13 @@ void ControllerSlider::Update()
 	
 	// If key press.
 	if (pIM->IsKeyPressed(SDL_SCANCODE_UP))
-		pT->incrementY( -(int)(mspeed * pFRC->getFrameTime()) );
+		pT->incrementY( -(float)(mspeed * pFRC->getFrameTime()) );
 	if (pIM->IsKeyPressed(SDL_SCANCODE_DOWN))
-		pT->incrementY(  (int)(mspeed * pFRC->getFrameTime()) );
+		pT->incrementY(  (float)(mspeed * pFRC->getFrameTime()) );
 	if (pIM->IsKeyPressed(SDL_SCANCODE_LEFT))
-		pT->incrementX( -(int)(mspeed * pFRC->getFrameTime()) );
+		pT->incrementX( -(float)(mspeed * pFRC->getFrameTime()) );
 	if (pIM->IsKeyPressed(SDL_SCANCODE_RIGHT))
-		pT->incrementX(  (int)(mspeed * pFRC->getFrameTime()) );
+		pT->incrementX(  (float)(mspeed * pFRC->getFrameTime()) );
 }
 
 void ControllerSlider::setSpeed(float speed)
