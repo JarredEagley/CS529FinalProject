@@ -11,7 +11,7 @@ uniform mat4 transform, viewTrans, viewProj;//, viewOffset;
 
 void main()
 {
-	gl_Position = transform * aPosition * viewTrans * viewProj;
+	gl_Position = viewProj * viewTrans * transform * aPosition;
 	ourColor = aColor;
 	ourTexCoord = aTexCoord;
 }

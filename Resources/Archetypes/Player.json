@@ -3,7 +3,12 @@
     "Type": "GameObject",
     "Components":
     {
-        "TYPE_TRANSFORM": [200.0, 200.0],
+        "TYPE_TRANSFORM":
+        {
+            "Translation": [100.0, 100.0],
+            "Rotation": 0,
+            "Scale": [10.0, 10.0]
+        },
         "TYPE_CONTROLLERSLIDER": 0.5,
         "TYPE_GLRECT":
         {

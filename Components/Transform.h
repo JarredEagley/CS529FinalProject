@@ -37,6 +37,7 @@ public:
 	void setRotation(float);
 	void setX(float x);
 	void setY(float y);
+	void setZ(float z); // Dangerous, pretty much just for cameras.
 
 	glm::vec3 getPosition() { return mPosition; };
 	float getRotation() { return mRotation; };

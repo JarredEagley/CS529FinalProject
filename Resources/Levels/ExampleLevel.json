@@ -10,7 +10,17 @@
             "Archetype": "Archetypes\\Player.json",
             "Components":
             {
-                "TYPE_TRANSFORM": [1,1]
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [1.0, 1.0],
+                    "Rotation": 0,
+                    "Scale": [10.0, 10.0]
+                },
+                "TYPE_GLRECT": 
+                {
+                    "Texture": "Mars.png",
+                    "Color": [1,1,1,1]
+                }
             }
         }
     ]

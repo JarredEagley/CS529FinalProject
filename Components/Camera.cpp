@@ -9,12 +9,7 @@
 Camera::Camera() : Component(ComponentTypes::TYPE_CAMERA)
 {
 	glm::vec3 offset = glm::vec3(0.0f,0.0f,0.0f);
-	float clipNear = 0.1f;
-	float clipFar = 10.0f;
-	float left = 5.0f;
-	float right = 5.0f;
-	float top = 5.0f;
-	float bottom = 5.0f;
+	
 	projMatrix = glm::mat4(1.0f);
 	offsetTransMatrix = glm::mat4(1.0f);
 }
@@ -33,13 +28,14 @@ void Camera::Update()
 		pOwnerTransform->setPosition(pParentTransform->getPosition()); // Just set position. No need to alter camera angle.
 	}
 
+	std::cout << "DEBUG: bottom is " << bottom << std::endl;
 
 	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_W))
 	{
 		std::cout << "DEBUG - Trying to zoom out camera" << std::endl;
 		top = top + 10;
-		bottom = bottom + 10;
-		left = left + 10;
+		bottom = bottom - 10;
+		left = left - 10;
 		right = right + 10;
 	}
 
@@ -56,8 +52,9 @@ void Camera::assignParent(GameObject* pGO)
 
 void Camera::buildTransform()
 {
-	projMatrix = glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
-	offsetTransMatrix = glm::translate(glm::mat4(0.1f), this->offset);
+	projMatrix =  glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
+	projMatrix = projMatrix * glm::rotate(glm::mat4(1.0f), glm::degrees(80.0f), glm::vec3(1,0,0));
+	offsetTransMatrix = glm::translate(glm::mat4(1.0f), this->offset);
 }
 
 void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
@@ -65,4 +62,7 @@ void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	std::cout << "DEBUG - Deserializing camera..." << std::endl;
 	// For now, I'll just auto-bind.
 	GlobalManager::getGraphicsManager()->setCurrentCamera(this->mpOwner);
+
+	Transform* pTrans = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+	pTrans->setZ(5.0);
 }

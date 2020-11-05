@@ -75,6 +75,11 @@ void Transform::setY( float y)
 	mPosition.y = y;
 }
 
+void Transform::setZ(float z)
+{
+	mPosition.z = z;
+}
+
 glm::mat4 Transform::getTransformationMatrix() 
 { 
 	// Do I need to nullcheck here? 
@@ -84,6 +89,8 @@ glm::mat4 Transform::getTransformationMatrix()
 
 void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
+	// TO-DO: Redo
+	/*
 	// Sanity check for transform.
 	if (!inputMemberIt->value.IsArray() 
 		|| !inputMemberIt->value.GetArray()[0].IsNumber()
@@ -97,4 +104,5 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	//std::cout << "DEBUG: Transform is " << inputMemberIt->value.GetArray()[0].GetFloat() << ", " << inputMemberIt->value.GetArray()[1].GetFloat() << "\n";
 	setX(inputMemberIt->value.GetArray()[0].GetFloat());
 	setY(inputMemberIt->value.GetArray()[1].GetFloat());
+	*/
 }
