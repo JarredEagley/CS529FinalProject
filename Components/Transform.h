@@ -32,6 +32,9 @@ public:
 
 	void Update();
 
+	void setPosition(glm::vec3);
+	void setPosition(glm::vec4);
+	void setRotation(float);
 	void setX(float x);
 	void setY(float y);
 

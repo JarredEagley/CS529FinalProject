@@ -49,6 +49,21 @@ void Transform::buildTransformationMatrix()
 	//std::cout << "built transformation matrix. (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
 }
 
+void Transform::setPosition(glm::vec3 pos)
+{
+	this->mPosition = glm::vec4(pos, 1.0f);
+}
+
+void Transform::setPosition(glm::vec4 pos)
+{
+	this->mPosition = pos;
+}
+
+void Transform::setRotation(float rot)
+{
+	this->mRotation = rot;
+}
+
 void Transform::setX(float x)
 {
 	mPosition.x = x;
