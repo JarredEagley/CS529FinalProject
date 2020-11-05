@@ -37,15 +37,16 @@ ResourceManager::ResourceManager()
 GLuint ResourceManager::loadTexture(const char* texName)
 {
 	// Test if the texture by the given name exists. If it does, return it.
-	if (mTextures.find(texName) == mTextures.end())
+	if (mTextures.find(texName) != mTextures.end())
 		return mTextures[texName];
 
 	// Texture by that name doesn't exist. Load it using stb_image, store in vram, then store its id.
-	std::string texPath = pathTextures + texName;
+	//std::string texPath = pathTextures + texName;
 
 	int width, height, nrChannels;
-	stbi_uc* data = stbi_load(texPath.c_str(), &width, &height, &nrChannels, STBI_rgb_alpha);
-	GLuint texId;
+	//stbi_uc* data = stbi_load(texPath.c_str(), &width, &height, &nrChannels, STBI_rgb_alpha);
+	stbi_uc* data = stbi_load(texName, &width, &height, &nrChannels, STBI_rgb_alpha);
+	GLuint texId = NULL;
 	if (data != nullptr)
 	{
 		// Generate the texId and return it.
@@ -70,10 +71,12 @@ GLuint ResourceManager::loadTexture(const char* texName)
 	}
 	else
 	{
-		std::cout << "Warning: Failed to load image: " << texPath << std::endl;
+		//std::cout << "Warning: Failed to load image: " << texPath << std::endl;
+		std::cout << "Warning: Failed to load image: " << texName << std::endl;
 	}
 	// Clear data.
 	stbi_image_free(data);
+
 
 	// Returns NULL if failed, the generated id if success.
 	return texId;

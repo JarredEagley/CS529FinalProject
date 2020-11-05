@@ -245,12 +245,7 @@ void gameLoop()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// VERTEX TEST
-		//glDrawArrays(GL_TRIANGLES, 0, 6);
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		for (GameObject* pGO : GlobalManager::getGameObjectManager()->mGameObjects)
-		{
-			pGO->Update();
-		}
+		GlobalManager::getGraphicsManager()->drawAllGameObjects();
 
 
 		SDL_GL_SwapWindow(pWindow);

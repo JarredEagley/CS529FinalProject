@@ -64,7 +64,7 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 ShaderProgram* GraphicsManager::loadShader(const char* shaderName)
 {
 	// Test if the shader by the given name exists. If it does, return it.
-	if ( mShaderPrograms.find(shaderName) == mShaderPrograms.end() ) // May have bad efficiency. Could be worth exploring alternate ways of doign this.
+	if ( mShaderPrograms.find(shaderName) != mShaderPrograms.end() ) // May have bad efficiency. Could be worth exploring alternate ways of doign this.
 		return mShaderPrograms[shaderName];
 
 	// Shader by that name doesn't exist. Try to create it.
