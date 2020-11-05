@@ -28,8 +28,6 @@ public:
 
 	void Update();
 	Component* AddComponent(unsigned int Type); // Returns the component which was allocated.
-	// TO-DO: Remove overwriteComponent, I didn't end up needing it.
-	Component* overwriteComponent(unsigned int Type); // Returns the component which was created or overwritten.
 	Component* GetComponent(unsigned int Type); // Because we need to access components. 
 public:
 	std::unordered_map<unsigned int, Component*> mComponents; // TYPE, COMPONENT

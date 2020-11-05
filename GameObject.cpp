@@ -66,24 +66,7 @@ Component* GameObject::AddComponent(unsigned int Type)
 	Component* pNewComponent;
 	pNewComponent = GetComponent(Type); // test if it already exists.
 	if (pNewComponent != nullptr)
-		return pNewComponent;
-
-	// If it doesn't, just run overwriteComponent.
-	return overwriteComponent(Type);
-}
-
-// Adds a component. If the component already exists, it will be overwritten.
-// Also acts as the foundation for addComponent.
-Component* GameObject::overwriteComponent(unsigned int Type) // TO-DO: OverwriteComponent should probably be removed in the future.
-{
-	// If it already exists, delete.
-	Component* pNewComponent;
-	pNewComponent = GetComponent(Type);
-	if (pNewComponent != nullptr)
-	{
-		// Delete the current component of this type, then continue on.
-		delete pNewComponent;
-	}
+		return pNewComponent; // If it does, return it.
 
 	// Component doesn't exist yet. Create it.
 	switch (Type)
@@ -121,6 +104,7 @@ Component* GameObject::overwriteComponent(unsigned int Type) // TO-DO: Overwrite
 	// Return the component.
 	return pNewComponent;
 }
+
 
 Component* GameObject::GetComponent(unsigned int Type)
 {
