@@ -38,6 +38,14 @@ void Camera::Update()
 		left = left - 10;
 		right = right + 10;
 	}
+	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_S))
+	{
+		std::cout << "DEBUG - Trying to zoom in camera" << std::endl;
+		top = top - 10;
+		bottom = bottom + 10;
+		left = left + 10;
+		right = right - 10;
+	}
 
 	// Handle offset (todo)
 
