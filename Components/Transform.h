@@ -37,7 +37,7 @@ public:
 
 	glm::vec3 getPosition() { return mPosition; };
 	float getRotation() { return mRotation; };
-	glm::mat4 getTransformationMatrix() { return mTransMatrix; };
+	glm::mat4 getTransformationMatrix() ;
 
 	void incrementX(float delta) { mPosition.x += delta; }; // TO-DO: Maybe this should be in cpp...
 	void incrementY(float delta) { mPosition.y += delta; };

@@ -4,6 +4,9 @@
 #include "GlobalManager.h"
 #include "../Components/ComponentTypes.h"
 #include "../Components/GLRect.h" // May rename to 'GLGraphic' or something in the future... Not sure.
+#include "../Components/Transform.h"
+
+#include "glm/gtc/type_ptr.hpp"
 
 GraphicsManager* GraphicsManager::instance = nullptr;
 
@@ -40,6 +43,8 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 
 	// Get the vaoID we want to draw.
 	GLRect* pRect = static_cast<GLRect*>(pGO->GetComponent(ComponentTypes::stringToEnum("TYPE_GLRECT")));
+	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::stringToEnum("TYPE_TRANSFORM")));
+	
 	unsigned int vaoID = pRect->getVAO();
 
 	if (program == nullptr)
@@ -53,6 +58,9 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	glBindVertexArray(vaoID); // Bind the VAO
 	glActiveTexture(GL_TEXTURE0); // Will be needed if I one day one multiple textures on one rect.
 	glBindTexture(GL_TEXTURE_2D, pRect->getTexId()); // Bind the desired texture.
+
+	unsigned int transformLoc = glGetUniformLocation(program->ProgramID, "transform");
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr( pTransform->getTransformationMatrix() ) );
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

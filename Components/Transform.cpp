@@ -24,7 +24,7 @@
 Transform::Transform() : Component(ComponentTypes::TYPE_TRANSFORM) // Call the constructor of the base class with the correct type.
 {
 	//mPositionX = mPositionY = 0.0f;
-	mPosition = glm::vec4(0, 0, 0, 1);
+	mPosition = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	mRotation = 0;
 	mScale = glm::vec3(1, 1, 1);
 	mTransMatrix = glm::mat4(); // Identity.
@@ -41,13 +41,13 @@ void Transform::Update()
 void Transform::buildTransformationMatrix()
 {
 	// Build the transformations.
-	glm::mat4 rot = glm::rotate( glm::mat4(),mRotation, glm::vec3(0,0,1) );
-	glm::mat4 trans = glm::translate( glm::mat4(), glm::vec3(mPosition) );
-	glm::mat4 scale = glm::scale( glm::mat4(), mScale );
-	// Build the transformation matrix.
-	mTransMatrix = glm::mat4() * trans * rot * scale;
-}
+	mTransMatrix = glm::mat4(1.0f);
+	mTransMatrix = glm::translate(mTransMatrix, glm::vec3(mPosition));
+	mTransMatrix = glm::rotate(mTransMatrix, glm::radians(mRotation), glm::vec3(0,0,1));
+	mTransMatrix = glm::scale(mTransMatrix, mScale);
 
+	//std::cout << "built transformation matrix. (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
+}
 
 void Transform::setX(float x)
 {
@@ -58,6 +58,12 @@ void Transform::setY( float y)
 {
 	mPosition.y = y;
 }
+
+glm::mat4 Transform::getTransformationMatrix() 
+{ 
+	// Do I need to nullcheck here? 
+	return mTransMatrix; 
+};
 
 
 void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)

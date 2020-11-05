@@ -222,7 +222,6 @@ void gameLoop()
 	while (true == appIsRunning)
 	{
 		GlobalManager::getFrameRateController()->frameStart();
-		// TO-DO: Will  need to do frameStart here after I've got openGL running.
 
 		// Don't want this queue to fill up. Never put anything before it.
 		SDL_Event e;
@@ -234,10 +233,11 @@ void gameLoop()
 				appIsRunning = false;
 			}
 		} // Done handling events.
+		GlobalManager::getInputManager()->Update();
 
 		// Do updates.
-		// ...
-
+		for (auto pGO : GlobalManager::getGameObjectManager()->mGameObjects)
+			pGO->Update();
 
 		// Clear the buffer.
 		// The color I chose is just for fun.

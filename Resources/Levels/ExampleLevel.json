@@ -7,7 +7,7 @@
             "Archetype": "Archetypes\\Player.json",
             "Components":
             {
-                "TYPE_TRANSFORM": [100,100]
+                "TYPE_TRANSFORM": [1,1]
             }
         }
     ]
