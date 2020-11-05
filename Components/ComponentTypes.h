@@ -32,6 +32,7 @@ public:
 		if (strcmp(str, "TYPE_CONTROLLERSLIDER") == 0)	return TYPE_CONTROLLERSLIDER;
 		if (strcmp(str, "TYPE_UPDOWN") == 0)			return TYPE_UPDOWN;
 		if (strcmp(str, "TYPE_GLRECT") == 0)			return TYPE_GLRECT;
+		if (strcmp(str, "TYPE_CAMERA") == 0)			return TYPE_CAMERA;
 
 		return TYPE_UNDEFINED;
 	}
@@ -45,6 +46,7 @@ public:
 		TYPE_CONTROLLERSLIDER,
 		TYPE_UPDOWN,
 		TYPE_GLRECT,
+		TYPE_CAMERA,
 	};
 private:
 	// No private methods.

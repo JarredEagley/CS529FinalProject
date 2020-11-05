@@ -46,7 +46,7 @@ void ControllerSlider::Update()
 
 	InputManager* pIM = GlobalManager::getInputManager();
 	FrameRateController* pFRC = GlobalManager::getFrameRateController();
-
+	
 	// If key press.
 	if (pIM->IsKeyPressed(SDL_SCANCODE_UP))
 		pT->incrementY( -(int)(mspeed * pFRC->getFrameTime()) );
