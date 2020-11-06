@@ -28,24 +28,32 @@ void Camera::Update()
 		pOwnerTransform->setPosition(pParentTransform->getPosition()); // Just set position. No need to alter camera angle.
 	}
 
-	std::cout << "DEBUG: bottom is " << bottom << std::endl;
-
-	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_W))
+	// Just for fun, remove me in the future.
+	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_S))
 	{
-		std::cout << "DEBUG - Trying to zoom out camera" << std::endl;
 		top = top + 10;
 		bottom = bottom - 10;
 		left = left - 10;
 		right = right + 10;
 	}
-	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_S))
+	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_W))
 	{
-		std::cout << "DEBUG - Trying to zoom in camera" << std::endl;
 		top = top - 10;
 		bottom = bottom + 10;
 		left = left + 10;
 		right = right - 10;
 	}
+	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_A))
+	{
+		left = left + 10;
+		right = right + 10;
+	}
+	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_D))
+	{
+		left = left - 10;
+		right = right - 10;
+	}
+
 
 	// Handle offset (todo)
 
