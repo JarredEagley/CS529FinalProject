@@ -24,7 +24,7 @@ public:
 	void setCurrentCamera(GameObject* pCam) { pCurrentCamera = pCam; }; // Cameras are game objects with a camera component.
 
 public:
-	std::unordered_map<const char*, ShaderProgram*> mShaderPrograms; // shaderName, ShaderProgram*
+	static std::unordered_map<const char*, ShaderProgram*> mShaderPrograms; // shaderName, ShaderProgram*
 	
 private:
 	GraphicsManager();

@@ -10,6 +10,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 GraphicsManager* GraphicsManager::instance = nullptr;
+std::unordered_map<const char*, ShaderProgram*> GraphicsManager::mShaderPrograms;
 
 void GraphicsManager::destroySingleton()
 {

@@ -46,5 +46,5 @@ private:
 	ResourceManager();
 private:
 	static ResourceManager* instance;
-	std::unordered_map<const char*, GLuint> mTextures; // textureName, texId
+	static std::unordered_map<const char*, GLuint> mTextures; // textureName, texId
 };

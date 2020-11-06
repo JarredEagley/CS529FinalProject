@@ -20,9 +20,12 @@
 #include "stb_image.h"
 
 ResourceManager* ResourceManager::instance = nullptr;
+std::unordered_map<const char*, GLuint> ResourceManager::mTextures;
 
 void ResourceManager::destroySingleton()
 {	
+	// TO-DO: Strings are char*, do I need to delete them?
+
 	// Clear the hashmap.
 	mTextures.clear();
 	
