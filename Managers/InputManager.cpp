@@ -16,7 +16,6 @@
 
 #include "inputmanager.h"
 #include "memory.h"
-#include "SDL_keyboard.h"
 
 InputManager* InputManager::instance = nullptr;
 
@@ -38,41 +37,87 @@ void InputManager::Update()
 	// Save the previous state.
 	memcpy(mPreviousState, mCurrentState, 512 * sizeof(Uint8));
 
-	int numberOfFetched = 0;
-	const Uint8* CurrentKeyStates = SDL_GetKeyboardState(&numberOfFetched);
+	int numberOfFetched_key = 0;
 
-	if (numberOfFetched > 512)
-		numberOfFetched = 512;
+	const Uint8* currentKeyStates = SDL_GetKeyboardState(&numberOfFetched_key);
 
-	memcpy(mCurrentState, CurrentKeyStates, numberOfFetched * sizeof(Uint8));
+	//const Uint32 currentMouseStates = SDL_GetMouseState(&mouseX, &mouseY);
+
+	if (numberOfFetched_key > 512)
+		numberOfFetched_key = 512;
+
+	memcpy(mCurrentState, currentKeyStates, numberOfFetched_key * sizeof(Uint8));
 }
 
-bool InputManager::IsKeyPressed(unsigned int KeyScanCode)
+bool InputManager::IsKeyPressed(unsigned int keyScanCode)
 {
-	if (KeyScanCode >= 512)
+	if (keyScanCode >= 512)
 		return false;
 
-	if (mCurrentState[KeyScanCode])
+	if (mCurrentState[keyScanCode])
 		return true;
 	return false;
 }
 
-bool InputManager::IsKeyTriggered(unsigned int KeyScanCode)
+bool InputManager::IsKeyTriggered(unsigned int keyScanCode)
 {
-	if (KeyScanCode >= 512)
+	if (keyScanCode >= 512)
 		return false;
 
-	if (mCurrentState[KeyScanCode] && !mPreviousState[KeyScanCode])
+	if (mCurrentState[keyScanCode] && !mPreviousState[keyScanCode])
 		return true;
 	return false;
 }
 
-bool InputManager::IsKeyReleased(unsigned int KeyScanCode)
+bool InputManager::IsKeyReleased(unsigned int keyScanCode)
 {
-	if (KeyScanCode >= 512)
+	if (keyScanCode >= 512)
 		return false;
 
-	if (!mCurrentState[KeyScanCode] && mPreviousState[KeyScanCode])
+	if (!mCurrentState[keyScanCode] && mPreviousState[keyScanCode])
 		return true;
 	return false;
+}
+
+// --- MOUSE --- //
+
+void InputManager::getMousePosition(int& posX, int& posY) const
+{
+
+}
+
+void InputManager::getMouseDiff(int& diffX, int& diffY) const
+{
+
+}
+// Mouse buttons
+bool InputManager::isMouseButtonTriggered(const Uint32 button) const
+{
+
+}
+
+bool InputManager::isMouseButtonPressed(const Uint32 button) const
+{
+
+}
+
+bool InputManager::isMouseButtonReleased(const Uint32 button) const
+{
+
+}
+
+// Mouse wheel
+void InputManager::recieveEvent(const SDL_Event& event)
+{
+
+}
+
+int InputManager::getWheelX() const
+{
+
+}
+
+int InputManager::getWheelY() const
+{
+
 }

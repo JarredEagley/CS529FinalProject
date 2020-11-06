@@ -53,6 +53,11 @@ void Camera::Update()
 		left = left - 10;
 		right = right - 10;
 	}
+	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_BUTTON_LEFT))
+	{
+		std::cout << "DEBUG - BUTTON LEFT" << std::endl;
+		left = left + 30;
+	}
 
 
 	// Handle offset (todo)

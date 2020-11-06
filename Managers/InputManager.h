@@ -18,6 +18,9 @@
 #pragma once
 
 #include "SDL_stdinc.h"
+#include "SDL_keyboard.h"
+#include "SDL_mouse.h"
+#include "SDL_events.h"
 
 class InputManager
 {
@@ -32,9 +35,26 @@ public:
 
 	void Update();
 
-	bool IsKeyPressed(unsigned int KeyScanCode);
-	bool IsKeyTriggered(unsigned int KeyScanCode);
-	bool IsKeyReleased(unsigned int KeyScanCode);
+	// Keyboard
+	bool IsKeyTriggered(unsigned int keyScanCode);
+	bool IsKeyPressed(unsigned int keyScanCode);
+	bool IsKeyReleased(unsigned int keyScanCode);
+
+	
+	// Mouse position
+	void getMousePosition(int& posX, int& posY) const;
+	void getMouseDiff(int& diffX, int& diffY) const;
+	// Mouse buttons
+	bool isMouseButtonTriggered(const Uint32 button) const;
+	bool isMouseButtonPressed(const Uint32 button) const;
+	bool isMouseButtonReleased(const Uint32 button) const;
+
+	// Mouse wheel
+	void recieveEvent(const SDL_Event& event); // Used to recieve SDL_MouseWheelEvent
+	int getWheelX() const;
+	int getWheelY() const;
+
+
 public:
 	// No public variables.
 private:
@@ -43,4 +63,6 @@ private:
 	static InputManager* instance;
 	Uint8 mCurrentState[512];
 	Uint8 mPreviousState[512];
+	int mouseX;
+	int mouseY;
 };
