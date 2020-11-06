@@ -38,7 +38,7 @@ public:
 
 	// TO-DO: perhaps make game objects private and use getter and setter methods...
 public:
-	std::vector<GameObject*> mGameObjects = std::vector<GameObject*>(); // Vector of game objects; may become an unordered map in the future.
+	static std::vector<GameObject*> mGameObjects; // Vector of game objects; may become an unordered map in the future.
 private:
 	GameObjectManager(); // Constructor.
 private:

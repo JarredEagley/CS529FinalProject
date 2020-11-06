@@ -20,27 +20,21 @@
 #include <iostream>
 
 GameObjectManager* GameObjectManager::instance = nullptr;
+std::vector<GameObject*> GameObjectManager::mGameObjects;
 
 void GameObjectManager::destroySingleton()
 {
-	// Ensure mGameObjects has been initialized.
-	// TO-DO: This feels like a hack. Is there a better way to do this?
-	if (&mGameObjects != nullptr)
-	{
-		// Delete the game object instances.
-		for (auto pGO : mGameObjects)
-			delete pGO;
-		// Clear the vector.
-		mGameObjects.clear();
-	}
-	else
-	{
-		std::cout << "Warning: GameObject vector was nullptr" << std::endl;
-	}
+	// Delete the game object instances.
+	for (auto pGO : mGameObjects)
+		delete pGO;
+	// Clear the vector.
+	mGameObjects.clear();
+		
 	// Delete the singleton.
 	delete instance;
 }
 
 GameObjectManager::GameObjectManager()
 {
+	
 }
