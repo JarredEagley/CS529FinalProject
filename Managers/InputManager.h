@@ -50,7 +50,7 @@ public:
 	bool isMouseButtonReleased(const Uint32 buttonScanCode) const;
 
 	// Mouse wheel
-	void recieveEvent(const SDL_Event& event); // Used to recieve SDL_MouseWheelEvent
+	void recieveEvent(const SDL_Event& mouseEvent); // Used to recieve SDL_MouseWheelEvent
 	int getWheelX() const;
 	int getWheelY() const;
 

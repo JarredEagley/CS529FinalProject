@@ -17,6 +17,8 @@
 #include "inputmanager.h"
 #include "memory.h"
 
+#include <iostream>
+
 InputManager* InputManager::instance = nullptr;
 
 void InputManager::destroySingleton()
@@ -127,17 +129,11 @@ bool InputManager::isMouseButtonReleased(const Uint32 buttonScanCode) const
 }
 
 // Mouse wheel
-void InputManager::recieveEvent(const SDL_Event& event)
+void InputManager::recieveEvent(const SDL_Event& mouseEvent)
 {
-	switch (event.type)
-	{
-	case SDL_MOUSEWHEEL:
-	{
-		mouseWheelX = event.wheel.x;
-		mouseWheelY = event.wheel.y;
-		break;
-	}
-	}
+	// I removed the check for type MouseWheel because that's done in the game loop.
+	this->mouseWheelX = mouseEvent.wheel.x;
+	this->mouseWheelY = mouseEvent.wheel.y;
 }
 
 int InputManager::getWheelX() const

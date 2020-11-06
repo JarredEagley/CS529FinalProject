@@ -223,6 +223,9 @@ void gameLoop()
 	{
 		GlobalManager::getFrameRateController()->frameStart();
 
+		// Handle inputs...
+		GlobalManager::getInputManager()->Update(); 
+
 		// Don't want this queue to fill up. Never put anything before it.
 		SDL_Event e;
 		while (SDL_PollEvent(&e) != 0)
@@ -232,8 +235,11 @@ void gameLoop()
 			{
 				appIsRunning = false;
 			}
+			if (e.type == SDL_MOUSEWHEEL)
+			{
+				GlobalManager::getInputManager()->recieveEvent(e);
+			}
 		} // Done handling events.
-		GlobalManager::getInputManager()->Update();
 
 		// Do updates.
 		for (auto pGO : GlobalManager::getGameObjectManager()->mGameObjects)
