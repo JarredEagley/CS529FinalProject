@@ -60,10 +60,13 @@ void Camera::Update()
 		left = left + GlobalManager::getInputManager()->getWheelY();
 	}
 
+	// Handle offset.
+	int mX, mY;
+	GlobalManager::getInputManager()->getMousePosition(mX, mY);
+	this->offset.x = ( -mX + (GlobalManager::getGraphicsManager()->windowWidth/2.0f) ) / 100.0f; // TO-DO: Right idea, will need scaling factor.
+	this->offset.y = ( -mY + (GlobalManager::getGraphicsManager()->windowHeight/2.0f) ) / 100.0f;
 
-	// Handle offset (todo)
-
-	// Build perspective transformation...
+		// Build perspective transformation...
 	buildTransform();
 }
 
@@ -74,9 +77,12 @@ void Camera::assignParent(GameObject* pGO)
 
 void Camera::buildTransform()
 {
+	// TO-DO: Must account for transform.
 	projMatrix =  glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
 	projMatrix = projMatrix * glm::rotate(glm::mat4(1.0f), glm::degrees(80.0f), glm::vec3(1,0,0));
+
 	offsetTransMatrix = glm::translate(glm::mat4(1.0f), this->offset);
+	projMatrix = projMatrix * offsetTransMatrix;
 }
 
 void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)

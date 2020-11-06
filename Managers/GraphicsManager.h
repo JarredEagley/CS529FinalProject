@@ -25,7 +25,8 @@ public:
 
 public:
 	static std::unordered_map<const char*, ShaderProgram*> mShaderPrograms; // shaderName, ShaderProgram*
-	
+	int windowWidth, windowHeight;
+
 private:
 	GraphicsManager();
 private:

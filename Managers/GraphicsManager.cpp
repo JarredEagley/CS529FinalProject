@@ -91,7 +91,6 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	unsigned int viewProjLoc = glGetUniformLocation(program->ProgramID, "viewProj");
 	glUniformMatrix4fv(viewProjLoc, 1, GL_FALSE, glm::value_ptr( pCamera->getProjMatrix() ));
 
-
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // <--- The actual draw call! <---
 
 

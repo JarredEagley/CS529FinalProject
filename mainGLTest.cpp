@@ -64,7 +64,11 @@ bool Init()
 
 	
 	// Create our window.
-	pWindow = SDL_CreateWindow(programName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 900, 800, SDL_WINDOW_OPENGL);
+	GlobalManager::getGraphicsManager()->windowWidth = 1000;
+	GlobalManager::getGraphicsManager()->windowHeight= 800;
+
+	pWindow = SDL_CreateWindow(programName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+		GlobalManager::getGraphicsManager()->windowWidth, GlobalManager::getGraphicsManager()->windowHeight, SDL_WINDOW_OPENGL);
 
 	// Nullcheck the window.
 	if (!pWindow)
