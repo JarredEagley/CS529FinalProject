@@ -30,7 +30,6 @@ void GLRect::setColor(glm::vec4 rgba)
 	{
 		mVertCol[i] = rgba;
 	}
-	std::cout << "gonna build me a vao now\n";
 	buildVAO();
 }
 
