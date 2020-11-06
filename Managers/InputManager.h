@@ -45,9 +45,9 @@ public:
 	void getMousePosition(int& posX, int& posY) const;
 	void getMouseDiff(int& diffX, int& diffY) const;
 	// Mouse buttons
-	bool isMouseButtonTriggered(const Uint32 button) const;
-	bool isMouseButtonPressed(const Uint32 button) const;
-	bool isMouseButtonReleased(const Uint32 button) const;
+	bool isMouseButtonTriggered(const Uint32 buttonScanCode) const;
+	bool isMouseButtonPressed(const Uint32 buttonScanCode) const;
+	bool isMouseButtonReleased(const Uint32 buttonScanCode) const;
 
 	// Mouse wheel
 	void recieveEvent(const SDL_Event& event); // Used to recieve SDL_MouseWheelEvent
@@ -63,6 +63,14 @@ private:
 	static InputManager* instance;
 	Uint8 mCurrentState[512];
 	Uint8 mPreviousState[512];
-	int mouseX;
-	int mouseY;
+	// Mouse
+	int mousePosXCurr;
+	int mousePosYCurr;
+	int mousePosXPrev;
+	int mousePosYPrev;
+	Uint32 currentMouseState;
+	Uint32 previousMouseState;
+	Sint32 mouseWheelX;
+	Sint32 mouseWheelY;
+
 };

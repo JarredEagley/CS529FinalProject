@@ -24,16 +24,21 @@ void InputManager::destroySingleton()
 	delete instance;
 }
 
-
 InputManager::InputManager()
 {
 	// Destination, value, # of bytes. NO ALLOCATION OCCURS.
 	memset(mCurrentState, 0, 512 * sizeof(Uint8));
 	memset(mPreviousState, 0, 512 * sizeof(Uint8));
+
+	// Initialize some stuff for the mouse.
+	previousMouseState = mousePosYPrev = mousePosXPrev = 0;
+	currentMouseState = SDL_GetMouseState(&mousePosXCurr, &mousePosYCurr);
+	mouseWheelX = mouseWheelY = 0;
 }
 
 void InputManager::Update()
 {
+	// --- Update Keyboard --- //
 	// Save the previous state.
 	memcpy(mPreviousState, mCurrentState, 512 * sizeof(Uint8));
 
@@ -41,12 +46,20 @@ void InputManager::Update()
 
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(&numberOfFetched_key);
 
-	//const Uint32 currentMouseStates = SDL_GetMouseState(&mouseX, &mouseY);
-
-	if (numberOfFetched_key > 512)
+		if (numberOfFetched_key > 512)
 		numberOfFetched_key = 512;
 
 	memcpy(mCurrentState, currentKeyStates, numberOfFetched_key * sizeof(Uint8));
+
+	// --- Update Mouse --- //
+	mousePosXPrev = mousePosXCurr;
+	mousePosYPrev = mousePosYCurr;
+	previousMouseState = currentMouseState;
+
+	currentMouseState = SDL_GetMouseState(&mousePosXCurr, &mousePosYCurr);
+
+	mouseWheelX = 0;
+	mouseWheelY = 0;
 }
 
 bool InputManager::IsKeyPressed(unsigned int keyScanCode)
@@ -80,44 +93,59 @@ bool InputManager::IsKeyReleased(unsigned int keyScanCode)
 }
 
 // --- MOUSE --- //
+// Useful tutorial:
+// http://www.falukdevelop.com/2016/09/07/sdl2_mouse_implementation/
 
 void InputManager::getMousePosition(int& posX, int& posY) const
 {
-
+	posX = mousePosXCurr;
+	posY = mousePosYCurr;
 }
 
 void InputManager::getMouseDiff(int& diffX, int& diffY) const
 {
-
+	diffX = mousePosXCurr - mousePosXPrev;
+	diffY = mousePosYCurr - mousePosYPrev;
 }
+
 // Mouse buttons
-bool InputManager::isMouseButtonTriggered(const Uint32 button) const
+bool InputManager::isMouseButtonTriggered(const Uint32 buttonScanCode) const
 {
-
+	return ((SDL_BUTTON(buttonScanCode) & currentMouseState) != 0) 
+		&& ((SDL_BUTTON(buttonScanCode) & previousMouseState) == 0);
 }
 
-bool InputManager::isMouseButtonPressed(const Uint32 button) const
+bool InputManager::isMouseButtonPressed(const Uint32 buttonScanCode) const
 {
-
+	return (SDL_BUTTON(buttonScanCode) & currentMouseState) != 0;
 }
 
-bool InputManager::isMouseButtonReleased(const Uint32 button) const
+bool InputManager::isMouseButtonReleased(const Uint32 buttonScanCode) const
 {
-
+	return ((SDL_BUTTON(buttonScanCode) & currentMouseState) == 0)
+		&& ((SDL_BUTTON(buttonScanCode) & previousMouseState) != 0);
 }
 
 // Mouse wheel
 void InputManager::recieveEvent(const SDL_Event& event)
 {
-
+	switch (event.type)
+	{
+	case SDL_MOUSEWHEEL:
+	{
+		mouseWheelX = event.wheel.x;
+		mouseWheelY = event.wheel.y;
+		break;
+	}
+	}
 }
 
 int InputManager::getWheelX() const
 {
-
+	return mouseWheelX;
 }
 
 int InputManager::getWheelY() const
 {
-
+	return mouseWheelY;
 }

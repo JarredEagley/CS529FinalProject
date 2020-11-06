@@ -53,7 +53,7 @@ void Camera::Update()
 		left = left - 10;
 		right = right - 10;
 	}
-	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_BUTTON_LEFT))
+	if (GlobalManager::getInputManager()->isMouseButtonPressed(SDL_MOUSEBUTTONDOWN))
 	{
 		std::cout << "DEBUG - BUTTON LEFT" << std::endl;
 		left = left + 30;
