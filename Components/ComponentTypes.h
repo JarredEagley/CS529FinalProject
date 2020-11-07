@@ -28,7 +28,6 @@ public:
 	{
 		// Wish I could do this with a switch case block it would be so much prettier.
 		if (strcmp(str, "TYPE_TRANSFORM") == 0)			return TYPE_TRANSFORM;
-		if (strcmp(str, "TYPE_SPRITE") == 0)			return TYPE_SPRITE;
 		if (strcmp(str, "TYPE_CONTROLLERSLIDER") == 0)	return TYPE_CONTROLLERSLIDER;
 		if (strcmp(str, "TYPE_UPDOWN") == 0)			return TYPE_UPDOWN;
 		if (strcmp(str, "TYPE_GLRECT") == 0)			return TYPE_GLRECT;
@@ -42,7 +41,6 @@ public:
 	{
 		TYPE_UNDEFINED,
 		TYPE_TRANSFORM,
-		TYPE_SPRITE,
 		TYPE_CONTROLLERSLIDER,
 		TYPE_UPDOWN,
 		TYPE_GLRECT,
