@@ -56,7 +56,6 @@ void Camera::assignParent(GameObject* pGO)
 
 void Camera::buildTransform()
 {
-	// TO-DO: Must account for transform.
 	// Get transform. 
 	glm::mat4 camTransform = glm::mat4(1.0f);
 	Transform* pTrans = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));

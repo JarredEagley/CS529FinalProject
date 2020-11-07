@@ -171,8 +171,22 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	{
 		if (transObj["Parent"].IsString())
 		{
-			//GlobalManager::getGameObjectManager()->mGameObjects
-		}
+			GameObjectManager* pGOM = GlobalManager::getGameObjectManager();
+			std::string parentName = transObj["Parent"].GetString();
+
+			// Does a GameObject by that name exist?
+			if (pGOM->mGameObjects.find(parentName) != pGOM->mGameObjects.end())
+			{
+				GameObject* pParentGO = pGOM->mGameObjects["Parent"];
+				pParentTransform = static_cast<Transform*>(pParentGO->AddComponent(ComponentTypes::TYPE_TRANSFORM));
+				if (pParentTransform == nullptr)
+					std::cout << "Warning: GameObject by the name '" << parentName << "' did not have a transform component." << std::endl;
+			}
+			else
+			{
+				std::cout << "Warning: No GameObject by the name '" << parentName << "', transform parenting failed." << std::endl;
+			}
+  		}
 		else
 			std::cout << "Warning: Deserialized Transform component's 'Parent' member was incorrectly formatted." << std::endl;
 	}
