@@ -39,6 +39,9 @@ public:
 	void setY(float y);
 	void setZ(float z); // Dangerous, pretty much just for cameras.
 
+	void setParent(GameObject* pGO);
+	void setParent(Transform* pTran);
+
 	glm::vec3 getPosition() { return mPosition; };
 	float getRotation() { return mRotation; };
 	glm::mat4 getTransformationMatrix();
@@ -57,4 +60,6 @@ private:
 	float mRotation = 0.0f; // I'm not going to bother supporting 3D rotation.
 	glm::vec3 mScale = glm::vec3(1.0f,1.0f,1.0f);
 	glm::mat4 mTransMatrix = glm::mat4(1.0f);
+	
+	Transform* pParentTransform; // If a parent is present then all transformations will be based on the parent's transformation matrix.
 };

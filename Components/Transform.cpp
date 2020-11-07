@@ -20,6 +20,7 @@
 #include "ComponentTypes.h"
 #include <iostream>
 #include "rapidjson/rapidjson.h"
+#include "../GameObject.h"
 
 Transform::Transform() : Component(ComponentTypes::TYPE_TRANSFORM) // Call the constructor of the base class with the correct type.
 {
@@ -29,6 +30,7 @@ Transform::Transform() : Component(ComponentTypes::TYPE_TRANSFORM) // Call the c
 	mScale = glm::vec3(1, 1, 1);
 	//mTransMatrix = glm::mat4(1.0f); // Identity.
 	buildTransformationMatrix();
+	pParentTransform = nullptr;
 }
 
 Transform::~Transform()
@@ -79,6 +81,18 @@ void Transform::setZ(float z)
 {
 	mPosition.z = z;
 }
+
+void Transform::setParent(GameObject* pGO)
+{
+	pParentTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+}
+
+void Transform::setParent(Transform* pTran)
+{
+	pParentTransform = pTran;
+}
+
+
 
 glm::mat4 Transform::getTransformationMatrix() 
 { 
@@ -151,20 +165,6 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		std::cout << "Warning: Deserialized Transform component did not contain a Scale member." << std::endl;
 	}
 
-	// TO-DO: Redo
-	/*
-	// Sanity check for transform.
-	if (!inputMemberIt->value.IsArray() 
-		|| !inputMemberIt->value.GetArray()[0].IsNumber()
-		|| !inputMemberIt->value.GetArray()[1].IsNumber() )
-	{
-		std::cerr << "Warning: Transform component failed to deserialize. Value was not an array of floats." << std::endl;
-		return;
-	}
+	// Check if it has a parent GameObject.
 
-	// Transform stored as an array of floats.
-	//std::cout << "DEBUG: Transform is " << inputMemberIt->value.GetArray()[0].GetFloat() << ", " << inputMemberIt->value.GetArray()[1].GetFloat() << "\n";
-	setX(inputMemberIt->value.GetArray()[0].GetFloat());
-	setY(inputMemberIt->value.GetArray()[1].GetFloat());
-	*/
 }

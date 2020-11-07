@@ -1,0 +1,19 @@
+{
+    "Name": "Planet",
+    "Type": "GameObject",
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+            "Translation": [-200.0, -200.0],
+            "Rotation": 0,
+            "Scale": [100.0, 100.0]
+        },
+        "TYPE_CONTROLLERSLIDER": 0.0,
+        "TYPE_GLRECT":
+        {
+            "Texture": "Mars.png",
+            "Color": [1.0, 1.0, 1.0, 1.0]
+        }
+    }
+}
