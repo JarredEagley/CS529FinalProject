@@ -30,16 +30,19 @@
 #include <iostream>
 #include <fstream>
 
-#include "GameObject.h"
-#include "Components/ComponentTypes.h"
-#include "Managers/GlobalManager.h"
-#include "Components/Component.h"
+#include "../GameObject.h"
+#include "../Components/ComponentTypes.h"
+#include "../Managers/GlobalManager.h"
+#include "../Components/Component.h"
 
 #include "rapidjson/document.h"
 #include "rapidjson/istreamwrapper.h"
 
+GameObjectFactory* GameObjectFactory::instance = nullptr;
+
+void GameObjectFactory::destroySingleton() {};
+
 GameObjectFactory::GameObjectFactory() { }
-GameObjectFactory::~GameObjectFactory() { }
 
 GameObject* GameObjectFactory::loadObject(const char* pFileName) 
 {
@@ -83,9 +86,14 @@ GameObject* GameObjectFactory::loadObject(const char* pFileName)
 	rapidjson::Value::ConstMemberIterator itr = doc["Components"].GetObject().MemberBegin();
 	for (; itr != doc["Components"].GetObject().MemberEnd(); ++itr )
 	{
+		if (itr->name.IsString() == false)
+		{
+			std::cout << "Warning: Failed to deserialize a component because. itr->name was not string." << std::endl;
+			continue;
+		}
+
 		Component* pNewComponent = nullptr;
 		std::cout << "Reading in: " << itr->name.GetString() << "\n";
-		// TO-DO: Handle non-string name value.
 		pNewComponent = pNewGO->AddComponent(ComponentTypes::stringToEnum(itr->name.GetString()));
 
 		std::cout << "Done.\n";
@@ -150,7 +158,7 @@ void GameObjectFactory::loadLevel(const char* pFileName)
 			// Make sure archetype is valid.
 			const char* archetypeName = arrItr->GetObject().FindMember("Archetype")->value.GetString();
 			std::string pathName{ archetypeName };
-			pathName = ".\\Resources\\" + pathName; // TO-DO: This path (".\\Resources\\") feels like it should be a global somewhere.
+			pathName = GlobalManager::getResourceManager()->pathArchetypes + pathName; 
 			pCurrentGO = loadObject(pathName.c_str());
 		}
 		

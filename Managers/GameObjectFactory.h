@@ -21,13 +21,22 @@ class GameObject;
 class GameObjectFactory // TO-DO: Eventually make this a singleton probably, and move it into Managers directory... 
 {
 public:
-	GameObjectFactory();
-	~GameObjectFactory();
+	static GameObjectFactory* getInstance()
+	{
+		if (!instance)
+		{
+			instance = new GameObjectFactory();
+		}
+		return instance;
+	};
+	void destroySingleton();
 
 	GameObject* loadObject(const char* pFileName); // Returns a GameObject pointer matching the given archetype.
 	void loadLevel(const char* pFileName);
 public:
 private:
+	GameObjectFactory();
 private:
+	static GameObjectFactory *instance;
 };
 

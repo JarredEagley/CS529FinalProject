@@ -24,6 +24,7 @@
 #include "ResourceManager.h"
 #include "Serializer.h"
 #include "GraphicsManager.h"
+#include "GameObjectFactory.h"
 
 class GlobalManager
 {
@@ -47,6 +48,7 @@ public:
 	static ResourceManager* getResourceManager()			{ return pRM->getInstance(); };
 	static Serializer* getSerializer()						{ return pSer->getInstance(); };
 	static GraphicsManager* getGraphicsManager()			{ return pGraphM->getInstance(); };
+	static GameObjectFactory* getGameObjectFactory()		{ return pGOFactory->getInstance(); };
 private:
 	GlobalManager();
 private:
@@ -59,5 +61,6 @@ private:
 	static ResourceManager* pRM;
 	static Serializer* pSer;
 	static GraphicsManager* pGraphM;
+	static GameObjectFactory* pGOFactory;
 };
 

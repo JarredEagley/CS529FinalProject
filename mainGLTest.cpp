@@ -16,7 +16,6 @@
 #include "Components/ComponentTypes.h"
 
 #include "GameObject.h"
-#include "GameObjectFactory.h" // TO-DO: Singleton?
 
 #define STB_IMAGE_IMPLEMENTATION // Couldn't find any good sources on why this is needed
 #include "stb_image.h"
@@ -201,8 +200,7 @@ int main(int argc, char*argv[])
 	shaderTest.Use();	
 	*/
 
-	GameObjectFactory* pGOF = new GameObjectFactory();
-	pGOF->loadLevel(".\\Resources\\Levels\\ExampleLevel.json");
+	GlobalManager::getGameObjectFactory()->loadLevel(".\\Resources\\Levels\\ExampleLevel.json");
 
 	// Alpha blend mode.
 

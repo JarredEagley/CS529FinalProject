@@ -4,14 +4,14 @@
     "GameObjects":
     [
         {
-            "Archetype": "Archetypes\\Camera.json",
+            "Archetype": "Camera.json",
             "TYPE_TRANSFORM":
             {
                 "Translation": [0.0, 0.0, 10.0]
             }
         },
         {
-            "Archetype": "Archetypes\\Player.json",
+            "Archetype": "Player.json",
             "Components":
             {
                 "TYPE_TRANSFORM":

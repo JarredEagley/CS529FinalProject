@@ -96,12 +96,12 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="mainGLTest.cpp" />
     <ClCompile Include="Managers\FrameRateController.cpp" />
+    <ClCompile Include="Managers\GameObjectFactory.cpp" />
     <ClCompile Include="Managers\GameObjectManager.cpp" />
     <ClCompile Include="Managers\GlobalManager.cpp" />
     <ClCompile Include="Managers\GraphicsManager.cpp" />
     <ClCompile Include="Managers\InputManager.cpp" />
     <ClCompile Include="Managers\ResourceManager.cpp" />
-    <ClCompile Include="GameObjectFactory.cpp" />
     <ClCompile Include="Managers\Serializer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -115,12 +115,12 @@
     <ClInclude Include="Components\UpDown.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Managers\FrameRateController.h" />
+    <ClInclude Include="Managers\GameObjectFactory.h" />
     <ClInclude Include="Managers\GameObjectManager.h" />
     <ClInclude Include="Managers\GlobalManager.h" />
     <ClInclude Include="Managers\GraphicsManager.h" />
     <ClInclude Include="Managers\InputManager.h" />
     <ClInclude Include="Managers\ResourceManager.h" />
-    <ClInclude Include="GameObjectFactory.h" />
     <ClInclude Include="Managers\Serializer.h" />
     <ClInclude Include="ShaderProgram.h" />
   </ItemGroup>

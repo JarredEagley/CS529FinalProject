@@ -27,6 +27,7 @@ InputManager*			GlobalManager::pIM = nullptr;
 ResourceManager*		GlobalManager::pRM = nullptr;
 Serializer*				GlobalManager::pSer = nullptr;
 GraphicsManager*		GlobalManager::pGraphM = nullptr;
+GameObjectFactory*		GlobalManager::pGOFactory = nullptr;;
 
 // Fires all the getters to initialze all singletons GM is responsible for.
 void GlobalManager::initSingletons()
@@ -37,6 +38,7 @@ void GlobalManager::initSingletons()
 	getResourceManager();
 	getSerializer();
 	getGraphicsManager();
+	getGameObjectFactory();
 }
 
 // Call the destroy method on every singleton. 
@@ -49,6 +51,7 @@ void GlobalManager::destroySingleton()
 	pRM->destroySingleton();
 	pSer->destroySingleton();
 	pGraphM->destroySingleton();
+	pGOFactory->destroySingleton();
 
 	delete instance;
 }
