@@ -53,8 +53,7 @@ void Transform::buildTransformationMatrix()
 	// Apply parent transform, if applicable.
 	if (pParentTransform != nullptr)
 	{
-		printf("Test\n");
-		 mTransMatrix = mTransMatrix * pParentTransform->getTransformationMatrix();
+		mTransMatrix = glm::translate(mTransMatrix, -pParentTransform->getPosition());
 	}
 
 	//std::cout << "built transformation matrix. (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
