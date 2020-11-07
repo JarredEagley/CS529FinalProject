@@ -28,43 +28,22 @@ void Camera::Update()
 		pOwnerTransform->setPosition(pParentTransform->getPosition()); // Just set position. No need to alter camera angle.
 	}
 
-	// Just for fun, remove me in the future.
-	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_S))
-	{
-		top = top + 10;
-		bottom = bottom - 10;
-		left = left - 10;
-		right = right + 10;
-	}
-	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_W))
-	{
-		top = top - 10;
-		bottom = bottom + 10;
-		left = left + 10;
-		right = right - 10;
-	}
-	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_A))
-	{
-		left = left + 10;
-		right = right + 10;
-	}
-	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_D))
-	{
-		left = left - 10;
-		right = right - 10;
-	}
-	//left = left + GlobalManager::getInputManager()->getWheelY();
-	//std::cout << "DEBUG - Mouse wheel " << GlobalManager::getInputManager()->getWheelX() << ", " << GlobalManager::getInputManager()->getWheelY() << std::endl;
+	this->right = (float)(GlobalManager::getGraphicsManager()->windowWidth) * scale/1000.0f;
+	this->left = -(float)(GlobalManager::getGraphicsManager()->windowWidth) * scale/1000.0f;
+	this->top = (float)(GlobalManager::getGraphicsManager()->windowHeight) * scale/1000.0f;
+	this->bottom = -(float)(GlobalManager::getGraphicsManager()->windowHeight) * scale/1000.0f;
+
+	// Will be moved to a camera controller component.
 	if (GlobalManager::getInputManager()->getWheelY() != 0)
 	{
-		left = left + GlobalManager::getInputManager()->getWheelY();
+		scale += GlobalManager::getInputManager()->getWheelY() * scale * 0.4f;
 	}
 
 	// Handle offset.
 	int mX, mY;
 	GlobalManager::getInputManager()->getMousePosition(mX, mY);
-	this->offset.x = ( -mX + (GlobalManager::getGraphicsManager()->windowWidth/2.0f) ) / 100.0f; // TO-DO: Right idea, will need scaling factor.
-	this->offset.y = ( -mY + (GlobalManager::getGraphicsManager()->windowHeight/2.0f) ) / 100.0f;
+	this->offset.x = ( -mX + (GlobalManager::getGraphicsManager()->windowWidth/2.0f) ) * scale / 1000.0f; // TO-DO: Right idea, will need scaling factor.
+	this->offset.y = ( -mY + (GlobalManager::getGraphicsManager()->windowHeight/2.0f) ) * scale / 1000.0f;
 
 		// Build perspective transformation...
 	buildTransform();
@@ -78,8 +57,17 @@ void Camera::assignParent(GameObject* pGO)
 void Camera::buildTransform()
 {
 	// TO-DO: Must account for transform.
-	projMatrix =  glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
-	projMatrix = projMatrix * glm::rotate(glm::mat4(1.0f), glm::degrees(80.0f), glm::vec3(1,0,0));
+	// Get transform. 
+	glm::mat4 camTransform = glm::mat4(1.0f);
+	Transform* pTrans = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+	if (pTrans == nullptr)
+		std::cout << "Warning: Camera component's GameObject did not have transform component." << std::endl;
+	else
+	{
+		camTransform = pTrans->getTransformationMatrix();
+	}
+	projMatrix = glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
+	projMatrix = projMatrix * glm::rotate(glm::mat4(1.0f), glm::degrees(80.0f), glm::vec3(1,0,0)); // Building this into the proj matrix. A bit hacky, but it works.
 
 	offsetTransMatrix = glm::translate(glm::mat4(1.0f), this->offset);
 	projMatrix = projMatrix * offsetTransMatrix;

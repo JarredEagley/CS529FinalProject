@@ -9,6 +9,7 @@
             "Rotation": 0,
             "Scale": [1.0, 1.0]
         },
+        "TYPE_CONTROLLERSLIDER": 0.01,
         "TYPE_CAMERA": ""
     }
 }
