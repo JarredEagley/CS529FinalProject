@@ -20,7 +20,8 @@
 #include "ComponentTypes.h"
 #include <iostream>
 #include "rapidjson/rapidjson.h"
-#include "../GameObject.h"
+#include "../Managers/GlobalManager.h"
+//#include "../GameObject.h"
 
 Transform::Transform() : Component(ComponentTypes::TYPE_TRANSFORM) // Call the constructor of the base class with the correct type.
 {
@@ -166,5 +167,14 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	}
 
 	// Check if it has a parent GameObject.
+	if (transObj.HasMember("Parent"))
+	{
+		if (transObj["Parent"].IsString())
+		{
+			//GlobalManager::getGameObjectManager()->mGameObjects
+		}
+		else
+			std::cout << "Warning: Deserialized Transform component's 'Parent' member was incorrectly formatted." << std::endl;
+	}
 
 }
