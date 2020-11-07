@@ -186,6 +186,7 @@ void GameObjectFactory::loadLevel(const char* pFileName)
 		currentGOName = arrItr->GetObject()["Name"].GetString();
 		// Check if GO by this name already exists.
 
+		std::cout << "Deserializing GameObject " << currentGOName << std::endl;
 
 		GameObject *pCurrentGO = nullptr;
 
@@ -223,6 +224,8 @@ void GameObjectFactory::loadLevel(const char* pFileName)
 					std::cerr << "Warning: Failed to parse a component while building level's GameObjects." << std::endl;
 					continue;
 				}
+
+				std::cout << "DEBUG - (re)loading component " << compItr->name.GetString() << std::endl;
 				
 				// Deserialize this component.
 				Component* pCurrentComp = pCurrentGO->AddComponent(ComponentTypes::stringToEnum(compItr->name.GetString()));

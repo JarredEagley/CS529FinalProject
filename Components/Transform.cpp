@@ -50,6 +50,13 @@ void Transform::buildTransformationMatrix()
 	mTransMatrix = glm::rotate(mTransMatrix, glm::radians(mRotation), glm::vec3(0,0,1));
 	mTransMatrix = glm::scale(mTransMatrix, mScale);
 
+	// Apply parent transform, if applicable.
+	if (pParentTransform != nullptr)
+	{
+		printf("Test\n");
+		 mTransMatrix = mTransMatrix * pParentTransform->getTransformationMatrix();
+	}
+
 	//std::cout << "built transformation matrix. (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
 }
 
@@ -177,7 +184,7 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			// Does a GameObject by that name exist?
 			if (pGOM->mGameObjects.find(parentName) != pGOM->mGameObjects.end())
 			{
-				GameObject* pParentGO = pGOM->mGameObjects["Parent"];
+				GameObject* pParentGO = pGOM->mGameObjects[parentName];
 				pParentTransform = static_cast<Transform*>(pParentGO->AddComponent(ComponentTypes::TYPE_TRANSFORM));
 				if (pParentTransform == nullptr)
 					std::cout << "Warning: GameObject by the name '" << parentName << "' did not have a transform component." << std::endl;

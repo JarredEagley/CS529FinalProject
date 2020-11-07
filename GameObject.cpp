@@ -17,7 +17,6 @@
 
 #include "GameObject.h"
 #include <iostream>
-//#include <unordered_map>
 
 #include "Components/Component.h"
 #include "Components/ComponentTypes.h"
@@ -36,6 +35,7 @@ unsigned int GameObject::maxId = NULL;
 
 GameObject::GameObject()
 {
+	std::unordered_map<unsigned int, Component*> mComponents;
 	if (NULL == maxId)
 	{
 		maxId = 0;

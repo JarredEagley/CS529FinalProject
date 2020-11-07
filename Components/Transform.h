@@ -61,5 +61,5 @@ private:
 	glm::vec3 mScale = glm::vec3(1.0f,1.0f,1.0f);
 	glm::mat4 mTransMatrix = glm::mat4(1.0f);
 	
-	Transform* pParentTransform; // If a parent is present then all transformations will be based on the parent's transformation matrix.
+	Transform* pParentTransform = nullptr; // If a parent is present then all transformations will be based on the parent's transformation matrix.
 };
