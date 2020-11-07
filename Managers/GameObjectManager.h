@@ -39,7 +39,7 @@ public:
 
 	// TO-DO: perhaps make game objects private and use getter and setter methods...
 public:
-	static std::unordered_map<const char*, GameObject*> mGameObjects;
+	static std::unordered_map<std::string, GameObject*> mGameObjects;
 private:
 	GameObjectManager(); // Constructor.
 private:

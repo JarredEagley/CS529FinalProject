@@ -4,6 +4,7 @@
     "GameObjects":
     [
         {
+            "Name": "MainCamera",
             "Archetype": "Camera.json",
             "TYPE_TRANSFORM":
             {
@@ -12,6 +13,7 @@
             }
         },
         {
+            "Name": "PlayerShip",
             "Archetype": "Player.json",
             "Components":
             {
@@ -24,6 +26,7 @@
             }
         },
         {
+            "Name":"Mars",
             "Archetype": "Planet.json"
         }
     ]

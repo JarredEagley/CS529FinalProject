@@ -20,13 +20,16 @@
 #include <iostream>
 
 GameObjectManager* GameObjectManager::instance = nullptr;
-std::unordered_map<const char*, GameObject*> GameObjectManager::mGameObjects;
+std::unordered_map<std::string, GameObject*> GameObjectManager::mGameObjects;
 
 void GameObjectManager::destroySingleton()
 {
 	// Delete the game object instances.
 	for (auto keyValuePair : mGameObjects)
+	{
+		//std::cout << "DEBUG - INSIDE DESTRUCTOR - " << keyValuePair.first << std::endl;
 		delete keyValuePair.second;
+	}
 
 	// Clear the map.
 	mGameObjects.clear();
@@ -37,5 +40,4 @@ void GameObjectManager::destroySingleton()
 
 GameObjectManager::GameObjectManager()
 {
-	
 }

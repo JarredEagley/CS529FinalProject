@@ -247,6 +247,8 @@ void gameLoop()
 		for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects)
 			pGOPair.second->Update();
 		
+		//std::cout << "DEBUG - " << GlobalManager::getGameObjectManager()->mGameObjects.max_size() << std::endl;
+
 		// Clear the buffer.
 		// The color I chose is just for fun.
 		glClearColor(0.1, 0.11, 0.14, 1.0);

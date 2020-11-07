@@ -36,7 +36,7 @@ void Camera::Update()
 	// Will be moved to a camera controller component.
 	if (GlobalManager::getInputManager()->getWheelY() != 0)
 	{
-		scale += GlobalManager::getInputManager()->getWheelY() * scale * 0.4f;
+		scale -= GlobalManager::getInputManager()->getWheelY() * scale * 0.4f;
 	}
 
 	// Handle offset.
@@ -75,7 +75,6 @@ void Camera::buildTransform()
 
 void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
-	std::cout << "DEBUG - Deserializing camera..." << std::endl;
 	// For now, I'll just auto-bind.
 	GlobalManager::getGraphicsManager()->setCurrentCamera(this->mpOwner);
 

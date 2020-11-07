@@ -47,7 +47,7 @@ GameObjectFactory::GameObjectFactory() { }
 GameObject* GameObjectFactory::loadObject(const char* pFileName) 
 {
 	GameObject* pNewGO;
-	std::string gameObjectName;
+	//std::string gameObjectName;
 	std::string componentName;
 	std::ifstream inputStream(pFileName); 
 
@@ -72,19 +72,27 @@ GameObject* GameObjectFactory::loadObject(const char* pFileName)
 		return nullptr; // Return nullptr on fail.
 	}
 
+	/*
 	// Get this GO's UNIQUE name.
 	// MUST BE UNIQUE.
 	if (!doc.HasMember("Name")
 		|| !doc["Name"].IsString())
 	{
-		gameObjectName = doc["Name"].GetString();
-		// Check the map for repeats.
-		if (GlobalManager::getGameObjectManager()->mGameObjects.find(gameObjectName.c_str()) == GlobalManager::getGameObjectManager()->mGameObjects.end())
-		{
-			std::cout << "Warning: GameObject with name '" << gameObjectName << "' already exists! Aborting deserialization for this GameObject." << std::endl;
-			return nullptr;
-		}
+		std::cerr << "Error: File " << pFileName << " did not have any valid unique name identifier." << std::endl;
+		return nullptr; 
 	}
+
+	gameObjectName = doc["Name"].GetString();
+
+	std::cout << "DEBUG - Deserializing name " << gameObjectName << std::endl;
+	
+	// Check the map for repeats.
+	if (GlobalManager::getGameObjectManager()->mGameObjects.find(gameObjectName.c_str()) != GlobalManager::getGameObjectManager()->mGameObjects.end())
+	{
+		std::cout << "Note: GameObject with name '" << gameObjectName << "' already exists and will be replaced." << std::endl;
+	}
+	*/
+
 	
 	// Create the new GameObject now that we know the json is reasonable.
 	pNewGO = new GameObject; 
@@ -117,8 +125,12 @@ GameObject* GameObjectFactory::loadObject(const char* pFileName)
 		if (nullptr != pNewComponent)
 			pNewComponent->Serialize(itr);
 	}
+
 	// Push object onto the manager.
-	GlobalManager::getGameObjectManager()->mGameObjects[gameObjectName.c_str()] = pNewGO;
+	//GlobalManager::getGameObjectManager()->mGameObjects[gameObjectName.c_str()] = pNewGO;
+	//GlobalManager::getGameObjectManager()->mGameObjects.insert(std::make_pair(gameObjectName.c_str(), pNewGO));
+	// TO-DO: Make loadLevel handle pushing stuff onto the gameobjectmanager...
+
 
 	return pNewGO;
 }
@@ -160,9 +172,20 @@ void GameObjectFactory::loadLevel(const char* pFileName)
 		// Make sure this member is an object.
 		if (!arrItr->IsObject())
 		{
-			std::cerr << "Warning: Failed to parse an object while loading level." << std::endl;
+			std::cout << "Warning: Failed to parse an object while loading level." << std::endl;
 			continue;
 		}
+
+		// Get the name of the current GO. 
+		std::string currentGOName;
+		if (!arrItr->HasMember("Name") || !arrItr->GetObject()["Name"].IsString())
+		{
+			std::cout << "Error: GameObject in level failed to deserialize because it lacked a name or contained an invalid name." << std::endl;
+			continue;
+		}
+		currentGOName = arrItr->GetObject()["Name"].GetString();
+		// Check if GO by this name already exists.
+
 
 		GameObject *pCurrentGO = nullptr;
 
@@ -203,11 +226,16 @@ void GameObjectFactory::loadLevel(const char* pFileName)
 				
 				// Deserialize this component.
 				Component* pCurrentComp = pCurrentGO->AddComponent(ComponentTypes::stringToEnum(compItr->name.GetString()));
-				//pCurrentComp->Serialize(arrItr->GetObject().FindMember("Components")->value.MemberBegin());
 				pCurrentComp->Serialize(compItr);
 
 			}
 		}
+		
+		// Push onto the GOM.
+		std::cout << "DEBUG - Name = " << currentGOName.c_str() << std::endl;
+		//GlobalManager::getGameObjectManager()->mGameObjects[currentGOName.c_str()] = new GameObject;
+		GlobalManager::getGameObjectManager()->mGameObjects.insert(std::make_pair(currentGOName, pCurrentGO));
+		std::cout << "DEBUG - size is now " << GlobalManager::getGameObjectManager()->mGameObjects.size() << std::endl;
 	}
 
 }
