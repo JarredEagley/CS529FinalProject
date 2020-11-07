@@ -21,9 +21,6 @@
 #include "Component.h"
 #include "rapidjson/document.h"
 
-class FrameRateController;
-class InputManager;
-
 class ControllerSlider : public Component
 {
 public:

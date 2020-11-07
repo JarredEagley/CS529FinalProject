@@ -88,9 +88,11 @@
   <ItemGroup>
     <ClCompile Include="Components\Camera.cpp" />
     <ClCompile Include="Components\Component.cpp" />
+    <ClCompile Include="Components\ControllerShip.cpp" />
     <ClCompile Include="Components\ControllerSlider.cpp" />
     <ClCompile Include="Components\GLRect.cpp" />
-    <ClCompile Include="Components\Sprite.cpp" />
+    <ClCompile Include="Components\PhysicsDynamic.cpp" />
+    <ClCompile Include="Components\PhysicsStatic.cpp" />
     <ClCompile Include="Components\Transform.cpp" />
     <ClCompile Include="Components\UpDown.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -107,9 +109,11 @@
   <ItemGroup>
     <ClInclude Include="Components\Camera.h" />
     <ClInclude Include="Components\Component.h" />
+    <ClInclude Include="Components\ControllerShip.h" />
     <ClInclude Include="Components\ControllerSlider.h" />
     <ClInclude Include="Components\GLRect.h" />
-    <ClInclude Include="Components\Sprite.h" />
+    <ClInclude Include="Components\PhysicsDynamic.h" />
+    <ClInclude Include="Components\PhysicsStatic.h" />
     <ClInclude Include="Components\Transform.h" />
     <ClInclude Include="Components\ComponentTypes.h" />
     <ClInclude Include="Components\UpDown.h" />
@@ -122,7 +126,6 @@
     <ClInclude Include="Managers\InputManager.h" />
     <ClInclude Include="Managers\ResourceManager.h" />
     <ClInclude Include="Managers\Serializer.h" />
-    <ClInclude Include="ShaderProgram.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\core.frag" />

@@ -24,9 +24,9 @@
 
 #include "../../SDL2.0/include//SDL_scancode.h"
 
-ControllerSlider::ControllerSlider() : Component(ComponentTypes::TYPE_CONTROLLERSLIDER)
+ControllerSlider::ControllerSlider() : Component(ComponentTypes::TYPE_CONTROLLERSLIDER), mspeed(1.0f)
 {
-	mspeed = 1.0f; // Default speed. I think there's a more efficient way to do this default ctor.
+	//mspeed = 1.0f; // Default speed. I think there's a more efficient way to do this default ctor.
 }
 
 ControllerSlider::ControllerSlider(float speed) : Component(ComponentTypes::TYPE_CONTROLLERSLIDER)

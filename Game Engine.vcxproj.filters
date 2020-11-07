@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Components\Sprite.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Components\Transform.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -48,11 +45,17 @@
     <ClCompile Include="Managers\GameObjectFactory.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Components\ControllerShip.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\PhysicsStatic.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\PhysicsDynamic.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Components\Sprite.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Components\Transform.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -93,12 +96,20 @@
     <ClInclude Include="Managers\GraphicsManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Components\Camera.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Managers\GameObjectFactory.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ControllerShip.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\PhysicsStatic.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\PhysicsDynamic.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
