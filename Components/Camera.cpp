@@ -66,7 +66,7 @@ void Camera::buildTransform()
 		camTransform = pTrans->getTransformationMatrix();
 	}
 	projMatrix = glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
-	projMatrix = projMatrix * glm::rotate(glm::mat4(1.0f), glm::degrees(80.0f), glm::vec3(1,0,0)); // Building this into the proj matrix. A bit hacky, but it works.
+	projMatrix = projMatrix * glm::rotate(glm::mat4(1.0f), glm::degrees(-80.0f), glm::vec3(1,0,0)); // Building this into the proj matrix. A bit hacky, but it works.
 
 	offsetTransMatrix = glm::translate(glm::mat4(1.0f), this->offset);
 	projMatrix = projMatrix * offsetTransMatrix;

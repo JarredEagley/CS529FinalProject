@@ -8,7 +8,7 @@
             "Rotation": 0,
             "Scale": [50.0, 50.0]
         },
-        "TYPE_CONTROLLERSLIDER": 0.0,
+        "TYPE_CONTROLLERSLIDER": 0.5,
         "TYPE_GLRECT":
         {
             "Texture": "Ship1.png",

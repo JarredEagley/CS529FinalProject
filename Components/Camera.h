@@ -20,8 +20,8 @@ public:
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 public:
 	glm::vec3 offset = glm::vec3(0,0,0);
-	float clipNear = 0.1f;
-	float clipFar = 10.0f;
+	float clipNear = -100.0f;
+	float clipFar = 100.0f;
 	float left = -10.0f;
 	float right = 10.0f;
 	float top = 10.0f;

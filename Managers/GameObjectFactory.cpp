@@ -232,10 +232,8 @@ void GameObjectFactory::loadLevel(const char* pFileName)
 		}
 		
 		// Push onto the GOM.
-		std::cout << "DEBUG - Name = " << currentGOName.c_str() << std::endl;
-		//GlobalManager::getGameObjectManager()->mGameObjects[currentGOName.c_str()] = new GameObject;
-		GlobalManager::getGameObjectManager()->mGameObjects.insert(std::make_pair(currentGOName, pCurrentGO));
-		std::cout << "DEBUG - size is now " << GlobalManager::getGameObjectManager()->mGameObjects.size() << std::endl;
+		GlobalManager::getGameObjectManager()->mGameObjects[currentGOName] = pCurrentGO;
+		//GlobalManager::getGameObjectManager()->mGameObjects.insert(std::make_pair(currentGOName, pCurrentGO));
 	}
 
 }
