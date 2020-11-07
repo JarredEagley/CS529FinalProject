@@ -99,14 +99,11 @@ void Transform::setParent(Transform* pTran)
 	pParentTransform = pTran;
 }
 
-
-
 glm::mat4 Transform::getTransformationMatrix() 
 { 
 	// Do I need to nullcheck here? 
 	return this->mTransMatrix; 
 };
-
 
 void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
