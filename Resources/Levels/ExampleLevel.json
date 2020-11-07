@@ -3,15 +3,7 @@
     "Type": "Level",
     "GameObjects":
     [
-        {
-            "Name": "MainCamera",
-            "Archetype": "Camera.json",
-            "TYPE_TRANSFORM":
-            {
-                "Translation": [0.0, 0.0, 10.0],
-                "Parent": "Player"
-            }
-        },
+
         {
             "Name": "PlayerShip",
             "Archetype": "Player.json",
@@ -28,6 +20,15 @@
         {
             "Name":"Mars",
             "Archetype": "Planet.json"
+        },
+        {
+            "Name": "MainCamera",
+            "Archetype": "Camera.json",
+            "TYPE_TRANSFORM":
+            {
+                "Translation": [0.0, 0.0, 10.0],
+                "Parent": "Player"
+            }
         }
     ]
 }
