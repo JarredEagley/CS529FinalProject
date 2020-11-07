@@ -19,7 +19,8 @@
 
 #pragma once
 
-#include <vector>
+//#include <vector>
+#include <unordered_map>
 
 class GameObject;
 
@@ -38,7 +39,7 @@ public:
 
 	// TO-DO: perhaps make game objects private and use getter and setter methods...
 public:
-	static std::vector<GameObject*> mGameObjects; // Vector of game objects; may become an unordered map in the future.
+	static std::unordered_map<const char*, GameObject*> mGameObjects;
 private:
 	GameObjectManager(); // Constructor.
 private:

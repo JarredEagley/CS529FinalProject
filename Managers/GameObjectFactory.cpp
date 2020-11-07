@@ -30,9 +30,9 @@
 #include <iostream>
 #include <fstream>
 
+#include "GlobalManager.h"
 #include "../GameObject.h"
 #include "../Components/ComponentTypes.h"
-#include "../Managers/GlobalManager.h"
 #include "../Components/Component.h"
 
 #include "rapidjson/document.h"
@@ -47,6 +47,7 @@ GameObjectFactory::GameObjectFactory() { }
 GameObject* GameObjectFactory::loadObject(const char* pFileName) 
 {
 	GameObject* pNewGO;
+	std::string gameObjectName;
 	std::string componentName;
 	std::ifstream inputStream(pFileName); 
 
@@ -69,6 +70,20 @@ GameObject* GameObjectFactory::loadObject(const char* pFileName)
 		// We're not deserializing a GameObject.
 		std::cerr << "Error: File " << pFileName << " was not of type GameObject." << std::endl;
 		return nullptr; // Return nullptr on fail.
+	}
+
+	// Get this GO's UNIQUE name.
+	// MUST BE UNIQUE.
+	if (!doc.HasMember("Name")
+		|| !doc["Name"].IsString())
+	{
+		gameObjectName = doc["Name"].GetString();
+		// Check the map for repeats.
+		if (GlobalManager::getGameObjectManager()->mGameObjects.find(gameObjectName.c_str()) == GlobalManager::getGameObjectManager()->mGameObjects.end())
+		{
+			std::cout << "Warning: GameObject with name '" << gameObjectName << "' already exists! Aborting deserialization for this GameObject." << std::endl;
+			return nullptr;
+		}
 	}
 	
 	// Create the new GameObject now that we know the json is reasonable.
@@ -103,7 +118,7 @@ GameObject* GameObjectFactory::loadObject(const char* pFileName)
 			pNewComponent->Serialize(itr);
 	}
 	// Push object onto the manager.
-	GlobalManager::getGameObjectManager()->mGameObjects.push_back(pNewGO);
+	GlobalManager::getGameObjectManager()->mGameObjects[gameObjectName.c_str()] = pNewGO;
 
 	return pNewGO;
 }

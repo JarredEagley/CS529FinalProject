@@ -20,14 +20,15 @@
 #include <iostream>
 
 GameObjectManager* GameObjectManager::instance = nullptr;
-std::vector<GameObject*> GameObjectManager::mGameObjects;
+std::unordered_map<const char*, GameObject*> GameObjectManager::mGameObjects;
 
 void GameObjectManager::destroySingleton()
 {
 	// Delete the game object instances.
-	for (auto pGO : mGameObjects)
-		delete pGO;
-	// Clear the vector.
+	for (auto keyValuePair : mGameObjects)
+		delete keyValuePair.second;
+
+	// Clear the map.
 	mGameObjects.clear();
 		
 	// Delete the singleton.

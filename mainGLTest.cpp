@@ -244,8 +244,8 @@ void gameLoop()
 		} // Done handling events.
 
 		// Do updates.
-		for (auto pGO : GlobalManager::getGameObjectManager()->mGameObjects)
-			pGO->Update();
+		for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects)
+			pGOPair.second->Update();
 		
 		// Clear the buffer.
 		// The color I chose is just for fun.

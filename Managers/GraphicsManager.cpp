@@ -33,9 +33,9 @@ GraphicsManager::GraphicsManager()
 void GraphicsManager::drawAllGameObjects()
 {
 	GameObjectManager *pGOM = GlobalManager::getGameObjectManager();
-	for (auto pGO : pGOM->mGameObjects)
+	for (auto pGOPair : pGOM->mGameObjects)
 	{
-		drawGameObject(pGO);
+		drawGameObject(pGOPair.second);
 	}
 }
 
