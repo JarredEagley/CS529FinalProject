@@ -5,7 +5,6 @@
 
 GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT)
 {
-	std::cout << "DEBUG - Rect constructor fired." << std::endl;
 	// Texture is null until loaded.
 	//mTexture->texture = nullptr;
 	vaoID = NULL;
@@ -84,7 +83,7 @@ unsigned int GLRect::getVAO()
 
 void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
-	std::cout << "DEBUG - Deserializing GLRect..." << std::endl;
+	//std::cout << "DEBUG - Deserializing GLRect..." << std::endl;
 	// Sanity check for serializing GLRect.
 	if (!inputMemberIt->value.IsObject())
 	{
