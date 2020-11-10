@@ -22,7 +22,7 @@
 #include "Components/ComponentTypes.h"
 
 
-#include "Components/Sprite.h"
+//#include "Components/Sprite.h"
 #include "Components/Transform.h"
 #include "Components/ControllerSlider.h"
 #include "Components/UpDown.h"
@@ -77,9 +77,6 @@ Component* GameObject::AddComponent(unsigned int Type)
 		return nullptr; // Failed to create component.
 	case (ComponentTypes::TYPE_TRANSFORM):
 		pNewComponent = new Transform();
-		break;
-	case (ComponentTypes::TYPE_SPRITE):
-		pNewComponent = new Sprite();
 		break;
 	case (ComponentTypes::TYPE_CONTROLLERSLIDER):
 		pNewComponent = new ControllerSlider();

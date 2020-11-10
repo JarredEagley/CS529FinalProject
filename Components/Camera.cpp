@@ -39,13 +39,17 @@ void Camera::Update()
 		scale -= GlobalManager::getInputManager()->getWheelY() * scale * 0.4f;
 	}
 
+	//std::cout << "DEBUG - offset = " << offset.x << ", " << offset.y << ", " << offset.z << std::endl;
+
 	// Handle offset.
 	int mX, mY;
 	GlobalManager::getInputManager()->getMousePosition(mX, mY);
-	this->offset.x = ( -mX + (GlobalManager::getGraphicsManager()->windowWidth/2.0f) ) * scale / 1000.0f; // TO-DO: Right idea, will need scaling factor.
-	this->offset.y = ( -mY + (GlobalManager::getGraphicsManager()->windowHeight/2.0f) ) * scale / 1000.0f;
+	int const winH = GlobalManager::getGraphicsManager()->windowHeight;
+	int const winW = GlobalManager::getGraphicsManager()->windowWidth;
+	this->offset.x = -(mX-(winW/2)) * (scale/500.0f) ; // (these are inverted to get the correct behavior.
+	this->offset.y = (mY-(winH/2)) * (scale/500.0f)  ;
 
-		// Build perspective transformation...
+	// Build perspective transformation...
 	buildTransform();
 }
 
@@ -66,10 +70,8 @@ void Camera::buildTransform()
 		camTransform = pTrans->getTransformationMatrix();
 	}
 	projMatrix = glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
-	projMatrix = projMatrix * glm::rotate(glm::mat4(1.0f), glm::degrees(-80.0f), glm::vec3(1,0,0)); // Building this into the proj matrix. A bit hacky, but it works.
-
-	offsetTransMatrix = glm::translate(glm::mat4(1.0f), this->offset);
-	projMatrix = projMatrix * offsetTransMatrix;
+	projMatrix = glm::translate(projMatrix, offset);
+	projMatrix = glm::rotate(projMatrix, glm::degrees(-80.0f), glm::vec3(1,0,0)); // Building this into the proj matrix. A bit hacky, but it works.
 }
 
 void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)

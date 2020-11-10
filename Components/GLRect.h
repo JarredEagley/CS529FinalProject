@@ -29,7 +29,7 @@ private:
 private:
 	// A 1x1 flat white square with default uv's.
 	glm::vec4 mVertPos[4] = {
-		// Supporting 3d transfomrations. Theoretically I should never need them, but I don't know for sure.
+		// Supporting 3d transfomrations. 
 		glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f),		// Left Top
 		glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f),	// Left Bot
 		glm::vec4(0.5f, -0.5f, 0.0f, 1.0f),		// Right bot

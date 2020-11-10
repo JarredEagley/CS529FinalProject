@@ -40,6 +40,9 @@ Transform::~Transform()
 void Transform::Update()
 {
 	buildTransformationMatrix();
+
+	if (pParentTransform ==  nullptr) // Tempory test stuff.
+		incrementRotation(GlobalManager::getFrameRateController()->getFrameTime() * 0.1f);
 } 
 
 void Transform::buildTransformationMatrix()
@@ -53,6 +56,8 @@ void Transform::buildTransformationMatrix()
 	// Apply parent transform, if applicable.
 	if (pParentTransform != nullptr)
 	{
+		// TO-DO: THIS IS HORRIBLY INEFFICIENT!!!
+		pParentTransform->buildTransformationMatrix();
 		mTransMatrix = glm::translate(mTransMatrix, -pParentTransform->getPosition());
 	}
 
