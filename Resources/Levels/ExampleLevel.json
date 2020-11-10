@@ -22,6 +22,23 @@
             "Archetype": "Planet.json"
         },
         {
+            "Name": "DebugBullet",
+            "Components":
+            {
+                "TYPE_GLRECT":
+                {
+                    "Texture": "CoilBullet.png",
+                    "Color": [1.0, 0.9, 0.0, 1.0]
+                },
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0.0, 0.0],
+                    "Rotation": 0,
+                    "Parent": "PlayerShip"
+                }
+            }
+        },
+        {
             "Name": "MainCamera",
             "Archetype": "Camera.json",
             "Components":
