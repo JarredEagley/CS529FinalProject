@@ -56,6 +56,12 @@ void ControllerSlider::Update()
 		pT->incrementX( -(float)(mspeed * pFRC->getFrameTime()) );
 	if (pIM->IsKeyPressed(SDL_SCANCODE_RIGHT))
 		pT->incrementX(  (float)(mspeed * pFRC->getFrameTime()) );
+
+	if (pIM->IsKeyPressed(SDL_SCANCODE_E))
+		pT->incrementRotation((float)(0.1f * pFRC->getFrameTime()));
+	else if (pIM->IsKeyPressed(SDL_SCANCODE_Q))
+		pT->incrementRotation((float)( - 0.1f * pFRC->getFrameTime()));
+
 }
 
 void ControllerSlider::setSpeed(float speed)
