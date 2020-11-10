@@ -41,8 +41,8 @@ void Transform::Update()
 {
 	buildTransformationMatrix();
 
-	if (pParentTransform ==  nullptr) // Tempory test stuff.
-		incrementRotation(GlobalManager::getFrameRateController()->getFrameTime() * 0.1f);
+	//if (pParentTransform ==  nullptr) // TO-DO: Remove this temp test stuff. 
+		//incrementRotation(GlobalManager::getFrameRateController()->getFrameTime() * 0.1f);
 } 
 
 void Transform::buildTransformationMatrix()
