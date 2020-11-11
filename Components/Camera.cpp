@@ -61,6 +61,7 @@ void Camera::assignParent(GameObject* pGO)
 void Camera::buildTransform()
 {
 	// Get transform. 
+	
 	glm::mat4 camTransform = glm::mat4(1.0f);
 	Transform* pTrans = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 	if (pTrans == nullptr)
@@ -69,7 +70,12 @@ void Camera::buildTransform()
 	{
 		camTransform = pTrans->getTransformationMatrix();
 	}
+	projMatrix = glm::mat4(1.0f);
+
 	projMatrix = glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
+	//projMatrix = glm::translate(projMatrix, camTransform);
+	
+	
 	projMatrix = glm::translate(projMatrix, offset);
 	projMatrix = glm::rotate(projMatrix, glm::degrees(-80.0f), glm::vec3(1,0,0)); // Building this into the proj matrix. A bit hacky, but it works.
 }

@@ -1,0 +1,54 @@
+{
+    "Name": "ExampleLevel",
+    "Type": "Level",
+    "GameObjects":
+    [
+
+        {
+            "Name": "PlayerShip",
+            "Archetype": "Player.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [1.0, 0.0],
+                    "Rotation": 0,
+                    "Scale": [10.0, 20.0]
+                }
+            }
+        },
+        {
+            "Name":"Mars",
+            "Archetype": "Planet.json"
+        },
+        {
+            "Name": "DebugBullet",
+            "Type": "GameObject",
+            "Components":
+            {
+                "TYPE_GLRECT":
+                {
+                    "Texture": "CoilBullet.png",
+                    "Color": [1.0, 0.9, 0.0, 1.0]
+                },
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0.0, 0.0, 10.0],
+                    "Parent": "PlayerShip"
+                }
+            }
+        },
+        {
+            "Name": "MainCamera",
+            "Archetype": "Camera.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0.0, 0.0, 10.0],
+                    "Parent": "PlayerShip"
+                }
+            }
+        }
+    ]
+}

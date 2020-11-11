@@ -225,7 +225,7 @@ void GameObjectFactory::loadLevel(const char* pFileName)
 					continue;
 				}
 
-				//std::cout << "DEBUG - (re)loading component " << compItr->name.GetString() << std::endl;
+				std::cout << "DEBUG - (re)loading component " << compItr->name.GetString() << std::endl;
 				
 				// Deserialize this component.
 				Component* pCurrentComp = pCurrentGO->AddComponent(ComponentTypes::stringToEnum(compItr->name.GetString()));

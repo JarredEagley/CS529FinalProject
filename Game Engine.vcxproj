@@ -103,6 +103,7 @@
     <ClCompile Include="Managers\GlobalManager.cpp" />
     <ClCompile Include="Managers\GraphicsManager.cpp" />
     <ClCompile Include="Managers\InputManager.cpp" />
+    <ClCompile Include="Managers\PhysicsManager.cpp" />
     <ClCompile Include="Managers\ResourceManager.cpp" />
     <ClCompile Include="Managers\Serializer.cpp" />
   </ItemGroup>
@@ -124,6 +125,7 @@
     <ClInclude Include="Managers\GlobalManager.h" />
     <ClInclude Include="Managers\GraphicsManager.h" />
     <ClInclude Include="Managers\InputManager.h" />
+    <ClInclude Include="Managers\PhysicsManager.h" />
     <ClInclude Include="Managers\ResourceManager.h" />
     <ClInclude Include="Managers\Serializer.h" />
   </ItemGroup>

@@ -11,30 +11,9 @@
             {
                 "TYPE_TRANSFORM":
                 {
-                    "Translation": [1.0, 0.0],
-                    "Rotation": 0,
-                    "Scale": [10.0, 20.0]
-                }
-            }
-        },
-        {
-            "Name":"Mars",
-            "Archetype": "Planet.json"
-        },
-        {
-            "Name": "DebugBullet",
-            "Components":
-            {
-                "TYPE_GLRECT":
-                {
-                    "Texture": "CoilBullet.png",
-                    "Color": [1.0, 0.9, 0.0, 1.0]
-                },
-                "TYPE_TRANSFORM":
-                {
                     "Translation": [0.0, 0.0],
                     "Rotation": 0,
-                    "Parent": "PlayerShip"
+                    "Scale": [10.0, 10.0]
                 }
             }
         },
@@ -45,8 +24,7 @@
             {
                 "TYPE_TRANSFORM":
                 {
-                    "Translation": [0.0, 0.0, 10.0],
-                    "Parent": "PlayerShip"
+                    "Translation": [0.0, 0.0, 10.0]
                 }
             }
         }

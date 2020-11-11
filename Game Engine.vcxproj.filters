@@ -54,6 +54,9 @@
     <ClCompile Include="Components\PhysicsDynamic.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Managers\PhysicsManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\Transform.h">
@@ -110,6 +113,9 @@
     </ClInclude>
     <ClInclude Include="Components\PhysicsDynamic.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\PhysicsManager.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
