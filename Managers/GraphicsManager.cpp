@@ -12,6 +12,8 @@
 GraphicsManager* GraphicsManager::instance = nullptr;
 std::unordered_map<const char*, ShaderProgram*> GraphicsManager::mShaderPrograms;
 
+bool toggle = false; // TO-DO: This is for milestone 3. Remove when done.
+
 void GraphicsManager::destroySingleton()
 {
 	// Destroy all shader programs.
@@ -82,14 +84,23 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	glActiveTexture(GL_TEXTURE0); // Will be needed if I one day one multiple textures on one rect.
 	glBindTexture(GL_TEXTURE_2D, pRect->getTexId()); // Bind the desired texture.
 
+	unsigned int loc;
+
 	// transform
-	unsigned int transformLoc = glGetUniformLocation(program->ProgramID, "transform");
-	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr( pTransform->getTransformationMatrix() ));
+	loc = glGetUniformLocation(program->ProgramID, "transform");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr( pTransform->getTransformationMatrix() ));
 	// Cam transforms
-	unsigned int viewTransLoc = glGetUniformLocation(program->ProgramID, "viewTrans");
-	glUniformMatrix4fv(viewTransLoc, 1, GL_FALSE, glm::value_ptr( pCameraTransform->getTransformationMatrix() ));
-	unsigned int viewProjLoc = glGetUniformLocation(program->ProgramID, "viewProj");
-	glUniformMatrix4fv(viewProjLoc, 1, GL_FALSE, glm::value_ptr( pCamera->getProjMatrix() ));
+	loc = glGetUniformLocation(program->ProgramID, "viewTrans");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr( pCameraTransform->getTransformationMatrix() ));
+	loc = glGetUniformLocation(program->ProgramID, "viewProj");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr( pCamera->getProjMatrix() ));
+
+	// TEMPORARY -- the debug draw toggle for milestone 3
+	bool spacebar = GlobalManager::getInputManager()->IsKeyTriggered(SDL_SCANCODE_SPACE);
+	if (spacebar)
+		toggle = !toggle;
+	loc = glGetUniformLocation(program->ProgramID, "debugDraw");
+	glUniform1i(loc, toggle);
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // <--- The actual draw call! <---
 
