@@ -15,7 +15,7 @@ public:
 	void Update();
 	void Integrate(float deltaTme);
 
-	bool hasGravity() { return hasGravity; }; // hasGravity is read-only. Setter needs to inform the physics manager.
+	bool hasGravity() { return mHasGravity; }; // hasGravity is read-only. Setter needs to inform the physics manager.
 	void enableGravity();
 	void disableGravity();
 
@@ -36,6 +36,6 @@ public:
 
 private:
 private:
-	bool hasGravity; 
+	bool mHasGravity; 
 };
 

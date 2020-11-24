@@ -32,7 +32,7 @@ public:
 	Component* GetComponent(unsigned int Type); // Because we need to access components. 
 	void handleEvent(Event *pEvent);
 public:
-	std::unordered_map<unsigned int, Component*> mComponents; // TYPE, COMPONENT
+	std::unordered_map<unsigned int, Component*> mComponents; // <TYPE, COMPONENT>
 	int getID() { return this->gameObjectID; }
 	const char* shaderName = "core";	// May have more shaders in the future.
 private:

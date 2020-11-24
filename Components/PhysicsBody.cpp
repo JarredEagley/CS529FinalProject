@@ -6,7 +6,7 @@
 
 PhysicsBody::PhysicsBody() : Component(ComponentTypes::TYPE_PHYSICSBODY)
 {
-	hasGravity = false;
+	mHasGravity = false;
 	mPosition = glm::vec2(0.0f);
 	mAngle = 0.0f;
 	mPrevPosition = glm::vec2(0.0f);
@@ -74,21 +74,21 @@ void PhysicsBody::Integrate(float deltaTime)
 
 void PhysicsBody::enableGravity()
 {
-	if (this->hasGravity)
+	if (mHasGravity)
 		return;
 
 	// Enable gravity and push this physics body onto the physics manager's vector.
 	// TO-DO: Handle this physics body getting destroyed; needs to be removed from the physics manager.
-	this->hasGravity = true;
+	mHasGravity = true;
 	GlobalManager::getPhysicsManager()->gravityBodies.push_back(this);
 }
 
 void PhysicsBody::disableGravity()
 {
-	if (!this->hasGravity)
+	if (!mHasGravity)
 		return;
 	// Disable gravity and remove this physics body from the physics manager's vector.
-	this->hasGravity = false;
+	mHasGravity = false;
 	GlobalManager::getPhysicsManager()->gravityBodies.remove(this); // TO-DO: A std::list may be more appropriate for gravityBodies... // TO-DO: Will this call this body's destructor by accident???
 }
 

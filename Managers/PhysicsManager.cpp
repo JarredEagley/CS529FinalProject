@@ -5,8 +5,7 @@
 #include "../GameObject.h"
 
 PhysicsManager* PhysicsManager::instance = nullptr;
-auto PhysicsManager::gravityBodies; // Initialize the vector.
-
+std::list<PhysicsBody*> PhysicsManager::gravityBodies; // Initialize the vector.
 
 void PhysicsManager::destroySingleton()
 {
@@ -32,6 +31,7 @@ PhysicsManager::PhysicsManager()
 {
 }
 
+
 void PhysicsManager::Update(float frameTime)
 {
 	// Integrate the physics bodies.
@@ -49,15 +49,17 @@ void PhysicsManager::Update(float frameTime)
 		pObjPair1 != GlobalManager::getGameObjectManager()->mGameObjects.end();
 		++pObjPair1)
 	{
-		
-		PhysicsBody* pPhysicsBody1 = static_cast<PhysicsBody*>( (*pObjPair1)->second->GetComponent(ComponentTypes::TYPE_PHYSICSBODY) );
+		PhysicsBody* pPhysicsBody1 = static_cast<PhysicsBody*>( pObjPair1->second->GetComponent(ComponentTypes::TYPE_PHYSICSBODY) );
 		if (nullptr == pPhysicsBody1) continue;
 
-		for (auto pObjPair2 = pObjPair1 + 1;
+
+		auto pObjPair2 = pObjPair1; // TO-DO: If this is not creating a copy, switch to std::map
+		pObjPair2++;
+		for (;
 			pObjPair2 != GlobalManager::getGameObjectManager()->mGameObjects.end();
 			++pObjPair2)
 		{
-			PhysicsBody* pPhysicsBody2 = static_cast<PhysicsBody*>((*pObjPair2)->second->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+			PhysicsBody* pPhysicsBody2 = static_cast<PhysicsBody*>(pObjPair2->second->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
 			if (nullptr == pPhysicsBody2) continue;
 
 			// If we're here, we have two GO's with body components.

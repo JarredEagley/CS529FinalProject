@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EventManager.h"
+class PhysicsBody;
 
 class CollideEvent : public Event
 {

@@ -1,9 +1,13 @@
 #pragma once
 #include <list>
+#include <unordered_map>
+
+class GameObject;
 
 enum EventType
 {
 	COLLIDE,
+
 	NUM
 };
 
