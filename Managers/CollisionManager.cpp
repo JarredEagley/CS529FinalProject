@@ -5,6 +5,7 @@ CollisionManager* CollisionManager::instance = nullptr;
 
 void CollisionManager::destroySingleton()
 {
+	Reset();
 	delete instance;
 }
 
@@ -67,22 +68,14 @@ bool ShapeAABB::testPoint(glm::vec2 point)
 // End of shape class stuff //
 // ------------------------------------------------------ //
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ------------------------------------------------------ //
-
+CollisionManager::CollisionManager()
+{
+	// Initialize the 2d array of collisions function pointers.
+	CollisionFunctions[Shape::ShapeType::CIRCLE][Shape::ShapeType::CIRCLE]	= checkCollisionCircleCircle;
+	CollisionFunctions[Shape::ShapeType::AABB][Shape::ShapeType::AABB]		= checkCollisionAABBAABB;
+	CollisionFunctions[Shape::ShapeType::CIRCLE][Shape::ShapeType::AABB]	= checkCollisionCircleAABB;
+	CollisionFunctions[Shape::ShapeType::AABB][Shape::ShapeType::CIRCLE]	= checkCollisionAABBCircle;
+}
 
 // The four hidden functions which manipulate the collision manager's contacts array.
 // (Only collisionManager can see these.)
@@ -183,11 +176,16 @@ bool checkCollisionAABBCircle(Shape* pAABBShape1, glm::vec2 pos1, Shape* pCircle
 	return checkCollisionCircleAABB(pCircleShape2, pos2, pAABBShape1, pos1, mContacts);
 }
 
+void CollisionManager::Reset()
+{
+	for (auto c : mContacts)
+		delete c;
+	mContacts.clear();
+}
 
 // This is the exposed function which calls the above four!
 bool CollisionManager::checkCollisionAndGenerateContact(Shape* pShape1, glm::vec2 pos1, Shape* pShape2, glm::vec2 pos2)
 {
 	return CollisionFunctions[pShape1->mType][pShape2->mType](pShape1, pos1, pShape2, pos2, mContacts);
 }
-
 

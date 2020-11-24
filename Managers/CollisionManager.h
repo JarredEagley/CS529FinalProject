@@ -97,7 +97,7 @@ public:
 	bool (*CollisionFunctions[Shape::ShapeType::NUM][Shape::ShapeType::NUM])(Shape* pShape1, glm::vec2 pos1, Shape* pShape2, glm::vec2 pos2, std::list<Contact*>& mContacts);
 
 private:
-	CollisionManager();
+	CollisionManager(); // Private ctor
 
 private:
 	static CollisionManager* instance;
