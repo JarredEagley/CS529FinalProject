@@ -1,6 +1,6 @@
 #include "PhysicsManager.h"
 #include "GlobalManager.h"
-#include "../Components/PhysicsDynamic.h"
+#include "../Components/PhysicsBody.h"
 #include "../GameObject.h"
 
 PhysicsManager* PhysicsManager::instance = nullptr;
@@ -31,8 +31,8 @@ void PhysicsManager::Update(float frameTime)
 {
 	for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects)
 	{
-		PhysicsDynamic* PhysicsDynamic = static_cast<PhysicsDynamic*>();
-		if (nullptr != PhysicsDynamic)
+		PhysicsBody* PhysicsBody = static_cast<PhysicsBody*>();
+		if (nullptr != PhysicsBody)
 			pBody->Integrate(frameTime);
 	}
 }

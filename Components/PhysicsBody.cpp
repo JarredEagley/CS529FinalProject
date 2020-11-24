@@ -1,10 +1,10 @@
-#include "PhysicsDynamic.h"
+#include "PhysicsBody.h"
 #include "Transform.h"
 #include "ComponentTypes.h"
 #include "../GameObject.h"
 #include "../Managers/GlobalManager.h"
 
-PhysicsDynamic::PhysicsDynamic() : Component(ComponentTypes::TYPE_PHYSICSDYNAMIC)
+PhysicsBody::PhysicsBody() : Component(ComponentTypes::TYPE_PHYSICSBODY)
 {
 	mPosition = glm::vec2(0.0f);
 	mAngle = 0.0f;
@@ -22,18 +22,18 @@ PhysicsDynamic::PhysicsDynamic() : Component(ComponentTypes::TYPE_PHYSICSDYNAMIC
 	mpShape = nullptr;
 }
 
-PhysicsDynamic::~PhysicsDynamic()
+PhysicsBody::~PhysicsBody()
 {
 	if (mpShape != nullptr)
 		delete mpShape;
 }
 
 
-void PhysicsDynamic::Update()
+void PhysicsBody::Update()
 {}
 
 
-void PhysicsDynamic::Integrate(float deltaTime)
+void PhysicsBody::Integrate(float deltaTime)
 {
 	// Get the associated transform. 
 	Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // Probably shouldn't get this EVERY integration. Oh well.
@@ -71,7 +71,7 @@ void PhysicsDynamic::Integrate(float deltaTime)
 }
 
 
-void PhysicsDynamic::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
+void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
 	// Read in mMass.
 
@@ -82,8 +82,5 @@ void PhysicsDynamic::Serialize(rapidjson::Value::ConstMemberIterator inputMember
 	// If circle read in a radius.
 
 	// If AABB read in a left right top bottom.
-
-
-
 
 }

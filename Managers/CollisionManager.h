@@ -1,7 +1,7 @@
 #pragma once
 #include "glm/vec2.hpp"
 
-class PhysicsDynamic;
+class PhysicsBody;
 
 class Shape
 {
@@ -20,7 +20,7 @@ public:
 	virtual bool testPoint(glm::vec2 point) = 0;
 
 public:
-	PhysicsDynamic* mpOwnerPhysics;
+	PhysicsBody* mpOwnerPhysics;
 	ShapeType mType;
 
 private:
@@ -57,6 +57,18 @@ private:
 private:
 };
 
+
+// ------------------------------------------------------ //
+
+// Stores everything you need to know about two shapes hitting eachother.
+class Contact
+{
+public:
+	Contact();
+	~Contact() {};
+public:
+	PhysicsBody* ;
+};
 
 // ------------------------------------------------------ //
 

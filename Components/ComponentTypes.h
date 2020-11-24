@@ -33,7 +33,7 @@ public:
 		if (strcmp(str, "TYPE_UPDOWN") == 0)			return TYPE_UPDOWN;
 		if (strcmp(str, "TYPE_GLRECT") == 0)			return TYPE_GLRECT;
 		if (strcmp(str, "TYPE_CAMERA") == 0)			return TYPE_CAMERA;
-		if (strcmp(str, "TYPE_PHYSICSDYNAMIC") == 0)	return TYPE_PHYSICSDYNAMIC;
+		if (strcmp(str, "TYPE_PHYSICSBODY") == 0)		return TYPE_PHYSICSBODY;
 		return TYPE_UNDEFINED;
 	}
 public:
@@ -47,7 +47,7 @@ public:
 		TYPE_UPDOWN,
 		TYPE_GLRECT,
 		TYPE_CAMERA,
-		TYPE_PHYSICSDYNAMIC,
+		TYPE_PHYSICSBODY,
 	};
 private:
 	// No private methods.

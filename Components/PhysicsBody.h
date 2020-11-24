@@ -6,11 +6,11 @@
 class Shape;
 
 // Roughly equivalent to the example 'body.h'.
-class PhysicsDynamic : public Component
+class PhysicsBody : public Component
 {
 public:
-	PhysicsDynamic();
-	~PhysicsDynamic();
+	PhysicsBody();
+	~PhysicsBody();
 
 	void Update();
 	void Integrate(float deltaTme);

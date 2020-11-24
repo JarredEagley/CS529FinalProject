@@ -1,5 +1,5 @@
 #include "CollisionManager.h"
-#include "../Components/PhysicsDynamic.h"
+#include "../Components/PhysicsBody.h"
 
 CollisionManager* CollisionManager::instance = nullptr;
 
