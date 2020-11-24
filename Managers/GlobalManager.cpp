@@ -29,6 +29,7 @@ Serializer*				GlobalManager::pSer = nullptr;
 GraphicsManager*		GlobalManager::pGraphM = nullptr;
 GameObjectFactory*		GlobalManager::pGOFactory = nullptr;;
 PhysicsManager*			GlobalManager::pPhysM = nullptr;
+CollisionManager*		GlobalManager::pColM = nullptr;
 EventManager*			GlobalManager::pEM = nullptr;
 
 // Fires all the getters to initialze all singletons GM is responsible for.
@@ -42,6 +43,7 @@ void GlobalManager::initSingletons()
 	getGraphicsManager();
 	getGameObjectFactory();
 	getPhysicsManager();
+	getCollisionManager();
 	getEventManager();
 }
 
@@ -57,6 +59,7 @@ void GlobalManager::destroySingleton()
 	pGraphM->destroySingleton();
 	pGOFactory->destroySingleton();
 	pPhysM->destroySingleton();
+	pColM->destroySingleton();
 	pEM->destroySingleton();
 
 	delete instance;

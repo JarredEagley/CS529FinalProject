@@ -26,6 +26,7 @@
 #include "GraphicsManager.h"
 #include "GameObjectFactory.h"
 #include "PhysicsManager.h"
+#include "CollisionManager.h"
 #include "EventManager.h"
 
 class GlobalManager
@@ -52,6 +53,7 @@ public:
 	static GraphicsManager* getGraphicsManager()			{ return pGraphM->getInstance(); };
 	static GameObjectFactory* getGameObjectFactory()		{ return pGOFactory->getInstance(); };
 	static PhysicsManager* getPhysicsManager()				{ return pPhysM; };
+	static CollisionManager* getCollisionManager()			{ return pColM; };
 	static EventManager* getEventManager()					{ return pEM->getInstance(); };
 private:
 	GlobalManager();
@@ -67,6 +69,7 @@ private:
 	static GraphicsManager* pGraphM;
 	static GameObjectFactory* pGOFactory;
 	static PhysicsManager* pPhysM;
+	static CollisionManager* pColM;
 	static EventManager* pEM;
 };
 

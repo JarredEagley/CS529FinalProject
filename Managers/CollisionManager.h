@@ -1,4 +1,5 @@
 #pragma once
+#include <list>
 #include "glm/vec2.hpp"
 
 class PhysicsBody;
@@ -64,10 +65,13 @@ private:
 class Contact
 {
 public:
-	Contact();
+	Contact()
+	{
+		mBodies[0] = mBodies[1] = nullptr;
+	}
 	~Contact() {};
 public:
-	PhysicsBody* ;
+	PhysicsBody* mBodies[2];
 };
 
 // ------------------------------------------------------ //
@@ -83,8 +87,14 @@ public:
 	};
 	void destroySingleton();
 
-public:
+	void Reset(); // Deletes all contacts.
+	bool checkCollisionAndGenerateContact(Shape* pShape1, glm::vec2 pos1, Shape* pShape2, glm::vec2 pos2 );
 
+public:
+	std::list<Contact*> mContacts;
+
+	// 2D Array of function pointers used to store collision functions.
+	bool (*CollisionFunctions[Shape::ShapeType::NUM][Shape::ShapeType::NUM])(Shape* pShape1, glm::vec2 pos1, Shape* pShape2, glm::vec2 pos2, std::list<Contact*>& mContacts);
 
 private:
 	CollisionManager();
