@@ -14,7 +14,7 @@
             "Texture": "Ship1.png",
             "Color": [0.0, 0.6, 0.1, 1.0]
         },
-        "TYPE_PHYSICSDYNAMIC":
+        "TYPE_PHYSICSBODY":
         {
             "Mass": 5.0,
             "AABB":
