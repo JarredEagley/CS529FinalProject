@@ -1,5 +1,14 @@
 #pragma once
 
+#include "EventManager.h"
+
+class CollideEvent : public Event
+{
+public:
+	CollideEvent();
+	~CollideEvent();
+};
+
 
 class PhysicsManager
 {
@@ -11,6 +20,8 @@ public:
 		return instance;
 	};
 	void destroySingleton();
+
+	void Update(float frameTime);
 
 public:
 	// No public variables.

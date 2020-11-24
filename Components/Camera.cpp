@@ -8,10 +8,6 @@
 
 Camera::Camera() : Component(ComponentTypes::TYPE_CAMERA)
 {
-	glm::vec3 offset = glm::vec3(0.0f,0.0f,0.0f);
-	
-	projMatrix = glm::mat4(1.0f);
-	offsetTransMatrix = glm::mat4(1.0f);
 }
 
 Camera::~Camera()
@@ -21,17 +17,22 @@ Camera::~Camera()
 void Camera::Update()
 {
 	// Update this game object's transformation based on parent if one exists...
+	/*
 	if (this->mpParentGO != nullptr)
 	{
 		Transform* pOwnerTransform = static_cast<Transform*>(this->mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 		Transform* pParentTransform = static_cast<Transform*>(this->mpParentGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 		pOwnerTransform->setPosition(pParentTransform->getPosition()); // Just set position. No need to alter camera angle.
 	}
+	*/
 
-	this->right = (float)(GlobalManager::getGraphicsManager()->windowWidth) * scale/1000.0f;
-	this->left = -(float)(GlobalManager::getGraphicsManager()->windowWidth) * scale/1000.0f;
-	this->top = (float)(GlobalManager::getGraphicsManager()->windowHeight) * scale/1000.0f;
+	this->right =   (float)(GlobalManager::getGraphicsManager()->windowWidth) * scale/1000.0f;
+	this->left =   -(float)(GlobalManager::getGraphicsManager()->windowWidth) * scale/1000.0f;
+	this->top =     (float)(GlobalManager::getGraphicsManager()->windowHeight) * scale/1000.0f;
 	this->bottom = -(float)(GlobalManager::getGraphicsManager()->windowHeight) * scale/1000.0f;
+
+	pTransform->setZ(scale);
+	
 
 	// Will be moved to a camera controller component.
 	if (GlobalManager::getInputManager()->getWheelY() != 0)
@@ -52,32 +53,31 @@ void Camera::Update()
 	// Build perspective transformation...
 	buildTransform();
 }
-
+/*
 void Camera::assignParent(GameObject* pGO)
 {
 	this->mpParentGO = pGO;
 }
+*/
 
 void Camera::buildTransform()
 {
-	// Get transform. 
-	
-	glm::mat4 camTransform = glm::mat4(1.0f);
-	Transform* pTrans = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-	if (pTrans == nullptr)
-		std::cout << "Warning: Camera component's GameObject did not have transform component." << std::endl;
-	else
-	{
-		camTransform = pTrans->getTransformationMatrix();
-	}
-	projMatrix = glm::mat4(1.0f);
+	cameraProjection = glm::mat4(1.0f);
+	//cameraProjection = glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
 
-	projMatrix = glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
+	cameraProjection = glm::perspective(45.0f, 1.0f, 0.1f, 1000.0f);
+
+	cameraTransform = (glm::mat4(1.0f))/(pTransform->getTransformationMatrix());
+	//cameraTransform = (pTransform->getTransformationMatrix());
+	
+
+	//cameraTransform = glm::translate(cameraTransform, glm::vec3(0,0,0));
+	//cameraTransform = glm::rotate(cameraTransform, glm::degrees(45.0f), glm::vec3(1, 0, 0));
+
 	//projMatrix = glm::translate(projMatrix, camTransform);
 	
-	
-	projMatrix = glm::translate(projMatrix, offset);
-	projMatrix = glm::rotate(projMatrix, glm::degrees(-80.0f), glm::vec3(1,0,0)); // Building this into the proj matrix. A bit hacky, but it works.
+	//cameraProjection = glm::translate(cameraProjection, offset);
+	//cameraRotation = glm::rotate(glm::mat4(1.0f), glm::degrees(-80.0f), glm::vec3(1,0,0)); // Building this into the proj matrix. A bit hacky, but it works.
 }
 
 void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
@@ -85,6 +85,6 @@ void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	// For now, I'll just auto-bind.
 	GlobalManager::getGraphicsManager()->setCurrentCamera(this->mpOwner);
 
-	Transform* pTrans = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-	pTrans->setZ(5.0);
+	pTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+	pTransform->setZ(5.0);
 }

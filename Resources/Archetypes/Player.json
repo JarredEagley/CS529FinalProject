@@ -13,6 +13,22 @@
         {
             "Texture": "Ship1.png",
             "Color": [0.0, 0.6, 0.1, 1.0]
+        },
+        "TYPE_PHYSICSDYNAMIC":
+        {
+            "Mass": 5.0,
+            "AABB":
+            {
+                "Left": 2.0,
+                "Right": 2.0,
+                "Top": 5.0,
+                "Bottom":5.0
+            }
+            "OR",
+            "Circle":
+            {
+                "Radius": 10.0
+            }
         }
     }
 }

@@ -10,7 +10,7 @@
 						and destroyed correctly.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
-	Project:			JarredEagley_Milestone2
+	Project:			JarredEagley_FinalProject
 	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
 	Creation date:		10/20/2020
 
@@ -28,6 +28,8 @@ ResourceManager*		GlobalManager::pRM = nullptr;
 Serializer*				GlobalManager::pSer = nullptr;
 GraphicsManager*		GlobalManager::pGraphM = nullptr;
 GameObjectFactory*		GlobalManager::pGOFactory = nullptr;;
+PhysicsManager*			GlobalManager::pPhysM = nullptr;
+EventManager*			GlobalManager::pEM = nullptr;
 
 // Fires all the getters to initialze all singletons GM is responsible for.
 void GlobalManager::initSingletons()
@@ -39,6 +41,8 @@ void GlobalManager::initSingletons()
 	getSerializer();
 	getGraphicsManager();
 	getGameObjectFactory();
+	getPhysicsManager();
+	getEventManager();
 }
 
 // Call the destroy method on every singleton. 
@@ -52,6 +56,8 @@ void GlobalManager::destroySingleton()
 	pSer->destroySingleton();
 	pGraphM->destroySingleton();
 	pGOFactory->destroySingleton();
+	pPhysM->destroySingleton();
+	pEM->destroySingleton();
 
 	delete instance;
 }

@@ -48,19 +48,19 @@ void ControllerSlider::Update()
 	FrameRateController* pFRC = GlobalManager::getFrameRateController();
 	
 	// If key press.
-	if (pIM->IsKeyPressed(SDL_SCANCODE_UP))
-		pT->incrementY( -(float)(mspeed * pFRC->getFrameTime()) );
-	if (pIM->IsKeyPressed(SDL_SCANCODE_DOWN))
-		pT->incrementY(  (float)(mspeed * pFRC->getFrameTime()) );
-	if (pIM->IsKeyPressed(SDL_SCANCODE_LEFT))
+	if (pIM->IsKeyPressed(SDL_SCANCODE_W))
+		pT->incrementY( (float)(mspeed * pFRC->getFrameTime()) );
+	if (pIM->IsKeyPressed(SDL_SCANCODE_S))
+		pT->incrementY(  -(float)(mspeed * pFRC->getFrameTime()) );
+	if (pIM->IsKeyPressed(SDL_SCANCODE_A))
 		pT->incrementX( -(float)(mspeed * pFRC->getFrameTime()) );
-	if (pIM->IsKeyPressed(SDL_SCANCODE_RIGHT))
+	if (pIM->IsKeyPressed(SDL_SCANCODE_D))
 		pT->incrementX(  (float)(mspeed * pFRC->getFrameTime()) );
 
 	if (pIM->IsKeyPressed(SDL_SCANCODE_E))
-		pT->incrementRotation((float)(0.1f * pFRC->getFrameTime()));
-	else if (pIM->IsKeyPressed(SDL_SCANCODE_Q))
 		pT->incrementRotation((float)( - 0.1f * pFRC->getFrameTime()));
+	else if (pIM->IsKeyPressed(SDL_SCANCODE_Q))
+		pT->incrementRotation((float)( 0.1f * pFRC->getFrameTime()));
 
 }
 

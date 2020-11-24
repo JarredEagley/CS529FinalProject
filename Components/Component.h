@@ -22,6 +22,7 @@
 #include "rapidjson/document.h"
 
 class GameObject; 
+class Event;
 
 // Abstract class because of Update() = 0...
 class Component
@@ -37,6 +38,7 @@ public:
 
 	//virtual void Serialize(std::ifstream& InputStream) = 0;  
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt) = 0;  
+	virtual void handleEvent(Event* pEvent) {};
 public:
 	GameObject* mpOwner; // Should be private with a setter TO-DO
 private:

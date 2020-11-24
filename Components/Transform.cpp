@@ -41,27 +41,36 @@ void Transform::Update()
 {
 	buildTransformationMatrix();
 
+	//std::cout << "DEBUG - Rotation = " << this->getRotation() << std::endl;
+
 	//if (pParentTransform ==  nullptr) // TO-DO: Remove this temp test stuff. 
 		//incrementRotation(GlobalManager::getFrameRateController()->getFrameTime() * 0.1f);
 } 
 
 void Transform::buildTransformationMatrix()
 {
-	// Build the transformations.
 	mTransMatrix = glm::mat4(1.0f);
-	mTransMatrix = glm::translate(mTransMatrix, glm::vec3(mPosition));
-	mTransMatrix = glm::rotate(mTransMatrix, glm::radians(mRotation), glm::vec3(0,0,1));
-	mTransMatrix = glm::scale(mTransMatrix, mScale);
-
 	// Apply parent transform, if applicable.
 	if (pParentTransform != nullptr)
 	{
 		// TO-DO: THIS IS HORRIBLY INEFFICIENT!!!
+		//std::cout << "DEBUG - " << pParentTransform->mPosition.x << ", " << pParentTransform->mPosition.y << std::endl;
 		pParentTransform->buildTransformationMatrix();
-		mTransMatrix = glm::translate(mTransMatrix, -pParentTransform->getPosition());
+		mTransMatrix = glm::translate(mTransMatrix, pParentTransform->getPosition());
 	}
 
+	// Build the transformations.
+	mTransMatrix = glm::translate(mTransMatrix, glm::vec3(mPosition));
+	mTransMatrix = glm::rotate(mTransMatrix, glm::radians(mRotation), glm::vec3(0,0,1));
+	mTransMatrix = glm::scale(mTransMatrix, mScale);
+
+
 	//std::cout << "built transformation matrix. (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
+}
+
+void Transform::setPosition(glm::vec2 pos)
+{
+	this->mPosition.x = pos.x; this->mPosition.y = pos.y;
 }
 
 void Transform::setPosition(glm::vec3 pos)
@@ -128,7 +137,7 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		if (transObj["Translation"].IsArray() && transObj["Translation"].GetArray().Size() >= 2 && transObj["Translation"].GetArray()[0].IsNumber())
 		{
 			setX( transObj["Translation"].GetArray()[0].GetFloat() );
-			setX( transObj["Translation"].GetArray()[1].GetFloat() );
+			setY( transObj["Translation"].GetArray()[1].GetFloat() );
 			if (transObj["Translation"].GetArray().Size() > 2)
 				setX( transObj["Translation"].GetArray()[2].GetFloat() ); // Optional Z.
 		}

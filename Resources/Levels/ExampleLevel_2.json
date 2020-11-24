@@ -1,0 +1,33 @@
+{
+    "Name": "ExampleLevel",
+    "Type": "Level",
+    "GameObjects":
+    [
+
+        {
+            "Name": "PlayerShip",
+            "Archetype": "Player.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0.0, 0.0],
+                    "Rotation": 0,
+                    "Scale": [10.0, 10.0]
+                }
+            }
+        },
+        {
+            "Name": "MainCamera",
+            "Archetype": "Camera.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Parent": "PlayerShip",
+                    "Translation": [0.0, 0.0, 10.0]
+                }
+            }
+        }
+    ]
+}

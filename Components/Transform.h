@@ -32,6 +32,7 @@ public:
 
 	void Update();
 
+	void setPosition(glm::vec2); // Ignores Z.
 	void setPosition(glm::vec3);
 	void setPosition(glm::vec4);
 	void setRotation(float);

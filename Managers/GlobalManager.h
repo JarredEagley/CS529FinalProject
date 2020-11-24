@@ -25,6 +25,8 @@
 #include "Serializer.h"
 #include "GraphicsManager.h"
 #include "GameObjectFactory.h"
+#include "PhysicsManager.h"
+#include "EventManager.h"
 
 class GlobalManager
 {
@@ -49,6 +51,8 @@ public:
 	static Serializer* getSerializer()						{ return pSer->getInstance(); };
 	static GraphicsManager* getGraphicsManager()			{ return pGraphM->getInstance(); };
 	static GameObjectFactory* getGameObjectFactory()		{ return pGOFactory->getInstance(); };
+	static PhysicsManager* getPhysicsManager()				{ return pPhysM; };
+	static EventManager* getEventManager()					{ return pEM->getInstance(); };
 private:
 	GlobalManager();
 private:
@@ -62,5 +66,7 @@ private:
 	static Serializer* pSer;
 	static GraphicsManager* pGraphM;
 	static GameObjectFactory* pGOFactory;
+	static PhysicsManager* pPhysM;
+	static EventManager* pEM;
 };
 

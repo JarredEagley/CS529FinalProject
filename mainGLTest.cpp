@@ -122,90 +122,10 @@ int main(int argc, char*argv[])
 	// Set framerate.
 	GlobalManager::getFrameRateController()->setMaxFramerate(30);
 
-	// VERTEX TEST STUFF ---------
-	// Create vertex array object.
-	/*
-	Shader shaderTest(".\\Shaders\\core.vert", ".\\Shaders\\core.frag");
-
-
-	float verts[] = {
-		// positions          // colors             // texture coords
-		 0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
-		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f, 1.0f,   0.0f, 1.0f    // top left 
-	};
-	unsigned int indices[] = {
-		0,1,3, // First triangle.
-		1,2,3  // Second triangle.
-	};
-	
-	// Vertex array object, vertex buffer object, element buffer object.
-	GLuint vao, vbo, ebo;
-	// Generate
-	glGenVertexArrays(1, &vao);
-	glGenBuffers(1, &vbo);
-	glGenBuffers(1, &ebo);
-	// Bind
-	glBindVertexArray(vao);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	int const number_of_values = 9;
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, number_of_values * sizeof(GLfloat), (GLvoid*)0); // position attribute.
-	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, number_of_values * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat))); // color attribute.
-	glEnableVertexAttribArray(1);
-
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, number_of_values * sizeof(GLfloat), (GLvoid*)(7 * sizeof(GLfloat))); // UV attribute.
-	glEnableVertexAttribArray(2);
-
-
-
-	// Texture stuff...
-
-	unsigned int texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
-	
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // try linear as well...
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	
-
-	// Load image
-	int texwidth, texheight, nrChannels;
-	stbi_uc *data = stbi_load("Resources\\Ship1.png", &texwidth, &texheight, &nrChannels, STBI_rgb_alpha);
-	
-	if (data)
-	{
-		//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texwidth, texheight, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		//glGenerateMipmap(GL_TEXTURE_2D); // Mipmap might not be needed for my game...
-	}
-	else
-	{
-		std::cout << "FAILED TO LOAD TEXTURE!!!" << std::endl;
-	}
-	stbi_image_free(data); // We dont actually need the image anymore because its stored in openGL!
-
-	glUniform1i(glGetUniformLocation(shaderTest.ProgramID, "ourTexture"), 0);
-	//shaderTest.setInt("ourTexture", 0);
-
-	shaderTest.Use();	
-	*/
-
+	// Load level.
 	GlobalManager::getGameObjectFactory()->loadLevel(".\\Resources\\Levels\\ExampleLevel.json");
 
-	// Alpha blend mode.
-
-	// END OF VERTEX TEST STUFF ---------
-	
+	// Alpha blend.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // TO-DO: Where does this actually belong? init?
 	glEnable(GL_BLEND);
 	

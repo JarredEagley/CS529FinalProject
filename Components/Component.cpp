@@ -21,5 +21,5 @@
 Component::Component(unsigned int Type)
 {
 	mType = Type; 
-	mpOwner = nullptr;
+	mpOwner = nullptr; // Set at the end of GameObject addcomponent function.
 }

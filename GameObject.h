@@ -19,6 +19,7 @@
 #include <unordered_map>
 
 class Component;
+class Event;
 
 class GameObject
 {
@@ -29,6 +30,7 @@ public:
 	void Update();
 	Component* AddComponent(unsigned int Type); // Returns the component which was allocated.
 	Component* GetComponent(unsigned int Type); // Because we need to access components. 
+	void handleEvent(Event *pEvent);
 public:
 	std::unordered_map<unsigned int, Component*> mComponents; // TYPE, COMPONENT
 	int getID() { return this->gameObjectID; }

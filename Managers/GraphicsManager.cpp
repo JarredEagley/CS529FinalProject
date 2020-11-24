@@ -29,11 +29,21 @@ void GraphicsManager::destroySingleton()
 GraphicsManager::GraphicsManager()
 {
 	pCurrentCamera = nullptr;
+	windowHeight = 0;
+	windowWidth = 0;
 }
 
 // Draws every GameObject stored in the GameObjectManger.
 void GraphicsManager::drawAllGameObjects()
 {
+	// TEMPORARY -- the debug draw toggle for milestone 3
+	bool spacebar = GlobalManager::getInputManager()->IsKeyTriggered(SDL_SCANCODE_SPACE);
+	if (spacebar)
+	{
+		std::cout << "Toggling milestone 3 draw mode..." << std::endl;
+		toggle = !toggle;
+	}
+
 	GameObjectManager *pGOM = GlobalManager::getGameObjectManager();
 	for (auto pGOPair : pGOM->mGameObjects)
 	{
@@ -55,7 +65,7 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	if (pRect == nullptr)
 		return;
 
-	Transform* pCameraTransform = nullptr;
+	//Transform* pCameraTransform = nullptr;
 	Camera* pCamera = nullptr;
 	if (pCurrentCamera == nullptr)
 	{
@@ -63,7 +73,7 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	}
 	else
 	{
-		pCameraTransform = static_cast<Transform*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		//pCameraTransform = static_cast<Transform*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 		pCamera = static_cast<Camera*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
 	}
 
@@ -75,6 +85,8 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 		std::cout << "Warning: GameObject " << pGO->getID() << " had an invalid shaderName. Aborting draw." << std::endl;
 		return;
 	}
+
+	//glm::mat4 cameraTrasform = pCamera->getRotMatrix() * pCameraTransform->getTransformationMatrix(); // Separated out rotation for now.
 
 	// --- Draw --- //
 
@@ -91,14 +103,10 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr( pTransform->getTransformationMatrix() ));
 	// Cam transforms
 	loc = glGetUniformLocation(program->ProgramID, "viewTrans");
-	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr( pCameraTransform->getTransformationMatrix() ));
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(pCamera->getTransMatrix() ));
 	loc = glGetUniformLocation(program->ProgramID, "viewProj");
 	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr( pCamera->getProjMatrix() ));
 
-	// TEMPORARY -- the debug draw toggle for milestone 3
-	bool spacebar = GlobalManager::getInputManager()->IsKeyTriggered(SDL_SCANCODE_SPACE);
-	if (spacebar)
-		toggle = !toggle;
 	loc = glGetUniformLocation(program->ProgramID, "debugDraw");
 	glUniform1i(loc, toggle);
 

@@ -31,7 +31,7 @@
 
 
 // Init the maxId.
-unsigned int GameObject::maxId = NULL;
+unsigned int GameObject::maxId = NULL; // TO-DO: Should I depricate this? I should probably depricate this...
 
 GameObject::GameObject()
 {
@@ -118,4 +118,13 @@ Component* GameObject::GetComponent(unsigned int Type)
 		*/
 
 	return nullptr;
+}
+
+
+void GameObject::handleEvent(Event* pEvent)
+{
+	for (auto pComponentPair : mComponents)
+	{
+		pComponentPair.second->handleEvent(pEvent);
+	}
 }
