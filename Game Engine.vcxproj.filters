@@ -48,14 +48,17 @@
     <ClCompile Include="Components\ControllerShip.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Components\PhysicsStatic.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\PhysicsDynamic.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Managers\PhysicsManager.cpp">
       <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\EventManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\CollisionManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\PhysicsBody.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,14 +111,17 @@
     <ClInclude Include="Components\ControllerShip.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Components\PhysicsStatic.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\PhysicsDynamic.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Managers\PhysicsManager.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\EventManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\CollisionManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\PhysicsBody.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

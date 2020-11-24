@@ -40,6 +40,8 @@ public:
 	void Update(float frameTime);
 public:
 	std::list<Event*> mEvents; // This is a list and not a vector because it's the fastest to remove an element from the middle. Priority queue would also make sense.
+
+	std::unordered_map<EventType, std::list<GameObject*>> mSubscriptions; // unordered_multimap may be appropriate.
 private:
 	EventManager();
 private:

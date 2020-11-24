@@ -24,7 +24,7 @@ public:
 	void Update(float frameTime);
 
 public:
-	// No public variables.
+	static std::list<PhysicsBody*> gravityBodies;
 private:
 	PhysicsManager();
 private:

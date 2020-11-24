@@ -42,3 +42,26 @@ void EventManager::Update(float frameTime)
 			++it;
 	}
 }
+/* stuff from 11/24/2020
+void EventManager::broadcastEventToSubscribers(Event* pEvent)
+{
+	std::list<GameObject*>& listOfSubs = mSubscriptions[Et];
+
+
+
+	//////
+}
+
+void EventManager::Subscribe(EventType Et, GameObject* pGameObject)
+{
+	std::list<GameObject*>& listOfSubs = mSubscriptions[Et];
+
+	for (auto pGO : GlobalManager::getGameObjectManager()->mGameObjects)
+	{
+		if (pGO.second == pGameObject)
+			return;
+
+		///////
+	}
+}
+*/

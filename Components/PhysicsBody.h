@@ -15,6 +15,10 @@ public:
 	void Update();
 	void Integrate(float deltaTme);
 
+	bool hasGravity() { return hasGravity; }; // hasGravity is read-only. Setter needs to inform the physics manager.
+	void enableGravity();
+	void disableGravity();
+
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
@@ -32,5 +36,6 @@ public:
 
 private:
 private:
+	bool hasGravity; 
 };
 

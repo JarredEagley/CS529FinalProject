@@ -5,9 +5,13 @@
 #include "../GameObject.h"
 
 PhysicsManager* PhysicsManager::instance = nullptr;
+auto PhysicsManager::gravityBodies; // Initialize the vector.
+
 
 void PhysicsManager::destroySingleton()
 {
+	// The bodies pointed to in the vector belong to their game objects; game objects will dispose of them.
+	gravityBodies.clear();
 	delete instance;
 }
 
