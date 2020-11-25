@@ -2,6 +2,9 @@
 #include "GlobalManager.h"
 
 EventManager* EventManager::instance = nullptr;
+std::list<Event*> EventManager::mEvents;
+std::unordered_map<EventType, std::list<GameObject*>> EventManager::mSubscriptions;
+
 
 void EventManager::destroySingleton()
 {
@@ -39,7 +42,8 @@ void EventManager::Update()
 		pEvent->mTimer -= GlobalManager::getFrameRateController()->getFrameTime();
 		if (pEvent->mTimer <= 0.0f)
 		{
-			broadcastEvent(pEvent);
+			//broadcastEvent(pEvent);
+			broadcastEventToSubscribers(pEvent);
 			delete pEvent;
 			it = mEvents.erase(it); // This will update the iterator and remove the element!
 		}
@@ -47,26 +51,23 @@ void EventManager::Update()
 			++it;
 	}
 }
-/* stuff from 11/24/2020
+
+
 void EventManager::broadcastEventToSubscribers(Event* pEvent)
 {
-	std::list<GameObject*>& listOfSubs = mSubscriptions[Et];
+	std::list<GameObject*>& listOfSubs = mSubscriptions[pEvent->mType];
 
-
-
-	//////
+	for (auto pGO : listOfSubs)
+		pGO->handleEvent(pEvent);
 }
 
 void EventManager::Subscribe(EventType Et, GameObject* pGameObject)
 {
 	std::list<GameObject*>& listOfSubs = mSubscriptions[Et];
 
-	for (auto pGO : GlobalManager::getGameObjectManager()->mGameObjects)
-	{
-		if (pGO.second == pGameObject)
+	for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects) // TO-DO: Am I 100% sure this is right??
+		if (pGOPair.second == pGameObject)
 			return;
 
-		///////
-	}
+	listOfSubs.push_back(pGameObject);
 }
-*/

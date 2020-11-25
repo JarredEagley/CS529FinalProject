@@ -4,7 +4,7 @@
 
 class GameObject;
 
-enum EventType
+enum class EventType
 {
 	COLLIDE,
 
@@ -39,13 +39,18 @@ public:
 	};
 	void destroySingleton();
 
-	void broadcastEvent(Event* pEvent);
+	void broadcastEvent(Event* pEvent); // Broadcast to everybody.
+	void broadcastEventToSubscribers(Event* pEvent);
 	void addTimedEvent(Event* pEvent);
 	void Update();
-public:
-	std::list<Event*> mEvents; // This is a list and not a vector because it's the fastest to remove an element from the middle. Priority queue would also make sense.
 
-	std::unordered_map<EventType, std::list<GameObject*>> mSubscriptions; // unordered_multimap may be appropriate.
+	void Subscribe(EventType Et, GameObject* pGameObject); 
+	 
+public:
+	static std::list<Event*> mEvents; // This is a list and not a vector because it's the fastest to remove an element from the middle. Priority queue would also make sense.
+
+	static std::unordered_map<EventType, std::list<GameObject*>> mSubscriptions; // unordered_multimap may be appropriate.
+
 private:
 	EventManager();
 private:
