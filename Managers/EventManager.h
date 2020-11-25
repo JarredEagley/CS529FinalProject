@@ -41,7 +41,7 @@ public:
 
 	void broadcastEvent(Event* pEvent);
 	void addTimedEvent(Event* pEvent);
-	void Update(float frameTime);
+	void Update();
 public:
 	std::list<Event*> mEvents; // This is a list and not a vector because it's the fastest to remove an element from the middle. Priority queue would also make sense.
 

@@ -165,6 +165,7 @@ void gameLoop()
 			}
 		} // Done handling events.
 
+		GlobalManager::getEventManager()->Update();
 
 		// ----- Updates ----- //
 

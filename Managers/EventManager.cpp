@@ -27,7 +27,7 @@ void EventManager::addTimedEvent(Event* pEvent)
 	mEvents.push_back(pEvent);
 }
 
-void EventManager::Update(float frameTime)
+void EventManager::Update()
 {
 	// Using an iterator because we want to remove from the middle potentially.
 	std::list<Event*>::iterator it = mEvents.begin();
@@ -36,7 +36,7 @@ void EventManager::Update(float frameTime)
 	{
 		Event* pEvent = *it;
 
-		pEvent->mTimer -= frameTime;
+		pEvent->mTimer -= GlobalManager::getFrameRateController()->getFrameTime();
 		if (pEvent->mTimer <= 0.0f)
 		{
 			broadcastEvent(pEvent);

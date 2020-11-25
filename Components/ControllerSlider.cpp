@@ -20,10 +20,10 @@
 #include <iostream>
 
 #include "ComponentTypes.h"
-#include "../Components/PhysicsBody.h"
+#include "../Components/Transform.h"
 #include "../Managers/GlobalManager.h"
 
-#include "../../SDL2.0/include//SDL_scancode.h"
+#include "../../SDL2.0/include/SDL_scancode.h"
 
 ControllerSlider::ControllerSlider() : Component(ComponentTypes::TYPE_CONTROLLERSLIDER), mspeed(1.0f)
 {
@@ -76,10 +76,12 @@ void ControllerSlider::handleEvent(Event* pEvent)
 	{
 		CollideEvent* pCollideEvent = static_cast<CollideEvent*>(pEvent);
 		
-		PhysicsBody* pBody = static_cast<PhysicsBody*>(mpOwner->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+		Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 
-		if (pBody != nullptr)
-			pBody->mPosition.x = 0.0f;
+		if (pT != nullptr)
+		{
+			pT->setPosition(glm::vec2(0.0f, 0.0f));
+		}
 	}
 }
 
