@@ -4,14 +4,16 @@
 #include "../Managers/GlobalManager.h"
 
 ControllerShip::ControllerShip() : Component(ComponentTypes::TYPE_CONTROLLERSHIP)
+, mThrottle(0.0f), mMainAcceleration(1.0f), mSecondaryAcceleration(0.01f), mAngularAcceleration(0.1)
 {
-
 }
 
+/*
 ControllerShip::ControllerShip(float speed) : Component(ComponentTypes::TYPE_CONTROLLERSHIP)
 {
 
 }
+*/
 
 ControllerShip::~ControllerShip()
 {
@@ -27,14 +29,41 @@ void ControllerShip::Update()
 	InputManager* pIM = GlobalManager::getInputManager();
 	FrameRateController* pFRC = GlobalManager::getFrameRateController();
 
+	// Rotation
 	if (pIM->IsKeyPressed(SDL_SCANCODE_E))
 	{
-		pPhys->mTotalTorque = 1.0f;
+		pPhys->applyTorque(-mAngularAcceleration);
 	}
-	if (pIM->IsKeyPressed(SDL_SCANCODE_Q))
+	else if (pIM->IsKeyPressed(SDL_SCANCODE_Q))
 	{
-		pPhys->mTotalTorque = -1.0f;
+		pPhys->applyTorque(mAngularAcceleration);
 	}
+	else
+	{
+		// Try to stop.
+		pPhys->applyTorque(-mAngularAcceleration * pPhys->mAngularVelocity * 2.0);
+	}
+
+	// Translation
+	if (pIM->IsKeyPressed(SDL_SCANCODE_W))
+	{
+		pPhys->applyForce(pPhys->mForwardDir * mSecondaryAcceleration);
+	}
+	if (pIM->IsKeyPressed(SDL_SCANCODE_S))
+	{
+		pPhys->applyForce(-pPhys->mForwardDir * mSecondaryAcceleration);
+	}
+	if (pIM->IsKeyPressed(SDL_SCANCODE_A))
+	{
+		pPhys->applyForce(-pPhys->mRightDir * mSecondaryAcceleration);
+	}
+	if (pIM->IsKeyPressed(SDL_SCANCODE_D))
+	{
+		pPhys->applyForce(pPhys->mRightDir * mSecondaryAcceleration);
+	}
+
+
+	// Main drive
 
 }
 

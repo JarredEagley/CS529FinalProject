@@ -7,6 +7,7 @@
 
 PhysicsBody::PhysicsBody() : Component(ComponentTypes::TYPE_PHYSICSBODY)
 {
+	// TO-DO: Move these into initalizer.
 	mHasGravity = false;
 	mPosition = glm::vec2(0.0f);
 	mAngle = 0.0f;
@@ -20,6 +21,9 @@ PhysicsBody::PhysicsBody() : Component(ComponentTypes::TYPE_PHYSICSBODY)
 	mTotalTorque = 0.0f;
 
 	mMass = mInvMass = 1.0f;
+
+	mForwardDir = glm::vec2(0.0f, 1.0f);
+	mRightDir = glm::vec2(1.0f, 0.0f);
 
 	mpShape = nullptr;
 }
@@ -54,6 +58,7 @@ void PhysicsBody::Integrate(float deltaTime)
 	mAcceleration = mTotalForce * mInvMass;
 	mAngularAcceleration = mTotalTorque * mInvMass;
 
+	// Clear force and torque.
 	mTotalForce = glm::vec2(0.0f);
 	mTotalTorque = 0.0f;
 
@@ -64,6 +69,9 @@ void PhysicsBody::Integrate(float deltaTime)
 	// Integrate position. P1 = V1*t + P0
 	mPosition = mVelocity * deltaTime + mPosition;
 	mAngle = mAngularVelocity * deltaTime + mAngle;
+
+	mForwardDir = glm::vec2(sin(glm::radians(-mAngle)), cos(glm::radians(mAngle)));
+	mRightDir = glm::vec2( cos(glm::radians(mAngle)), sin(glm::radians(mAngle)) );
 
 	if (nullptr != pT)
 	{

@@ -26,6 +26,9 @@ public:
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
+	glm::vec2 mForwardDir;
+	glm::vec2 mRightDir;
+
 	glm::vec2 mPosition;
 	glm::vec2 mPrevPosition;
 	glm::vec2 mVelocity;
