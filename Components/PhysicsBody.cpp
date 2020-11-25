@@ -4,6 +4,8 @@
 #include "../GameObject.h"
 #include "../Managers/GlobalManager.h"
 
+//#define G_CONST 6.67 // The universal gravitational constant. NOT CURRENTLY CORRECT. TO-DO:
+#define G_CONST 0.0000000000667 // The universal gravitational constant. 
 
 PhysicsBody::PhysicsBody() : Component(ComponentTypes::TYPE_PHYSICSBODY)
 {
@@ -41,6 +43,8 @@ void PhysicsBody::Update()
 
 void PhysicsBody::Integrate(float deltaTime)
 {
+	calculateGravityForces();
+
 	// Get the associated transform. 
 	Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // Probably shouldn't get this EVERY integration. Oh well.
 
@@ -70,6 +74,7 @@ void PhysicsBody::Integrate(float deltaTime)
 	mPosition = mVelocity * deltaTime + mPosition;
 	mAngle = mAngularVelocity * deltaTime + mAngle;
 
+	// Compute new direction vectors.
 	mForwardDir = glm::vec2(sin(glm::radians(-mAngle)), cos(glm::radians(mAngle)));
 	mRightDir = glm::vec2( cos(glm::radians(mAngle)), sin(glm::radians(mAngle)) );
 
@@ -80,6 +85,47 @@ void PhysicsBody::Integrate(float deltaTime)
 	}
 }
 
+
+void PhysicsBody::calculateGravityForces()
+{
+	for (auto pBody : GlobalManager::getPhysicsManager()->gravityBodies)
+	{
+		if (this == pBody)
+			continue;
+
+		float numerator = (G_CONST * this->mMass * pBody->mMass);
+
+		float denominator = (pBody->mPosition.x - this->mPosition.x) * (pBody->mPosition.x - this->mPosition.x)
+			+ (pBody->mPosition.y - this->mPosition.y) * (pBody->mPosition.y - this->mPosition.y);
+		
+		if (denominator == 0.0f)
+			continue;
+
+		float gravScale = numerator / denominator;
+
+		// I tried to avoid needing to normalize. I might try again if I have time.
+
+		glm::vec2 gravitationalForce = glm::normalize(pBody->mPosition - this->mPosition) * std::max(gravScale, 10.0f);
+
+		/*
+		glm::vec2 denominator = (this->mPosition - pBody->mPosition);//* (this->mPosition - pBody->mPosition) ;
+		if (denominator.x == 0.0f && denominator.y == 0.0f)
+		{
+			std::cout << "DEBUG - Aborting gravitational force calculation\n";
+			continue;
+		}
+
+		denominator = denominator * denominator;
+
+		glm::vec2 gravitationalForce = -numerator/denominator;
+
+		std::cout << "DEBUG - Applying gravitational force (" << gravitationalForce.x << ", " << gravitationalForce.y << ")\n";
+		*/
+		//std::cout << "DEBUG - Applying gravitational force (" << gravitationalForce.x << ", " << gravitationalForce.y << ")\n";
+
+		applyForce(gravitationalForce);
+	}
+}
 
 void PhysicsBody::applyForce(glm::vec2 F)
 {
@@ -191,6 +237,13 @@ void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	}
 	else
 		std::cout << "Warning: Deserialized Physics Body component did not contain a collision shape parameter." << std::endl;
+
+	// Has gravity?
+	if (physBodyObj.HasMember("HasGravity"))
+	{
+		enableGravity();
+	}
+
 
 	// TO-DO: Allow static flag here. Don't need it just yet, though.
 

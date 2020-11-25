@@ -46,7 +46,7 @@ void Camera::buildTransform()
 	//cameraProjection = glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
 
 	// Perspective
-	cameraProjection = glm::perspective(45.0f, 1.0f, 0.1f, 10000.0f);
+	cameraProjection = glm::perspective(45.0f, 1.0f, 0.1f, 1000000.0f); // TO-DO: Move these params back into somewhere more generalized.
 
 	// Build transform.
 	cameraTransform = (glm::mat4(1.0f))/(pTransform->getTransformationMatrix());

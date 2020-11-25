@@ -5,9 +5,9 @@
     {
         "TYPE_TRANSFORM":
         {
-            "Translation": [-200.0, -200.0],
+            "Translation": [-2000.0, -2000.0],
             "Rotation": 0,
-            "Scale": [100.0, 100.0]
+            "Scale": [3389.5, 3389.5]
         },
         "TYPE_GLRECT":
         {
@@ -16,11 +16,12 @@
         },
         "TYPE_PHYSICSBODY":
         {
-            "Mass": 5.0,
+            "Mass": 64200000000000,
             "Circle":
             {
-                "Radius": 50.0
-            }
+                "Radius": 3389.5
+            },
+            "HasGravity":""
         }
     }
 }

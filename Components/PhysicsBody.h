@@ -15,6 +15,7 @@ public:
 	void Update();
 	void Integrate(float deltaTme);
 
+	void calculateGravityForces(); // Applies all the gravitational force vectors.
 	void applyForce(glm::vec2 F);
 	void applyTorque(float T);
 
