@@ -8,7 +8,7 @@
             "Rotation": 0,
             "Scale": [50.0, 50.0]
         },
-        "TYPE_CONTROLLERSLIDER": 0.5,
+        "TYPE_CONTROLLERSHIP": "",
         "TYPE_GLRECT":
         {
             "Texture": "Ship1.png",
@@ -16,7 +16,7 @@
         },
         "TYPE_PHYSICSBODY":
         {
-            "Mass": 5.0,
+            "Mass": 200.0,
             "AABB":
             {
                 "Left": 2.0,

@@ -24,6 +24,7 @@
 
 #include "Components/Transform.h"
 #include "Components/ControllerSlider.h"
+#include "Components/ControllerShip.h"
 #include "Components/UpDown.h"
 #include "Components/GLRect.h"
 #include "Components/Camera.h"
@@ -66,6 +67,9 @@ Component* GameObject::AddComponent(unsigned int Type)
 		break;
 	case (ComponentTypes::TYPE_CONTROLLERSLIDER):
 		pNewComponent = new ControllerSlider();
+		break;
+	case (ComponentTypes::TYPE_CONTROLLERSHIP):
+		pNewComponent = new ControllerShip();
 		break;
 	case (ComponentTypes::TYPE_UPDOWN):
 		pNewComponent = new UpDown();

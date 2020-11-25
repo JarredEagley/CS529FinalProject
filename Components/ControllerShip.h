@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "Component.h"
 #include "rapidjson/document.h"
 
@@ -12,13 +11,16 @@ public:
 	~ControllerShip();
 
 	void Update();
-	void setSpeed(float speed);
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 public:
 	// No public variables.
 private:
 	// No private methods.
 private:
-	float mAcceleration;
+	float mThrottle; // Throttle
+	float mMainAcceleration; // Main drive
+	float mSecondaryAcceleration; // Maneuvering thrusters
+	float mAngularAcceleration; // RCS
+
 };
 

@@ -40,11 +40,6 @@ Transform::~Transform()
 void Transform::Update()
 {
 	buildTransformationMatrix();
-
-	//std::cout << "DEBUG - Rotation = " << this->getRotation() << std::endl;
-
-	//if (pParentTransform ==  nullptr) // TO-DO: Remove this temp test stuff. 
-		//incrementRotation(GlobalManager::getFrameRateController()->getFrameTime() * 0.1f);
 } 
 
 void Transform::buildTransformationMatrix()
@@ -54,7 +49,6 @@ void Transform::buildTransformationMatrix()
 	if (pParentTransform != nullptr)
 	{
 		// TO-DO: THIS IS HORRIBLY INEFFICIENT!!!
-		//std::cout << "DEBUG - " << pParentTransform->mPosition.x << ", " << pParentTransform->mPosition.y << std::endl;
 		pParentTransform->buildTransformationMatrix();
 		mTransMatrix = glm::translate(mTransMatrix, pParentTransform->getPosition());
 	}
