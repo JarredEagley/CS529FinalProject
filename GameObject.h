@@ -29,16 +29,15 @@ public:
 
 	void Update();
 	Component* AddComponent(unsigned int Type); // Returns the component which was allocated.
-	Component* GetComponent(unsigned int Type); // Because we need to access components. 
+	Component* GetComponent(unsigned int Type); // Because we need to access components.
 	void handleEvent(Event *pEvent);
 public:
 	std::unordered_map<unsigned int, Component*> mComponents; // <TYPE, COMPONENT>
-	int getID() { return this->gameObjectID; }
-	const char* shaderName = "core";	// May have more shaders in the future.
+	const char* mShaderName = "core";	// May have more shaders in the future.
+	std::string mName;
 private:
 	// No private methods.
 private:
-	static unsigned int maxId; // Keeping track of how many GameObjects we've made. // NOT CURRENTLY USED AT ALL
-	int gameObjectID; 
+	// No private variables.
 };
 

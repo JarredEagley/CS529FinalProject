@@ -34,7 +34,9 @@ void ResourceManager::destroySingleton()
 }
 
 ResourceManager::ResourceManager() 
-{}
+{
+	stbi_set_flip_vertically_on_load(true);
+}
 
 
 GLuint ResourceManager::loadTexture(const char* texName)
@@ -44,10 +46,8 @@ GLuint ResourceManager::loadTexture(const char* texName)
 		return mTextures[texName];
 
 	// Texture by that name doesn't exist. Load it using stb_image, store in vram, then store its id.
-	//std::string texPath = pathTextures + texName; // TO-DO: At what level do I turn the name into a path? Needs to be consistant.
 
 	int width, height, nrChannels;
-	//stbi_uc* data = stbi_load(texPath.c_str(), &width, &height, &nrChannels, STBI_rgb_alpha); 
 	stbi_uc* data = stbi_load(texName, &width, &height, &nrChannels, STBI_rgb_alpha);
 	GLuint texId = NULL;
 	if (data != nullptr)

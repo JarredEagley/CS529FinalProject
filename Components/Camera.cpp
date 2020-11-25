@@ -16,28 +16,12 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	// Update this game object's transformation based on parent if one exists...
-	/*
-	if (this->mpParentGO != nullptr)
-	{
-		Transform* pOwnerTransform = static_cast<Transform*>(this->mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-		Transform* pParentTransform = static_cast<Transform*>(this->mpParentGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-		pOwnerTransform->setPosition(pParentTransform->getPosition()); // Just set position. No need to alter camera angle.
-	}
-	*/
-
-	this->right =   (float)(GlobalManager::getGraphicsManager()->windowWidth) * scale/1000.0f;
-	this->left =   -(float)(GlobalManager::getGraphicsManager()->windowWidth) * scale/1000.0f;
-	this->top =     (float)(GlobalManager::getGraphicsManager()->windowHeight) * scale/1000.0f;
-	this->bottom = -(float)(GlobalManager::getGraphicsManager()->windowHeight) * scale/1000.0f;
-
-	pTransform->setZ(scale);
+	//pTransform->setZ(zoom);
 	
-
 	// Will be moved to a camera controller component.
 	if (GlobalManager::getInputManager()->getWheelY() != 0)
 	{
-		scale -= GlobalManager::getInputManager()->getWheelY() * scale * 0.4f;
+		zoom -= GlobalManager::getInputManager()->getWheelY() * zoom * 0.4f;
 	}
 
 	//std::cout << "DEBUG - offset = " << offset.x << ", " << offset.y << ", " << offset.z << std::endl;
@@ -47,37 +31,36 @@ void Camera::Update()
 	GlobalManager::getInputManager()->getMousePosition(mX, mY);
 	int const winH = GlobalManager::getGraphicsManager()->windowHeight;
 	int const winW = GlobalManager::getGraphicsManager()->windowWidth;
-	this->offset.x = -(mX-(winW/2)) * (scale/500.0f) ; // (these are inverted to get the correct behavior.
-	this->offset.y = (mY-(winH/2)) * (scale/500.0f)  ;
+	this->offset.x = (mX-(winW/2)) * (zoom/500.0f); 
+	this->offset.y = -(mY-(winH/2)) * (zoom/500.0f);
+
+	this->offset.x -= 10.0f; // Correct for weird offset. A bit hacky, but it works.
 
 	// Build perspective transformation...
 	buildTransform();
 }
-/*
-void Camera::assignParent(GameObject* pGO)
-{
-	this->mpParentGO = pGO;
-}
-*/
 
 void Camera::buildTransform()
 {
 	cameraProjection = glm::mat4(1.0f);
 	//cameraProjection = glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
 
-	cameraProjection = glm::perspective(45.0f, 1.0f, 0.1f, 1000.0f);
+	// Perspective
+	cameraProjection = glm::perspective(45.0f, 1.0f, 0.1f, 10000.0f);
 
+	// Build transform.
 	cameraTransform = (glm::mat4(1.0f))/(pTransform->getTransformationMatrix());
-	//cameraTransform = (pTransform->getTransformationMatrix());
+	cameraTransform = (pTransform->getTransformationMatrix());
+	// Offset Translation.
+	cameraTransform = glm::translate(cameraTransform, offset); 
 	
-
-	//cameraTransform = glm::translate(cameraTransform, glm::vec3(0,0,0));
-	//cameraTransform = glm::rotate(cameraTransform, glm::degrees(45.0f), glm::vec3(1, 0, 0));
-
-	//projMatrix = glm::translate(projMatrix, camTransform);
+	// Rotate.
+	cameraTransform = glm::rotate(cameraTransform, 0.15f, glm::vec3(1, 0, 0));
 	
-	//cameraProjection = glm::translate(cameraProjection, offset);
-	//cameraRotation = glm::rotate(glm::mat4(1.0f), glm::degrees(-80.0f), glm::vec3(1,0,0)); // Building this into the proj matrix. A bit hacky, but it works.
+	// Apply Zoom translation
+	cameraTransform = glm::translate(cameraTransform, glm::vec3(0.0f,0.0f,zoom));
+
+	cameraTransform = glm::inverse(cameraTransform);
 }
 
 void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)

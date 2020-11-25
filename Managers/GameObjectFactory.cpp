@@ -126,12 +126,6 @@ GameObject* GameObjectFactory::loadObject(const char* pFileName)
 			pNewComponent->Serialize(itr);
 	}
 
-	// Push object onto the manager.
-	//GlobalManager::getGameObjectManager()->mGameObjects[gameObjectName.c_str()] = pNewGO;
-	//GlobalManager::getGameObjectManager()->mGameObjects.insert(std::make_pair(gameObjectName.c_str(), pNewGO));
-	// TO-DO: Make loadLevel handle pushing stuff onto the gameobjectmanager...
-
-
 	return pNewGO;
 }
 
@@ -233,10 +227,12 @@ void GameObjectFactory::loadLevel(const char* pFileName)
 
 			}
 		}
+
+		// Name
+		pCurrentGO->mName = currentGOName;
 		
 		// Push onto the GOM.
 		GlobalManager::getGameObjectManager()->mGameObjects[currentGOName] = pCurrentGO;
-		//GlobalManager::getGameObjectManager()->mGameObjects.insert(std::make_pair(currentGOName, pCurrentGO));
 	}
 
 }

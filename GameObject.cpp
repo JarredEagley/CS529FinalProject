@@ -22,7 +22,6 @@
 #include "Components/ComponentTypes.h"
 
 
-//#include "Components/Sprite.h"
 #include "Components/Transform.h"
 #include "Components/ControllerSlider.h"
 #include "Components/UpDown.h"
@@ -30,22 +29,9 @@
 #include "Components/Camera.h"
 #include "Components/PhysicsBody.h"
 
-// Init the maxId.
-unsigned int GameObject::maxId = NULL; // TO-DO: Should I depricate this? I should probably depricate this...
-
-GameObject::GameObject()
+GameObject::GameObject() : mName("")
 {
 	std::unordered_map<unsigned int, Component*> mComponents;
-	if (NULL == maxId)
-	{
-		maxId = 0;
-		this->gameObjectID = maxId;
-	}
-	else
-	{
-		++maxId;
-		this->gameObjectID = maxId;
-	}
 }
 
 GameObject::~GameObject()

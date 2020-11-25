@@ -55,7 +55,7 @@ void GraphicsManager::drawAllGameObjects()
 void GraphicsManager::drawGameObject(GameObject* pGO)
 {
 	// Get the shader we want to use.
-	ShaderProgram* program = loadShader(pGO->shaderName);
+	ShaderProgram* program = loadShader(pGO->mShaderName);
 
 	// Components we'll need.
 	GLRect* pRect = static_cast<GLRect*>(pGO->GetComponent(ComponentTypes::TYPE_GLRECT)); // From game object being drawn
@@ -82,7 +82,7 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 
 	if (program == nullptr)
 	{
-		std::cout << "Warning: GameObject " << pGO->getID() << " had an invalid shaderName. Aborting draw." << std::endl;
+		std::cout << "Warning: GameObject " << pGO->mName << " had an invalid shaderName. Aborting draw." << std::endl;
 		return;
 	}
 
