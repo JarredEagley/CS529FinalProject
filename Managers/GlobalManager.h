@@ -52,8 +52,8 @@ public:
 	static Serializer* getSerializer()						{ return pSer->getInstance(); };
 	static GraphicsManager* getGraphicsManager()			{ return pGraphM->getInstance(); };
 	static GameObjectFactory* getGameObjectFactory()		{ return pGOFactory->getInstance(); };
-	static PhysicsManager* getPhysicsManager()				{ return pPhysM; };
-	static CollisionManager* getCollisionManager()			{ return pColM; };
+	static PhysicsManager* getPhysicsManager()				{ return pPhysM->getInstance(); };
+	static CollisionManager* getCollisionManager()			{ return pColM->getInstance(); };
 	static EventManager* getEventManager()					{ return pEM->getInstance(); };
 private:
 	GlobalManager();

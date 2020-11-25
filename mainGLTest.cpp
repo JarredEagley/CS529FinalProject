@@ -163,10 +163,13 @@ void gameLoop()
 			}
 		} // Done handling events.
 
+		GlobalManager::getPhysicsManager()->Update(GlobalManager::getFrameRateController()->getFrameTime());
+
 		// Do updates.
 		for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects)
 			pGOPair.second->Update();
 		
+
 		//std::cout << "DEBUG - " << GlobalManager::getGameObjectManager()->mGameObjects.max_size() << std::endl;
 
 		// Clear the buffer.
@@ -181,6 +184,9 @@ void gameLoop()
 		SDL_GL_SwapWindow(pWindow);
 
 		GlobalManager::getFrameRateController()->frameEnd();
+
+		// test
+		printf("# of contacts = %i\n", GlobalManager::getCollisionManager()->mContacts.size());
 	}
 }
 

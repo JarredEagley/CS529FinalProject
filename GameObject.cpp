@@ -28,7 +28,7 @@
 #include "Components/UpDown.h"
 #include "Components/GLRect.h"
 #include "Components/Camera.h"
-
+#include "Components/PhysicsBody.h"
 
 // Init the maxId.
 unsigned int GameObject::maxId = NULL; // TO-DO: Should I depricate this? I should probably depricate this...
@@ -89,6 +89,9 @@ Component* GameObject::AddComponent(unsigned int Type)
 		break;
 	case (ComponentTypes::TYPE_CAMERA):
 		pNewComponent = new Camera();
+		break;
+	case (ComponentTypes::TYPE_PHYSICSBODY):
+		pNewComponent = new PhysicsBody();
 		break;
 	default:
 		return nullptr; // Failed to create component.

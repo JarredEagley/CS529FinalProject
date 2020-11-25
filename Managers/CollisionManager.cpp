@@ -2,6 +2,8 @@
 #include "../Components/PhysicsBody.h"
 
 CollisionManager* CollisionManager::instance = nullptr;
+std::list<Contact*> CollisionManager::mContacts;
+
 
 void CollisionManager::destroySingleton()
 {
