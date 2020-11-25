@@ -16,7 +16,7 @@ public:
 	};
 
 	Shape(ShapeType Type);
-	virtual ~Shape() = 0;
+	virtual ~Shape() {};
 
 	virtual bool testPoint(glm::vec2 point) = 0;
 
