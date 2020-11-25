@@ -34,8 +34,9 @@ PhysicsManager::PhysicsManager()
 }
 
 
-void PhysicsManager::Update(float frameTime)
+void PhysicsManager::Update()
 {
+	float frameTime = GlobalManager::getFrameRateController()->getFrameTime();
 	// Integrate the physics bodies.
 	for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects)
 	{

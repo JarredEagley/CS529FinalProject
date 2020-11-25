@@ -22,7 +22,7 @@ public:
 	};
 	void destroySingleton();
 
-	void Update(float frameTime);
+	void Update();
 
 public:
 	static std::list<PhysicsBody*> gravityBodies;

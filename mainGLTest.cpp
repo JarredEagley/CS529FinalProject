@@ -145,6 +145,8 @@ void gameLoop()
 	{
 		GlobalManager::getFrameRateController()->frameStart();
 
+		// ----- Input ----- //
+
 		// Handle inputs...
 		GlobalManager::getInputManager()->Update(); 
 
@@ -163,30 +165,29 @@ void gameLoop()
 			}
 		} // Done handling events.
 
-		GlobalManager::getPhysicsManager()->Update(GlobalManager::getFrameRateController()->getFrameTime());
+
+		// ----- Updates ----- //
+
+		GlobalManager::getPhysicsManager()->Update();
 
 		// Do updates.
 		for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects)
 			pGOPair.second->Update();
 		
-
-		//std::cout << "DEBUG - " << GlobalManager::getGameObjectManager()->mGameObjects.max_size() << std::endl;
+		// ----- Drawing ----- //
 
 		// Clear the buffer.
 		// The color I chose is just for fun.
 		glClearColor(0.1, 0.11, 0.14, 1.0);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// VERTEX TEST
+		// Draw the game object VAO's.
 		GlobalManager::getGraphicsManager()->drawAllGameObjects();
 
+		SDL_GL_SwapWindow(pWindow); // Swaps the buffered frame to view.
 
-		SDL_GL_SwapWindow(pWindow);
 
 		GlobalManager::getFrameRateController()->frameEnd();
-
-		// test
-		printf("# of contacts = %i\n", GlobalManager::getCollisionManager()->mContacts.size());
 	}
 }
 
