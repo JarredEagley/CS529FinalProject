@@ -21,7 +21,7 @@ public:
 	virtual bool testPoint(glm::vec2 point) = 0;
 
 public:
-	PhysicsBody* mpOwnerPhysics;
+	PhysicsBody* mpOwnerBody;
 	ShapeType mType;
 
 private:

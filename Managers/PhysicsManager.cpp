@@ -17,11 +17,13 @@ void PhysicsManager::destroySingleton()
 // End of singleton stuff //
 // ------------------------------------------------------ //
 
+
 CollideEvent::CollideEvent() : Event(EventType::COLLIDE)
 {}
 
 CollideEvent::~CollideEvent()
 {}
+
 
 // End of CollideEvent stuff //
 // ------------------------------------------------------ //
@@ -67,5 +69,13 @@ void PhysicsManager::Update(float frameTime)
 		}
 	}
 
-	// TO-DO: Advanced physics resolutions go here.
+	// Resolve contacts...
+
+	for (auto pContact : GlobalManager::getCollisionManager()->mContacts)
+	{
+		CollideEvent cEvent;
+
+		pContact->mBodies[0]->mpOwner->handleEvent(&cEvent);
+		pContact->mBodies[1]->mpOwner->handleEvent(&cEvent);
+	}
 }

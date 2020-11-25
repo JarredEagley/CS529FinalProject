@@ -14,7 +14,7 @@ void CollisionManager::destroySingleton()
 
 Shape::Shape(ShapeType Type)
 {
-	mpOwnerPhysics = nullptr;
+	mpOwnerBody = nullptr;
 	mType = Type;
 }
 
@@ -26,8 +26,8 @@ ShapeCircle::ShapeCircle(float radius) : Shape(Shape::ShapeType::CIRCLE)
 bool ShapeCircle::testPoint(glm::vec2 point)
 {
 	// Center-point squared distance. GLM might have a built-in function for this but I couldn't find it.
-	float sqDist = (point.x - mpOwnerPhysics->mPosition.x) * (point.x - mpOwnerPhysics->mPosition.x) 
-		+ (point.y - mpOwnerPhysics->mPosition.y) * (point.y - mpOwnerPhysics->mPosition.y);
+	float sqDist = (point.x - mpOwnerBody->mPosition.x) * (point.x - mpOwnerBody->mPosition.x) 
+		+ (point.y - mpOwnerBody->mPosition.y) * (point.y - mpOwnerBody->mPosition.y);
 	
 	// Compare to squared radius.
 	if (sqDist > (mRadius * mRadius))
@@ -48,10 +48,10 @@ ShapeAABB::ShapeAABB(float left, float right, float top, float bottom) : Shape(S
 bool ShapeAABB::testPoint(glm::vec2 point)
 {
 	float left, right, top, bottom;
-	left = mpOwnerPhysics->mPosition.x - mLeft;
-	right = mpOwnerPhysics->mPosition.x + mRight;
-	top = mpOwnerPhysics->mPosition.y + mTop;
-	bottom = mpOwnerPhysics->mPosition.y - mBottom;
+	left = mpOwnerBody->mPosition.x - mLeft;
+	right = mpOwnerBody->mPosition.x + mRight;
+	top = mpOwnerBody->mPosition.y + mTop;
+	bottom = mpOwnerBody->mPosition.y - mBottom;
 
 	if (
 		point.x < left ||
@@ -82,8 +82,8 @@ bool checkCollisionCircleCircle(Shape* pCircleShape1, glm::vec2 pos1, Shape* pCi
 
 	// Add a new contact.
 	Contact* pNewContact = new Contact();
-	pNewContact->mBodies[0] = pCircleShape1->mpOwnerPhysics;
-	pNewContact->mBodies[1] = pCircleShape2->mpOwnerPhysics;
+	pNewContact->mBodies[0] = pCircleShape1->mpOwnerBody;
+	pNewContact->mBodies[1] = pCircleShape2->mpOwnerBody;
 	mContacts.push_back(pNewContact);
 
 	return true;
@@ -114,8 +114,8 @@ bool checkCollisionAABBAABB(Shape* pAABBShape1, glm::vec2 pos1, Shape* pAABBShap
 
 	// Add a new contact.
 	Contact* pNewContact = new Contact();
-	pNewContact->mBodies[0] = pAABBShape1->mpOwnerPhysics;
-	pNewContact->mBodies[1] = pAABBShape2->mpOwnerPhysics;
+	pNewContact->mBodies[0] = pAABBShape1->mpOwnerBody;
+	pNewContact->mBodies[1] = pAABBShape2->mpOwnerBody;
 	mContacts.push_back(pNewContact);
 
 	return true;
@@ -154,8 +154,8 @@ bool checkCollisionCircleAABB(Shape* pCircleShape1, glm::vec2 pos1, Shape* pAABB
 
 	// Add a new contact.
 	Contact* pNewContact = new Contact();
-	pNewContact->mBodies[0] = pCircleShape1->mpOwnerPhysics;
-	pNewContact->mBodies[1] = pAABBShape2->mpOwnerPhysics;
+	pNewContact->mBodies[0] = pCircleShape1->mpOwnerBody;
+	pNewContact->mBodies[1] = pAABBShape2->mpOwnerBody;
 	mContacts.push_back(pNewContact);
 
 	return true;

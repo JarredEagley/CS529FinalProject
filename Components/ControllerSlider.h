@@ -30,6 +30,7 @@ public:
 	
 	void Update();
 	void setSpeed(float speed);
+	void handleEvent(Event* pEvent);
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 public:
 	// No public variables.

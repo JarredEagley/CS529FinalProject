@@ -18,6 +18,7 @@ public:
 	bool hasGravity() { return mHasGravity; }; // hasGravity is read-only. Setter needs to inform the physics manager.
 	void enableGravity();
 	void disableGravity();
+	void setMass(float mass); // sets mass, calculates and sets invMass.
 
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 

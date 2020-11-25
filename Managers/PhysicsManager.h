@@ -3,7 +3,7 @@
 #include "EventManager.h"
 class PhysicsBody;
 
-class CollideEvent : public Event
+class CollideEvent : public Event // Event declared in EventManager.h
 {
 public:
 	CollideEvent();

@@ -20,6 +20,7 @@
 #include <iostream>
 
 #include "ComponentTypes.h"
+#include "../Components/PhysicsBody.h"
 #include "../Managers/GlobalManager.h"
 
 #include "../../SDL2.0/include//SDL_scancode.h"
@@ -67,6 +68,19 @@ void ControllerSlider::Update()
 void ControllerSlider::setSpeed(float speed)
 {
 	mspeed = speed;
+}
+
+void ControllerSlider::handleEvent(Event* pEvent)
+{
+	if (EventType::COLLIDE == pEvent->mType)
+	{
+		CollideEvent* pCollideEvent = static_cast<CollideEvent*>(pEvent);
+		
+		PhysicsBody* pBody = static_cast<PhysicsBody*>(mpOwner->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+
+		if (pBody != nullptr)
+			pBody->mPosition.x = 0.0f;
+	}
 }
 
 void ControllerSlider::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)

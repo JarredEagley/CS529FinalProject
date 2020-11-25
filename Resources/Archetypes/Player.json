@@ -24,11 +24,6 @@
                 "Top": 5.0,
                 "Bottom":5.0
             }
-            "OR",
-            "Circle":
-            {
-                "Radius": 10.0
-            }
         }
     }
 }

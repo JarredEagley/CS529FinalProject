@@ -13,6 +13,14 @@
         {
             "Texture": "Mars.png",
             "Color": [1.0, 1.0, 1.0, 1.0]
+        },
+        "TYPE_PHYSICSBODY":
+        {
+            "Mass": 5.0,
+            "Circle":
+            {
+                "Radius": 50.0
+            }
         }
     }
 }

@@ -4,6 +4,7 @@
 #include "../GameObject.h"
 #include "../Managers/GlobalManager.h"
 
+
 PhysicsBody::PhysicsBody() : Component(ComponentTypes::TYPE_PHYSICSBODY)
 {
 	mHasGravity = false;
@@ -92,16 +93,86 @@ void PhysicsBody::disableGravity()
 	GlobalManager::getPhysicsManager()->gravityBodies.remove(this); // TO-DO: A std::list may be more appropriate for gravityBodies... // TO-DO: Will this call this body's destructor by accident???
 }
 
+
+void PhysicsBody::setMass(float mass)
+{
+	mMass = mass;
+	mInvMass = 1 / mass;
+}
+
+
 void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
-	// Read in mMass.
+	// Sanity check type.
+	if (!inputMemberIt->value.IsObject())
+	{
+		std::cerr << "Warning: Physics Body component failed to deserialize. Value was not an object." << std::endl;
+		return;
+	}
 
-	// Store mInvMass.
+	rapidjson::GenericObject<true, rapidjson::Value> physBodyObj = inputMemberIt->value.GetObject();
+	
+	// ----- Read in mMass. -----
 
-	// Read in shapename.
+	if (physBodyObj.HasMember("Mass"))
+	{
+		if (physBodyObj["Mass"].IsNumber())
+		{
+			// Store mMass and mInvMass.
+			this->setMass(physBodyObj["Mass"].GetFloat());
+		}
+		else
+			std::cout << "Warning: Deserialized Physics Body component's mass parameter was formatted incorrectly. Mass will be default." << std::endl;
+	}
+	else
+		std::cout << "Warning: Deserialized Physics Body component did not contain a mass parameter. Mass will be default." << std::endl;
 
-	// If circle read in a radius.
+	// ----- Read in shapename. -----
 
-	// If AABB read in a left right top bottom.
+	if (physBodyObj.HasMember("AABB"))
+	{
+		if (
+			physBodyObj["AABB"].IsObject()
+			&& physBodyObj["AABB"].HasMember("Left")
+			&& physBodyObj["AABB"]["Left"].IsNumber()
+			&& physBodyObj["AABB"].HasMember("Right")
+			&& physBodyObj["AABB"]["Right"].IsNumber()
+			&& physBodyObj["AABB"].HasMember("Top")
+			&& physBodyObj["AABB"]["Top"].IsNumber()
+			&& physBodyObj["AABB"].HasMember("Bottom")
+			&& physBodyObj["AABB"]["Bottom"].IsNumber()
+			)
+		{
+			float left		= physBodyObj["AABB"]["Left"].GetFloat();
+			float right		= physBodyObj["AABB"]["Right"].GetFloat();
+			float top		= physBodyObj["AABB"]["Top"].GetFloat();
+			float bottom	= physBodyObj["AABB"]["Bottom"].GetFloat();
+
+			mpShape = new ShapeAABB(left, right, top, bottom);
+			mpShape->mpOwnerBody = this;
+		}
+		else
+			std::cout << "Warning: Deserialized Physics Body component's AABB Shape was improperly formatted." << std::endl;
+	}
+	else if (physBodyObj.HasMember("Circle"))
+	{
+		if (
+			physBodyObj["Circle"].IsObject()
+			&& physBodyObj["Circle"].HasMember("Radius")
+			&& physBodyObj["Circle"]["Radius"].IsNumber()
+			)
+		{
+			float radius = physBodyObj["Circle"]["Radius"].GetFloat();
+
+			mpShape = new ShapeCircle(radius);
+			mpShape->mpOwnerBody = this;
+		}
+		else
+			std::cout << "Warning: Deserialized Physics Body component's Circle shape was improperly formatted." << std::endl;
+	}
+	else
+		std::cout << "Warning: Deserialized Physics Body component did not contain a collision shape parameter." << std::endl;
+
+	// TO-DO: Allow static flag here. Don't need it just yet, though.
 
 }
