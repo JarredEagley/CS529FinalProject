@@ -11,6 +11,11 @@ void EventManager::destroySingleton()
 // End of singleton stuff.
 // ------------------------------------------------------------------------ //
 
+EventManager::EventManager()
+{
+	// Empty for now.
+}
+
 void EventManager::broadcastEvent(Event* pEvent)
 {
 	for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects)
