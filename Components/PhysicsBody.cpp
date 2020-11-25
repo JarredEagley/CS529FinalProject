@@ -4,8 +4,7 @@
 #include "../GameObject.h"
 #include "../Managers/GlobalManager.h"
 
-//#define G_CONST 6.67 // The universal gravitational constant. NOT CURRENTLY CORRECT. TO-DO:
-#define G_CONST 0.0000000000667 // The universal gravitational constant. 
+#define G_CONST 0.0000000000667 // The universal gravitational constant. in N * m^2 / kg^2
 
 PhysicsBody::PhysicsBody() : Component(ComponentTypes::TYPE_PHYSICSBODY)
 {
@@ -93,19 +92,22 @@ void PhysicsBody::calculateGravityForces()
 		if (this == pBody)
 			continue;
 
-		float numerator = (G_CONST * this->mMass * pBody->mMass);
+		double numerator = (G_CONST * this->mMass * pBody->mMass);
 
-		float denominator = (pBody->mPosition.x - this->mPosition.x) * (pBody->mPosition.x - this->mPosition.x)
+		double denominator = (pBody->mPosition.x - this->mPosition.x) * (pBody->mPosition.x - this->mPosition.x)
 			+ (pBody->mPosition.y - this->mPosition.y) * (pBody->mPosition.y - this->mPosition.y);
 		
 		if (denominator == 0.0f)
 			continue;
 
-		float gravScale = numerator / denominator;
+		double gravScale = numerator / (denominator);
+		gravScale /= 1000.0 * 1000.0; // Convert m^2 to km^2
+
+		//std::cout << "DEBUG - Grav scale is " << gravScale << "\n";
 
 		// I tried to avoid needing to normalize. I might try again if I have time.
 
-		glm::vec2 gravitationalForce = glm::normalize(pBody->mPosition - this->mPosition) * std::max(gravScale, 10.0f);
+		glm::vec2 gravitationalForce = glm::normalize(pBody->mPosition - this->mPosition) * (float)std::max(gravScale, 10.0) / 1000.0f;
 
 		/*
 		glm::vec2 denominator = (this->mPosition - pBody->mPosition);//* (this->mPosition - pBody->mPosition) ;
@@ -237,6 +239,21 @@ void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	}
 	else
 		std::cout << "Warning: Deserialized Physics Body component did not contain a collision shape parameter." << std::endl;
+
+	// Has velocity?
+	if (physBodyObj.HasMember("Velocity"))
+	{
+		if (physBodyObj["Velocity"].IsArray() && physBodyObj["Velocity"].GetArray().Size() == 2)
+		{
+			this->mVelocity = glm::vec2(
+				physBodyObj["Velocity"].GetArray()[0].GetFloat(),
+				physBodyObj["Velocity"].GetArray()[1].GetFloat()
+			);
+		}
+		else
+			std::cout << "Warning: Deserialized Physics Body component's starter velocity was improperly formatted." << std::endl;
+	}
+
 
 	// Has gravity?
 	if (physBodyObj.HasMember("HasGravity"))

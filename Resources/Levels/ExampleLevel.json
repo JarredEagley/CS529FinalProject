@@ -11,9 +11,21 @@
             {
                 "TYPE_TRANSFORM":
                 {
-                    "Translation": [0.0, 0.0],
+                    "Translation": [4000.0, 1000.0],
                     "Rotation": 0,
                     "Scale": [10.0, 20.0]
+                },
+                "TYPE_PHYSICSBODY":
+                {
+                    "Mass": 200.0,
+                    "AABB":
+                    {
+                        "Left": 2.0,
+                        "Right": 2.0,
+                        "Top": 5.0,
+                        "Bottom":5.0
+                    },
+                    "Velocity": [0.0, -0.4]
                 }
             }
         },
