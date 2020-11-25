@@ -78,5 +78,8 @@ void PhysicsManager::Update()
 
 		pContact->mBodies[0]->mpOwner->handleEvent(&cEvent);
 		pContact->mBodies[1]->mpOwner->handleEvent(&cEvent);
+	
+		// Test thing
+		//glm::vec2 colforce = pContact.;
 	}
 }

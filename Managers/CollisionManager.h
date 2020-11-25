@@ -72,6 +72,8 @@ public:
 	~Contact() {};
 public:
 	PhysicsBody* mBodies[2];
+	glm::vec2 mNormal;
+	// TO-DO: Velocity diff?
 };
 
 // ------------------------------------------------------ //
