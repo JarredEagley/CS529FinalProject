@@ -73,6 +73,17 @@ void PhysicsBody::Integrate(float deltaTime)
 }
 
 
+void PhysicsBody::applyForce(glm::vec2 F)
+{
+	mTotalForce += F;
+}
+
+void PhysicsBody::applyTorque(float T)
+{
+	mTotalTorque += T;
+}
+
+
 void PhysicsBody::enableGravity()
 {
 	if (mHasGravity)

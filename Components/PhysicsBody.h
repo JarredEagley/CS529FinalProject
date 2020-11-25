@@ -15,6 +15,9 @@ public:
 	void Update();
 	void Integrate(float deltaTme);
 
+	void applyForce(glm::vec2 F);
+	void applyTorque(float T);
+
 	bool hasGravity() { return mHasGravity; }; // hasGravity is read-only. Setter needs to inform the physics manager.
 	void enableGravity();
 	void disableGravity();
