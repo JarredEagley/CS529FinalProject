@@ -63,12 +63,6 @@ void DirectionIndicator::Update()
 	mpTransform->setScale( scalefactor * mIndicatorSizeFactor);
 }
 
-
-void DirectionIndicator::handleEvent(Event* pEvent)
-{
-}
-
-
 void DirectionIndicator::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
 
