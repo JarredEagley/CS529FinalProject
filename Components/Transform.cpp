@@ -156,8 +156,12 @@ void Transform::handleEvent(Event* pEvent)
 		TransformUpdatedEvent* pTransformEvent = static_cast<TransformUpdatedEvent*>(pEvent);
 		Transform* pParentTransform = pTransformEvent->mpTransform;
 
-		// Apply translation.
-		buildTransformationMatrix(pParentTransform);
+		// Check if this belongs to owner's parent.
+		if (this->mpOwner->getParent() == pParentTransform->mpOwner)
+		{
+			// Apply translation.
+			buildTransformationMatrix(pParentTransform);
+		}
 	}
 }
 
