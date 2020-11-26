@@ -18,6 +18,8 @@
 
 #include "DirectionIndicator.h"
 #include "ComponentTypes.h"
+#include "Transform.h"
+#include "../Managers/GlobalManager.h"
 
 DirectionIndicator::DirectionIndicator() : Component(ComponentTypes::TYPE_DIRINDICATOR), mIndicatorScaleFactor(1.0)
 {
@@ -32,13 +34,31 @@ DirectionIndicator::~DirectionIndicator()
 
 void DirectionIndicator::Update() 
 {
-	// 
+	// Need graphics manager for the zoom level.
+	GraphicsManager* pGM = GlobalManager::getGraphicsManager();
+
+
 }
 
 
 void DirectionIndicator::handleEvent(Event* pEvent)
 {
+	/*
+	// Listen for transform updates.
+	if (pEvent->mType == EventType::TRANSFORM_UPDATED)
+	{
+		TransformUpdatedEvent* pTransformEvent = static_cast<TransformUpdatedEvent*>(pEvent);
+		Transform* pParentTransform = pTransformEvent->mpTransform;
 
+		// Check if this belongs to owner's parent.
+		if (this->mpOwner->getParent() == pParentTransform->mpOwner)
+		{
+
+
+
+		}
+	}
+	*/
 }
 
 

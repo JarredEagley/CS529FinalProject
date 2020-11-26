@@ -23,7 +23,7 @@
 #include "../Managers/GlobalManager.h"
 //#include "../GameObject.h"
 
-Transform::Transform() : Component(ComponentTypes::TYPE_TRANSFORM) // Call the constructor of the base class with the correct type.
+Transform::Transform() : Component(ComponentTypes::TYPE_TRANSFORM), mInheritRotation(false) // Call the constructor of the base class with the correct type.
 {
 	mPosition = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	mRotation = 0;
@@ -85,6 +85,10 @@ void Transform::buildTransformationMatrix(Transform* pParentTransform)
 	if (pParentTransform != nullptr)
 	{
 		mTransMatrix = glm::translate(mTransMatrix, pParentTransform->getPosition());
+		if (mInheritRotation)
+		{
+			mTransMatrix = glm::rotate(mTransMatrix, glm::radians(pParentTransform->getRotation()), glm::vec3(0,0,1));
+		}
 	}
 
 	// Build the transformations.
@@ -230,31 +234,11 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		std::cout << "Warning: Deserialized Transform component did not contain a Scale member." << std::endl;
 	}
 
-	// Check if it has a parent GameObject.
-	/*
-	if (transObj.HasMember("Parent"))
+	// Check inherit rotation.
+	if (transObj.HasMember("Inherit Rotation"))
 	{
-		if (transObj["Parent"].IsString())
-		{
-			GameObjectManager* pGOM = GlobalManager::getGameObjectManager();
-			std::string parentName = transObj["Parent"].GetString();
-
-			// Does a GameObject by that name exist?
-			if (pGOM->mGameObjects.find(parentName) != pGOM->mGameObjects.end())
-			{
-				GameObject* pParentGO = pGOM->mGameObjects[parentName];
-				pParentTransform = static_cast<Transform*>(pParentGO->AddComponent(ComponentTypes::TYPE_TRANSFORM));
-				if (pParentTransform == nullptr)
-					std::cout << "Warning: GameObject by the name '" << parentName << "' did not have a transform component." << std::endl;
-			}
-			else
-			{
-				std::cout << "Warning: No GameObject by the name '" << parentName << "', transform parenting failed." << std::endl;
-			}
-  		}
-		else
-			std::cout << "Warning: Deserialized Transform component's 'Parent' member was incorrectly formatted." << std::endl;
+		// Doing a naiive impementation for this. Additional checks would be nice; but not necessary.
+		mInheritRotation = true;
 	}
-	*/
 
 }

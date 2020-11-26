@@ -3,7 +3,36 @@
     "Type": "Level",
     "GameObjects":
     [
-
+        {
+            "Name": "SecondShip",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [4000.0, 1000.0],
+                    "Rotation": 0,
+                    "Scale": [50.0, 50.0]
+                },
+                "TYPE_GLRECT":
+                {
+                    "Texture": "Ship1.png",
+                    "Color": [0.1, 0.6, 0.1, 1.0]
+                },
+                "TYPE_PHYSICSBODY":
+                {
+                    "Mass": 200.0,
+                    "AABB":
+                    {
+                        "Left": 2.0,
+                        "Right": 2.0,
+                        "Top": 5.0,
+                        "Bottom":5.0
+                    },
+                    "Velocity": [0.0, -0.4],
+                    "Angular Velocity": 1.0
+                }
+            }
+        },
         {
             "Name": "PlayerShip",
             "Archetype": "Player.json",
@@ -28,6 +57,25 @@
                     "Velocity": [0.0, -0.4]
                 }
             }
+        },
+        {
+            "Name": "DebugBUllet",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [100.0, 0.0],
+                    "Rotation": 0,
+                    "Scale": [2.0, 50.0],
+                    "Inherit Rotation": true
+                },
+                "TYPE_GLRECT":
+                {
+                    "Texture": "CoilBullet.png",
+                    "Color": [0.6, 0.6, 0.1, 1.0]
+                }
+            },
+            "Parent": "SecondShip"
         },
         {
             "Name":"Mars",

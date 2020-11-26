@@ -41,6 +41,7 @@ public:
 	Transform* mpTransform;
 };
 
+/*
 class PhysicsBody;
 class PhysicsUpdatedEvent : public Event
 {
@@ -53,6 +54,7 @@ public:
 	PhysicsBody* mpPhysicsBody;
 
 };
+*/
 
 // ------------------------------------ //
 
