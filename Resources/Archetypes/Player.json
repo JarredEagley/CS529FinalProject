@@ -6,7 +6,7 @@
         {
             "Translation": [100.0, 100.0],
             "Rotation": 0,
-            "Scale": [50.0, 50.0]
+            "Scale": [10.0, 20.0]
         },
         "TYPE_CONTROLLERSHIP": "",
         "TYPE_GLRECT":
@@ -19,8 +19,8 @@
             "Mass": 200.0,
             "AABB":
             {
-                "Left": 2.0,
-                "Right": 2.0,
+                "Left": 5.0,
+                "Right": 5.0,
                 "Top": 5.0,
                 "Bottom":5.0
             }

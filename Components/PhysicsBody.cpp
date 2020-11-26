@@ -173,7 +173,7 @@ void PhysicsBody::handleEvent(Event* pEvent)
 	{
 		CollideEvent* pCollideEvent = static_cast<CollideEvent*>(pEvent);
 
-		applyForce(-pCollideEvent->mNormal * pCollideEvent->mTotalSpeed + 1.0f);
+		applyForce((-pCollideEvent->mNormal * pCollideEvent->mTotalSpeed)/0.9f);
 	}
 }
 

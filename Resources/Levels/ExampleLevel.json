@@ -16,17 +16,17 @@
                 "TYPE_GLRECT":
                 {
                     "Texture": "Ship1.png",
-                    "Color": [0.1, 0.6, 0.1, 1.0]
+                    "Color": [0.9, 0.1, 0.1, 1.0]
                 },
                 "TYPE_PHYSICSBODY":
                 {
                     "Mass": 200.0,
                     "AABB":
                     {
-                        "Left": 2.0,
-                        "Right": 2.0,
-                        "Top": 5.0,
-                        "Bottom":5.0
+                        "Left": 10.0,
+                        "Right": 10.0,
+                        "Top": 10.0,
+                        "Bottom":10.0
                     },
                     "Velocity": [0.0, -0.4],
                     "Angular Velocity": 0.3
@@ -41,8 +41,7 @@
                 "TYPE_TRANSFORM":
                 {
                     "Translation": [4600.0, 1000.0],
-                    "Rotation": 0,
-                    "Scale": [10.0, 20.0]
+                    "Rotation": 0
                 },
                 "TYPE_PHYSICSBODY":
                 {
@@ -57,6 +56,41 @@
                     "Velocity": [0.0, -0.4]
                 }
             }
+        },
+        {
+            "Name": "DebugBUllet",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [100.0, 0.0],
+                    "Rotation": 0.2,
+                    "Scale": [20.0, 10.0],
+                    "Inherit Rotation": true
+                },
+                "TYPE_GLRECT":
+                {
+                    "Texture": "CoilBullet.png",
+                    "Color": [0.6, 0.6, 0.1, 1.0]
+                }
+            },
+            "Parent": "SecondShip"
+        },
+        {
+            "Name":"Mars",
+            "Archetype": "Planet.json"
+        },
+        {
+            "Name": "MainCamera",
+            "Archetype": "Camera.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0.0, 0.0, 0.0]
+                }
+            },
+            "Parent": "PlayerShip"
         },
         {
             "Name": "PlayerShip_Indicator_Forward",
@@ -82,58 +116,27 @@
             "Parent":"PlayerShip"
         },
         {
-            "Name": "DebugBUllet",
+            "Name": "SecondShip_Indicator_Forward",
             "Components":
             {
                 "TYPE_TRANSFORM":
                 {
-                    "Translation": [100.0, 0.0],
-                    "Rotation": 0.2,
-                    "Scale": [20.0, 10.0],
+                    "Translation": [0.0, 0.0],
+                    "Rotation": 0,
+                    "Scale": [50.0, 50.0],
                     "Inherit Rotation": true
                 },
                 "TYPE_GLRECT":
                 {
-                    "Texture": "CoilBullet.png",
-                    "Color": [0.6, 0.6, 0.1, 1.0]
-                }
-            },
-            "Parent": "SecondShip"
-        },
-        {
-            "Name": "DebugBUllet2",
-            "Components":
-            {
-                "TYPE_TRANSFORM":
-                {
-                    "Translation": [100.0, 0.0],
-                    "Rotation": 0.2,
-                    "Scale": [20.0, 10.0],
-                    "Inherit Rotation": true
+                    "Texture": "DirectionIndicator.png",
+                    "Color": [0.8, 0.1, 0.1, 0.1]
                 },
-                "TYPE_GLRECT":
+                "TYPE_DIRINDICATOR":
                 {
-                    "Texture": "CoilBullet.png",
-                    "Color": [0.6, 0.6, 0.1, 1.0]
+
                 }
             },
-            "Parent": "PlayerShip"
-        },
-        {
-            "Name":"Mars",
-            "Archetype": "Planet.json"
-        },
-        {
-            "Name": "MainCamera",
-            "Archetype": "Camera.json",
-            "Components":
-            {
-                "TYPE_TRANSFORM":
-                {
-                    "Translation": [0.0, 0.0, 0.0]
-                }
-            },
-            "Parent": "PlayerShip"
+            "Parent":"SecondShip"
         }
     ]
 }
