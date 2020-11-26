@@ -3,7 +3,7 @@
 #include "ComponentTypes.h"
 #include <iostream>
 
-GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT)
+GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT), mColor(glm::vec4(1.0f))
 {
 	// Texture is null until loaded.
 	//mTexture->texture = nullptr;
@@ -21,14 +21,14 @@ void GLRect::Update()
 
 void GLRect::setColor(glm::vec4 rgba)
 {
-	/*
-	for (glm::vec4 col : this->mVertCol)
-		col = rgba;
-	*/
+	// Store the color so we can ask GLRect for it.
+	mColor = rgba;
+	// Set the vert colors.
 	for (int i = 0; i < 4; ++i)
 	{
 		mVertCol[i] = rgba;
 	}
+	// Build the new VAO.
 	buildVAO();
 }
 

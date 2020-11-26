@@ -134,6 +134,20 @@ void Transform::setZ(float z)
 	mPosition.z = z;
 }
 
+
+void Transform::setScale(float scale)
+{
+	mScale = glm::vec3(scale);
+}
+
+void Transform::setScale(glm::vec2 scale)
+{
+	mScale = glm::vec3(scale, 1.0f);
+}
+
+
+
+
 /*
 void Transform::setParent(GameObject* pGO)
 {

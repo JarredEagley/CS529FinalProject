@@ -30,6 +30,7 @@
 #include "Components/GLRect.h"
 #include "Components/Camera.h"
 #include "Components/PhysicsBody.h"
+#include "Components/DirectionIndicator.h"
 
 GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false)
 {
@@ -109,6 +110,9 @@ Component* GameObject::AddComponent(unsigned int Type)
 		break;
 	case (ComponentTypes::TYPE_PHYSICSBODY):
 		pNewComponent = new PhysicsBody();
+		break;
+	case (ComponentTypes::TYPE_DIRINDICATOR):
+		pNewComponent = new DirectionIndicator();
 		break;
 	default:
 		return nullptr; // Failed to create component.

@@ -21,7 +21,8 @@
 #include "Transform.h"
 #include "../Managers/GlobalManager.h"
 
-DirectionIndicator::DirectionIndicator() : Component(ComponentTypes::TYPE_DIRINDICATOR), mIndicatorScaleFactor(1.0)
+DirectionIndicator::DirectionIndicator() : Component(ComponentTypes::TYPE_DIRINDICATOR), 
+mpGLRect(nullptr), mpTransform(nullptr)
 {
 
 }
@@ -37,28 +38,34 @@ void DirectionIndicator::Update()
 	// Need graphics manager for the zoom level.
 	GraphicsManager* pGM = GlobalManager::getGraphicsManager();
 
+	if (mpGLRect == nullptr || mpTransform == nullptr)
+	{
+		// Try to set mpGLRect and terminate early.
+		mpGLRect = static_cast<GLRect*>(mpOwner->GetComponent(ComponentTypes::TYPE_GLRECT));
+		mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		return;
+	}
 
+	// Update based on zoom...
+
+	// Color alpha
+	glm::vec4 color = mpGLRect->getColor();
+	float const zoomLevel = pGM->getZoomLevel();
+	float const maxZoomLevel = pGM->getMaxZoomLevel();
+	float const minZoomLevel = pGM->getMinZoomLevel();
+	float const scalefactor = std::log(((zoomLevel - minZoomLevel) / (maxZoomLevel - minZoomLevel))+1.0f) * 2.0f;
+	//std::cout << "DEBUG: scalefactor is " << scalefactor << std::endl;
+	color.a = scalefactor * mIndicatorAlphaFactor;
+	//std::cout << "DEBUG: Alpha is " << color.a << std::endl;
+	mpGLRect->setColor(color);
+
+	// Scale
+	mpTransform->setScale( scalefactor * mIndicatorSizeFactor);
 }
 
 
 void DirectionIndicator::handleEvent(Event* pEvent)
 {
-	/*
-	// Listen for transform updates.
-	if (pEvent->mType == EventType::TRANSFORM_UPDATED)
-	{
-		TransformUpdatedEvent* pTransformEvent = static_cast<TransformUpdatedEvent*>(pEvent);
-		Transform* pParentTransform = pTransformEvent->mpTransform;
-
-		// Check if this belongs to owner's parent.
-		if (this->mpOwner->getParent() == pParentTransform->mpOwner)
-		{
-
-
-
-		}
-	}
-	*/
 }
 
 

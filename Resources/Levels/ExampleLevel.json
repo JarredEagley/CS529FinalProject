@@ -29,7 +29,7 @@
                         "Bottom":5.0
                     },
                     "Velocity": [0.0, -0.4],
-                    "Angular Velocity": 1.0
+                    "Angular Velocity": 0.3
                 }
             }
         },
@@ -59,14 +59,37 @@
             }
         },
         {
+            "Name": "PlayerShip_Indicator_Forward",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0.0, 0.0],
+                    "Rotation": 0,
+                    "Scale": [50.0, 50.0],
+                    "Inherit Rotation": true
+                },
+                "TYPE_GLRECT":
+                {
+                    "Texture": "DirectionIndicator.png",
+                    "Color": [0.1, 1.0, 0.1, 0.1]
+                },
+                "TYPE_DIRINDICATOR":
+                {
+
+                }
+            },
+            "Parent":"PlayerShip"
+        },
+        {
             "Name": "DebugBUllet",
             "Components":
             {
                 "TYPE_TRANSFORM":
                 {
                     "Translation": [100.0, 0.0],
-                    "Rotation": 0,
-                    "Scale": [2.0, 50.0],
+                    "Rotation": 0.2,
+                    "Scale": [20.0, 10.0],
                     "Inherit Rotation": true
                 },
                 "TYPE_GLRECT":
@@ -88,7 +111,7 @@
             {
                 "TYPE_TRANSFORM":
                 {
-                    "Translation": [0.0, 0.0, 10.0]
+                    "Translation": [0.0, 0.0, 0.0]
                 }
             },
             "Parent": "PlayerShip"

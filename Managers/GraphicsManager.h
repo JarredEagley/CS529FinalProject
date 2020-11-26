@@ -26,7 +26,9 @@ public:
 	// Was originally just in camera, but I'll be needing this in more components.
 	float getZoomLevel() { return mZoomLevel; };
 	void setMaxZoomLevel(float zoomLevel);
+	float getMaxZoomLevel() { return mMaxZoomLevel; };
 	void setMinZoomLevel(float zoomLevel);
+	float getMinZoomLevel() { return mMinZoomLevel; };
 	void setZoomLevel(float zoom);
 	void incrementZoomLevel(float delta);
 

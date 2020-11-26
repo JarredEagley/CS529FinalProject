@@ -21,7 +21,8 @@
 
 #pragma once
 #include "Component.h"
-
+#include "GLRect.h"
+#include "Transform.h"
 
 class DirectionIndicator : public Component
 {
@@ -36,10 +37,12 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
-	float mIndicatorScaleFactor;
+	float mIndicatorSizeFactor = 2000.0f;
+	float mIndicatorAlphaFactor = 10.0f;
 private:
 	// No private methods.
 private:
-	// DirectionIndicator will interact with GLRect, transform, and physics.
+	GLRect* mpGLRect;
+	Transform* mpTransform;
 };
 

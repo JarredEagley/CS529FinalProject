@@ -40,6 +40,10 @@ public:
 	void setY(float y);
 	void setZ(float z); // Dangerous, pretty much just for cameras.
 
+	void setScale(float scale);
+	void setScale(glm::vec2 scale);
+	glm::vec3 getScale() { return mScale; };
+
 	//void setParent(GameObject* pGO);
 	//void setParent(Transform* pTran);
 
