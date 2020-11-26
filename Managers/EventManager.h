@@ -7,6 +7,7 @@ class GameObject;
 enum class EventType
 {
 	COLLIDE,
+	TRANSFORM_UPDATED,
 
 	NUM
 };
@@ -24,6 +25,19 @@ public:
 public:
 	EventType mType;
 	float mTimer;
+};
+
+// I couldn't think of a better place for this.
+class Transform;
+class TransformUpdatedEvent : public Event
+{
+public:
+	TransformUpdatedEvent(Transform* ptransform) : Event(EventType::TRANSFORM_UPDATED), mpTransform(ptransform)
+	{}
+
+	~TransformUpdatedEvent() {}
+
+	Transform* mpTransform;
 };
 
 // ------------------------------------ //

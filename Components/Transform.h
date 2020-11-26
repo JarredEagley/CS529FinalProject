@@ -40,8 +40,8 @@ public:
 	void setY(float y);
 	void setZ(float z); // Dangerous, pretty much just for cameras.
 
-	void setParent(GameObject* pGO);
-	void setParent(Transform* pTran);
+	//void setParent(GameObject* pGO);
+	//void setParent(Transform* pTran);
 
 	glm::vec3 getPosition() { return mPosition; };
 	float getRotation() { return mRotation; };
@@ -51,16 +51,21 @@ public:
 	void incrementY(float delta) { mPosition.y += delta; };
 	void incrementRotation(float delta) { mRotation += delta; };
 	
+	void handleEvent(Event* pEvent);
+
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
+
 public:
 	// No public variables.
 private:
-	void Transform::buildTransformationMatrix();
+	void initTransformationMatrix();
+	void buildTransformationMatrix();
+	void buildTransformationMatrix(Transform* pParentTransform);
 private:
 	glm::vec4 mPosition = glm::vec4(0.0f,0.0f,0.0f,1.0f);
 	float mRotation = 0.0f; // I'm not going to bother supporting 3D rotation.
 	glm::vec3 mScale = glm::vec3(1.0f,1.0f,1.0f);
 	glm::mat4 mTransMatrix = glm::mat4(1.0f);
 	
-	Transform* pParentTransform = nullptr; // If a parent is present then all transformations will be based on the parent's transformation matrix.
+	// Transform* pParentTransform = nullptr; // If a parent is present then all transformations will be based on the parent's transformation matrix.
 };

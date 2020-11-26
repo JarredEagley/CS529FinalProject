@@ -25,13 +25,10 @@
 
 Transform::Transform() : Component(ComponentTypes::TYPE_TRANSFORM) // Call the constructor of the base class with the correct type.
 {
-	//mPositionX = mPositionY = 0.0f;
 	mPosition = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 	mRotation = 0;
 	mScale = glm::vec3(1, 1, 1);
-	//mTransMatrix = glm::mat4(1.0f); // Identity.
-	buildTransformationMatrix();
-	pParentTransform = nullptr;
+	initTransformationMatrix();
 }
 
 Transform::~Transform()
@@ -40,24 +37,70 @@ Transform::~Transform()
 void Transform::Update()
 {
 	buildTransformationMatrix();
+	
+	// Send transform update to children.
+	if (this->mpOwner->mHasChildren)
+	{
+		std::cout << "DEBUG - Transform.cpp::Update() mpOwner " << this->mpOwner->mName << " has children\n";
+		TransformUpdatedEvent* pTransformEvent = new TransformUpdatedEvent(this);
+		GlobalManager::getEventManager()->broadcastEventToSubscribers(pTransformEvent);
+	}
 } 
 
-void Transform::buildTransformationMatrix()
+// Called on initialization when mpowner is still nullptr.
+void Transform::initTransformationMatrix()
 {
 	mTransMatrix = glm::mat4(1.0f);
+	mTransMatrix = glm::translate(mTransMatrix, glm::vec3(mPosition));
+	mTransMatrix = glm::rotate(mTransMatrix, glm::radians(mRotation), glm::vec3(0, 0, 1));
+	mTransMatrix = glm::scale(mTransMatrix, mScale);
+}
+
+// Build without parent.
+void Transform::buildTransformationMatrix()
+{
+	// Only proceed if this object isn't parented.
+	GameObject* test = mpOwner->getParent();
+	if (test != nullptr)
+		return;
+
+	//std::cout << "DEBUG - Transform build matrix for " << mpOwner->mName << std::endl;
+	mTransMatrix = glm::mat4(1.0f);
 	// Apply parent transform, if applicable.
+	/*
 	if (pParentTransform != nullptr)
 	{
 		// TO-DO: THIS IS HORRIBLY INEFFICIENT!!!
 		pParentTransform->buildTransformationMatrix();
 		mTransMatrix = glm::translate(mTransMatrix, pParentTransform->getPosition());
 	}
+	*/
 
 	// Build the transformations.
 	mTransMatrix = glm::translate(mTransMatrix, glm::vec3(mPosition));
 	mTransMatrix = glm::rotate(mTransMatrix, glm::radians(mRotation), glm::vec3(0,0,1));
 	mTransMatrix = glm::scale(mTransMatrix, mScale);
 
+	//std::cout << mpOwner->mName << " built transformation matrix. (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
+}
+
+// Build with parent.
+void Transform::buildTransformationMatrix(Transform* pParentTransform)
+{
+	//std::cout << mpOwner->mName << "'s parent is " << mpOwner->getParent()->mName << std::endl;
+
+	mTransMatrix = glm::mat4(1.0f);
+	
+	// Try to apply parent transform.
+	if (pParentTransform != nullptr)
+	{
+		mTransMatrix = glm::translate(mTransMatrix, pParentTransform->getPosition());
+	}
+
+	// Build the transformations.
+	mTransMatrix = glm::translate(mTransMatrix, glm::vec3(mPosition));
+	mTransMatrix = glm::rotate(mTransMatrix, glm::radians(mRotation), glm::vec3(0, 0, 1));
+	mTransMatrix = glm::scale(mTransMatrix, mScale);
 
 	//std::cout << "built transformation matrix. (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
 }
@@ -97,6 +140,7 @@ void Transform::setZ(float z)
 	mPosition.z = z;
 }
 
+/*
 void Transform::setParent(GameObject* pGO)
 {
 	pParentTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
@@ -106,12 +150,27 @@ void Transform::setParent(Transform* pTran)
 {
 	pParentTransform = pTran;
 }
+*/
 
 glm::mat4 Transform::getTransformationMatrix() 
 { 
 	// Do I need to nullcheck here? 
 	return this->mTransMatrix; 
 };
+
+
+void Transform::handleEvent(Event* pEvent)
+{
+	if (pEvent->mType == EventType::TRANSFORM_UPDATED)
+	{
+		TransformUpdatedEvent* pTransformEvent = static_cast<TransformUpdatedEvent*>(pEvent);
+		Transform* pParentTransform = pTransformEvent->mpTransform;
+
+		// Apply translation.
+		buildTransformationMatrix(pParentTransform);
+	}
+}
+
 
 void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
@@ -133,7 +192,7 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			setX( transObj["Translation"].GetArray()[0].GetFloat() );
 			setY( transObj["Translation"].GetArray()[1].GetFloat() );
 			if (transObj["Translation"].GetArray().Size() > 2)
-				setX( transObj["Translation"].GetArray()[2].GetFloat() ); // Optional Z.
+			setX( transObj["Translation"].GetArray()[2].GetFloat() ); // Optional Z.
 		}
 		else
 			std::cout << "Warning: Deserialized Transform component's 'Translation' member was incorrectly formatted." << std::endl;
@@ -178,6 +237,7 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	}
 
 	// Check if it has a parent GameObject.
+	/*
 	if (transObj.HasMember("Parent"))
 	{
 		if (transObj["Parent"].IsString())
@@ -201,5 +261,6 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		else
 			std::cout << "Warning: Deserialized Transform component's 'Parent' member was incorrectly formatted." << std::endl;
 	}
+	*/
 
 }

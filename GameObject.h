@@ -28,15 +28,20 @@ public:
 	~GameObject();
 
 	void Update();
+
+	void setParent(GameObject* pParentGO);
+	GameObject* getParent();
+
 	Component* AddComponent(unsigned int Type); // Returns the component which was allocated.
 	Component* GetComponent(unsigned int Type); // Because we need to access components.
 	void handleEvent(Event *pEvent);
 public:
+	bool mHasChildren;
 	std::unordered_map<unsigned int, Component*> mComponents; // <TYPE, COMPONENT>
 	const char* mShaderName = "core";	// May have more shaders in the future.
 	std::string mName;
 private:
-	// No private methods.
+	GameObject* mpParentGO;
 private:
 	// No private variables.
 };

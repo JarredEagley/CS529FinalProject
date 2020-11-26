@@ -18,8 +18,6 @@
 
 #include "Component.h"
 
-Component::Component(unsigned int Type)
+Component::Component(unsigned int Type) : mType(Type), mpOwner(nullptr) // Set at the end of GameObject addcomponent function.
 {
-	mType = Type; 
-	mpOwner = nullptr; // Set at the end of GameObject addcomponent function.
 }

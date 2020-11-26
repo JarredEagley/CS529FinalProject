@@ -18,9 +18,10 @@
 #include "GameObject.h"
 #include <iostream>
 
+#include "Managers/GlobalManager.h"
+
 #include "Components/Component.h"
 #include "Components/ComponentTypes.h"
-
 
 #include "Components/Transform.h"
 #include "Components/ControllerSlider.h"
@@ -30,7 +31,7 @@
 #include "Components/Camera.h"
 #include "Components/PhysicsBody.h"
 
-GameObject::GameObject() : mName("")
+GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false)
 {
 	std::unordered_map<unsigned int, Component*> mComponents;
 }
@@ -45,9 +46,35 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
+	// Update components.
 	for (auto pComponentPair : mComponents)
 		pComponentPair.second->Update();
 }
+
+
+void GameObject::setParent(GameObject* pParentGO)
+{
+	// Nullcheck.
+	if (pParentGO == nullptr)
+		return;
+
+	// Set the parent.
+	this->mpParentGO = pParentGO;
+
+	// Tell parent it has children.
+	pParentGO->mHasChildren = true;
+
+	// Subscribe me to transform updates.
+	GlobalManager::getEventManager()->Subscribe(EventType::TRANSFORM_UPDATED, this);
+}
+
+GameObject* GameObject::getParent()
+{
+	if (this->mpParentGO == nullptr)
+		return nullptr;
+	return this->mpParentGO;
+}
+
 
 Component* GameObject::AddComponent(unsigned int Type) 
 {
@@ -91,9 +118,8 @@ Component* GameObject::AddComponent(unsigned int Type)
 	// It seemed useless... We'll see if I was wrong.
 
 	// Add to list
-	//mComponents.push_back(pNewComponent);
-	mComponents[Type] = pNewComponent;
 	pNewComponent->mpOwner = this;
+	mComponents[Type] = pNewComponent;
 
 	// Return the component.
 	return pNewComponent;
@@ -105,10 +131,6 @@ Component* GameObject::GetComponent(unsigned int Type)
 	for (auto pComponentPair : mComponents)
 		if (pComponentPair.second->getType() == Type)
 			return pComponentPair.second;
-		/*
-		if (pComponent->getType() == Type)
-			return pComponent;
-		*/
 
 	return nullptr;
 }
@@ -116,6 +138,7 @@ Component* GameObject::GetComponent(unsigned int Type)
 
 void GameObject::handleEvent(Event* pEvent)
 {
+	// Hand the event down to the components.
 	for (auto pComponentPair : mComponents)
 	{
 		pComponentPair.second->handleEvent(pEvent);

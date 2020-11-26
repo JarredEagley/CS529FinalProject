@@ -5,22 +5,14 @@
 	prior written consent of DigiPen Institute of Technology is prohibited.
 
 	File Name:			GameObjectFactory.cpp
-	Purpose:			My initial implementation for the GameObject Factory
-						needed for milestone 2. This may be heavily expanded
+	Purpose:			My implementation for the GameObject Factory.
 						and/or altered in the future, but right now handles:
 							- Loading Objects
 							- Loading Levels
-						This does not currently:
-							- Cache deserialized JSON files.
-							- Handle ALL possible edge cases.
-							  (Though it does handle most of them)
-						Note:
-						I'm still not certain if loadObject should return
-						a GameObject pointer or a GameObject. Returning
-						a pointer feels dangerous.
+						Some edge cases may be missed.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
-	Project:			JarredEagley_Milestone2
+	Project:			JarredEagley_FinalProject
 	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
 	Creation date:		10/23/2020
 
@@ -226,6 +218,22 @@ void GameObjectFactory::loadLevel(const char* pFileName)
 				pCurrentComp->Serialize(compItr);
 
 			}
+		}
+
+		// If this GO is to be parented, parent it.
+		if (
+			arrItr->GetObject().HasMember("Parent")
+			&& arrItr->GetObject()["Parent"].IsString()
+			)
+		{
+			std::string parentName = arrItr->GetObject()["Parent"].GetString();
+			GameObject* pParent = GlobalManager::getGameObjectManager()->mGameObjects[parentName];
+
+			// Make sure parent wasn't invalid.
+			if (pParent == nullptr)
+				std::cout << "Warning: Parent was either invalid or not initialized before child GameObject. Parenting failed for " << currentGOName << std::endl;
+			else
+				pCurrentGO->setParent(pParent);
 		}
 
 		// Name

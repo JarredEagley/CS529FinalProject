@@ -66,11 +66,14 @@ void EventManager::broadcastEventToSubscribers(Event* pEvent)
 
 void EventManager::Subscribe(EventType Et, GameObject* pGameObject)
 {
+	// Get all subscribed to this event type.
 	std::list<GameObject*>& listOfSubs = mSubscriptions[Et];
 
-	for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects) // TO-DO: Am I 100% sure this is right??
-		if (pGOPair.second == pGameObject)
+	// Don't double-add.
+	for (auto pGO : listOfSubs) 
+		if (pGO == pGameObject)
 			return;
 
+	// Push onto that list.
 	listOfSubs.push_back(pGameObject);
 }
