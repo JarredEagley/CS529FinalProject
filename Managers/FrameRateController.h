@@ -31,6 +31,7 @@ public:
 	void frameStart();
 	void frameEnd();
 	unsigned int getFrameTime() { return mFrameTime; }
+	float getFrameTimeSec() { return mFrameTime / 1000.0f; }
 
 public:
 private:

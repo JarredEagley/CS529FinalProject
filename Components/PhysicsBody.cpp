@@ -131,12 +131,13 @@ void PhysicsBody::calculateGravityForces()
 
 void PhysicsBody::applyForce(glm::vec2 F)
 {
-	mTotalForce += F;
+	// Frametime is in ms, convert to s.
+	mTotalForce += F * GlobalManager::getFrameRateController()->getFrameTimeSec();
 }
 
 void PhysicsBody::applyTorque(float T)
 {
-	mTotalTorque += T;
+	mTotalTorque += T * GlobalManager::getFrameRateController()->getFrameTimeSec();
 }
 
 

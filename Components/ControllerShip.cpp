@@ -3,7 +3,7 @@
 #include "../Managers/GlobalManager.h"
 
 ControllerShip::ControllerShip() : Component(ComponentTypes::TYPE_CONTROLLERSHIP)
-, mThrottle(0.0f), mThrottleSensitivity(0.5f)//, mMainAcceleration(1.0f), mSecondaryAcceleration(0.01f), mAngularAcceleration(0.1)
+, mThrottle(0.0f), mThrottleSensitivity(1.0f)//, mMainAcceleration(1.0f), mSecondaryAcceleration(0.01f), mAngularAcceleration(0.1)
 {
 }
 
@@ -65,7 +65,7 @@ void ControllerShip::Update()
 		// Spool up
 		this->mThrottle = std::min( mThrottle + mThrottleSensitivity , 100.0f );
 	}
-	else
+	else if (pIM->IsKeyPressed(SDL_SCANCODE_LCTRL))
 	{
 		// Spool down
 		this->mThrottle = std::max(mThrottle - mThrottleSensitivity, 0.0f);
@@ -74,7 +74,8 @@ void ControllerShip::Update()
 	std::cout << "DEBUG - Current throttle is " << mThrottle << ", fuel is at " << mpShipData->mFuel << std::endl;
 	if (mpShipData->mFuel > 0.0f && mThrottle > 1.0f) // Throttle actually has a tiny deadzone. Making this configurable could make for an interesting game mechanic.
 	{
-		mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mpShipData->mMainAcceleration * this->mThrottle);
+		mpShipData->mFuel -=  GlobalManager::getFrameRateController()->getFrameTimeSec() / mpShipData->fuelEfficiency;
+		mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mpShipData->mMainAcceleration * (this->mThrottle / 100.0f));
 	}
 }
 
