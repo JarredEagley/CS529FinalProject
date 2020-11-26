@@ -39,7 +39,6 @@ public:
 	bool IsKeyTriggered(unsigned int keyScanCode);
 	bool IsKeyPressed(unsigned int keyScanCode);
 	bool IsKeyReleased(unsigned int keyScanCode);
-
 	
 	// Mouse position
 	void getMousePosition(int& posX, int& posY) const;
@@ -54,10 +53,19 @@ public:
 	int getWheelX() const;
 	int getWheelY() const;
 
+	// Was originally just in camera, but I'll be needing this in more components.
+	float getZoomLevel() { return mZoomLevel; };
+	void setMaxZoomLevel(float zoomLevel);
+	void setMinZoomLevel(float zoomLevel);
+	void setZoomLevel(float zoom);
+	void incrementZoomLevel(float delta);
 
 public:
 	// No public variables.
 private:
+	float mZoomLevel;
+	float mMinZoomLevel;
+	float mMaxZoomLevel;
 	InputManager();
 private:
 	static InputManager* instance;

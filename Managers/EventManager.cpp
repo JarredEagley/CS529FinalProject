@@ -33,16 +33,19 @@ void EventManager::addTimedEvent(Event* pEvent)
 void EventManager::Update()
 {
 	// Using an iterator because we want to remove from the middle potentially.
+	// Loop through the event list.
 	std::list<Event*>::iterator it = mEvents.begin();
 
 	while (it != mEvents.end())
 	{
+		// Get current event.
 		Event* pEvent = *it;
 
 		pEvent->mTimer -= GlobalManager::getFrameRateController()->getFrameTime();
 		if (pEvent->mTimer <= 0.0f)
 		{
 			//broadcastEvent(pEvent);
+			// Broadcast that event to its subscribers then remove it.
 			broadcastEventToSubscribers(pEvent);
 			delete pEvent;
 			it = mEvents.erase(it); // This will update the iterator and remove the element!

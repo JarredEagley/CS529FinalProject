@@ -60,6 +60,9 @@
     <ClCompile Include="Components\PhysicsBody.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Components\DirectionIndicator.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\Transform.h">
@@ -121,6 +124,9 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="Components\PhysicsBody.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\DirectionIndicator.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

@@ -34,6 +34,8 @@ public:
 		if (strcmp(str, "TYPE_GLRECT") == 0)			return TYPE_GLRECT;
 		if (strcmp(str, "TYPE_CAMERA") == 0)			return TYPE_CAMERA;
 		if (strcmp(str, "TYPE_PHYSICSBODY") == 0)		return TYPE_PHYSICSBODY;
+		if (strcmp(str, "TYPE_DIRINDICATOR") == 0)		return TYPE_DIRINDICATOR;
+		
 		return TYPE_UNDEFINED;
 	}
 public:
@@ -48,6 +50,7 @@ public:
 		TYPE_GLRECT,
 		TYPE_CAMERA,
 		TYPE_PHYSICSBODY,
+		TYPE_DIRINDICATOR,
 	};
 private:
 	// No private methods.

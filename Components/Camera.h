@@ -14,8 +14,6 @@ public:
 
 	void Update();
 
-	//void assignParent(GameObject* pGO); // Assigns parent game object for transformations. This functionality may eventually be better placed in GameObject itself.
-
 	glm::mat4 getProjMatrix() { return cameraProjection; }; // Gets the perspective transformation matrix. Currently ortho.
 	glm::mat4 getTransMatrix() { return cameraTransform; }
 
@@ -31,6 +29,5 @@ private:
 	glm::mat4 cameraOffset = glm::mat4(1.0f);
 	//GameObject* mpParentGO = nullptr; // May eventually be better placed in GameObject...
 
-	float zoom = 10; // Will go in camera controller
 };
 
