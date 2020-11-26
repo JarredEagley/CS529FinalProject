@@ -12,7 +12,7 @@
 						enum.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
-	Project:			JarredEagley_Milestone2
+	Project:			JarredEagley_FinalProject
 	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
 	Creation date:		10/22/2020
 
@@ -35,6 +35,7 @@ public:
 		if (strcmp(str, "TYPE_CAMERA") == 0)			return TYPE_CAMERA;
 		if (strcmp(str, "TYPE_PHYSICSBODY") == 0)		return TYPE_PHYSICSBODY;
 		if (strcmp(str, "TYPE_DIRINDICATOR") == 0)		return TYPE_DIRINDICATOR;
+		if (strcmp(str, "TYPE_SHIPDATA") == 0)			return TYPE_SHIPDATA;
 		
 		return TYPE_UNDEFINED;
 	}
@@ -51,6 +52,7 @@ public:
 		TYPE_CAMERA,
 		TYPE_PHYSICSBODY,
 		TYPE_DIRINDICATOR,
+		TYPE_SHIPDATA
 	};
 private:
 	// No private methods.

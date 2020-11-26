@@ -2,12 +2,14 @@
 
 #include "Component.h"
 #include "rapidjson/document.h"
+#include "ShipData.h"
+#include "PhysicsBody.h"
 
 class ControllerShip : public Component
 {
 public:
 	ControllerShip();
-	ControllerShip(float speed);
+	//ControllerShip(float speed);
 	~ControllerShip();
 
 	void Update();
@@ -18,9 +20,10 @@ private:
 	// No private methods.
 private:
 	float mThrottle; // Throttle
-	float mMainAcceleration; // Main drive
-	float mSecondaryAcceleration; // Maneuvering thrusters
-	float mAngularAcceleration; // RCS
+	float mThrottleSensitivity;
+
+	ShipData* mpShipData;
+	PhysicsBody* mpPhysicsBody;
 
 };
 

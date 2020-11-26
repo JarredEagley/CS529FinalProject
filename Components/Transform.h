@@ -57,7 +57,7 @@ public:
 	
 	void handleEvent(Event* pEvent);
 
-	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
+	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
 	// No public variables.

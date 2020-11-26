@@ -31,6 +31,7 @@
 #include "Components/Camera.h"
 #include "Components/PhysicsBody.h"
 #include "Components/DirectionIndicator.h"
+#include "Components/ShipData.h"
 
 GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false)
 {
@@ -114,6 +115,10 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_DIRINDICATOR):
 		pNewComponent = new DirectionIndicator();
 		break;
+	case (ComponentTypes::TYPE_SHIPDATA):
+		pNewComponent = new ShipData();
+		break;
+
 	default:
 		return nullptr; // Failed to create component.
 	}

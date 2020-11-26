@@ -42,7 +42,6 @@
     <ClCompile Include="Managers\CollisionManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="ShipAttributes.cpp" />
     <ClCompile Include="Components\Transform.cpp">
       <Filter>Components\Data</Filter>
     </ClCompile>
@@ -63,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="Components\ControllerSlider.cpp">
       <Filter>Components\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\ShipData.cpp">
+      <Filter>Components\Data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,7 +111,6 @@
     <ClInclude Include="Managers\CollisionManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="ShipAttributes.h" />
     <ClInclude Include="Components\Transform.h">
       <Filter>Components\Data</Filter>
     </ClInclude>
@@ -130,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="Components\ControllerShip.h">
       <Filter>Components\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ShipData.h">
+      <Filter>Components\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
