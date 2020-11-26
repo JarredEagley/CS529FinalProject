@@ -72,8 +72,6 @@ public:
 	~Contact() {};
 public:
 	PhysicsBody* mBodies[2];
-	float mTotalVelocity;
-	glm::vec2 mNormal;
 };
 
 // ------------------------------------------------------ //

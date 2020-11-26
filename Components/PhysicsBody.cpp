@@ -169,15 +169,12 @@ void PhysicsBody::setMass(float mass)
 
 void PhysicsBody::handleEvent(Event* pEvent)
 {
-/*
 	if (pEvent->mType == EventType::COLLIDE)
 	{
 		CollideEvent* pCollideEvent = static_cast<CollideEvent*>(pEvent);
 
-		pCollideEvent;
-		applyForce();
+		applyForce(-pCollideEvent->mNormal * pCollideEvent->mTotalSpeed + 1.0f);
 	}
-*/
 }
 
 

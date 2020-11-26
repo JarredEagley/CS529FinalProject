@@ -80,11 +80,6 @@ void addContact(Shape* pShape1, Shape* pShape2, std::list<Contact*>& mContacts)
 	pNewContact->mBodies[0] = pShape1->mpOwnerBody;
 	pNewContact->mBodies[1] = pShape2->mpOwnerBody;
 
-	// Create normal and total velocity.
-	pNewContact->mNormal = pShape1->mpOwnerBody->mVelocity + pShape2->mpOwnerBody->mVelocity;
-	pNewContact->mTotalVelocity = glm::length(pNewContact->mNormal); // Yes, this will do a sqrt unfortunately.
-	pNewContact->mNormal = pNewContact->mNormal / pNewContact->mTotalVelocity;
-
 	// Push new contact onto mContacts.
 	mContacts.push_back(pNewContact);
 }

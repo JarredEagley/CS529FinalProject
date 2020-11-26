@@ -1,6 +1,8 @@
 #pragma once
 
 #include "EventManager.h"
+#include "glm/vec2.hpp"
+
 class PhysicsBody;
 
 class CollideEvent : public Event // Event declared in EventManager.h
@@ -8,6 +10,11 @@ class CollideEvent : public Event // Event declared in EventManager.h
 public:
 	CollideEvent();
 	~CollideEvent();
+
+	glm::vec2 mTotalVelocity;
+	float mTotalSpeed;
+	glm::vec2 mVelocityNormalized;
+	glm::vec2 mNormal;
 };
 
 

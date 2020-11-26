@@ -74,12 +74,20 @@ void PhysicsManager::Update()
 
 	for (auto pContact : GlobalManager::getCollisionManager()->mContacts)
 	{
+		// Create a collide event.
 		CollideEvent cEvent;
 
+		// Create collision information.
+		// TO-DO: Fix up header for contact?
+		cEvent.mTotalVelocity = pContact->mBodies[0]->mVelocity + pContact->mBodies[1]->mVelocity;
+		cEvent.mTotalSpeed = glm::length(cEvent.mTotalVelocity); // TO-DO: Remove this sqrt if I dont end up needing it.
+		cEvent.mVelocityNormalized = cEvent.mTotalVelocity / cEvent.mTotalSpeed;
+
+		cEvent.mNormal = pContact->mBodies[0]->mPosition - pContact->mBodies[1]->mPosition;
+		cEvent.mNormal = glm::normalize(cEvent.mNormal);
+
+		// Send the collide event to the bodies.
 		pContact->mBodies[0]->mpOwner->handleEvent(&cEvent);
 		pContact->mBodies[1]->mpOwner->handleEvent(&cEvent);
-	
-		// Test thing
-		//glm::vec2 colforce = pContact.;
 	}
 }
