@@ -44,25 +44,6 @@
                 }
             },
             "Parent": "PlayerShip"
-        },
-        {
-            "Name": "DebugBullet2",
-            "Type": "GameObject",
-            "Components":
-            {
-                "TYPE_GLRECT":
-                {
-                    "Texture": "CoilBullet.png",
-                    "Color": [1.0, 0.9, 0.9, 1.0]
-                },
-                "TYPE_TRANSFORM":
-                {
-                    "Translation": [0.0, 0.0, -10.0],
-                    "Rotation": 0,
-                    "Scale": [3.0, 1.0]
-                }
-            },
-            "Parent": "PlayerShip"
         }
     ]
 }

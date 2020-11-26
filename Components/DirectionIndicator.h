@@ -31,9 +31,15 @@ public:
 
 	void Update();
 
+	void handleEvent(Event* pEvent);
+
+	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
+	float mIndicatorScaleFactor;
 private:
+	// No private methods.
 private:
+	// DirectionIndicator will interact with GLRect, transform, and physics.
 };
 

@@ -19,7 +19,7 @@
 #include "DirectionIndicator.h"
 #include "ComponentTypes.h"
 
-DirectionIndicator::DirectionIndicator() : Component(ComponentTypes::TYPE_UNDEFINED) // TO-DO
+DirectionIndicator::DirectionIndicator() : Component(ComponentTypes::TYPE_DIRINDICATOR), mIndicatorScaleFactor(1.0)
 {
 
 }
@@ -32,7 +32,17 @@ DirectionIndicator::~DirectionIndicator()
 
 void DirectionIndicator::Update() 
 {
+	// 
+}
+
+
+void DirectionIndicator::handleEvent(Event* pEvent)
+{
 
 }
 
 
+void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
+{
+
+}

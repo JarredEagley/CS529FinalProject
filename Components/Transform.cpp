@@ -66,15 +66,6 @@ void Transform::buildTransformationMatrix()
 
 	//std::cout << "DEBUG - Transform build matrix for " << mpOwner->mName << std::endl;
 	mTransMatrix = glm::mat4(1.0f);
-	// Apply parent transform, if applicable.
-	/*
-	if (pParentTransform != nullptr)
-	{
-		// TO-DO: THIS IS HORRIBLY INEFFICIENT!!!
-		pParentTransform->buildTransformationMatrix();
-		mTransMatrix = glm::translate(mTransMatrix, pParentTransform->getPosition());
-	}
-	*/
 
 	// Build the transformations.
 	mTransMatrix = glm::translate(mTransMatrix, glm::vec3(mPosition));
