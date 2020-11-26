@@ -40,7 +40,7 @@
             {
                 "TYPE_TRANSFORM":
                 {
-                    "Translation": [4000.0, 1000.0],
+                    "Translation": [4600.0, 1000.0],
                     "Rotation": 0,
                     "Scale": [10.0, 20.0]
                 },

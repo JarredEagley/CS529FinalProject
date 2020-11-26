@@ -70,6 +70,25 @@ bool ShapeAABB::testPoint(glm::vec2 point)
 // End of shape class stuff //
 // ------------------------------------------------------ //
 
+// Helper function.
+void addContact(Shape* pShape1, Shape* pShape2, std::list<Contact*>& mContacts)
+{
+	// Create the new contact.
+	Contact* pNewContact = new Contact();
+
+	// Add the physics bodies.
+	pNewContact->mBodies[0] = pShape1->mpOwnerBody;
+	pNewContact->mBodies[1] = pShape2->mpOwnerBody;
+
+	// Create normal and total velocity.
+	pNewContact->mNormal = pShape1->mpOwnerBody->mVelocity + pShape2->mpOwnerBody->mVelocity;
+	pNewContact->mTotalVelocity = glm::length(pNewContact->mNormal); // Yes, this will do a sqrt unfortunately.
+	pNewContact->mNormal = pNewContact->mNormal / pNewContact->mTotalVelocity;
+
+	// Push new contact onto mContacts.
+	mContacts.push_back(pNewContact);
+}
+
 // The four hidden functions which manipulate the collision manager's contacts array.
 // (Only collisionManager can see these.)
 bool checkCollisionCircleCircle(Shape* pCircleShape1, glm::vec2 pos1, Shape* pCircleShape2, glm::vec2 pos2, std::list<Contact*>& mContacts)
@@ -83,10 +102,7 @@ bool checkCollisionCircleCircle(Shape* pCircleShape1, glm::vec2 pos1, Shape* pCi
 		return false;
 
 	// Add a new contact.
-	Contact* pNewContact = new Contact();
-	pNewContact->mBodies[0] = pCircleShape1->mpOwnerBody;
-	pNewContact->mBodies[1] = pCircleShape2->mpOwnerBody;
-	mContacts.push_back(pNewContact);
+	addContact(pCircleShape1, pCircleShape2, mContacts);
 
 	return true;
 }
@@ -115,10 +131,7 @@ bool checkCollisionAABBAABB(Shape* pAABBShape1, glm::vec2 pos1, Shape* pAABBShap
 		return false;
 
 	// Add a new contact.
-	Contact* pNewContact = new Contact();
-	pNewContact->mBodies[0] = pAABBShape1->mpOwnerBody;
-	pNewContact->mBodies[1] = pAABBShape2->mpOwnerBody;
-	mContacts.push_back(pNewContact);
+	addContact(pAABBShape1, pAABBShape2, mContacts);
 
 	return true;
 }
@@ -155,10 +168,7 @@ bool checkCollisionCircleAABB(Shape* pCircleShape1, glm::vec2 pos1, Shape* pAABB
 		return false;
 
 	// Add a new contact.
-	Contact* pNewContact = new Contact();
-	pNewContact->mBodies[0] = pCircleShape1->mpOwnerBody;
-	pNewContact->mBodies[1] = pAABBShape2->mpOwnerBody;
-	mContacts.push_back(pNewContact);
+	addContact(pCircleShape1, pAABBShape2, mContacts);
 
 	return true;
 }
@@ -167,7 +177,6 @@ bool checkCollisionAABBCircle(Shape* pAABBShape1, glm::vec2 pos1, Shape* pCircle
 {
 	return checkCollisionCircleAABB(pCircleShape2, pos2, pAABBShape1, pos1, mContacts);
 }
-
 
 CollisionManager::CollisionManager()
 {
