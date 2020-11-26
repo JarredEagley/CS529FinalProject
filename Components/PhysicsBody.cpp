@@ -146,7 +146,6 @@ void PhysicsBody::enableGravity()
 		return;
 
 	// Enable gravity and push this physics body onto the physics manager's vector.
-	// TO-DO: Handle this physics body getting destroyed; needs to be removed from the physics manager.
 	mHasGravity = true;
 	GlobalManager::getPhysicsManager()->gravityBodies.push_back(this);
 }
@@ -267,6 +266,18 @@ void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		else
 			std::cout << "Warning: Deserialized Physics Body component's starter velocity was improperly formatted." << std::endl;
 	}
+	// Has Angular velocity?
+	if (physBodyObj.HasMember("Angular Velocity"))
+	{
+		if (physBodyObj["Angular Velocity"].IsNumber())
+		{
+			this->mAngularVelocity = physBodyObj["Angular Velocity"].GetFloat();
+		}
+		else
+			std::cout << "Warning: Deserialized Physics Body component's starter angular velocity was improperly formatted." << std::endl;
+	}
+
+
 
 
 	// Has gravity?
