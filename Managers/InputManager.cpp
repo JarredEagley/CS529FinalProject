@@ -26,7 +26,7 @@ void InputManager::destroySingleton()
 	delete instance;
 }
 
-InputManager::InputManager() : mMinZoomLevel(0.1f), mMaxZoomLevel(100000.0f), mZoomLevel(100.0f)
+InputManager::InputManager()
 {
 	// Destination, value, # of bytes. NO ALLOCATION OCCURS.
 	memset(mCurrentState, 0, 512 * sizeof(Uint8));
@@ -145,33 +145,5 @@ int InputManager::getWheelY() const
 {
 	return mouseWheelY;
 }
-
-
-void InputManager::setMaxZoomLevel(float zoomLevel)
-{
-	mMaxZoomLevel = zoomLevel;
-	mZoomLevel = std::min(mMaxZoomLevel, mZoomLevel); // Clamp
-}
-
-void InputManager::setMinZoomLevel(float zoomLevel)
-{
-	mMinZoomLevel = zoomLevel;
-	mZoomLevel = std::max(mMinZoomLevel, mZoomLevel); // Clamp
-}
-
-void InputManager::setZoomLevel(float zoom)
-{
-	mZoomLevel = zoom;
-	mZoomLevel = std::max(mMinZoomLevel, mZoomLevel); // Clamp
-	mZoomLevel = std::min(mMaxZoomLevel, mZoomLevel); // Clamp
-}
-
-void InputManager::incrementZoomLevel(float delta)
-{
-	mZoomLevel += delta;
-	mZoomLevel = std::max(mMinZoomLevel, mZoomLevel); // Clamp
-	mZoomLevel = std::min(mMaxZoomLevel, mZoomLevel); // Clamp
-}
-
 
 

@@ -19,12 +19,12 @@ void Camera::Update()
 	//pTransform->setZ(zoom);
 	
 	// Will be moved to a camera controller component.
-	InputManager* pIM = GlobalManager::getInputManager();
+	GraphicsManager* pGM = GlobalManager::getGraphicsManager();
 
 	if (GlobalManager::getInputManager()->getWheelY() != 0)
 	{
 		//zoom -= GlobalManager::getInputManager()->getWheelY() * zoom * 0.4f;
-		GlobalManager::getInputManager()->incrementZoomLevel(-GlobalManager::getInputManager()->getWheelY() * pIM->getZoomLevel() * 0.4f );
+		GlobalManager::getGraphicsManager()->incrementZoomLevel(-GlobalManager::getInputManager()->getWheelY() * pGM->getZoomLevel() * 0.4f );
 	}
 
 	//std::cout << "DEBUG - offset = " << offset.x << ", " << offset.y << ", " << offset.z << std::endl;
@@ -34,8 +34,8 @@ void Camera::Update()
 	GlobalManager::getInputManager()->getMousePosition(mX, mY);
 	int const winH = GlobalManager::getGraphicsManager()->windowHeight;
 	int const winW = GlobalManager::getGraphicsManager()->windowWidth;
-	this->offset.x = (mX-(winW/2)) * (pIM->getZoomLevel()/500.0f); 
-	this->offset.y = -(mY-(winH/2)) * (pIM->getZoomLevel()/500.0f);
+	this->offset.x = (mX-(winW/2)) * (pGM->getZoomLevel()/500.0f);
+	this->offset.y = -(mY-(winH/2)) * (pGM->getZoomLevel()/500.0f);
 
 	this->offset.x -= 10.0f; // Correct for weird offset. A bit hacky, but it works.
 
@@ -61,7 +61,7 @@ void Camera::buildTransform()
 	cameraTransform = glm::rotate(cameraTransform, 0.15f, glm::vec3(1, 0, 0));
 	
 	// Apply Zoom translation
-	cameraTransform = glm::translate(cameraTransform, glm::vec3(0.0f,0.0f, GlobalManager::getInputManager()->getZoomLevel() ));
+	cameraTransform = glm::translate(cameraTransform, glm::vec3(0.0f,0.0f, GlobalManager::getGraphicsManager()->getZoomLevel() ));
 
 	cameraTransform = glm::inverse(cameraTransform);
 }

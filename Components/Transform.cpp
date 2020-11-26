@@ -41,7 +41,6 @@ void Transform::Update()
 	// Send transform update to children.
 	if (this->mpOwner->mHasChildren)
 	{
-		std::cout << "DEBUG - Transform.cpp::Update() mpOwner " << this->mpOwner->mName << " has children\n";
 		TransformUpdatedEvent* pTransformEvent = new TransformUpdatedEvent(this);
 		GlobalManager::getEventManager()->broadcastEventToSubscribers(pTransformEvent);
 	}

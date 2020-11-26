@@ -42,7 +42,7 @@ void DirectionIndicator::handleEvent(Event* pEvent)
 }
 
 
-void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
+void DirectionIndicator::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
 
 }

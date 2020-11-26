@@ -26,7 +26,7 @@ void GraphicsManager::destroySingleton()
 	delete instance;
 }
 
-GraphicsManager::GraphicsManager()
+GraphicsManager::GraphicsManager() : mMinZoomLevel(0.1f), mMaxZoomLevel(100000.0f), mZoomLevel(100.0f)
 {
 	pCurrentCamera = nullptr;
 	windowHeight = 0;
@@ -144,3 +144,30 @@ ShaderProgram* GraphicsManager::loadShader(const char* shaderName)
 
 	return program;
 }
+
+void GraphicsManager::setMaxZoomLevel(float zoomLevel)
+{
+	mMaxZoomLevel = zoomLevel;
+	mZoomLevel = std::min(mMaxZoomLevel, mZoomLevel); // Clamp
+}
+
+void GraphicsManager::setMinZoomLevel(float zoomLevel)
+{
+	mMinZoomLevel = zoomLevel;
+	mZoomLevel = std::max(mMinZoomLevel, mZoomLevel); // Clamp
+}
+
+void GraphicsManager::setZoomLevel(float zoom)
+{
+	mZoomLevel = zoom;
+	mZoomLevel = std::max(mMinZoomLevel, mZoomLevel); // Clamp
+	mZoomLevel = std::min(mMaxZoomLevel, mZoomLevel); // Clamp
+}
+
+void GraphicsManager::incrementZoomLevel(float delta)
+{
+	mZoomLevel += delta;
+	mZoomLevel = std::max(mMinZoomLevel, mZoomLevel); // Clamp
+	mZoomLevel = std::min(mMaxZoomLevel, mZoomLevel); // Clamp
+}
+

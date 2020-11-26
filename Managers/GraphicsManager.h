@@ -23,12 +23,22 @@ public:
 
 	void setCurrentCamera(GameObject* pCam) { pCurrentCamera = pCam; }; // Cameras are game objects with a camera component.
 
+	// Was originally just in camera, but I'll be needing this in more components.
+	float getZoomLevel() { return mZoomLevel; };
+	void setMaxZoomLevel(float zoomLevel);
+	void setMinZoomLevel(float zoomLevel);
+	void setZoomLevel(float zoom);
+	void incrementZoomLevel(float delta);
+
 public:
 	static std::unordered_map<const char*, ShaderProgram*> mShaderPrograms; // shaderName, ShaderProgram*
 	int windowWidth, windowHeight;
 
 private:
 	GraphicsManager();
+	float mZoomLevel;
+	float mMinZoomLevel;
+	float mMaxZoomLevel;
 private:
 	static GraphicsManager *instance;
 	GameObject* pCurrentCamera = nullptr;;

@@ -63,6 +63,7 @@
     <ClCompile Include="Components\DirectionIndicator.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="ShipAttributes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\Transform.h">
@@ -129,6 +130,7 @@
     <ClInclude Include="Components\DirectionIndicator.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="ShipAttributes.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

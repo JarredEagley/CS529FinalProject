@@ -108,6 +108,7 @@
     <ClCompile Include="Managers\PhysicsManager.cpp" />
     <ClCompile Include="Managers\ResourceManager.cpp" />
     <ClCompile Include="Managers\Serializer.cpp" />
+    <ClCompile Include="ShipAttributes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\Camera.h" />
@@ -132,6 +133,7 @@
     <ClInclude Include="Managers\PhysicsManager.h" />
     <ClInclude Include="Managers\ResourceManager.h" />
     <ClInclude Include="Managers\Serializer.h" />
+    <ClInclude Include="ShipAttributes.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\core.frag" />
