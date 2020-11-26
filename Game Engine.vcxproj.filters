@@ -1,17 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Components\Transform.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Components\Component.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\ControllerSlider.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\UpDown.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Managers\GameObjectManager.cpp">
@@ -33,9 +24,6 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="mainGLTest.cpp" />
-    <ClCompile Include="Components\GLRect.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Managers\GraphicsManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
@@ -44,9 +32,6 @@
     </ClCompile>
     <ClCompile Include="Managers\GameObjectFactory.cpp">
       <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\ControllerShip.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Managers\PhysicsManager.cpp">
       <Filter>Managers</Filter>
@@ -57,29 +42,35 @@
     <ClCompile Include="Managers\CollisionManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Components\PhysicsBody.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="ShipAttributes.cpp" />
+    <ClCompile Include="Components\Transform.cpp">
+      <Filter>Components\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\GLRect.cpp">
+      <Filter>Components\Data</Filter>
     </ClCompile>
     <ClCompile Include="Components\DirectionIndicator.cpp">
-      <Filter>Components</Filter>
+      <Filter>Components\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="ShipAttributes.cpp" />
+    <ClCompile Include="Components\UpDown.cpp">
+      <Filter>Components\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\PhysicsBody.cpp">
+      <Filter>Components\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\ControllerShip.cpp">
+      <Filter>Components\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\ControllerSlider.cpp">
+      <Filter>Components\Control</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Components\Transform.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Components\Component.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Components\ControllerSlider.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Components\ComponentTypes.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\UpDown.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Managers\GameObjectManager.h">
@@ -100,9 +91,6 @@
     <ClInclude Include="Managers\Serializer.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Components\GLRect.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Managers\GraphicsManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
@@ -111,9 +99,6 @@
     </ClInclude>
     <ClInclude Include="Managers\GameObjectFactory.h">
       <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\ControllerShip.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Managers\PhysicsManager.h">
       <Filter>Managers</Filter>
@@ -124,13 +109,28 @@
     <ClInclude Include="Managers\CollisionManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Components\PhysicsBody.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="ShipAttributes.h" />
+    <ClInclude Include="Components\Transform.h">
+      <Filter>Components\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\GLRect.h">
+      <Filter>Components\Data</Filter>
     </ClInclude>
     <ClInclude Include="Components\DirectionIndicator.h">
-      <Filter>Components</Filter>
+      <Filter>Components\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="ShipAttributes.h" />
+    <ClInclude Include="Components\UpDown.h">
+      <Filter>Components\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\PhysicsBody.h">
+      <Filter>Components\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ControllerSlider.h">
+      <Filter>Components\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ControllerShip.h">
+      <Filter>Components\Control</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">
@@ -142,11 +142,17 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{5b190d9f-e8bb-4f51-8746-c7a8594faeed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Physics">
+    <Filter Include="Components\Interface">
+      <UniqueIdentifier>{33536d63-2244-40b8-8a69-04034ade562d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Data">
       <UniqueIdentifier>{9617c0fc-53af-4022-9bbb-2e979ebc6509}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Ship">
-      <UniqueIdentifier>{451db698-bc91-4b8d-8c69-7ef3d944c8db}</UniqueIdentifier>
+    <Filter Include="Components\AI">
+      <UniqueIdentifier>{46667afd-f82b-4a6f-8a99-609898f8dc06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Control">
+      <UniqueIdentifier>{91fa421d-5f79-491e-a2ef-391ab8456079}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

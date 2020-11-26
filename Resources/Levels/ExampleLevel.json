@@ -101,6 +101,25 @@
             "Parent": "SecondShip"
         },
         {
+            "Name": "DebugBUllet2",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [100.0, 0.0],
+                    "Rotation": 0.2,
+                    "Scale": [20.0, 10.0],
+                    "Inherit Rotation": true
+                },
+                "TYPE_GLRECT":
+                {
+                    "Texture": "CoilBullet.png",
+                    "Color": [0.6, 0.6, 0.1, 1.0]
+                }
+            },
+            "Parent": "PlayerShip"
+        },
+        {
             "Name":"Mars",
             "Archetype": "Planet.json"
         },
