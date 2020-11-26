@@ -14,15 +14,21 @@ public:
 
 public:
 	float mHealth; // ie structural integrity.
+	float mMaxHealth;
+	float mPower;
+	float mMaxPower;
+	float mPowerProduction;
+
 	float mFuel;
+	float mMaxFuel;
+	float fuelEfficiency;	// Basically ISP, but without the real-world math.
+
 	int mCoilBullets;
 	int mMissiles;
 
 	float mMainAcceleration;		// Main drive
 	float mSecondaryAcceleration;	// Maneuvering thrusters
 	float mAngularAcceleration;		// RCS
-
-	float fuelEfficiency;	// Basically ISP, but without the real-world math.
 
 private:
 private:

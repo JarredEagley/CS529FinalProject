@@ -24,6 +24,25 @@
                 "Top": 5.0,
                 "Bottom":5.0
             }
+        },
+        "TYPE_SHIPDATA":
+        {
+            "Health": 100,
+            "Health Max": 100,
+            "Power": 100,
+            "Power Max": 100,
+            "Power Production": 2,
+
+            "Fuel": 100,
+            "Fuel Max": 100,
+            "Fuel Efficiency": 1.0,
+
+            "Coil Bullets": 500,
+            "Missiles": 10,
+
+            "Main Acceleration": 1.0,
+            "Secondary Acceleration": 0.01,
+            "Angular Acceleration": 0.05
         }
     }
 }
