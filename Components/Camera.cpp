@@ -37,10 +37,15 @@ void Camera::Update()
 	this->offset.x = (mX-(winW/2)) * (pGM->getZoomLevel()/500.0f);
 	this->offset.y = -(mY-(winH/2)) * (pGM->getZoomLevel()/500.0f);
 
-	this->offset.x -= 10.0f; // Correct for weird offset. A bit hacky, but it works.
+	// Stuff to only do if not parented.
+	if (this->mpOwner->getParent() == nullptr)
+	{
+		this->offset.x -= 10.0f; // Correct for weird offset. A bit hacky, but it works.
 
-	// Build perspective transformation...
-	buildTransform();
+		// Build perspective transformation... // Transform now built on event call.
+		buildTransform();
+	}
+
 }
 
 void Camera::buildTransform()
@@ -65,6 +70,24 @@ void Camera::buildTransform()
 
 	cameraTransform = glm::inverse(cameraTransform);
 }
+
+
+void Camera::handleEvent(Event* pEvent)
+{
+	if (pEvent->mType == EventType::TRANSFORM_UPDATED)
+	{
+		TransformUpdatedEvent* pTransformEvent = static_cast<TransformUpdatedEvent*>(pEvent);
+		Transform* pParentTransform = pTransformEvent->mpTransform;
+
+		// Check if this belongs to owner's parent.
+		if (this->mpOwner->getParent() == pParentTransform->mpOwner)
+		{
+			// Apply translation.
+			this->buildTransform();
+		}
+	}
+}
+
 
 void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
