@@ -44,6 +44,9 @@ void GLRect::setUvScale(float scale)
 	mVertUV[1] = glm::vec2(0.0f, 0.0f);
 	mVertUV[2] = glm::vec2(scale, 0.0f);
 	mVertUV[3] = glm::vec2(scale, scale);
+
+	// Build the new VAO.
+	buildVAO();
 }
 
 float GLRect::getUvScale()
@@ -61,6 +64,9 @@ void GLRect::setUvOffset(glm::vec2 offset)
 	mVertUV[1] += offset;
 	mVertUV[2] += offset;
 	mVertUV[3] += offset;
+
+	// Build the new VAO.
+	buildVAO();
 }
 
 glm::vec2 GLRect::getUvOffset()
