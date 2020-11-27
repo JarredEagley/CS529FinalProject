@@ -71,7 +71,7 @@ void ControllerShip::Update()
 		this->mThrottle = std::max(mThrottle - mThrottleSensitivity, 0.0f);
 	}
 	// Apply thrust.
-	std::cout << "DEBUG - Current throttle is " << mThrottle << ", fuel is at " << mpShipData->mFuel << std::endl;
+	//std::cout << "DEBUG - Current throttle is " << mThrottle << ", fuel is at " << mpShipData->mFuel << std::endl;
 	if (mpShipData->mFuel > 0.0f && mThrottle > 1.0f) // Throttle actually has a tiny deadzone. Making this configurable could make for an interesting game mechanic.
 	{
 		mpShipData->mFuel -=  GlobalManager::getFrameRateController()->getFrameTimeSec() / mpShipData->fuelEfficiency;

@@ -11,10 +11,12 @@ public:
 	CollideEvent();
 	~CollideEvent();
 
-	glm::vec2 mTotalVelocity;
-	float mTotalSpeed;
-	glm::vec2 mVelocityNormalized;
-	glm::vec2 mNormal;
+	PhysicsBody* mpBodies[2];
+
+	glm::vec2 mNewVel0;
+	glm::vec2 mNewVel1;
+
+	bool mObjectsAreApproaching;
 };
 
 
