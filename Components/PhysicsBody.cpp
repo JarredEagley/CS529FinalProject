@@ -177,24 +177,14 @@ void PhysicsBody::handleEvent(Event* pEvent)
 		// Only react to your own collisions. Figure out which one you are.
 		if (pCollideEvent->mpBodies[0] == this)
 		{
-			std::cout << "DEBUG: " << this->mpOwner->mName << " altered\n";
+			//std::cout << "DEBUG: " << this->mpOwner->mName << " altered\n";
 			this->mVelocity = pCollideEvent->mNewVel0;
 		}
 		else if (pCollideEvent->mpBodies[1] == this)
 		{
-			std::cout << "DEBUG: " << this->mpOwner->mName << " altered\n";
+			//std::cout << "DEBUG: " << this->mpOwner->mName << " altered\n";
 			this->mVelocity = pCollideEvent->mNewVel1;
 		}
-		else
-		{
-			std::cout << "DEBUG: " << this->mpOwner->mName << " skipped\n";
-			return;
-		}
-
-
-		//applyForce((-pCollideEvent->mNormal * pCollideEvent->mTotalSpeed)/0.9f); // I'm going to have to do some studying here.
-		//this->mVelocity += pCollideEvent->mTotalVelocity;
-
 	}
 }
 
