@@ -58,8 +58,8 @@ bool ShapeAABB::testPoint(glm::vec2 point)
 	if (
 		point.x < left ||
 		point.x > right ||
-		point.y < top ||
-		point.y > bottom
+		point.y > top ||
+		point.y < bottom
 		)
 		return false;
 
@@ -107,21 +107,21 @@ bool checkCollisionAABBAABB(Shape* pAABBShape1, glm::vec2 pos1, Shape* pAABBShap
 	ShapeAABB* pAABB1 = (ShapeAABB*)pAABBShape1;
 	ShapeAABB* pAABB2 = (ShapeAABB*)pAABBShape2;
 
-	float left1		= pos1.x + pAABB1->mLeft;
+	float left1		= pos1.x - pAABB1->mLeft;
 	float right1	= pos1.x + pAABB1->mRight;
 	float top1		= pos1.y + pAABB1->mTop;
-	float bottom1	= pos1.y + pAABB1->mBottom;
+	float bottom1	= pos1.y - pAABB1->mBottom;
 	
-	float left2		= pos2.x + pAABB2->mLeft;
+	float left2		= pos2.x - pAABB2->mLeft;
 	float right2	= pos2.x + pAABB2->mRight;
 	float top2		= pos2.y + pAABB2->mTop;
-	float bottom2	= pos2.y + pAABB2->mBottom;
+	float bottom2	= pos2.y - pAABB2->mBottom;
 
 	if (
 		left1 > right2 ||
 		left2 > right1 ||
-		top1 > bottom2 ||
-		top2 > bottom1
+		bottom1 > top2 ||
+		bottom2 > top1
 		)
 		return false;
 
@@ -136,10 +136,10 @@ bool checkCollisionCircleAABB(Shape* pCircleShape1, glm::vec2 pos1, Shape* pAABB
 	ShapeCircle* pCircle1 = (ShapeCircle*)pCircleShape1;
 	ShapeAABB* pAABB2 = (ShapeAABB*)pAABBShape2;
 
-	float left2		= pos2.x + pAABB2->mLeft;
+	float left2		= pos2.x - pAABB2->mLeft;
 	float right2	= pos2.x + pAABB2->mRight;
 	float top2		= pos2.y + pAABB2->mTop;
-	float bottom2	= pos2.y + pAABB2->mBottom;
+	float bottom2	= pos2.y - pAABB2->mBottom;
 
 	float snappedX, snappedY;
 
@@ -151,11 +151,11 @@ bool checkCollisionCircleAABB(Shape* pCircleShape1, glm::vec2 pos1, Shape* pAABB
 		else
 			snappedX = pos2.x;
 
-	if (pos1.y < top2)
-		snappedY = top2;
+	if (pos1.y < bottom2)
+		snappedY = bottom2;
 	else
-		if (pos1.y > bottom2)
-			snappedY = bottom2;
+		if (pos1.y > top2)
+			snappedY = top2;
 		else
 			snappedY = pos2.y;
 

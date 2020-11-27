@@ -23,13 +23,13 @@
                     "Mass": 200.0,
                     "AABB":
                     {
-                        "Left": 10.0,
-                        "Right": 10.0,
-                        "Top": 10.0,
-                        "Bottom":10.0
+                        "Left": 100.0,
+                        "Right": 100.0,
+                        "Top": 100.0,
+                        "Bottom":100.0
                     },
-                    "Velocity": [0.0, -0.4],
-                    "Angular Velocity": 0.3
+                    "Velocity": [0.0, -0.55],
+                    "Angular Velocity": 0.1
                 }
             }
         },
@@ -48,10 +48,10 @@
                     "Mass": 200.0,
                     "AABB":
                     {
-                        "Left": 2.0,
-                        "Right": 2.0,
-                        "Top": 5.0,
-                        "Bottom":5.0
+                        "Left": 100.0,
+                        "Right": 100.0,
+                        "Top": 100.0,
+                        "Bottom":100.0
                     },
                     "Velocity": [0.0, -0.4]
                 }
