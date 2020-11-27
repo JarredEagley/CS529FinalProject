@@ -12,8 +12,6 @@
 GraphicsManager* GraphicsManager::instance = nullptr;
 std::unordered_map<const char*, ShaderProgram*> GraphicsManager::mShaderPrograms;
 
-bool toggle = false; // TO-DO: This is for milestone 3. Remove when done.
-
 void GraphicsManager::destroySingleton()
 {
 	// Destroy all shader programs.
@@ -36,14 +34,6 @@ GraphicsManager::GraphicsManager() : mMinZoomLevel(0.1f), mMaxZoomLevel(100000.0
 // Draws every GameObject stored in the GameObjectManger.
 void GraphicsManager::drawAllGameObjects()
 {
-	// TEMPORARY -- the debug draw toggle for milestone 3
-	bool spacebar = GlobalManager::getInputManager()->IsKeyTriggered(SDL_SCANCODE_SPACE);
-	if (spacebar)
-	{
-		std::cout << "Toggling milestone 3 draw mode..." << std::endl;
-		toggle = !toggle;
-	}
-
 	GameObjectManager *pGOM = GlobalManager::getGameObjectManager();
 	for (auto pGOPair : pGOM->mGameObjects)
 	{
@@ -86,8 +76,6 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 		return;
 	}
 
-	//glm::mat4 cameraTrasform = pCamera->getRotMatrix() * pCameraTransform->getTransformationMatrix(); // Separated out rotation for now.
-
 	// --- Draw --- //
 
 	// bind
@@ -107,8 +95,6 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	loc = glGetUniformLocation(program->ProgramID, "viewProj");
 	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr( pCamera->getProjMatrix() ));
 
-	loc = glGetUniformLocation(program->ProgramID, "debugDraw");
-	glUniform1i(loc, toggle);
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // <--- The actual draw call! <---
 

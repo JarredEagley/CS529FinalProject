@@ -1,0 +1,12 @@
+{
+    "Type": "GameObject",
+    "Components":
+    {
+        "Type_TRANSFORM": {},
+        "TYPE_GLRECT":
+        {
+            "Texture": "HUDThrottleBase",
+            "Color": [1.0, 1.0, 1.0, 1.0]
+        }
+    }
+}

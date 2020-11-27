@@ -236,6 +236,16 @@ void GameObjectFactory::loadLevel(const char* pFileName)
 				pCurrentGO->setParent(pParent);
 		}
 
+		// If this GO is to have another shader aside from core, set its new shader.
+		if (
+			arrItr->GetObject().HasMember("Shader")
+			&& arrItr->GetObject()["Shader"].IsString()
+			)
+		{
+			std::string newShaderName = arrItr->GetObject()["Shader"].GetString();
+			pCurrentGO->mShaderName = newShaderName.c_str();
+		}
+
 		// Name
 		pCurrentGO->mName = currentGOName;
 		

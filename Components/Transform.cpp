@@ -7,10 +7,9 @@
 	File Name:			Transform.cpp
 	Purpose				Transform component tracks a GameObject's position
 						in the world.
-						May eventually track rotation angle as well.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
-	Project:			JarredEagley_Milestone2
+	Project:			JarredEagley_FinalProject
 	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
 	Creation date:		10/13/2020
 

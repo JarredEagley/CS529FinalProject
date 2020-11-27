@@ -24,6 +24,7 @@
 #include "Components/ComponentTypes.h"
 
 #include "Components/Transform.h"
+#include "Components/Timer.h"
 #include "Components/ControllerSlider.h"
 #include "Components/ControllerShip.h"
 #include "Components/UpDown.h"
@@ -32,6 +33,9 @@
 #include "Components/PhysicsBody.h"
 #include "Components/DirectionIndicator.h"
 #include "Components/ShipData.h"
+#include "Components/HUDElement.h"
+#include "Components/ThrottleMeter.h"
+// #include "Components/FuelMeter.h"
 
 GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false)
 {
@@ -94,6 +98,9 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_TRANSFORM):
 		pNewComponent = new Transform();
 		break;
+	case (ComponentTypes::TYPE_TIMER):
+		pNewComponent = new Timer();
+		break;
 	case (ComponentTypes::TYPE_CONTROLLERSLIDER):
 		pNewComponent = new ControllerSlider();
 		break;
@@ -118,6 +125,13 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_SHIPDATA):
 		pNewComponent = new ShipData();
 		break;
+	case (ComponentTypes::TYPE_HUDELEMENT):
+		pNewComponent = new HUDElement();
+		break;
+	case (ComponentTypes::TYPE_METER_THROTTLE):
+		pNewComponent = new ThrottleMeter();
+		break;
+	
 
 	default:
 		return nullptr; // Failed to create component.

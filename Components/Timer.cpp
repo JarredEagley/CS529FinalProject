@@ -4,8 +4,8 @@
 	Reproduction or disclosure of this file or its contents without the
 	prior written consent of DigiPen Institute of Technology is prohibited.
 
-	File Name:			FuelMeter.h
-	Purpose				A component for the player's fuel indicator.
+	File Name:			Timer.cpp
+	Purpose				Implementations for timer.h
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
 	Project:			JarredEagley_FinalProject
@@ -14,10 +14,29 @@
 
 - End Header --------------------------------------------------------*/
 
-#pragma once
+#include "Timer.h"
 
-
-class FuelMeter
+Timer::Timer() : Component(ComponentTypes::TYPE_TIMER)
 {
-};
+}
 
+Timer::~Timer()
+{
+
+}
+
+
+void Timer::Update()
+{
+}
+
+
+void Timer::handleEvent(Event* pEvent)
+{
+
+}
+
+
+void Timer::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
+{
+}

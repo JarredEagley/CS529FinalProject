@@ -8,7 +8,7 @@
             "Archetype": "Enemy.json"
         },
         {
-            "Name": "PlayerShip",
+            "Name": "PLAYER",
             "Archetype": "Player.json",
             "Components":
             {
@@ -38,12 +38,12 @@
         {
             "Name": "MainCamera",
             "Archetype": "Camera.json",
-            "Parent": "PlayerShip"
+            "Parent": "PLAYER"
         },
         {
             "Name": "PlayerShip_Indicator_Forward",
             "Archetype": "ForwardIndicator.json",
-            "Parent":"PlayerShip"
+            "Parent":"PLAYER"
         },
         {
             "Name": "SecondShip_Indicator_Forward",
