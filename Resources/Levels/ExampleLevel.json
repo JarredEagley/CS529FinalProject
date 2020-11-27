@@ -22,10 +22,10 @@
                     "Mass": 200.0,
                     "AABB":
                     {
-                        "Left": 100.0,
-                        "Right": 100.0,
-                        "Top": 100.0,
-                        "Bottom":100.0
+                        "Left": 10.0,
+                        "Right": 10.0,
+                        "Top": 10.0,
+                        "Bottom":10.0
                     },
                     "Velocity": [0.0, -0.4]
                 }
@@ -33,18 +33,11 @@
         },
         {
             "Name":"Mars",
-            "Archetype": "Planet.json"
+            "Archetype": "Mars.json"
         },
         {
             "Name": "MainCamera",
             "Archetype": "Camera.json",
-            "Components":
-            {
-                "TYPE_TRANSFORM":
-                {
-                    "Translation": [0.0, 0.0, 0.0]
-                }
-            },
             "Parent": "PlayerShip"
         },
         {
