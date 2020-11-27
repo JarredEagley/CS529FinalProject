@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Components\BackgroundGrid.cpp" />
     <ClCompile Include="Components\Camera.cpp" />
     <ClCompile Include="Components\Component.cpp" />
     <ClCompile Include="Components\ControllerShip.cpp" />
@@ -93,8 +94,11 @@
     <ClCompile Include="Components\DirectionIndicator.cpp" />
     <ClCompile Include="Components\FuelMeter.cpp" />
     <ClCompile Include="Components\GLRect.cpp" />
+    <ClCompile Include="Components\HUDElement.cpp" />
     <ClCompile Include="Components\PhysicsBody.cpp" />
     <ClCompile Include="Components\ShipData.cpp" />
+    <ClCompile Include="Components\ThrottleMeter.cpp" />
+    <ClCompile Include="Components\Timer.cpp" />
     <ClCompile Include="Components\Transform.cpp" />
     <ClCompile Include="Components\UpDown.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -112,6 +116,7 @@
     <ClCompile Include="Managers\Serializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Components\BackgroundGrid.h" />
     <ClInclude Include="Components\Camera.h" />
     <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\ControllerShip.h" />
@@ -119,8 +124,11 @@
     <ClInclude Include="Components\DirectionIndicator.h" />
     <ClInclude Include="Components\FuelMeter.h" />
     <ClInclude Include="Components\GLRect.h" />
+    <ClInclude Include="Components\HUDElement.h" />
     <ClInclude Include="Components\PhysicsBody.h" />
     <ClInclude Include="Components\ShipData.h" />
+    <ClInclude Include="Components\ThrottleMeter.h" />
+    <ClInclude Include="Components\Timer.h" />
     <ClInclude Include="Components\Transform.h" />
     <ClInclude Include="Components\ComponentTypes.h" />
     <ClInclude Include="Components\UpDown.h" />

@@ -83,7 +83,7 @@ public:
 
 	void broadcastEvent(Event* pEvent); // Broadcast to everybody.
 	void broadcastEventToSubscribers(Event* pEvent);
-	void addTimedEvent(Event* pEvent);
+	void addTimedEvent(Event* pEvent); // Note: Event will only be broadcasted to subscribers.
 	void Update();
 
 	void Subscribe(EventType Et, GameObject* pGameObject); 

@@ -19,6 +19,19 @@
 #include "Component.h"
 #include "ComponentTypes.h"
 
+// When another component requests something be timed, timer will wait the given
+// amount of time then broadcast a timer event to any gameobject subscribed to timerEvents.?
+/*
+class TimerRequest
+{
+public:
+	TimerRequest(float time) : mStartTime(time), mTime(time) {};
+	~TimerRequest() {};
+	float mStartTime;
+	float mTime;
+};
+*/
+
 class Timer : public Component
 {
 public:

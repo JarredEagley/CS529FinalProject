@@ -16,7 +16,6 @@ void EventManager::destroySingleton()
 
 EventManager::EventManager()
 {
-	// Empty for now.
 }
 
 void EventManager::broadcastEvent(Event* pEvent)
