@@ -14,8 +14,14 @@ public:
 	~GLRect();
 
 	void Update();
+
 	void setColor(glm::vec4); // Sets the color of the whole square. Will implement gradiant coloring if necessary.
 	glm::vec4 getColor() { return mColor; };
+
+	void setUvScale(float scale);
+	float getUvScale();
+	void setUvOffset(glm::vec2 offset);
+	glm::vec2 getUvOffset();
 
 	void buildVAO(); // Build this component's VAO. Automatically stores vaoId.
 	unsigned int getVAO(); // Returns the iD of this component's vertex array object.
@@ -59,4 +65,6 @@ private:
 	int texID; // ID of the texture we want to use; stored on the graphics card.
 
 	glm::vec4 mColor;
+	float mUvScale;
+	glm::vec2 mUvOffset;
 };

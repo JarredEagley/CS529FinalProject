@@ -36,7 +36,7 @@ void DirectionIndicator::Update()
 	// Need graphics manager for the zoom level.
 	GraphicsManager* pGM = GlobalManager::getGraphicsManager();
 
-	// Try to set mpGLRect. This is mpowner's graphics component.
+	// Try to set mpGLRect. This is mpowner's graphics component. (And transform)
 	if (mpGLRect == nullptr || mpTransform == nullptr)
 	{
 		// Try to set mpGLRect and terminate early.

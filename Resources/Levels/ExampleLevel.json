@@ -4,6 +4,10 @@
     "GameObjects":
     [
         {
+            "Name": "BackgroundGrid",
+            "Archetype":"BackgroundGrid.json"
+        },
+        {
             "Name": "SecondShip",
             "Archetype": "Enemy.json"
         },

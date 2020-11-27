@@ -21,7 +21,8 @@ public:
 
 	ShaderProgram* loadShader(const char* shaderName); // Loads a shader program. Creates the program if it cannot be found.
 
-	void setCurrentCamera(GameObject* pCam) { pCurrentCamera = pCam; }; // Cameras are game objects with a camera component.
+	void setCurrentCameraGO(GameObject* pCam); // Cameras are game objects with a camera component.
+	GameObject* getCurrentCameraGO() { return pCurrentCameraGO; };
 
 	// Was originally just in camera, but I'll be needing this in more components.
 	float getZoomLevel() { return mZoomLevel; };
@@ -43,6 +44,6 @@ private:
 	float mMaxZoomLevel;
 private:
 	static GraphicsManager *instance;
-	GameObject* pCurrentCamera = nullptr;;
+	GameObject* pCurrentCameraGO = nullptr;
 };
 

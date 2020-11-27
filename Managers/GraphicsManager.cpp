@@ -26,7 +26,7 @@ void GraphicsManager::destroySingleton()
 
 GraphicsManager::GraphicsManager() : mMinZoomLevel(0.1f), mMaxZoomLevel(100000.0f), mZoomLevel(100.0f)
 {
-	pCurrentCamera = nullptr;
+	pCurrentCameraGO = nullptr;
 	windowHeight = 0;
 	windowWidth = 0;
 }
@@ -57,14 +57,14 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 
 	//Transform* pCameraTransform = nullptr;
 	Camera* pCamera = nullptr;
-	if (pCurrentCamera == nullptr)
+	if (pCurrentCameraGO == nullptr)
 	{
 		std::cout << "Error: No camera GameObject currently bound to the GraphicsManager." << std::endl;
 	}
 	else
 	{
 		//pCameraTransform = static_cast<Transform*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-		pCamera = static_cast<Camera*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
+		pCamera = static_cast<Camera*>(pCurrentCameraGO->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
 	}
 
 	// Get the vaoID we want to draw.
@@ -130,6 +130,13 @@ ShaderProgram* GraphicsManager::loadShader(const char* shaderName)
 
 	return program;
 }
+
+
+void GraphicsManager::setCurrentCameraGO(GameObject* pCam)
+{
+	pCurrentCameraGO = pCam;
+}
+
 
 void GraphicsManager::setMaxZoomLevel(float zoomLevel)
 {

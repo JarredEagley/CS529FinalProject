@@ -1,0 +1,13 @@
+{
+    "Type": "GameObject",
+    "Components":
+    {
+        "TYPE_TRANSFORM": {},
+        "TYPE_GLRECT":
+        {
+            "Texture":"grid.png",
+            "Color": [0.0, 0.6, 0.1, 0.3]
+        },
+        "TYPE_BACKGROUNDGRID": {}
+    }
+}

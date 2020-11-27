@@ -30,6 +30,7 @@
 #include "Components/UpDown.h"
 #include "Components/GLRect.h"
 #include "Components/Camera.h"
+#include "Components/BackgroundGrid.h"
 #include "Components/PhysicsBody.h"
 #include "Components/DirectionIndicator.h"
 #include "Components/ShipData.h"
@@ -115,6 +116,9 @@ Component* GameObject::AddComponent(unsigned int Type)
 		break;
 	case (ComponentTypes::TYPE_CAMERA):
 		pNewComponent = new Camera();
+		break;
+	case (ComponentTypes::TYPE_BACKGROUNDGRID):
+		pNewComponent = new BackgroundGrid();
 		break;
 	case (ComponentTypes::TYPE_PHYSICSBODY):
 		pNewComponent = new PhysicsBody();

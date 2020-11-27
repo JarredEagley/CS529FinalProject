@@ -92,8 +92,7 @@ void Camera::handleEvent(Event* pEvent)
 void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
 	// For now, I'll just auto-bind.
-	GlobalManager::getGraphicsManager()->setCurrentCamera(this->mpOwner);
+	GlobalManager::getGraphicsManager()->setCurrentCameraGO(this->mpOwner);
 
 	pTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-	pTransform->setZ(5.0);
 }

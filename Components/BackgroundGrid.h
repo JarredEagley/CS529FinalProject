@@ -10,20 +10,41 @@
 						indicators, this fades in and out with zoom level,
 						but is actually the other way around, becoming less
 						noticable when zoomed in.
+						Scales size, uv coords, changes alpha. Therefore
+						will need to interface with
+						transform and GLRect.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
 	Project:			JarredEagley_FinalProject
 	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
-	Creation date:		10/13/2020
+	Creation date:		11/27/2020
 
 - End Header --------------------------------------------------------*/
 
 #pragma once
-class BackgroundGrid
+#include "Component.h"
+#include "ComponentTypes.h"
+#include "GLRect.h"
+#include "Transform.h"
+#include "Camera.h"
+
+class BackgroundGrid : public Component
 {
 public:
+	BackgroundGrid();
+	~BackgroundGrid();
+
+	void Update();
+
+	void handleEvent(Event* pEvent);
+
+	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 public:
+	// No public variables.
 private:
+	// No private methods.
 private:
+	GLRect* mpGLRect;
+	Transform* mpTransform;
 };
 

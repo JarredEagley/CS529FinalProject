@@ -3,7 +3,8 @@
 #include "ComponentTypes.h"
 #include <iostream>
 
-GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT), mColor(glm::vec4(1.0f))
+GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT), 
+mColor(glm::vec4(1.0f)), mUvScale(1.0f), mUvOffset(glm::vec2(0.0f))
 {
 	// Texture is null until loaded.
 	//mTexture->texture = nullptr;
@@ -30,6 +31,41 @@ void GLRect::setColor(glm::vec4 rgba)
 	}
 	// Build the new VAO.
 	buildVAO();
+}
+
+
+void GLRect::setUvScale(float scale)
+{
+	// Keep track.
+	this->mUvScale = scale;
+
+	// Actually change.
+	mVertUV[0] = glm::vec2(0.0f, scale);
+	mVertUV[1] = glm::vec2(0.0f, 0.0f);
+	mVertUV[2] = glm::vec2(scale, 0.0f);
+	mVertUV[3] = glm::vec2(scale, scale);
+}
+
+float GLRect::getUvScale()
+{
+	return this->mUvScale;
+}
+
+void GLRect::setUvOffset(glm::vec2 offset)
+{
+	// Keep track.
+	this->mUvOffset = offset;
+
+	// Actually change.
+	mVertUV[0] += offset;
+	mVertUV[1] += offset;
+	mVertUV[2] += offset;
+	mVertUV[3] += offset;
+}
+
+glm::vec2 GLRect::getUvOffset()
+{
+	return this->mUvOffset;
 }
 
 

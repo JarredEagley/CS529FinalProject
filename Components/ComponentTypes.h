@@ -34,6 +34,7 @@ public:
 		if (strcmp(str, "TYPE_UPDOWN") == 0)			return TYPE_UPDOWN;
 		if (strcmp(str, "TYPE_GLRECT") == 0)			return TYPE_GLRECT;
 		if (strcmp(str, "TYPE_CAMERA") == 0)			return TYPE_CAMERA;
+		if (strcmp(str, "TYPE_BACKGROUNDGRID") == 0)	return TYPE_BACKGROUNDGRID;
 		if (strcmp(str, "TYPE_PHYSICSBODY") == 0)		return TYPE_PHYSICSBODY;
 		if (strcmp(str, "TYPE_DIRINDICATOR") == 0)		return TYPE_DIRINDICATOR;
 		if (strcmp(str, "TYPE_SHIPDATA") == 0)			return TYPE_SHIPDATA;
@@ -55,6 +56,7 @@ public:
 		TYPE_UPDOWN,
 		TYPE_GLRECT,
 		TYPE_CAMERA,
+		TYPE_BACKGROUNDGRID,
 		TYPE_PHYSICSBODY,
 		TYPE_DIRINDICATOR,
 		TYPE_SHIPDATA,
