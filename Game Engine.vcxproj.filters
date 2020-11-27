@@ -66,6 +66,9 @@
     <ClCompile Include="Components\ShipData.cpp">
       <Filter>Components\Data</Filter>
     </ClCompile>
+    <ClCompile Include="Components\FuelMeter.cpp">
+      <Filter>Components\Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -134,6 +137,9 @@
     </ClInclude>
     <ClInclude Include="Components\ShipData.h">
       <Filter>Components\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\FuelMeter.h">
+      <Filter>Components\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

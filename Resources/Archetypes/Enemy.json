@@ -1,10 +1,30 @@
 {
-    "Name": "Enemy",
     "Type": "GameObject",
     "Components":
     {
-        "TYPE_TRANSFORM": [400.0, 100.0],
-        "TYPE_SPRITE": "Ship2Red.bmp",
-        "TYPE_UPDOWN": [0, 100]
+        "TYPE_TRANSFORM":
+        {
+            "Translation": [4000.0, 1000.0],
+            "Rotation": 0,
+            "Scale": [25.0, 50.0]
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "Ship1.png",
+            "Color": [0.9, 0.2, 0.1, 1.0]
+        },
+        "TYPE_PHYSICSBODY":
+        {
+            "Mass": 200.0,
+            "AABB":
+            {
+                "Left": 10.0,
+                "Right": 10.0,
+                "Top": 10.0,
+                "Bottom":10.0
+            },
+            "Velocity": [0.0, -0.55],
+            "Angular Velocity": 0.05
+        }
     }
 }

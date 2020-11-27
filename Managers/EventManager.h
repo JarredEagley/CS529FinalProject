@@ -8,7 +8,7 @@ enum class EventType
 {
 	COLLIDE,
 	TRANSFORM_UPDATED,
-	PHYSICS_BODY_UPDATED,
+	SHIPDATA_UPDATED,
 
 	NUM
 };
@@ -39,6 +39,18 @@ public:
 	~TransformUpdatedEvent() {}
 
 	Transform* mpTransform;
+};
+
+class ShipData;
+class ShipDataUpdatedEvent : public Event
+{
+public:
+	ShipDataUpdatedEvent(ShipData* pShipData) : Event(EventType::SHIPDATA_UPDATED), mpShipData(pShipData)
+	{}
+
+	~ShipDataUpdatedEvent() {};
+
+	ShipData* mpShipData;
 };
 
 /*

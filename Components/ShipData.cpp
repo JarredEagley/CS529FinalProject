@@ -1,5 +1,6 @@
 #include "ShipData.h"
 #include <iostream>
+#include "../Managers/GlobalManager.h"
 
 ShipData::ShipData() : Component(ComponentTypes::TYPE_SHIPDATA),
 mHealth(100.0f), mMaxHealth(100.0f), mPower(100.0f), mMaxPower(100.0f), mPowerProduction(1.0f),
@@ -16,6 +17,9 @@ ShipData::~ShipData()
 
 void ShipData::Update()
 {
+	// Broadcast ship data to those listening for it. IE fuel meter, health bar.
+	ShipDataUpdatedEvent* pShipDataEvent = new ShipDataUpdatedEvent(this);
+	GlobalManager::getEventManager()->broadcastEventToSubscribers(pShipDataEvent);
 }
 
 

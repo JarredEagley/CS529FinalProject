@@ -24,12 +24,10 @@
 DirectionIndicator::DirectionIndicator() : Component(ComponentTypes::TYPE_DIRINDICATOR), 
 mpGLRect(nullptr), mpTransform(nullptr)
 {
-
 }
 
 DirectionIndicator::~DirectionIndicator()
 {
-
 }
 
 
@@ -38,6 +36,7 @@ void DirectionIndicator::Update()
 	// Need graphics manager for the zoom level.
 	GraphicsManager* pGM = GlobalManager::getGraphicsManager();
 
+	// Try to set mpGLRect. This is mpowner's graphics component.
 	if (mpGLRect == nullptr || mpTransform == nullptr)
 	{
 		// Try to set mpGLRect and terminate early.
@@ -45,6 +44,11 @@ void DirectionIndicator::Update()
 		mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 		return;
 	}
+
+	// Set color to owner's color.
+	GLRect* pParentRect = static_cast<GLRect*>(this->mpOwner->getParent()->GetComponent(ComponentTypes::TYPE_GLRECT));
+	if (pParentRect != nullptr && this->mpGLRect != nullptr)
+		this->mpGLRect->setColor(pParentRect->getColor());
 
 	// Update based on zoom...
 
@@ -65,5 +69,4 @@ void DirectionIndicator::Update()
 
 void DirectionIndicator::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
-
 }

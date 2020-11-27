@@ -5,33 +5,7 @@
     [
         {
             "Name": "SecondShip",
-            "Components":
-            {
-                "TYPE_TRANSFORM":
-                {
-                    "Translation": [4000.0, 1000.0],
-                    "Rotation": 0,
-                    "Scale": [50.0, 50.0]
-                },
-                "TYPE_GLRECT":
-                {
-                    "Texture": "Ship1.png",
-                    "Color": [0.9, 0.1, 0.1, 1.0]
-                },
-                "TYPE_PHYSICSBODY":
-                {
-                    "Mass": 200.0,
-                    "AABB":
-                    {
-                        "Left": 100.0,
-                        "Right": 100.0,
-                        "Top": 100.0,
-                        "Bottom":100.0
-                    },
-                    "Velocity": [0.0, -0.55],
-                    "Angular Velocity": 0.1
-                }
-            }
+            "Archetype": "Enemy.json"
         },
         {
             "Name": "PlayerShip",
@@ -58,25 +32,6 @@
             }
         },
         {
-            "Name": "DebugBUllet",
-            "Components":
-            {
-                "TYPE_TRANSFORM":
-                {
-                    "Translation": [100.0, 0.0],
-                    "Rotation": 0.2,
-                    "Scale": [20.0, 10.0],
-                    "Inherit Rotation": true
-                },
-                "TYPE_GLRECT":
-                {
-                    "Texture": "CoilBullet.png",
-                    "Color": [0.6, 0.6, 0.1, 1.0]
-                }
-            },
-            "Parent": "SecondShip"
-        },
-        {
             "Name":"Mars",
             "Archetype": "Planet.json"
         },
@@ -94,48 +49,12 @@
         },
         {
             "Name": "PlayerShip_Indicator_Forward",
-            "Components":
-            {
-                "TYPE_TRANSFORM":
-                {
-                    "Translation": [0.0, 0.0],
-                    "Rotation": 0,
-                    "Scale": [50.0, 50.0],
-                    "Inherit Rotation": true
-                },
-                "TYPE_GLRECT":
-                {
-                    "Texture": "DirectionIndicator.png",
-                    "Color": [0.1, 1.0, 0.1, 0.1]
-                },
-                "TYPE_DIRINDICATOR":
-                {
-
-                }
-            },
+            "Archetype": "ForwardIndicator.json",
             "Parent":"PlayerShip"
         },
         {
             "Name": "SecondShip_Indicator_Forward",
-            "Components":
-            {
-                "TYPE_TRANSFORM":
-                {
-                    "Translation": [0.0, 0.0],
-                    "Rotation": 0,
-                    "Scale": [50.0, 50.0],
-                    "Inherit Rotation": true
-                },
-                "TYPE_GLRECT":
-                {
-                    "Texture": "DirectionIndicator.png",
-                    "Color": [0.8, 0.1, 0.1, 0.1]
-                },
-                "TYPE_DIRINDICATOR":
-                {
-
-                }
-            },
+            "Archetype": "ForwardIndicator.json",
             "Parent":"SecondShip"
         }
     ]

@@ -1,0 +1,20 @@
+{
+    "Type": "GameObject",
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+            "Translation": [0.0, 0.0],
+            "Rotation": 0,
+            "Scale": [50.0, 50.0],
+            "Inherit Rotation": true
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "DirectionIndicator.png"
+        },
+        "TYPE_DIRINDICATOR":
+        {
+        }
+    }
+}
