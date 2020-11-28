@@ -45,6 +45,7 @@ public:
 		NUM
 	};
 
+	void removeFromAnyRenderPasses(GameObject* pGO);
 	void addToRenderPass(GameObject* pGO, RenderPassType pass);
 
 	void drawAllGameObjects();

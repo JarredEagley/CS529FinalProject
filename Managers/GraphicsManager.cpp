@@ -57,6 +57,11 @@ GraphicsManager::GraphicsManager()
 	mWindowWidth = 0;
 }
 
+void GraphicsManager::removeFromAnyRenderPasses(GameObject* pGO)
+{
+	mRenderPasses[pGO->getRenderPass()].remove(pGO);
+}
+
 void GraphicsManager::addToRenderPass(GameObject* pGO, RenderPassType pass)
 {
 	// Check for invalid pass name.

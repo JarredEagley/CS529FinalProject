@@ -26,11 +26,7 @@ void GameObjectManager::destroySingleton()
 {
 	// Delete the game object instances.
 	for (auto keyValuePair : mGameObjects)
-	{
-		//std::cout << "DEBUG - INSIDE DESTRUCTOR - " << keyValuePair.first << std::endl;
 		delete keyValuePair.second;
-	}
-
 	// Clear the map.
 	mGameObjects.clear();
 		

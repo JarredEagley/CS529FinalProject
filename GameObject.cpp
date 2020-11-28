@@ -46,10 +46,13 @@ mRenderPass(GraphicsManager::RenderPassType::NONE)
 
 GameObject::~GameObject()
 {
+	// Remove all my components.
 	for (auto pComponentPair : mComponents)
 		delete pComponentPair.second;
-
 	mComponents.clear();
+
+	// Remove from render passes.
+	GlobalManager::getGraphicsManager()->removeFromAnyRenderPasses(this);
 }
 
 void GameObject::Update()
@@ -166,24 +169,7 @@ Component* GameObject::GetComponent(unsigned int Type)
 
 void GameObject::setRenderPass(GraphicsManager::RenderPassType renderpass)
 {
-	//GraphicsManager* pGM = GlobalManager::getGraphicsManager();
-	
 	GlobalManager::getGraphicsManager()->addToRenderPass(this, renderpass);
-
-	// Remove from current render pass if applicable.
-	/*
-	if (mRenderPass == GraphicsManager::RenderPasses::NONE || mRenderPass == GraphicsManager::RenderPasses::NUM) // NUM should never happen, but better safe than sorry.
-	{
-		switch (mRenderPass)
-		{
-		case GraphicsManager::RenderPasses::FINAL:
-		{
-			break;
-		}
-		}
-	}
-	*/
-
 }
 
 GraphicsManager::RenderPassType GameObject::getRenderPass()
