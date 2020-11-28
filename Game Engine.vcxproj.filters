@@ -84,6 +84,7 @@
     <ClCompile Include="Managers\GraphicsManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="FrameBufferObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Managers\GraphicsManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="FrameBufferObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

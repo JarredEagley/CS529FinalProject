@@ -32,13 +32,12 @@ public:
 	void destroySingleton();
 
 	rapidjson::Document loadJson(const char* pFileName); // For now, this just directly deserializes and returns.
-	void saveJson() {}; // For now, not implemented.
+	// void saveJson() {}; // Not going to do this.
 public:
 	// No public variables.
 private:
 	Serializer() {};
 private:
 	static Serializer* instance;
-	// TO-DO: At some point perhaps store loaded json's in a map to avoid having to ever re-serialize them...
 };
 

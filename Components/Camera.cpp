@@ -32,8 +32,8 @@ void Camera::Update()
 	// Handle offset.
 	int mX, mY;
 	GlobalManager::getInputManager()->getMousePosition(mX, mY);
-	int const winH = GlobalManager::getGraphicsManager()->windowHeight;
-	int const winW = GlobalManager::getGraphicsManager()->windowWidth;
+	int const winH = GlobalManager::getGraphicsManager()->mWindowHeight;
+	int const winW = GlobalManager::getGraphicsManager()->mWindowWidth;
 	this->offset.x = (mX-(winW/2)) * (pGM->getZoomLevel()/500.0f);
 	this->offset.y = -(mY-(winH/2)) * (pGM->getZoomLevel()/500.0f);
 

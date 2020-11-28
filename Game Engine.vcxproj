@@ -101,6 +101,7 @@
     <ClCompile Include="Components\Timer.cpp" />
     <ClCompile Include="Components\Transform.cpp" />
     <ClCompile Include="Components\UpDown.cpp" />
+    <ClCompile Include="FrameBufferObject.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Managers\CollisionManager.cpp" />
@@ -133,6 +134,7 @@
     <ClInclude Include="Components\Transform.h" />
     <ClInclude Include="Components\ComponentTypes.h" />
     <ClInclude Include="Components\UpDown.h" />
+    <ClInclude Include="FrameBufferObject.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Managers\CollisionManager.h" />
     <ClInclude Include="Managers\EventManager.h" />

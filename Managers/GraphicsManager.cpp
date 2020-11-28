@@ -1,3 +1,19 @@
+/* Start Header -------------------------------------------------------
+
+	Copyright (C) 20xx DigiPen Institute of Technology.
+	Reproduction or disclosure of this file or its contents without the
+	prior written consent of DigiPen Institute of Technology is prohibited.
+
+	File Name:			GraphicsManager.cpp
+	Purpose:			Implementations for GraphicsManager.h
+	Language:			C++, compiled using Microsoft Visual Studio 2019.
+	Platform:			Compiled using Visual Studio 2019, Windows 10.
+	Project:			JarredEagley_FinalProject
+	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
+	Creation date:		11/4/2020
+
+- End Header --------------------------------------------------------*/
+
 #include "GraphicsManager.h"
 
 #include "stb_image.h"
@@ -9,8 +25,12 @@
 
 #include "glm/gtc/type_ptr.hpp"
 
+// Static initializations.
 GraphicsManager* GraphicsManager::instance = nullptr;
 std::unordered_map<const char*, ShaderProgram*> GraphicsManager::mShaderPrograms;
+float GraphicsManager::mMinZoomLevel = 0.1f;
+float GraphicsManager::mMaxZoomLevel = 100000.0f;
+float GraphicsManager::mZoomLevel = mZoomLevel;
 
 void GraphicsManager::destroySingleton()
 {
@@ -24,11 +44,11 @@ void GraphicsManager::destroySingleton()
 	delete instance;
 }
 
-GraphicsManager::GraphicsManager() : mMinZoomLevel(0.1f), mMaxZoomLevel(100000.0f), mZoomLevel(100.0f)
+GraphicsManager::GraphicsManager() 
 {
 	pCurrentCameraGO = nullptr;
-	windowHeight = 0;
-	windowWidth = 0;
+	mWindowHeight = 0;
+	mWindowWidth = 0;
 }
 
 // Draws every GameObject stored in the GameObjectManger.
@@ -51,19 +71,23 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	GLRect* pRect = static_cast<GLRect*>(pGO->GetComponent(ComponentTypes::TYPE_GLRECT)); // From game object being drawn
 	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // From game object being drawn
 
+
 	// Can't draw something with no graphics component.
 	if (pRect == nullptr)
 		return;
 
-	//Transform* pCameraTransform = nullptr;
+	
+	// Camera needs to exist.
 	Camera* pCamera = nullptr;
 	if (pCurrentCameraGO == nullptr)
 		std::cout << "Error: No camera GameObject currently bound to the GraphicsManager." << std::endl;
 	else
 		pCamera = static_cast<Camera*>(pCurrentCameraGO->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
 
+
 	// Get the vaoID we want to draw.
-	GLuint vaoID = pRect->getVAO(); // It's possible for an object to not have a VAO.
+	GLuint vaoID = pRect->getVAO(); // Note: it's possible for an object to not have a VAO.
+
 
 	if (pProgram == nullptr)
 	{

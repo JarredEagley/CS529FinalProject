@@ -1,0 +1,51 @@
+{
+    "Description":
+    "This is a config file for data-driving the start-up state of the game. All singleton managers are listed here for future-proofing, but not all of them have options.",
+
+    "Gamestate Manager":
+    {
+        "Description": "Not Currently Implemented."
+    }, 
+    "Framerate Controller":
+    {
+        "Description": "Allows for framerate capping and tracking frametime in seconds and miliseconds.",
+        "Max Framerate": 60
+    },
+    "GameObject Manager":
+    {
+        "Description": "Not Currently Implemented."
+    },
+    "Input Manager":
+    {
+        "Description": "Not Currently Implemented."
+    },
+    "Resource Manager":
+    {
+        "Description": "Not Currently Implemented."
+    },
+    "Serializer":
+    {
+        "Description": "Nothing here to implement."
+    },
+    "GameObject Factory":
+    {
+        "Description": "Nothing here to implement."
+    },
+    "Graphics Manager":
+    {
+        "Description": "Responsible for any and all graphics-related things. Window height and width settable here, along with zoom properties. Note: Zoom properties may be overridden by levels.",
+        "Window Width": 900,
+        "Window Height": 800,
+        "Zoom Level": 100,
+        "Max Zoom Level": 100000,
+        "Min Zoom Level": 0.1
+    },
+    "Collision Manager":
+    {
+        "Description": "Not Currently Implemented."
+    },
+    "Event Manager":
+    {
+        "Description": "Not Currently Implemented."
+    }
+}

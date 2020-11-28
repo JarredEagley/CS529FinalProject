@@ -1,3 +1,23 @@
+/* Start Header -------------------------------------------------------
+
+	Copyright (C) 20xx DigiPen Institute of Technology.
+	Reproduction or disclosure of this file or its contents without the
+	prior written consent of DigiPen Institute of Technology is prohibited.
+
+	File Name:			GraphicsManager.h
+	Purpose:			Responsible for tracking graphics-related activity.
+						This includes, but is not limited to camera zoom level,
+						what object is the camera, window size, and 
+						drawing different objects in different render
+						passes.
+	Language:			C++, compiled using Microsoft Visual Studio 2019.
+	Platform:			Compiled using Visual Studio 2019, Windows 10.
+	Project:			JarredEagley_FinalProject
+	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
+	Creation date:		11/4/2020
+
+- End Header --------------------------------------------------------*/
+
 #pragma once
 
 #include "../GameObject.h"
@@ -35,13 +55,16 @@ public:
 
 public:
 	static std::unordered_map<const char*, ShaderProgram*> mShaderPrograms; // shaderName, ShaderProgram*
-	int windowWidth, windowHeight;
+	int mWindowWidth, mWindowHeight;
+	static std::list<GameObject*> mFinalPassObjects;
+	static std::list<GameObject*> mHudPassObjects;
 
 private:
 	GraphicsManager();
-	float mZoomLevel;
-	float mMinZoomLevel;
-	float mMaxZoomLevel;
+	static float mZoomLevel;
+	static float mMinZoomLevel;
+	static float mMaxZoomLevel;
+
 private:
 	static GraphicsManager *instance;
 	GameObject* pCurrentCameraGO = nullptr;

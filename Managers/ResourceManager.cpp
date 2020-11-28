@@ -40,7 +40,7 @@ ResourceManager::ResourceManager()
 
 GLuint ResourceManager::loadTexture(const char* texName)
 {
-	loadTexture(texName, TexType::REPEAT);
+	return loadTexture(texName, TexType::REPEAT);
 }
 
 GLuint ResourceManager::loadTexture(const char* texName, TexType _texType)
