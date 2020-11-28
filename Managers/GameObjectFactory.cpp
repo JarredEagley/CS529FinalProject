@@ -27,16 +27,18 @@
 #include "../Components/ComponentTypes.h"
 #include "../Components/Component.h"
 
-#include "rapidjson/document.h"
-#include "rapidjson/istreamwrapper.h"
-
 GameObjectFactory* GameObjectFactory::instance = nullptr;
 
-void GameObjectFactory::destroySingleton() {};
+void GameObjectFactory::destroySingleton() 
+{
+	delete instance;
+};
+
+// End of singleton stuff.
 
 GameObjectFactory::GameObjectFactory() { }
 
-GameObject* GameObjectFactory::loadObject(const char* pFileName) 
+GameObject* GameObjectFactory::loadArchetype(const char* pFileName) 
 {
 	GameObject* pNewGO;
 	//std::string gameObjectName;
@@ -63,27 +65,6 @@ GameObject* GameObjectFactory::loadObject(const char* pFileName)
 		std::cerr << "Error: File " << pFileName << " was not of type GameObject." << std::endl;
 		return nullptr; // Return nullptr on fail.
 	}
-
-	/*
-	// Get this GO's UNIQUE name.
-	// MUST BE UNIQUE.
-	if (!doc.HasMember("Name")
-		|| !doc["Name"].IsString())
-	{
-		std::cerr << "Error: File " << pFileName << " did not have any valid unique name identifier." << std::endl;
-		return nullptr; 
-	}
-
-	gameObjectName = doc["Name"].GetString();
-
-	std::cout << "DEBUG - Deserializing name " << gameObjectName << std::endl;
-	
-	// Check the map for repeats.
-	if (GlobalManager::getGameObjectManager()->mGameObjects.find(gameObjectName.c_str()) != GlobalManager::getGameObjectManager()->mGameObjects.end())
-	{
-		std::cout << "Note: GameObject with name '" << gameObjectName << "' already exists and will be replaced." << std::endl;
-	}
-	*/
 
 	
 	// Create the new GameObject now that we know the json is reasonable.
@@ -121,136 +102,103 @@ GameObject* GameObjectFactory::loadObject(const char* pFileName)
 	return pNewGO;
 }
 
-void GameObjectFactory::loadLevel(const char* pFileName)
+GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjson::Value> inputObj)
 {
-	std::ifstream inputStream(pFileName);
-
-	Serializer* pSer = GlobalManager::getSerializer();
-	rapidjson::Document doc = pSer->loadJson(pFileName);
-
-	// Nullcheck.
-	if (doc.IsNull())
+	// Get the name of the current GO. 
+	std::string currentGOName;
+	if (!inputObj.HasMember("Name") || !inputObj["Name"].IsString())
 	{
-		std::cerr << "Error: Failed to load level with filename " << pFileName << std::endl;
-		return;
+		std::cout << "Error: GameObject in level failed to deserialize because it lacked a name or contained an invalid name." << std::endl;
+		return nullptr;
 	}
 
-	// Make sure we're deserializing a level.
-	if (!doc.HasMember("Type") || !doc["Type"].IsString() || strcmp(doc["Type"].GetString(), "Level") != 0)
+	currentGOName = inputObj["Name"].GetString();
+	std::cout << "Deserializing GameObject " << currentGOName << std::endl;
+
+	// Check if GO by this name aready exists...
+	if (GlobalManager::getGameObjectManager()->mGameObjects.find(currentGOName) != GlobalManager::getGameObjectManager()->mGameObjects.end())
+		std::cout << "Warning: GameObject by name " << currentGOName << " already exists and will be replaced." << std::endl;
+
+
+	GameObject* pCurrentGO = nullptr;
+
+	// Load the archetype if one is provided and ensure its a string.
+	if (inputObj.HasMember("Archetype")
+		&& inputObj["Archetype"].IsString())
 	{
-		std::cerr << "Error: File " << pFileName << " is not of type 'Level'" << std::endl;
-		return;
+		// Make sure archetype is valid.
+		const char* archetypeName = inputObj["Archetype"].GetString();
+		std::string pathName{ archetypeName };
+		pathName = GlobalManager::getResourceManager()->pathArchetypes + pathName;
+
+		pCurrentGO = this->loadArchetype(pathName.c_str());
 	}
 
-	// Make sure this level has GameObjects to parse.
-	// Note: GameObjects member is an array/list of documents.
-	if (!doc.HasMember("GameObjects") || !doc["GameObjects"].IsArray())
+	// Two possibilities: Archetype was invalid or archetype didn't deserialize correctly.
+	if (nullptr == pCurrentGO)
 	{
-		std::cerr << "Warning: File " << pFileName << " did not contain any GameObjects." << std::endl;
-		return;
+		// Otherwise just create a fresh GameObject.
+		std::cerr << "Warning: Archetype for GameObject was invalid or not present." << std::endl;
+		pCurrentGO = new GameObject;
 	}
 
-	// Loop through the GameObjects array.
-	for (rapidjson::Value::ConstValueIterator arrItr = doc["GameObjects"].GetArray().Begin();
-		arrItr != doc["GameObjects"].GetArray().End();
-		++arrItr)
+
+	// Test if theres additioanl components, ensure its valid format.
+	if (
+		inputObj.HasMember("Components")
+		&& inputObj["Components"].IsObject()
+		)
 	{
-		// Make sure this member is an object.
-		if (!arrItr->IsObject())
+		// Loop through the components and add them to the object. (Or overwrite them)
+		for (rapidjson::Value::ConstMemberIterator compItr = inputObj["Components"].GetObject().MemberBegin();
+			compItr != inputObj["Components"].GetObject().MemberEnd();
+			++compItr)
 		{
-			std::cout << "Warning: Failed to parse an object while loading level." << std::endl;
-			continue;
-		}
-
-		// Get the name of the current GO. 
-		std::string currentGOName;
-		if (!arrItr->HasMember("Name") || !arrItr->GetObject()["Name"].IsString())
-		{
-			std::cout << "Error: GameObject in level failed to deserialize because it lacked a name or contained an invalid name." << std::endl;
-			continue;
-		}
-		currentGOName = arrItr->GetObject()["Name"].GetString();
-		// Check if GO by this name already exists.
-
-		std::cout << "Deserializing GameObject " << currentGOName << std::endl;
-
-		GameObject *pCurrentGO = nullptr;
-
-		// Load the archetype if one is provided and ensure its a string.
-		if (arrItr->GetObject().HasMember("Archetype") 
-			&& arrItr->GetObject().FindMember("Archetype")->value.IsString())
-		{
-			// Make sure archetype is valid.
-			const char* archetypeName = arrItr->GetObject().FindMember("Archetype")->value.GetString();
-			std::string pathName{ archetypeName };
-			pathName = GlobalManager::getResourceManager()->pathArchetypes + pathName; 
-			pCurrentGO = loadObject(pathName.c_str());
-		}
-		
-		// Two possibilities: Archetype was invalid or archetype didn't deserialize correctly.
-		if (nullptr == pCurrentGO)
-		{
-			// Otherwise just create a fresh GameObject.
-			std::cerr << "Warning: Archetype for GameObject was invalid or not present." << std::endl;
-			pCurrentGO = new GameObject;
-		}
-
-		// Test if theres additioanl components, ensure its valid format.
-		if (arrItr->GetObject().HasMember("Components")
-			&& arrItr->GetObject().FindMember("Components")->value.IsObject())
-		{
-			// Loop through the components and add them to the object. (Or overwrite them)
-			for (rapidjson::Value::ConstMemberIterator compItr = arrItr->GetObject().FindMember("Components")->value.MemberBegin();
-				compItr != arrItr->GetObject().FindMember("Components")->value.MemberEnd(); 
-				++compItr)
+			// Check this components' validity.
+			if (!compItr->name.IsString())
 			{
-				// Check this components' validity.
-				if (!compItr->name.IsString())
-				{
-					std::cerr << "Warning: Failed to parse a component while building level's GameObjects." << std::endl;
-					continue;
-				}
-
-				std::cout << "Note: (re)loading component " << compItr->name.GetString() << std::endl;
-				
-				// Deserialize this component.
-				Component* pCurrentComp = pCurrentGO->AddComponent(ComponentTypes::stringToEnum(compItr->name.GetString()));
-				pCurrentComp->Serialize(compItr);
-
+				std::cerr << "Warning: Failed to parse a component while building level's GameObjects." << std::endl;
+				continue;
 			}
+
+			std::cout << "Note: (re)loading component " << compItr->name.GetString() << std::endl;
+
+			// Deserialize this component.
+			Component* pCurrentComp = pCurrentGO->AddComponent(ComponentTypes::stringToEnum(compItr->name.GetString()));
+			pCurrentComp->Serialize(compItr);
 		}
-
-		// If this GO is to be parented, parent it.
-		if (
-			arrItr->GetObject().HasMember("Parent")
-			&& arrItr->GetObject()["Parent"].IsString()
-			)
-		{
-			std::string parentName = arrItr->GetObject()["Parent"].GetString();
-			GameObject* pParent = GlobalManager::getGameObjectManager()->mGameObjects[parentName];
-
-			// Make sure parent wasn't invalid.
-			if (pParent == nullptr)
-				std::cout << "Warning: Parent was either invalid or not initialized before child GameObject. Parenting failed for " << currentGOName << std::endl;
-			else
-				pCurrentGO->setParent(pParent);
-		}
-
-		// If this GO is to have another shader aside from core, set its new shader.
-		if (
-			arrItr->GetObject().HasMember("Shader")
-			&& arrItr->GetObject()["Shader"].IsString()
-			)
-		{
-			std::string newShaderName = arrItr->GetObject()["Shader"].GetString();
-			pCurrentGO->mShaderName = newShaderName.c_str();
-		}
-
-		// Name
-		pCurrentGO->mName = currentGOName;
-		
-		// Push onto the GOM.
-		GlobalManager::getGameObjectManager()->mGameObjects[currentGOName] = pCurrentGO;
 	}
 
+	// If this GO is to be parented, parent it.
+	if (
+		inputObj.HasMember("Parent")
+		&& inputObj["Parent"].IsString()
+		)
+	{
+		std::string parentName = inputObj["Parent"].GetString();
+		GameObject* pParent = GlobalManager::getGameObjectManager()->mGameObjects[parentName];
+
+		// Make sure parent wasn't invalid.
+		if (pParent == nullptr)
+			std::cout << "Warning: Parent was either invalid or not initialized before child GameObject. Parenting failed for " << currentGOName << std::endl;
+		else
+			pCurrentGO->setParent(pParent);
+	}
+
+	// If this GO is to have another shader aside from core, set its new shader.
+	if (
+		inputObj.HasMember("Shader")
+		&& inputObj["Shader"].IsString()
+		)
+	{
+		std::string newShaderName = inputObj["Shader"].GetString();
+		pCurrentGO->mShaderName = newShaderName.c_str();
+	}
+
+	// Name
+	pCurrentGO->mName = currentGOName;
+
+	// Push onto the GOM.
+	GlobalManager::getGameObjectManager()->mGameObjects[currentGOName] = pCurrentGO;
 }
+

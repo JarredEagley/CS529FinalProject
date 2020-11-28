@@ -8,9 +8,6 @@
 	Purpose:			Handles turning json files into something usable.
 						This is pretty much just a singleton which has
 						a loadJson function. 
-						It may or may not have more functionality in 
-						the future.
-						A saveJson seems likely.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
 	Project:			JarredEagley_Milestone2

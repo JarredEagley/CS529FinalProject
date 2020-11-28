@@ -18,6 +18,7 @@
 
 #pragma once
 
+#include "GameStateManager.h"
 #include "FrameRateController.h"
 #include "GameObjectManager.h"
 #include "InputManager.h"
@@ -45,6 +46,7 @@ public:
 
 public:
 	static void initSingletons();
+	static GameStateManager* getGameStateManager()			{ return pGSM->getInstance(); };
 	static FrameRateController* getFrameRateController()	{ return pFRC->getInstance(); };
 	static GameObjectManager* getGameObjectManager()		{ return pGOM->getInstance(); };
 	static InputManager* getInputManager()					{ return pIM->getInstance(); };
@@ -61,6 +63,7 @@ private:
 	// The global manager's singleton instance.
 	static GlobalManager *instance;
 	// Using shorthands for these just for convenience.
+	static GameStateManager* pGSM;
 	static FrameRateController* pFRC;
 	static GameObjectManager* pGOM;
 	static InputManager* pIM;

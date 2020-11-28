@@ -5,7 +5,8 @@
 	prior written consent of DigiPen Institute of Technology is prohibited.
 
 	File Name:			Serializer.h
-	Purpose:			Header file for the Serializer class.
+	Purpose:			Header file for the Serializer class. This only
+						encapsulates json loading.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
 	Project:			JarredEagley_Milestone2

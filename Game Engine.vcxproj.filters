@@ -5,41 +5,14 @@
     <ClCompile Include="Components\Component.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Managers\GameObjectManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
     <ClCompile Include="Managers\GlobalManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Managers\InputManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Managers\ResourceManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Managers\FrameRateController.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="Managers\Serializer.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Managers\GraphicsManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
     <ClCompile Include="Components\Camera.cpp">
       <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Managers\GameObjectFactory.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Managers\PhysicsManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Managers\EventManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="Managers\CollisionManager.cpp">
-      <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="Components\Transform.cpp">
       <Filter>Components\Data</Filter>
@@ -81,6 +54,36 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Managers\GameStateManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\PhysicsManager.cpp">
+      <Filter>Managers\gamedata</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\ResourceManager.cpp">
+      <Filter>Managers\gamedata</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\CollisionManager.cpp">
+      <Filter>Managers\gamedata</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\InputManager.cpp">
+      <Filter>Managers\communication</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\FrameRateController.cpp">
+      <Filter>Managers\communication</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\EventManager.cpp">
+      <Filter>Managers\communication</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\GameObjectFactory.cpp">
+      <Filter>Managers\gameobjectmanagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\GameObjectManager.cpp">
+      <Filter>Managers\gameobjectmanagement</Filter>
+    </ClCompile>
+    <ClCompile Include="Managers\GraphicsManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -90,41 +93,14 @@
     <ClInclude Include="Components\ComponentTypes.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Managers\GameObjectManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
     <ClInclude Include="Managers\GlobalManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Managers\InputManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Managers\ResourceManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Managers\FrameRateController.h">
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="Managers\Serializer.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Managers\GraphicsManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
     <ClInclude Include="Components\Camera.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Managers\GameObjectFactory.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Managers\PhysicsManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Managers\EventManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Managers\CollisionManager.h">
-      <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="Components\Transform.h">
       <Filter>Components\Data</Filter>
@@ -165,6 +141,36 @@
     <ClInclude Include="Components\BackgroundGrid.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Managers\GameStateManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\PhysicsManager.h">
+      <Filter>Managers\gamedata</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\ResourceManager.h">
+      <Filter>Managers\gamedata</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\CollisionManager.h">
+      <Filter>Managers\gamedata</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\InputManager.h">
+      <Filter>Managers\communication</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\FrameRateController.h">
+      <Filter>Managers\communication</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\EventManager.h">
+      <Filter>Managers\communication</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\GameObjectFactory.h">
+      <Filter>Managers\gameobjectmanagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\GameObjectManager.h">
+      <Filter>Managers\gameobjectmanagement</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\GraphicsManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">
@@ -187,6 +193,15 @@
     </Filter>
     <Filter Include="Components\Control">
       <UniqueIdentifier>{91fa421d-5f79-491e-a2ef-391ab8456079}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\gamedata">
+      <UniqueIdentifier>{4c537ac6-be90-4ed8-8805-1c8c13dc9592}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\communication">
+      <UniqueIdentifier>{77ca6b37-8f3f-4d98-b3ce-a6f9a86d1914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\gameobjectmanagement">
+      <UniqueIdentifier>{34ff5738-3535-4122-9cf0-12a8eee11307}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

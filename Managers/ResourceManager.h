@@ -20,9 +20,7 @@
 #include <unordered_map>
 #include "stb_image.h"
 
-#include "GL/glew.h" // I shouldnt need this in here. TO-DO: Do I REALLY need this in here?!
-
-class SDL_Surface; // All we're doing is letting this class know another class by this name exist. Reduces code size and build time.
+#include "GL/glew.h" 
 
 class ResourceManager
 {
@@ -37,11 +35,15 @@ public:
 
 	GLuint loadTexture(const char* texName); // Returns the id of the texture loaded (or cached)
 
+	void loadLevel(const char* pFileName);
+
 public:
 	const std::string pathResources = ".\\Resources\\"; // The base-folder for storing resources like configs and textures.
 	const std::string pathTextures	 = pathResources + "Textures\\";
 	const std::string pathLevels	 = pathResources + "Levels\\";
 	const std::string pathArchetypes = pathResources + "Archetypes\\";
+	std::string currentLevel;
+
 private:
 	ResourceManager();
 private:

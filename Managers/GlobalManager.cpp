@@ -21,6 +21,8 @@
 #include <iostream>
 
 GlobalManager*			GlobalManager::instance = nullptr;
+
+GameStateManager*		GlobalManager::pGSM = nullptr;
 FrameRateController*	GlobalManager::pFRC = nullptr;
 GameObjectManager*		GlobalManager::pGOM = nullptr;
 InputManager*			GlobalManager::pIM = nullptr;
@@ -35,6 +37,7 @@ EventManager*			GlobalManager::pEM = nullptr;
 // Fires all the getters to initialze all singletons GM is responsible for.
 void GlobalManager::initSingletons()
 {
+	getGameStateManager();
 	getFrameRateController();
 	getGameObjectManager();
 	getInputManager();
@@ -51,6 +54,7 @@ void GlobalManager::initSingletons()
 void GlobalManager::destroySingleton()
 {
 	// I'm sure there's a better way of doing this, but this is good enough for now.
+	pGSM->destroySingleton();
 	pFRC->destroySingleton();
 	pGOM->destroySingleton();
 	pIM->destroySingleton();

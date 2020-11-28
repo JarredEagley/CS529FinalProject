@@ -123,7 +123,8 @@ int main(int argc, char*argv[])
 	GlobalManager::getFrameRateController()->setMaxFramerate(30);
 
 	// Load level.
-	GlobalManager::getGameObjectFactory()->loadLevel(".\\Resources\\Levels\\ExampleLevel.json");
+	//GlobalManager::getGameObjectFactory()->loadLevel(".\\Resources\\Levels\\ExampleLevel.json");
+	GlobalManager::getResourceManager()->loadLevel("ExampleLevel.json");
 
 	// Alpha blend.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // TO-DO: Where does this actually belong? init?

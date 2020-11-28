@@ -15,7 +15,9 @@
 - End Header --------------------------------------------------------*/
 
 #include "ResourceManager.h"
+#include "GlobalManager.h"
 #include <iostream>
+#include <fstream>
 
 #include "stb_image.h"
 
@@ -24,8 +26,6 @@ std::unordered_map<const char*, GLuint> ResourceManager::mTextures;
 
 void ResourceManager::destroySingleton()
 {	
-	// TO-DO: Strings are char*, do I need to delete them?
-
 	// Clear the hashmap.
 	mTextures.clear();
 	
@@ -83,4 +83,57 @@ GLuint ResourceManager::loadTexture(const char* texName)
 
 	// Returns NULL if failed, the generated id if success.
 	return texId;
+}
+
+
+void ResourceManager::loadLevel(const char* pFileName)
+{
+	// Use serializer to read the json in.
+	std::ifstream inputStream(pFileName);
+	Serializer* pSer = GlobalManager::getSerializer();
+	std::string filePath = pathLevels + pFileName;
+	rapidjson::Document doc = pSer->loadJson(filePath.c_str());
+
+	// Nullcheck.
+	if (doc.IsNull())
+	{
+		std::cerr << "Error: Failed to load level with filename " << pFileName << std::endl;
+		return;
+	}
+
+	// Make sure we're deserializing a level.
+	if (
+		!doc.HasMember("Type") 
+		|| !doc["Type"].IsString() 
+		|| strcmp(doc["Type"].GetString(), "Level") != 0
+		)
+	{
+		std::cerr << "Error: File " << pFileName << " is not of type 'Level'" << std::endl;
+		return;
+	}
+
+	// Make sure this level has GameObjects to parse.
+	// Note: GameObjects member is an array/list of documents.
+	if (!doc.HasMember("GameObjects") || !doc["GameObjects"].IsArray())
+	{
+		std::cerr << "Warning: File " << pFileName << " did not contain any GameObjects." << std::endl;
+		return;
+	}
+
+
+	// Loop through the GameObjects array.
+	for (rapidjson::Value::ConstValueIterator arrItr = doc["GameObjects"].GetArray().Begin();
+		arrItr != doc["GameObjects"].GetArray().End();
+		++arrItr)
+	{
+		// Make sure this arrItr is an object.
+		if (!arrItr->IsObject())
+		{
+			std::cout << "Warning: Failed to parse an object while loading level." << std::endl;
+			continue;
+		}
+
+		// Load the object.
+		GlobalManager::getGameObjectFactory()->loadObject(arrItr->GetObject());
+	}
 }
