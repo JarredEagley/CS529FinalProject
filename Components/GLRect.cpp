@@ -19,16 +19,17 @@ GLRect::~GLRect()
 	glDeleteVertexArrays(1, &vaoID);
 }
 
+
 void GLRect::Update()
 {
 }
+
 
 void GLRect::setColor(glm::vec4 rgba)
 {
 	// Store the color so we can ask GLRect for it.
 	mColor = rgba;
 }
-
 
 void GLRect::setUvScale(float scale)
 {
@@ -49,6 +50,18 @@ void GLRect::setUvOffset(glm::vec2 offset)
 glm::vec2 GLRect::getUvOffset()
 {
 	return this->mUvOffset;
+}
+
+// Asks the ResourceManager for the provided texture and applies it to this rect.
+void GLRect::setTexture(const char* imageName)
+{
+	const std::string imagePath = GlobalManager::getResourceManager()->pathTextures + imageName;
+	GLuint newTexId = GlobalManager::getResourceManager()->loadTexture(imagePath.c_str());
+
+	if (newTexId == NULL) // Sanity checker. 
+		std::cout << "Warning: GLRect texture '" << imagePath << "' failed to deserialize!" << std::endl;
+
+	mTexID = newTexId;
 }
 
 
@@ -132,13 +145,7 @@ void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		if (rectObject["Texture"].IsString())
 		{
 			// Read in that texture.
-			const std::string imageName = rectObject["Texture"].GetString();
-			const std::string imagePath = GlobalManager::getResourceManager()->pathTextures + imageName;
-
-			this->texID = GlobalManager::getResourceManager()->loadTexture(imagePath.c_str());
-
-			if (this->texID == NULL) // Sanity checker. 
-				std::cout << "Warning: GLRect texture '"<< imagePath << "' failed to deserialize!" << std::endl;
+			this->setTexture(rectObject["Texture"].GetString());
 		}
 		else
 		{

@@ -24,8 +24,10 @@ public:
 	void setUvOffset(glm::vec2 offset);
 	glm::vec2 getUvOffset();
 
+	void setTexture(const char* imageName);
+
 	unsigned int getVAO(); // Returns the iD of this component's vertex array object.
-	int getTexId() { return texID; }; // Returns the ID of the texture stored on the graphics card which we want this component to draw.
+	int getTexId() { return mTexID; }; // Returns the ID of the texture stored on the graphics card which we want this component to draw.
 
 	void setUniformData(ShaderProgram* pProgram);
 
@@ -67,7 +69,7 @@ private:
 
 	GLuint vboID[3];
 	unsigned int vaoID; // The OpenGL identifier for the Vertex Array Object for this gameObject.
-	int texID; // ID of the texture we want to use; stored on the graphics card.
+	int mTexID; // ID of the texture we want to use; stored on the graphics card.
 
 	glm::vec4 mColor;
 	float mUvScale;
