@@ -23,7 +23,6 @@
     <ClCompile Include="Managers\Serializer.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="mainGLTest.cpp" />
     <ClCompile Include="Managers\GraphicsManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
@@ -81,6 +80,7 @@
     <ClCompile Include="Components\BackgroundGrid.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />

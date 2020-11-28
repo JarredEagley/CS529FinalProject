@@ -57,8 +57,8 @@ void BackgroundGrid::transformEventUpdate(Event* pEvent)
 	glm::vec4 newpos = pCamTransformComp->getTransformationMatrix() * glm::vec4(1.0f) + glm::vec4(pCamComp->offset, 1.0f);
 	mpTransform->setPosition(newpos);
 
-	mpGLRect->setUvScale(pGM->getZoomLevel() / mGridScale);
-	mpGLRect->setUvOffset(newpos / (pGM->getZoomLevel()));
+	mpGLRect->setUvScale(pGM->getZoomLevel() / (mGridScale * 2.0f));
+	mpGLRect->setUvOffset(newpos / (pGM->getZoomLevel() * 2.0f));
 	mpTransform->setScale( (pGM->getZoomLevel() + mGridScale) * 2.0f );
 }
 
@@ -87,8 +87,8 @@ void BackgroundGrid::scrollEventUpdate(Event* pEvent)
 	glm::vec4 newpos = pCamTransformComp->getTransformationMatrix() * glm::vec4(1.0f) + glm::vec4(pCamComp->offset, 1.0f);
 	mpTransform->setPosition(newpos);
 
-	mpGLRect->setUvScale(pGM->getZoomLevel() / mGridScale);
-	mpGLRect->setUvOffset(newpos / (pGM->getZoomLevel()));
+	mpGLRect->setUvScale(pGM->getZoomLevel() / (mGridScale * 2.0f) );
+	mpGLRect->setUvOffset(newpos / (pGM->getZoomLevel() * 2.0f) );
 	mpTransform->setScale((pGM->getZoomLevel() + mGridScale) * 2.0f);
 
 	float const scalefactor = std::log(((pGM->getZoomLevel() - pGM->getMinZoomLevel()) / (pGM->getMaxZoomLevel() - pGM->getMinZoomLevel())) + 1.0f) * 2.0f;
