@@ -27,15 +27,6 @@ void GLRect::setColor(glm::vec4 rgba)
 {
 	// Store the color so we can ask GLRect for it.
 	mColor = rgba;
-	/*
-	// Set the vert colors.
-	for (int i = 0; i < 4; ++i)
-	{
-		mVertCol[i] = rgba;
-	}
-	// Build the new VAO.
-	rebuildVAO();
-	*/
 }
 
 
@@ -43,17 +34,6 @@ void GLRect::setUvScale(float scale)
 {
 	// Keep track.
 	this->mUvScale = scale;
-	
-	/*
-	// Actually change.
-	mVertUV[0] = glm::vec2(0.0f, scale);
-	mVertUV[1] = glm::vec2(0.0f, 0.0f);
-	mVertUV[2] = glm::vec2(scale, 0.0f);
-	mVertUV[3] = glm::vec2(scale, scale);
-
-	// Build the new VAO.
-	rebuildVAO();
-	*/
 }
 
 float GLRect::getUvScale()
@@ -64,17 +44,6 @@ float GLRect::getUvScale()
 void GLRect::setUvOffset(glm::vec2 offset)
 {
 	this->mUvOffset = offset;
-
-	/*
-	// Actually change.
-	mVertUV[0] += offset;
-	mVertUV[1] += offset;
-	mVertUV[2] += offset;
-	mVertUV[3] += offset;
-
-	// Build the new VAO.
-	rebuildVAO();
-	*/
 }
 
 glm::vec2 GLRect::getUvOffset()
@@ -94,20 +63,14 @@ void GLRect::buildVAO()
 	// VBO
 	glGenBuffers(2, &vboID[0]);
 
-	// Position, color, uv
+	// Position, uv
 	glBindBuffer(GL_ARRAY_BUFFER, vboID[0]); 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertPos) , &mVertPos[0][0] , GL_STATIC_DRAW ); 
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0 );
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	/*
-	glBindBuffer(GL_ARRAY_BUFFER, vboID[1] );
-	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertCol) , &mVertCol[0][0] , GL_STATIC_DRAW );
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0 ); 
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, 1);
-	*/
+	// Color is nolonger a vertex attribute.
 
 	glBindBuffer(GL_ARRAY_BUFFER, vboID[1]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertUV) , &mVertUV[0][0] , GL_STATIC_DRAW );
