@@ -15,6 +15,7 @@
 - End Header --------------------------------------------------------*/
 
 #include "inputmanager.h"
+#include "GlobalManager.h"
 #include "memory.h"
 
 #include <iostream>
@@ -134,6 +135,10 @@ void InputManager::recieveEvent(const SDL_Event& mouseEvent)
 	// I removed the check for type MouseWheel because that's done in the game loop.
 	this->mouseWheelX = mouseEvent.wheel.x;
 	this->mouseWheelY = mouseEvent.wheel.y;
+
+	// Broadcast this through my own game event manager.
+	MouseScrollEvent* pNewEvent = new MouseScrollEvent();
+	GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewEvent);
 }
 
 int InputManager::getWheelX() const

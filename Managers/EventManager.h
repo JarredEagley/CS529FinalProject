@@ -9,6 +9,8 @@ enum class EventType
 	COLLIDE,
 	TRANSFORM_UPDATED,
 	SHIPDATA_UPDATED,
+	CAMERA_TRANSFORM_UPDATED,
+	MOUSE_SCROLL,
 
 	NUM
 };
@@ -28,7 +30,7 @@ public:
 	float mTimer;
 };
 
-// I couldn't think of a better place for this.
+// I couldn't think of a better place for these.
 class Transform;
 class TransformUpdatedEvent : public Event
 {
@@ -53,20 +55,21 @@ public:
 	ShipData* mpShipData;
 };
 
-/*
-class PhysicsBody;
-class PhysicsUpdatedEvent : public Event
+
+class CameraTransformUpdatedEvent : public Event
 {
 public:
-	PhysicsUpdatedEvent(PhysicsBody* pPBody) : Event(EventType::PHYSICS_BODY_UPDATED), mpPhysicsBody(pPBody)
-	{}
-
-	~PhysicsUpdatedEvent() {}
-
-	PhysicsBody* mpPhysicsBody;
-
+	CameraTransformUpdatedEvent() : Event(EventType::CAMERA_TRANSFORM_UPDATED) {};
+	~CameraTransformUpdatedEvent() {};
 };
-*/
+
+
+class MouseScrollEvent : public Event
+{
+public:
+	MouseScrollEvent() : Event(EventType::MOUSE_SCROLL) {};
+	~MouseScrollEvent() {};
+};
 
 // ------------------------------------ //
 

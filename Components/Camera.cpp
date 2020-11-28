@@ -69,6 +69,9 @@ void Camera::buildTransform()
 	cameraTransform = glm::translate(cameraTransform, glm::vec3(0.0f,0.0f, GlobalManager::getGraphicsManager()->getZoomLevel() ));
 
 	cameraTransform = glm::inverse(cameraTransform);
+
+	CameraTransformUpdatedEvent* pNewEvent = new CameraTransformUpdatedEvent();
+	GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewEvent);
 }
 
 

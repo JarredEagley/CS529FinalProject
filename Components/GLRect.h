@@ -2,6 +2,7 @@
 
 #include "Component.h"
 
+#include "../Managers/GlobalManager.h"
 #include "../Managers/ResourceManager.h" // I really dont like having to do this to get my encapsulation. Need to find a better way. 
 
 #include "glm/glm.hpp"
@@ -23,16 +24,17 @@ public:
 	void setUvOffset(glm::vec2 offset);
 	glm::vec2 getUvOffset();
 
-	void buildVAO(); // Build this component's VAO. Automatically stores vaoId.
 	unsigned int getVAO(); // Returns the iD of this component's vertex array object.
 	int getTexId() { return texID; }; // Returns the ID of the texture stored on the graphics card which we want this component to draw.
+
+	void setUniformData(ShaderProgram* pProgram);
 
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
 	// No public variables.
 private:
-	// No private methods.
+	void buildVAO(); // Build this component's VAO. Automatically stores vaoId.
 private:
 	// A 1x1 flat white square with default uv's.
 	glm::vec4 mVertPos[4] = {
@@ -42,13 +44,15 @@ private:
 		glm::vec4(0.5f, -0.5f, 0.0f, 1.0f),		// Right bot
 		glm::vec4(0.5f, 0.5f, 0.0f, 1.0f),		// Right top
 	};
+	/*
 	glm::vec4 mVertCol[4] = { 
 		// RGBA
-		glm::vec4(1.0f, 0.0f, 0.0f, 0.0f),
-		glm::vec4(0.0f, 1.0f, 0.0f, 1.0f),
-		glm::vec4(0.0f, 0.0f, 1.0f, 1.0f),
+		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
+		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
 		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
 	};
+	*/
 	glm::vec2 mVertUV[4] = {
 		glm::vec2(0.0f, 1.0f),
 		glm::vec2(0.0f, 0.0f),
@@ -61,6 +65,7 @@ private:
 		1, 2, 3	 // Second triangle.
 	};
 
+	GLuint vboID[3];
 	unsigned int vaoID; // The OpenGL identifier for the Vertex Array Object for this gameObject.
 	int texID; // ID of the texture we want to use; stored on the graphics card.
 

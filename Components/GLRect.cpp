@@ -14,6 +14,9 @@ mColor(glm::vec4(1.0f)), mUvScale(1.0f), mUvOffset(glm::vec2(0.0f))
 
 GLRect::~GLRect()
 {
+	// Dispose of vertex data.
+	glDeleteBuffers(3, &vboID[0]);
+	glDeleteVertexArrays(1, &vaoID);
 }
 
 void GLRect::Update()
@@ -24,13 +27,15 @@ void GLRect::setColor(glm::vec4 rgba)
 {
 	// Store the color so we can ask GLRect for it.
 	mColor = rgba;
+	/*
 	// Set the vert colors.
 	for (int i = 0; i < 4; ++i)
 	{
 		mVertCol[i] = rgba;
 	}
 	// Build the new VAO.
-	buildVAO();
+	rebuildVAO();
+	*/
 }
 
 
@@ -38,7 +43,8 @@ void GLRect::setUvScale(float scale)
 {
 	// Keep track.
 	this->mUvScale = scale;
-
+	
+	/*
 	// Actually change.
 	mVertUV[0] = glm::vec2(0.0f, scale);
 	mVertUV[1] = glm::vec2(0.0f, 0.0f);
@@ -46,7 +52,8 @@ void GLRect::setUvScale(float scale)
 	mVertUV[3] = glm::vec2(scale, scale);
 
 	// Build the new VAO.
-	buildVAO();
+	rebuildVAO();
+	*/
 }
 
 float GLRect::getUvScale()
@@ -56,9 +63,9 @@ float GLRect::getUvScale()
 
 void GLRect::setUvOffset(glm::vec2 offset)
 {
-	// Keep track.
 	this->mUvOffset = offset;
 
+	/*
 	// Actually change.
 	mVertUV[0] += offset;
 	mVertUV[1] += offset;
@@ -66,7 +73,8 @@ void GLRect::setUvOffset(glm::vec2 offset)
 	mVertUV[3] += offset;
 
 	// Build the new VAO.
-	buildVAO();
+	rebuildVAO();
+	*/
 }
 
 glm::vec2 GLRect::getUvOffset()
@@ -75,6 +83,7 @@ glm::vec2 GLRect::getUvOffset()
 }
 
 
+// PRIVATE.
 // Builds the openGL vertex array object. 
 void GLRect::buildVAO()
 {
@@ -83,26 +92,27 @@ void GLRect::buildVAO()
 	glBindVertexArray(vaoID);
 
 	// VBO
-	GLuint vboID[3];
-	glGenBuffers(3, &vboID[0]);
+	glGenBuffers(2, &vboID[0]);
 
 	// Position, color, uv
 	glBindBuffer(GL_ARRAY_BUFFER, vboID[0]); 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertPos) , &mVertPos[0][0] , GL_STATIC_DRAW ); 
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0 );
 	glEnableVertexAttribArray(0);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	/*
 	glBindBuffer(GL_ARRAY_BUFFER, vboID[1] );
 	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertCol) , &mVertCol[0][0] , GL_STATIC_DRAW );
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 0, 0 ); 
 	glEnableVertexAttribArray(1);
-	//glBindBuffer(GL_ARRAY_BUFFER, 1);
+	glBindBuffer(GL_ARRAY_BUFFER, 1);
+	*/
 
-	glBindBuffer(GL_ARRAY_BUFFER, vboID[2]);
+	glBindBuffer(GL_ARRAY_BUFFER, vboID[1]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertUV) , &mVertUV[0][0] , GL_STATIC_DRAW );
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0); 
-	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0); 
+	glEnableVertexAttribArray(1);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
@@ -115,6 +125,7 @@ void GLRect::buildVAO()
 	glBindVertexArray(0); // Set back to default.
 }
 
+
 unsigned int GLRect::getVAO()
 {
 	if (vaoID == NULL)
@@ -122,6 +133,20 @@ unsigned int GLRect::getVAO()
 
 	return vaoID;
 }
+
+
+// Binds the uniform data associated with this paticular GLRect.
+void GLRect::setUniformData(ShaderProgram* pProgram)
+{
+	unsigned int loc;
+	loc = glGetUniformLocation(pProgram->ProgramID, "uvScale");
+	glUniform1f(loc, getUvScale());
+	loc = glGetUniformLocation(pProgram->ProgramID, "uvOffset");
+	glUniform2fv(loc, 1, &mUvOffset.x );
+	loc = glGetUniformLocation(pProgram->ProgramID, "color");
+	glUniform4fv(loc, 1, &mColor.x );
+}
+
 
 void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {

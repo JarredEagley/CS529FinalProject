@@ -36,6 +36,9 @@ public:
 
 	void Update();
 
+	void transformEventUpdate(Event* pEvent);
+	void scrollEventUpdate(Event* pEvent);
+
 	void handleEvent(Event* pEvent);
 
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
@@ -46,5 +49,6 @@ private:
 private:
 	GLRect* mpGLRect;
 	Transform* mpTransform;
+	float mGridScale, mGridIntensity;
 };
 

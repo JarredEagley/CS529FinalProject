@@ -45,7 +45,7 @@ void GraphicsManager::drawAllGameObjects()
 void GraphicsManager::drawGameObject(GameObject* pGO)
 {
 	// Get the shader we want to use.
-	ShaderProgram* program = loadShader(pGO->mShaderName);
+	ShaderProgram* pProgram = loadShader(pGO->mShaderName);
 
 	// Components we'll need.
 	GLRect* pRect = static_cast<GLRect*>(pGO->GetComponent(ComponentTypes::TYPE_GLRECT)); // From game object being drawn
@@ -58,19 +58,14 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	//Transform* pCameraTransform = nullptr;
 	Camera* pCamera = nullptr;
 	if (pCurrentCameraGO == nullptr)
-	{
 		std::cout << "Error: No camera GameObject currently bound to the GraphicsManager." << std::endl;
-	}
 	else
-	{
-		//pCameraTransform = static_cast<Transform*>(pCurrentCamera->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 		pCamera = static_cast<Camera*>(pCurrentCameraGO->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
-	}
 
 	// Get the vaoID we want to draw.
-	unsigned int vaoID = pRect->getVAO(); // NOT ALL OBJECTS HAVE VAOS.
+	GLuint vaoID = pRect->getVAO(); // It's possible for an object to not have a VAO.
 
-	if (program == nullptr)
+	if (pProgram == nullptr)
 	{
 		std::cout << "Warning: GameObject " << pGO->mName << " had an invalid shaderName. Aborting draw." << std::endl;
 		return;
@@ -79,20 +74,21 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	// --- Draw --- //
 
 	// bind
-	program->Use();
+	pProgram->Use(); // Use current program.
 	glBindVertexArray(vaoID); // Bind the VAO
 	glActiveTexture(GL_TEXTURE0); // Will be needed if I one day one multiple textures on one rect.
 	glBindTexture(GL_TEXTURE_2D, pRect->getTexId()); // Bind the desired texture.
+	pRect->setUniformData(pProgram);
 
 	unsigned int loc;
 
 	// transform
-	loc = glGetUniformLocation(program->ProgramID, "transform");
+	loc = glGetUniformLocation(pProgram->ProgramID, "transform");
 	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr( pTransform->getTransformationMatrix() ));
 	// Cam transforms
-	loc = glGetUniformLocation(program->ProgramID, "viewTrans");
+	loc = glGetUniformLocation(pProgram->ProgramID, "viewTrans");
 	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(pCamera->getTransMatrix() ));
-	loc = glGetUniformLocation(program->ProgramID, "viewProj");
+	loc = glGetUniformLocation(pProgram->ProgramID, "viewProj");
 	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr( pCamera->getProjMatrix() ));
 
 
@@ -102,8 +98,9 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	// unbind
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
-	program->unUse();
+	pProgram->unUse();
 }
+
 
 ShaderProgram* GraphicsManager::loadShader(const char* shaderName)
 {

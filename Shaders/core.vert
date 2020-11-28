@@ -1,17 +1,19 @@
 #version 330 core
 
 layout (location = 0) in vec4 aPosition;
-layout (location = 1) in vec4 aColor; 
-layout (location = 2) in vec2 aTexCoord;
+layout (location = 1) in vec2 aTexCoord;
 
-out vec4 ourColor;
-out vec2 ourTexCoord;
+out vec4 vertColor;
+out vec2 vertTexCoord;
 
 uniform mat4 transform, viewTrans, viewProj;//, viewOffset;
+uniform float uvScale;
+uniform vec2 uvOffset;
+uniform vec4 color;
 
 void main()
 {
 	gl_Position = viewProj * viewTrans * transform * aPosition;
-	ourColor = aColor;
-	ourTexCoord = aTexCoord;
+	vertColor = color;
+	vertTexCoord = ( aTexCoord + uvOffset ) * uvScale;
 }
