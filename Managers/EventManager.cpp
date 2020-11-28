@@ -8,6 +8,16 @@ std::unordered_map<EventType, std::list<GameObject*>> EventManager::mSubscriptio
 
 void EventManager::destroySingleton()
 {
+	// Clear the subscriptions map. (Don't delete GameObjects by accident!)
+	for (auto li : mSubscriptions)
+		li.second.clear();
+	mSubscriptions.clear();
+
+	// Clear the events list.
+	for (auto pEv : mEvents)
+		delete pEv;
+	mEvents.clear();
+
 	delete instance;
 }
 

@@ -3,7 +3,7 @@
 #include "ComponentTypes.h"
 #include <iostream>
 
-GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT), 
+GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT),
 mColor(glm::vec4(1.0f)), mUvScale(1.0f), mUvOffset(glm::vec2(0.0f))
 {
 	// Texture is null until loaded.

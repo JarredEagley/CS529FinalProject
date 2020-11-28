@@ -31,12 +31,18 @@ std::unordered_map<const char*, ShaderProgram*> GraphicsManager::mShaderPrograms
 float GraphicsManager::mMinZoomLevel = 0.1f;
 float GraphicsManager::mMaxZoomLevel = 100000.0f;
 float GraphicsManager::mZoomLevel = mZoomLevel;
+std::unordered_map<GraphicsManager::RenderPassType, std::list<GameObject*>> GraphicsManager::mRenderPasses;
 
 void GraphicsManager::destroySingleton()
 {
 	// Destroy all shader programs.
 	for (auto keyValuePair : mShaderPrograms)
 		delete keyValuePair.second;
+
+	// Destroy render pass lists.
+	for (auto rp : mRenderPasses)
+		rp.second.clear();
+	mRenderPasses.clear();
 
 	// Clear the hash map.
 	mShaderPrograms.clear();
@@ -49,6 +55,26 @@ GraphicsManager::GraphicsManager()
 	pCurrentCameraGO = nullptr;
 	mWindowHeight = 0;
 	mWindowWidth = 0;
+}
+
+void GraphicsManager::addToRenderPass(GameObject* pGO, RenderPassType pass)
+{
+	// Check for invalid pass name.
+	if (pass > RenderPassType::NUM)
+	{
+		std::cout << "Warning: GameObject" << pGO->mName << " was passed an invalid render pass type." << std::endl;
+		return;
+	}
+
+	// No need to set the same renderpass.
+	if (pGO->getRenderPass() == pass)
+		return;
+
+	// Remove from current pass.
+	mRenderPasses[pGO->getRenderPass()].remove(pGO);
+
+	// Add to new pass.
+	mRenderPasses[pass].push_back(pGO);
 }
 
 // Draws every GameObject stored in the GameObjectManger.

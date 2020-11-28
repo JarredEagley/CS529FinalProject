@@ -38,7 +38,8 @@
 #include "Components/ThrottleMeter.h"
 // #include "Components/FuelMeter.h"
 
-GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false)
+GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false),
+mRenderPass(GraphicsManager::RenderPassType::NONE)
 {
 	std::unordered_map<unsigned int, Component*> mComponents;
 }
@@ -160,6 +161,34 @@ Component* GameObject::GetComponent(unsigned int Type)
 			return pComponentPair.second;
 
 	return nullptr;
+}
+
+
+void GameObject::setRenderPass(GraphicsManager::RenderPassType renderpass)
+{
+	//GraphicsManager* pGM = GlobalManager::getGraphicsManager();
+	
+	GlobalManager::getGraphicsManager()->addToRenderPass(this, renderpass);
+
+	// Remove from current render pass if applicable.
+	/*
+	if (mRenderPass == GraphicsManager::RenderPasses::NONE || mRenderPass == GraphicsManager::RenderPasses::NUM) // NUM should never happen, but better safe than sorry.
+	{
+		switch (mRenderPass)
+		{
+		case GraphicsManager::RenderPasses::FINAL:
+		{
+			break;
+		}
+		}
+	}
+	*/
+
+}
+
+GraphicsManager::RenderPassType GameObject::getRenderPass()
+{
+	return this->mRenderPass;
 }
 
 

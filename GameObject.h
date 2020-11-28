@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include "Managers/GlobalManager.h" 
 #include <unordered_map>
 
 class Component;
@@ -34,6 +35,12 @@ public:
 
 	Component* AddComponent(unsigned int Type); // Returns the component which was allocated.
 	Component* GetComponent(unsigned int Type); // Because we need to access components.
+
+	// One object may only be in one render pass.
+	// May not be ideal but for my applications its fine.
+	void setRenderPass(GraphicsManager::RenderPassType renderpass);
+	GraphicsManager::RenderPassType getRenderPass();
+
 	void handleEvent(Event *pEvent);
 public:
 	bool mHasChildren;
@@ -43,6 +50,6 @@ public:
 private:
 	GameObject* mpParentGO;
 private:
-	// No private variables.
+	GraphicsManager::RenderPassType mRenderPass;
 };
 

@@ -36,6 +36,17 @@ public:
 	};
 	void destroySingleton();
 
+	enum RenderPassType
+	{
+		NONE,
+		HUD,
+		FINAL,
+
+		NUM
+	};
+
+	void addToRenderPass(GameObject* pGO, RenderPassType pass);
+
 	void drawAllGameObjects();
 	void drawGameObject(GameObject *pGO);
 
@@ -56,8 +67,10 @@ public:
 public:
 	static std::unordered_map<const char*, ShaderProgram*> mShaderPrograms; // shaderName, ShaderProgram*
 	int mWindowWidth, mWindowHeight;
-	static std::list<GameObject*> mFinalPassObjects;
-	static std::list<GameObject*> mHudPassObjects;
+
+	// Different objects for different render passes.
+	// HUD objects will be in the hud pass, which is rendered onto an FBO.
+	static std::unordered_map<RenderPassType, std::list<GameObject*>> mRenderPasses;
 
 private:
 	GraphicsManager();
