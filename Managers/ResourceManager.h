@@ -33,7 +33,15 @@ public:
 	};
 	void destroySingleton();
 
-	GLuint loadTexture(const char* texName); // Returns the id of the texture loaded (or cached)
+	enum TexType
+	{
+		REPEAT,
+		EXTEND,
+		CLIP
+	};
+
+	GLuint loadTexture(const char* texName); // Returns the id of the texture loaded (or cached) (Default: Wrap texture.)
+	GLuint loadTexture(const char* texName, TexType texType); // Returns the id of the texture loaded (or cached)
 
 	void loadLevel(const char* pFileName);
 

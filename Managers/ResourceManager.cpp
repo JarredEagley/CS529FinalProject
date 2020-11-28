@@ -38,8 +38,12 @@ ResourceManager::ResourceManager()
 	stbi_set_flip_vertically_on_load(true);
 }
 
-
 GLuint ResourceManager::loadTexture(const char* texName)
+{
+	loadTexture(texName, TexType::REPEAT);
+}
+
+GLuint ResourceManager::loadTexture(const char* texName, TexType _texType)
 {
 	// Test if the texture by the given name exists. If it does, return it.
 	if (mTextures.find(texName) != mTextures.end())
@@ -63,11 +67,31 @@ GLuint ResourceManager::loadTexture(const char* texName)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 10); 
 		glGenerateMipmap(GL_TEXTURE_2D);
 
-		// Some parameters needed for textures.
+		// Some parameters needed for textures
+
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		switch (_texType)
+		{
+		case TexType::REPEAT:
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			break;
+		case TexType::EXTEND:
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			break;
+		case TexType::CLIP:
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP); // I'm not positive this is right...
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+			break;
+		default:
+			// Default behavior is just repeat.
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			break;
+		}
 
 		// Unbind
 		glBindTexture(GL_TEXTURE_2D, 0);
