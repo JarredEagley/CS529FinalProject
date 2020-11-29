@@ -20,6 +20,8 @@
 BackgroundGrid::BackgroundGrid() : Component(ComponentTypes::TYPE_BACKGROUNDGRID),
 mpGLRect(nullptr), mpTransform(nullptr), mGridScale(1000.0f), mGridIntensity(0.8f)
 {
+	GlobalManager::getEventManager()->Subscribe(EventType::CAMERA_TRANSFORM_UPDATED, this->mpOwner);
+	GlobalManager::getEventManager()->Subscribe(EventType::MOUSE_SCROLL, this->mpOwner);
 }
 
 BackgroundGrid::~BackgroundGrid()
@@ -112,6 +114,4 @@ void BackgroundGrid::handleEvent(Event* pEvent)
 
 void BackgroundGrid::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
-	GlobalManager::getEventManager()->Subscribe(EventType::CAMERA_TRANSFORM_UPDATED, this->mpOwner);
-	GlobalManager::getEventManager()->Subscribe(EventType::MOUSE_SCROLL, this->mpOwner);
 }
