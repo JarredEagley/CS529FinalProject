@@ -34,8 +34,8 @@
     "Graphics Manager":
     {
         "Description": "Responsible for any and all graphics-related things. Window height and width settable here, along with zoom properties. Note: Zoom properties may be overridden by levels.",
-        "Window Width": 900,
-        "Window Height": 800,
+        "Window Width": 1200,
+        "Window Height": 1000,
         "Zoom Level": 100,
         "Max Zoom Level": 100000,
         "Min Zoom Level": 0.1

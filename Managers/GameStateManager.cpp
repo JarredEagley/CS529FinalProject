@@ -31,7 +31,7 @@ GameStateManager::GameStateManager()
 }
 
 
-void readGameConfig()
+void GameStateManager::readGameConfig()
 {
 	// Use serializer to read the json in.
 	Serializer* pSer = GlobalManager::getSerializer();
@@ -77,35 +77,35 @@ void readGameConfig()
 		auto currentObj = doc["Graphics Manager"].GetObject();
 
 		// Width and height.
-		const char* currentattr = "Window Height";
-		if (currentObj.HasMember(currentattr) && currentObj[currentattr].IsNumber())
+		std::string currentattr = "Window Height";
+		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())
 		{
-			GlobalManager::getGraphicsManager()->mWindowHeight = currentObj[currentattr].GetInt();
+			GlobalManager::getGraphicsManager()->mWindowHeight = currentObj[currentattr.c_str()].GetInt();
 		}
 
-		const char* currentattr = "Window Width";
-		if (currentObj.HasMember(currentattr) && currentObj[currentattr].IsNumber())
+		currentattr = "Window Width";
+		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())
 		{
-			GlobalManager::getGraphicsManager()->mWindowWidth = currentObj[currentattr].GetInt();
+			GlobalManager::getGraphicsManager()->mWindowWidth = currentObj[currentattr.c_str()].GetInt();
 		}
 
-		// Zoomer stuff
-		const char* currentattr = "Zoom Level";
-		if (currentObj.HasMember(currentattr) && currentObj[currentattr].IsNumber())
+		// Zoom stuff
+		currentattr = "Zoom Level";
+		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())
 		{
-			GlobalManager::getGraphicsManager()->setZoomLevel( currentObj[currentattr].GetFloat() );
+			GlobalManager::getGraphicsManager()->setZoomLevel( currentObj[currentattr.c_str()].GetFloat() );
 		}
 
-		const char* currentattr = "Max Zoom Level";
-		if (currentObj.HasMember(currentattr) && currentObj[currentattr].IsNumber())
+		currentattr = "Max Zoom Level";
+		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())
 		{
-			GlobalManager::getGraphicsManager()->setMaxZoomLevel( currentObj[currentattr].GetFloat() );
+			GlobalManager::getGraphicsManager()->setMaxZoomLevel( currentObj[currentattr.c_str()].GetFloat() );
 		}
 
-		const char* currentattr = "Min Zoom Level";
-		if (currentObj.HasMember(currentattr) && currentObj[currentattr].IsNumber())
+		currentattr = "Min Zoom Level";
+		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())
 		{
-			GlobalManager::getGraphicsManager()->setMinZoomLevel( currentObj[currentattr].GetFloat() );
+			GlobalManager::getGraphicsManager()->setMinZoomLevel( currentObj[currentattr.c_str()].GetFloat() );
 		}
 	}
 

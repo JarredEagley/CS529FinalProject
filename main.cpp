@@ -54,18 +54,18 @@ bool Init()
 		SetConsoleTitle(L"Debug Console");
 	}
 
+	// Init my stuff.
+	GlobalManager::initSingletons();
+	GlobalManager::getGameStateManager()->readGameConfig();
+
 	// Initialize SDL's Video subsystem
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		std::cerr << "Failed to initialize SDL." << std::endl;
 		return false;
 	}
-
 	
 	// Create our window.
-	GlobalManager::getGraphicsManager()->mWindowWidth = 1000;
-	GlobalManager::getGraphicsManager()->mWindowHeight= 800;
-
 	pWindow = SDL_CreateWindow(programName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
 		GlobalManager::getGraphicsManager()->mWindowWidth, GlobalManager::getGraphicsManager()->mWindowHeight, SDL_WINDOW_OPENGL);
 
@@ -117,13 +117,7 @@ int main(int argc, char*argv[])
 	if (!Init())
 		return EXIT_FAILURE;
 
-	// Init the singletons.
-	GlobalManager::initSingletons();
-	// Set framerate.
-	GlobalManager::getFrameRateController()->setMaxFramerate(30);
-
 	// Load level.
-	//GlobalManager::getGameObjectFactory()->loadLevel(".\\Resources\\Levels\\ExampleLevel.json");
 	GlobalManager::getResourceManager()->loadLevel("ExampleLevel.json");
 
 	// Alpha blend.
