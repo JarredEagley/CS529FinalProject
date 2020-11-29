@@ -118,4 +118,11 @@ void BackgroundGrid::handleEvent(Event* pEvent)
 
 void BackgroundGrid::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
+	rapidjson::GenericObject<true, rapidjson::Value> inputObj = inputMemberIt->value.GetObject();
+
+	if (
+		inputObj.HasMember("Grid Intensity")
+		&& inputObj["Grid Intensity"].IsNumber()
+		)
+		this->mGridIntensity = inputObj["Grid Intensity"].GetFloat();
 }
