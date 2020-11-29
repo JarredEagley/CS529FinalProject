@@ -13,7 +13,7 @@ public:
 	~PhysicsBody();
 
 	void Update();
-	void Integrate(float deltaTme);
+	void Integrate(float deltaTime);
 
 	void calculateGravityForces(); // Applies all the gravitational force vectors.
 	void applyForce(glm::vec2 F);
@@ -34,11 +34,9 @@ public:
 	glm::vec2 mPosition;
 	glm::vec2 mPrevPosition;
 	glm::vec2 mVelocity;
-	glm::vec2 mPrevVelocity;
 	glm::vec2 mAcceleration;
-	glm::vec2 mPrevAccleration;
 	glm::vec2 mTotalForce;
-	float mAngle, mPrevAngle, mAngularVelocity, mPrevAngularVelocity, mAngularAcceleration, mPrevAngularAcceleration, mTotalTorque;
+	float mAngle, mPrevAngle, mAngularVelocity, mAngularAcceleration, mTotalTorque;
 	float mMass, mInvMass;
 
 	Shape* mpShape; 

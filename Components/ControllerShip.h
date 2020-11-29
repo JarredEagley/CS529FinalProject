@@ -3,7 +3,6 @@
 #include "Component.h"
 #include "rapidjson/document.h"
 #include "ShipData.h"
-#include "PhysicsBody.h"
 
 class ControllerShip : public Component
 {
@@ -15,15 +14,13 @@ public:
 	void Update();
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 public:
-	// No public variables.
+	float mAngularDamping; // How agressively ship tries to stop rotating with no input.
+
 private:
 	// No private methods.
 private:
-	float mThrottle; // Throttle
-	float mThrottleSensitivity;
-
 	ShipData* mpShipData;
-	PhysicsBody* mpPhysicsBody;
+	
 
 };
 

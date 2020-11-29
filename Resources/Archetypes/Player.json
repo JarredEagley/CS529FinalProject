@@ -42,7 +42,9 @@
 
             "Main Acceleration": 4.0,
             "Secondary Acceleration": 1.0,
-            "Angular Acceleration": 1.0
+            "Angular Acceleration": 1.0,
+
+            "Throttle Sensitivity": 5.0
         }
     }
 }

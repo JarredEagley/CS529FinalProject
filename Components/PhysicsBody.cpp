@@ -6,27 +6,17 @@
 
 #define G_CONST 0.0000000000667 // The universal gravitational constant. in N * m^2 / kg^2
 
-PhysicsBody::PhysicsBody() : Component(ComponentTypes::TYPE_PHYSICSBODY)
+PhysicsBody::PhysicsBody() : Component(ComponentTypes::TYPE_PHYSICSBODY),
+mHasGravity(false),
+mPosition(glm::vec2(0.0f)), mAngle(0.0f),
+mPrevPosition(glm::vec2(0.0f)), mPrevAngle(0.0f),
+mVelocity(glm::vec2(0.0f)), mAngularVelocity(0.0f),
+mAcceleration(glm::vec2(0.0f)), mAngularAcceleration(0.0f),
+mTotalForce(glm::vec2(0.0f)), mTotalTorque(0.0f),
+mMass(1.0f), mInvMass(1.0f),
+mForwardDir(glm::vec2(0.0f,1.0f)), mRightDir(glm::vec2(1.0f,0.0f)),
+mpShape(nullptr)
 {
-	// TO-DO: Move these into initalizer.
-	mHasGravity = false;
-	mPosition = glm::vec2(0.0f);
-	mAngle = 0.0f;
-	mPrevPosition = glm::vec2(0.0f);
-	mPrevAngle = 0.0f;
-	mVelocity = glm::vec2(0.0f);
-	mAngularVelocity = 0.0f;
-	mAcceleration = glm::vec2(0.0f);
-	mAngularAcceleration = 0.0f;
-	mTotalForce = glm::vec2(0.0f);
-	mTotalTorque = 0.0f;
-
-	mMass = mInvMass = 1.0f;
-
-	mForwardDir = glm::vec2(0.0f, 1.0f);
-	mRightDir = glm::vec2(1.0f, 0.0f);
-
-	mpShape = nullptr;
 }
 
 PhysicsBody::~PhysicsBody()
@@ -37,7 +27,8 @@ PhysicsBody::~PhysicsBody()
 
 
 void PhysicsBody::Update()
-{}
+{
+}
 
 
 void PhysicsBody::Integrate(float deltaTime)
@@ -69,13 +60,16 @@ void PhysicsBody::Integrate(float deltaTime)
 	mVelocity = mAcceleration * deltaTime + mVelocity;
 	mAngularVelocity = mAngularAcceleration * deltaTime + mAngularVelocity;
 
+
 	// Integrate position. P1 = V1*t + P0
 	mPosition = mVelocity * deltaTime + mPosition;
 	mAngle = mAngularVelocity * deltaTime + mAngle;
 
+
 	// Compute new direction vectors.
 	mForwardDir = glm::vec2(sin(glm::radians(-mAngle)), cos(glm::radians(mAngle)));
 	mRightDir = glm::vec2( cos(glm::radians(mAngle)), sin(glm::radians(mAngle)) );
+
 
 	if (nullptr != pT)
 	{
@@ -109,28 +103,13 @@ void PhysicsBody::calculateGravityForces()
 
 		glm::vec2 gravitationalForce = glm::normalize(pBody->mPosition - this->mPosition) * (float)std::max(gravScale, 10.0) / 1000.0f;
 
-		/*
-		glm::vec2 denominator = (this->mPosition - pBody->mPosition);//* (this->mPosition - pBody->mPosition) ;
-		if (denominator.x == 0.0f && denominator.y == 0.0f)
-		{
-			std::cout << "DEBUG - Aborting gravitational force calculation\n";
-			continue;
-		}
-
-		denominator = denominator * denominator;
-
-		glm::vec2 gravitationalForce = -numerator/denominator;
-
-		std::cout << "DEBUG - Applying gravitational force (" << gravitationalForce.x << ", " << gravitationalForce.y << ")\n";
-		*/
-		//std::cout << "DEBUG - Applying gravitational force (" << gravitationalForce.x << ", " << gravitationalForce.y << ")\n";
-
 		applyForce(gravitationalForce);
 	}
 }
 
 void PhysicsBody::applyForce(glm::vec2 F)
 {
+
 	// Frametime is in ms, convert to s.
 	mTotalForce += F * GlobalManager::getFrameRateController()->getFrameTimeSec();
 }
@@ -284,8 +263,6 @@ void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		else
 			std::cout << "Warning: Deserialized Physics Body component's starter angular velocity was improperly formatted." << std::endl;
 	}
-
-
 
 
 	// Has gravity?

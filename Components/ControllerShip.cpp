@@ -2,8 +2,8 @@
 #include "ComponentTypes.h"
 #include "../Managers/GlobalManager.h"
 
-ControllerShip::ControllerShip() : Component(ComponentTypes::TYPE_CONTROLLERSHIP)
-, mThrottle(0.0f), mThrottleSensitivity(1.0f)//, mMainAcceleration(1.0f), mSecondaryAcceleration(0.01f), mAngularAcceleration(0.1)
+ControllerShip::ControllerShip() : Component(ComponentTypes::TYPE_CONTROLLERSHIP), 
+mAngularDamping(4.0f)
 {
 }
 
@@ -15,11 +15,10 @@ ControllerShip::~ControllerShip()
 void ControllerShip::Update()
 {
 	// Necessary components to talk to.
-	mpPhysicsBody = static_cast<PhysicsBody*>(mpOwner->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
 	mpShipData = static_cast<ShipData*>(mpOwner->GetComponent(ComponentTypes::TYPE_SHIPDATA));
-	if (mpPhysicsBody == nullptr || mpShipData == nullptr)
+	if ( mpShipData == nullptr)
 	{
-		std::cout << "Warning: Ship controller component failed to find its physics and/or ship data component." << std::endl;
+		std::cout << "Warning: Ship controller component failed to find its ship data component." << std::endl;
 		return;
 	}
 
@@ -29,54 +28,64 @@ void ControllerShip::Update()
 	// Rotation
 	if (pIM->IsKeyPressed(SDL_SCANCODE_E))
 	{
-		mpPhysicsBody->applyTorque(-mpShipData->mAngularAcceleration);
+		mpShipData->applySpin(-1.0f);
 	}
 	else if (pIM->IsKeyPressed(SDL_SCANCODE_Q))
 	{
-		mpPhysicsBody->applyTorque(mpShipData->mAngularAcceleration);
+		mpShipData->applySpin();
 	}
 	else
 	{
 		// Try to stop spinning.
-		mpPhysicsBody->applyTorque(-mpShipData->mAngularAcceleration * mpPhysicsBody->mAngularVelocity * 4.0);
+		mpShipData->applyAngularDamping();
 	}
 
 	// Translation
+	glm::vec2 translationForce = glm::vec2(0.0f);
 	if (pIM->IsKeyPressed(SDL_SCANCODE_W))
 	{
-		mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mpShipData->mSecondaryAcceleration);
+		translationForce.x += 1;
+		//mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mpShipData->mSecondaryAcceleration);
 	}
 	if (pIM->IsKeyPressed(SDL_SCANCODE_S))
 	{
-		mpPhysicsBody->applyForce(-mpPhysicsBody->mForwardDir * mpShipData->mSecondaryAcceleration);
+		translationForce.x -= 1;
+		//mpPhysicsBody->applyForce(-mpPhysicsBody->mForwardDir * mpShipData->mSecondaryAcceleration);
 	}
 	if (pIM->IsKeyPressed(SDL_SCANCODE_A))
 	{
-		mpPhysicsBody->applyForce(-mpPhysicsBody->mRightDir * mpShipData->mSecondaryAcceleration);
+		translationForce.y += 1;
+		//mpPhysicsBody->applyForce(-mpPhysicsBody->mRightDir * mpShipData->mSecondaryAcceleration);
 	}
 	if (pIM->IsKeyPressed(SDL_SCANCODE_D))
 	{
-		mpPhysicsBody->applyForce(mpPhysicsBody->mRightDir * mpShipData->mSecondaryAcceleration);
+		translationForce.y -= 1;
+		//mpPhysicsBody->applyForce(mpPhysicsBody->mRightDir * mpShipData->mSecondaryAcceleration);
 	}
+	if (translationForce != glm::vec2(0.0f))
+		translationForce = glm::normalize(translationForce);
+	mpShipData->applyThrustSecondary(translationForce);
 
 	// Main drive
 	if (pIM->IsKeyPressed(SDL_SCANCODE_LSHIFT))
 	{
 		// Spool up
-		this->mThrottle = std::min( mThrottle + mThrottleSensitivity , 100.0f );
+		mpShipData->throttleUp();
 	}
 	else if (pIM->IsKeyPressed(SDL_SCANCODE_LCTRL))
 	{
 		// Spool down
-		this->mThrottle = std::max(mThrottle - mThrottleSensitivity, 0.0f);
+		mpShipData->throttleDown();
 	}
 	// Apply thrust.
 	//std::cout << "DEBUG - Current throttle is " << mThrottle << ", fuel is at " << mpShipData->mFuel << std::endl;
-	if (mpShipData->mFuel > 0.0f && mThrottle > 1.0f) // Throttle actually has a tiny deadzone. Making this configurable could make for an interesting game mechanic.
+	/*
+	if (mpShipData->mFuel > 0.0f && mpShipData->mThrottle > 1.0f) // Throttle actually has a tiny deadzone. Making this configurable could make for an interesting game mechanic.
 	{
-		mpShipData->mFuel -=  GlobalManager::getFrameRateController()->getFrameTimeSec() / mpShipData->fuelEfficiency;
-		mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mpShipData->mMainAcceleration * (this->mThrottle / 100.0f));
+		mpShipData->mFuel -=  GlobalManager::getFrameRateController()->getFrameTimeSec() / mpShipData->mFuelEfficiency;
+		mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mpShipData->mMainAcceleration * (mpShipData->mThrottle / 100.0f));
 	}
+	*/
 }
 
 void ControllerShip::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)

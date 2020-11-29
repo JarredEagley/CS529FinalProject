@@ -18,7 +18,7 @@
             {
                 "TYPE_TRANSFORM":
                 {
-                    "Translation": [4600.0, 1000.0],
+                    "Translation": [4900.0, 1000.0],
                     "Rotation": 0
                 },
                 "TYPE_PHYSICSBODY":

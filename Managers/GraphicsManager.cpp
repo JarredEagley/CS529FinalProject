@@ -29,7 +29,7 @@ GraphicsManager* GraphicsManager::instance = nullptr;
 std::unordered_map<std::string, ShaderProgram*> GraphicsManager::mShaderPrograms;
 float GraphicsManager::mMinZoomLevel = 0.1f;
 float GraphicsManager::mMaxZoomLevel = 100000.0f;
-float GraphicsManager::mZoomLevel = mZoomLevel;
+float GraphicsManager::mZoomLevel = 100.0f;
 std::unordered_map<RenderPassType, std::list<GameObject*>> GraphicsManager::mRenderPasses;
 
 void GraphicsManager::destroySingleton()
@@ -51,7 +51,9 @@ void GraphicsManager::destroySingleton()
 
 // --- End of singleton stuff --- //
 
-GraphicsManager::GraphicsManager() : pCurrentCameraGO(nullptr), mWindowHeight(0), mWindowWidth(0)
+GraphicsManager::GraphicsManager() : 
+	pCurrentCameraGO(nullptr), 
+	mWindowHeight(0), mWindowWidth(0)
 {
 }
 
