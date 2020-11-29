@@ -4,11 +4,12 @@
     {
         "TYPE_TRANSFORM":
         {
-            "Scale": [1.0, 1.0]
+            "Scale": [0.5, 1.0]
         },
         "TYPE_GLRECT":
         {
-            "Texture": "Turret1.png",
-        }
+            "Texture": "Turret1.png"
+        },
+        "TYPE_TURRET": {}
     }
 }

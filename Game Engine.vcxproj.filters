@@ -79,6 +79,9 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="FrameBufferObject.cpp" />
+    <ClCompile Include="Components\Turret.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -162,6 +165,9 @@
     </ClInclude>
     <ClInclude Include="FrameBufferObject.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Components\Turret.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">

@@ -1,34 +1,65 @@
 #include "Turret.h"
 
 #include "ComponentTypes.h"
+#include "Transform.h"
+#include "GLRect.h"
 
-Turret::Turret() : Component(ComponentTypes::TYPE_TURRET)
-{
-
-}
+Turret::Turret() : Component(ComponentTypes::TYPE_TURRET),
+mpTransform(nullptr), mpParentGLRect(nullptr),
+mAimPoint(glm::vec2(0.0f)), mAimAngle(0.0f)
+{}
 
 Turret::~Turret()
 {
-
 }
 
 
 void Turret::Initialize()
 {
-
+	GlobalManager::getEventManager()->Subscribe(EventType::TRANSFORM_UPDATED, mpOwner);
+	GlobalManager::getEventManager()->Subscribe(EventType::TURRET_COMMAND, mpOwner);
 }
 
 void Turret::Update()
+{}
+
+
+void Turret::handleEvent(Event* pEvent) 
 {
+	if (pEvent->mType == EventType::TURRET_COMMAND)
+	{
+		// Try to get the necessary components to talk to.
+		if (mpTransform == nullptr || mpParentTransform == nullptr || mpGLRect == nullptr || mpParentGLRect == nullptr)
+		{
+			mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+			mpParentTransform = static_cast<Transform*>(mpOwner->getParent()->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+			mpGLRect = static_cast<GLRect*>(mpOwner->GetComponent(ComponentTypes::TYPE_GLRECT));
+			mpParentGLRect = static_cast<GLRect*>(mpOwner->getParent()->GetComponent(ComponentTypes::TYPE_GLRECT)); // We will want to mirror color.
+			return;
+		}
 
+		mpGLRect->setColor(mpParentGLRect->getColor()); // Mirror color.
+
+		TurretCommandEvent* pTurretEvent = static_cast<TurretCommandEvent*>(pEvent);
+		this->mAimPoint = pTurretEvent->mAimPoint - glm::vec2(mpParentTransform->getPosition()); // Get aimpoint in local coordinates.
+
+		//std::cout << "aim point is " << mAimPoint.x << ", " << mAimPoint.y << std::endl;
+
+		// Get the aim angle.
+		mAimAngle = glm::dot( glm::normalize(mAimPoint), glm::vec2(-1.0f,0.0f ));
+		mAimAngle = glm::degrees(mAimAngle);
+		//std::cout << "Aim angle is " << mAimAngle << std::endl;
+		this->mpTransform->setRotation(mAimAngle);
+	}
+	/*
+	else if (pEvent->mType == EventType::TRANSFORM_UPDATED)
+	{
+		TransformUpdatedEvent* pTransformEvent = static_cast<TransformUpdatedEvent*>(pEvent);
+	}
+	*/
 }
-
 
 
 void Turret::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
-{
-
-}
-
-void Turret::handleEvent(Event* pEvent) {};
+{}
 

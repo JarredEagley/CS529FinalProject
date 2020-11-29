@@ -33,6 +33,7 @@
 #include "Components/ShipData.h"
 #include "Components/ThrottleMeter.h"
 #include "Components/FuelMeter.h"
+#include "Components/Turret.h"
 
 GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false),
 mRenderPassType(RenderPassType::NONE)
@@ -138,7 +139,11 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_METER_FUEL):
 		pNewComponent = new FuelMeter();
 		break;
+	case (ComponentTypes::TYPE_TURRET):
+		pNewComponent = new Turret();
+		break;
 	
+
 
 	default:
 		return nullptr; // Failed to create component.

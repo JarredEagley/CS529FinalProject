@@ -23,17 +23,14 @@
                 },
                 "TYPE_PHYSICSBODY":
                 {
-                    "Mass": 200.0,
-                    "AABB":
-                    {
-                        "Left": 10.0,
-                        "Right": 10.0,
-                        "Top": 10.0,
-                        "Bottom":10.0
-                    },
-                    "Velocity": [0.0, -0.4]
+                    "Velocity": [0.0, -0.1]
                 }
             }
+        },
+        {
+            "Name": "PLAYER_Turret",
+            "Archetype":"Turret.json",
+            "Parent":"PLAYER"
         },
         {
             "Name":"Mars",

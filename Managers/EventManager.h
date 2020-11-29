@@ -1,6 +1,7 @@
 #pragma once
 #include <list>
 #include <unordered_map>
+#include "glm/glm.hpp"
 
 class GameObject;
 
@@ -11,6 +12,7 @@ enum class EventType
 	SHIPDATA_UPDATED,
 	CAMERA_TRANSFORM_UPDATED,
 	MOUSE_SCROLL,
+	TURRET_COMMAND,
 
 	NUM
 };
@@ -55,7 +57,6 @@ public:
 	ShipData* mpShipData;
 };
 
-
 class CameraTransformUpdatedEvent : public Event
 {
 public:
@@ -63,13 +64,23 @@ public:
 	~CameraTransformUpdatedEvent() {};
 };
 
-
 class MouseScrollEvent : public Event
 {
 public:
 	MouseScrollEvent() : Event(EventType::MOUSE_SCROLL) {};
 	~MouseScrollEvent() {};
 };
+
+class TurretCommandEvent : public Event
+{
+public:
+	TurretCommandEvent() : Event(EventType::TURRET_COMMAND) {}
+	~TurretCommandEvent() {}
+
+	bool mShoot;
+	glm::vec2 mAimPoint;
+};
+
 
 // ------------------------------------ //
 

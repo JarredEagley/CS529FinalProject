@@ -88,6 +88,11 @@ void ControllerShip::Update()
 		mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mpShipData->mMainAcceleration * (mpShipData->mThrottle / 100.0f));
 	}
 	*/
+
+	TurretCommandEvent* pNewTurretEvent = new TurretCommandEvent();
+	pNewTurretEvent->mAimPoint = glm::vec2(0.0f, 0.0f);
+	pNewTurretEvent->mShoot = false;
+	GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewTurretEvent);
 }
 
 void ControllerShip::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)

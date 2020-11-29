@@ -99,6 +99,7 @@
     <ClCompile Include="Components\ThrottleMeter.cpp" />
     <ClCompile Include="Components\Timer.cpp" />
     <ClCompile Include="Components\Transform.cpp" />
+    <ClCompile Include="Components\Turret.cpp" />
     <ClCompile Include="FrameBufferObject.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="main.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="Components\Timer.h" />
     <ClInclude Include="Components\Transform.h" />
     <ClInclude Include="Components\ComponentTypes.h" />
+    <ClInclude Include="Components\Turret.h" />
     <ClInclude Include="FrameBufferObject.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Managers\CollisionManager.h" />
