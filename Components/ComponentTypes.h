@@ -37,6 +37,7 @@ public:
 		if (strcmp(str, "TYPE_PHYSICSBODY") == 0)		return TYPE_PHYSICSBODY;
 		if (strcmp(str, "TYPE_DIRINDICATOR") == 0)		return TYPE_DIRINDICATOR;
 		if (strcmp(str, "TYPE_SHIPDATA") == 0)			return TYPE_SHIPDATA;
+		if (strcmp(str, "TYPE_TURRET") == 0)			return TYPE_TURRET;
 		if (strcmp(str, "TYPE_METER_FUEL") == 0)		return TYPE_METER_FUEL;
 		if (strcmp(str, "TYPE_MARKER_THROTTLE") == 0)	return TYPE_MARKER_THROTTLE;
 		
@@ -57,6 +58,7 @@ public:
 		TYPE_PHYSICSBODY,
 		TYPE_DIRINDICATOR,
 		TYPE_SHIPDATA,
+		TYPE_TURRET,
 		TYPE_METER_FUEL,
 		TYPE_MARKER_THROTTLE
 	};

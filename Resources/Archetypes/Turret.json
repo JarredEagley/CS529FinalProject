@@ -1,0 +1,14 @@
+{
+    "Type": "GameObject",
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+            "Scale": [1.0, 1.0]
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "Turret1.png",
+        }
+    }
+}

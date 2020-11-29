@@ -24,6 +24,18 @@
 
 class GameObject;
 
+// Will be used to keep track of how many of a type of GameObject may be created
+// by the GameObjectFactory at runtime.
+enum class GameObjectType
+{
+	INITIALIZED_AT_START,
+	PARTICLE,
+	DEBRIS,
+	PROJECTILE,
+
+	NUM
+};
+
 class GameObjectManager
 {
 public:
