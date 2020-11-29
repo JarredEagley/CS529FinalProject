@@ -57,7 +57,7 @@ public:
 	void drawGameObject(GameObject *pGO);
 	void drawGameObject_HUD(GameObject* pGO);
 
-	ShaderProgram* loadShader(const char* shaderName); // Loads a shader program. Creates the program if it cannot be found.
+	ShaderProgram* loadShader(std::string shaderName); // Loads a shader program. Creates the program if it cannot be found.
 
 	void setCurrentCameraGO(GameObject* pCam); // Cameras are game objects with a camera component.
 	GameObject* getCurrentCameraGO() { return pCurrentCameraGO; };

@@ -12,5 +12,6 @@
             "Color": [1.0, 1.0, 1.0, 0.6]
         }
     },
-    "Render Pass" : "HUD"
+    "Render Pass" : "HUD",
+    "Shader": "meter"
 }

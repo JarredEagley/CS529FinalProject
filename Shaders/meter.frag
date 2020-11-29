@@ -1,0 +1,17 @@
+#version 330 core
+
+in vec4 vertColor;
+in vec2 vertTexCoord;
+
+out vec4 FragColor;
+
+uniform sampler2D ourTexture;
+uniform float fillLevel;
+
+void main()
+{
+	// Render to fragColor based on texture.
+	FragColor = texture(ourTexture, vertTexCoord) * vertColor;
+}
+
+

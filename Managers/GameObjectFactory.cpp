@@ -117,7 +117,7 @@ GameObject* GameObjectFactory::loadArchetype(const char* pFileName)
 		)
 	{
 		std::string newShaderName = doc["Shader"].GetString();
-		pNewGO->mShaderName = newShaderName.c_str();
+		pNewGO->mShaderName = newShaderName;
 	}
 
 	// Set render pass via archetype if its specified.
@@ -222,7 +222,7 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 		)
 	{
 		std::string newShaderName = inputObj["Shader"].GetString();
-		pCurrentGO->mShaderName = newShaderName.c_str();
+		pCurrentGO->mShaderName = newShaderName;
 	}
 
 	// If this GO Has a render pass aside from final, set its new render pass.

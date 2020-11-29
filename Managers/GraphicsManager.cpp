@@ -244,7 +244,7 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 }
 
 
-ShaderProgram* GraphicsManager::loadShader(const char* shaderName)
+ShaderProgram* GraphicsManager::loadShader(std::string shaderName)
 {
 	// Test if the shader by the given name exists. If it does, return it.
 	if ( mShaderPrograms.find(shaderName) != mShaderPrograms.end() ) // May have bad efficiency. Could be worth exploring alternate ways of doign this.
@@ -257,6 +257,8 @@ ShaderProgram* GraphicsManager::loadShader(const char* shaderName)
 	std::string fragpath = ".\\Shaders\\"; // Move into RM?
 	fragpath = fragpath + shaderName;
 	fragpath = fragpath + ".frag";
+
+	//std::cout << "Shader " << shaderName << " failed to be found." << std::endl;
 
 	ShaderProgram* program = mShaderPrograms[shaderName] = new ShaderProgram(vertpath.c_str(), fragpath.c_str());
 	if (!program)

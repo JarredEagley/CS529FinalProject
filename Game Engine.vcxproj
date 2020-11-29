@@ -144,10 +144,13 @@
     <ClInclude Include="Managers\PhysicsManager.h" />
     <ClInclude Include="Managers\ResourceManager.h" />
     <ClInclude Include="Managers\Serializer.h" />
+    <ClInclude Include="ShaderProgram.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\core.frag" />
     <None Include="Shaders\core.vert" />
+    <None Include="Shaders\meter.frag" />
+    <None Include="Shaders\meter.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

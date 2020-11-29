@@ -4,7 +4,7 @@
 #include "ShipData.h"
 
 FuelMeter::FuelMeter() : Component(ComponentTypes::TYPE_METER_FUEL),
-mFuel(0.0f);
+mFuel(0.0f)
 {}
 
 FuelMeter::~FuelMeter()

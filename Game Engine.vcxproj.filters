@@ -161,6 +161,7 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="FrameBufferObject.h" />
+    <ClInclude Include="ShaderProgram.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Components">
@@ -199,6 +200,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Shaders\core.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\meter.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\meter.vert">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
