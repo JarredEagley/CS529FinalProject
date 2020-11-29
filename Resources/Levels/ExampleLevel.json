@@ -57,6 +57,10 @@
 
 
         {
+            "Name": "HUD_Fuel_Meter",
+            "Archetype": "HUD_Fuel_Meter.json"
+        },
+        {
             "Name": "HUD_Throttle_Meter",
             "Archetype": "HUD_Throttle_Meter.json"
         },
