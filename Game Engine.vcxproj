@@ -94,7 +94,6 @@
     <ClCompile Include="Components\DirectionIndicator.cpp" />
     <ClCompile Include="Components\FuelMeter.cpp" />
     <ClCompile Include="Components\GLRect.cpp" />
-    <ClCompile Include="Components\HUDElement.cpp" />
     <ClCompile Include="Components\PhysicsBody.cpp" />
     <ClCompile Include="Components\ShipData.cpp" />
     <ClCompile Include="Components\ThrottleMeter.cpp" />
@@ -125,7 +124,6 @@
     <ClInclude Include="Components\DirectionIndicator.h" />
     <ClInclude Include="Components\FuelMeter.h" />
     <ClInclude Include="Components\GLRect.h" />
-    <ClInclude Include="Components\HUDElement.h" />
     <ClInclude Include="Components\PhysicsBody.h" />
     <ClInclude Include="Components\ShipData.h" />
     <ClInclude Include="Components\ThrottleMeter.h" />

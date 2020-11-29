@@ -5,7 +5,7 @@
 #include "../Managers/GlobalManager.h"
 
 ThrottleMeter::ThrottleMeter() : Component(ComponentTypes::TYPE_MARKER_THROTTLE),
-mpTransform(nullptr)
+mpTransform(nullptr), mpParentTransform(nullptr)
 {
 }
 
@@ -17,12 +17,11 @@ ThrottleMeter::~ThrottleMeter()
 void ThrottleMeter::Initialize() 
 {
 	// Subscrie my GameObject to shipdata updates.
-	GlobalManager::getEventManager()->Subscribe(EventType::SHIPDATA_UPDATED, this->mpOwner);
+	GlobalManager::getEventManager()->Subscribe(EventType::SHIPDATA_UPDATED, mpOwner);
 }
 
 void ThrottleMeter::Update()
 {
-
 }
 
 

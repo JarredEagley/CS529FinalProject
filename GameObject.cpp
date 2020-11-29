@@ -34,7 +34,6 @@
 #include "Components/ThrottleMeter.h"
 // #include "Components/FuelMeter.h"
 
-
 GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false),
 mRenderPassType(RenderPassType::NONE)
 {
@@ -175,10 +174,10 @@ RenderPassType GameObject::getRenderPassType()
 }
 
 
-void GameObject::setAllUniformData()
+void GameObject::setAllUniformData(ShaderProgram* pProgram)
 {
 	for (auto pCompPair : mComponents)
-		pCompPair.second->setUniformData(); // Will be empty call for most components.
+		pCompPair.second->setUniformData(pProgram); // Will be empty call for most components.
 }
 
 

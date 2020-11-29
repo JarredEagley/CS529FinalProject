@@ -41,9 +41,6 @@
     <ClCompile Include="Components\ThrottleMeter.cpp">
       <Filter>Components\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="Components\HUDElement.cpp">
-      <Filter>Components\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="Components\Timer.cpp">
       <Filter>Components\Data</Filter>
     </ClCompile>
@@ -125,9 +122,6 @@
       <Filter>Components\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Components\ThrottleMeter.h">
-      <Filter>Components\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\HUDElement.h">
       <Filter>Components\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Components\Timer.h">

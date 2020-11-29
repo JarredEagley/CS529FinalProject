@@ -26,6 +26,8 @@ public:
 	void Initialize();
 	void Update();
 
+	void handleEvent(Event* pEvent);
+
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:

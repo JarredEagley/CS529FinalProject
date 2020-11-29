@@ -146,7 +146,6 @@ void GraphicsManager::drawGameObject_HUD(GameObject* pGO)
 	}
 
 	// No need for camera.
-	// TO-DO: Will I even need a glm:lookat?
 
 	// Get the vaoID we want to draw.
 	GLuint vaoID = pRect->getVAO(); // Note: it's possible for an object to not have a VAO.
@@ -158,7 +157,8 @@ void GraphicsManager::drawGameObject_HUD(GameObject* pGO)
 	glBindVertexArray(vaoID); // Bind the VAO
 	glActiveTexture(GL_TEXTURE0); // Will be needed if I one day one multiple textures on one rect.
 	glBindTexture(GL_TEXTURE_2D, pRect->getTexId()); // Bind the desired texture.
-	pRect->setUniformData(pProgram);
+	//pRect->setUniformData(pProgram);
+	pGO->setAllUniformData(pProgram);
 
 	unsigned int loc;
 
@@ -219,7 +219,8 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	glBindVertexArray(vaoID); // Bind the VAO
 	glActiveTexture(GL_TEXTURE0); // Will be needed if I one day one multiple textures on one rect.
 	glBindTexture(GL_TEXTURE_2D, pRect->getTexId()); // Bind the desired texture.
-	pRect->setUniformData(pProgram);
+	//pRect->setUniformData(pProgram);
+	pGO->setAllUniformData(pProgram);
 
 	unsigned int loc;
 

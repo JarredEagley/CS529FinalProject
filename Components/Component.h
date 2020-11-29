@@ -23,6 +23,7 @@
 
 class GameObject; 
 class Event;
+class ShaderProgram;
 
 // Abstract class because of Update() = 0...
 class Component
@@ -36,7 +37,7 @@ public:
 	virtual void Update() = 0; // This would be a pure virtual function which would make Component an abstract class. Because it has one or more pure virt functs
 	
 	// Used for components which draw to openGL.
-	virtual void setUniformData() {};
+	virtual void setUniformData(ShaderProgram* pProgram) {};
 
 	unsigned int getType() { return mType; };
 

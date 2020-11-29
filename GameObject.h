@@ -21,6 +21,8 @@
 class Component;
 class Event;
 
+class ShaderProgram;
+
 enum class RenderPassType;
 
 class GameObject
@@ -43,7 +45,7 @@ public:
 	void setRenderPass(RenderPassType renderPassType);
 	RenderPassType getRenderPassType(); // returns render pass enum
 
-	void setAllUniformData(); // Calls setUniformData on all this GO's components.
+	void setAllUniformData(ShaderProgram* pProgram); // Calls setUniformData on all this GO's components.
 
 	void handleEvent(Event *pEvent);
 public:
