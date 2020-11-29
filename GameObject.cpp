@@ -31,7 +31,6 @@
 #include "Components/PhysicsBody.h"
 #include "Components/DirectionIndicator.h"
 #include "Components/ShipData.h"
-#include "Components/HUDElement.h"
 #include "Components/ThrottleMeter.h"
 // #include "Components/FuelMeter.h"
 
@@ -134,9 +133,6 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_SHIPDATA):
 		pNewComponent = new ShipData();
 		break;
-	case (ComponentTypes::TYPE_HUDELEMENT):
-		pNewComponent = new HUDElement();
-		break;
 	case (ComponentTypes::TYPE_MARKER_THROTTLE):
 		pNewComponent = new ThrottleMeter();
 		break;
@@ -176,6 +172,13 @@ void GameObject::setRenderPass(RenderPassType renderPassType)
 RenderPassType GameObject::getRenderPassType()
 {
 	return this->mRenderPassType;
+}
+
+
+void GameObject::setAllUniformData()
+{
+	for (auto pCompPair : mComponents)
+		pCompPair.second->setUniformData(); // Will be empty call for most components.
 }
 
 

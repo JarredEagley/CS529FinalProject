@@ -15,9 +15,21 @@
 - End Header --------------------------------------------------------*/
 
 #pragma once
+#include "Component.h"
 
-
-class FuelMeter
+class FuelMeter : Component
 {
+public:
+	FuelMeter();
+	~FuelMeter();
+
+	void Initialize();
+	void Update();
+
+	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
+
+public:
+private:
+private:
 };
 

@@ -35,6 +35,9 @@ public:
 	virtual void Initialize() = 0;
 	virtual void Update() = 0; // This would be a pure virtual function which would make Component an abstract class. Because it has one or more pure virt functs
 	
+	// Used for components which draw to openGL.
+	virtual void setUniformData() {};
+
 	unsigned int getType() { return mType; };
 
 	//virtual void Serialize(std::ifstream& InputStream) = 0;  

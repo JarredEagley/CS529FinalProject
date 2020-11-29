@@ -43,6 +43,8 @@ public:
 	void setRenderPass(RenderPassType renderPassType);
 	RenderPassType getRenderPassType(); // returns render pass enum
 
+	void setAllUniformData(); // Calls setUniformData on all this GO's components.
+
 	void handleEvent(Event *pEvent);
 public:
 	bool mHasChildren;
