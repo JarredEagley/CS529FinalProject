@@ -18,8 +18,6 @@
 #include "GameObject.h"
 #include <iostream>
 
-//#include "Managers/GlobalManager.h"
-
 #include "Components/Component.h"
 #include "Components/ComponentTypes.h"
 

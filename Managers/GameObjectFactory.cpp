@@ -21,6 +21,7 @@
 #include "GameObjectFactory.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 
 #include "GlobalManager.h"
 #include "../GameObject.h"
@@ -193,6 +194,22 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 	{
 		std::string newShaderName = inputObj["Shader"].GetString();
 		pCurrentGO->mShaderName = newShaderName.c_str();
+	}
+
+	// If this GO Has a render pass aside from final, set its new render pass.
+	if (
+		inputObj.HasMember("Render Pass")
+		&& inputObj["Render Pass"].IsString()
+		)
+	{
+		std::string newRenderPass = inputObj["Render Pass"].GetString();
+		if (strcmp(newRenderPass.c_str(), "HUD") == 0)
+			pCurrentGO->setRenderPass(RenderPassType::HUD);
+	}
+	else
+	{
+		// Default.
+		pCurrentGO->setRenderPass(RenderPassType::FINAL);
 	}
 
 	// Name

@@ -16,7 +16,6 @@
 
 #pragma once
 
-//#include "Managers/GlobalManager.h" 
 #include <unordered_map>
 
 class Component;

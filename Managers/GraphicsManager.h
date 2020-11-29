@@ -23,6 +23,7 @@
 #include "../GameObject.h"
 #include "../ShaderProgram.h"
 #include <unordered_map>
+#include "../FrameBufferObject.h"
 
 enum class RenderPassType
 {
@@ -54,6 +55,7 @@ public:
 	void DrawFinal();
 	void drawAllGameObjects();  // Depricated.
 	void drawGameObject(GameObject *pGO);
+	void drawGameObject_HUD(GameObject* pGO);
 
 	ShaderProgram* loadShader(const char* shaderName); // Loads a shader program. Creates the program if it cannot be found.
 

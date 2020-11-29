@@ -94,8 +94,8 @@ void GraphicsManager::drawAllGameObjects()
 // would be a good idea. This should be fine for my game, though.
 void GraphicsManager::Draw()
 {
-	DrawHUD();
 	DrawFinal();
+	DrawHUD();
 }
 
 void GraphicsManager::DrawHUD()
@@ -106,12 +106,7 @@ void GraphicsManager::DrawHUD()
 	// Loop through the GO's for this pass...
 	for (auto pGO : mRenderPasses[RenderPassType::HUD])
 	{
-		return; // TEMP
-
-
-
-
-
+		drawGameObject_HUD(pGO);
 	}
 }
 
@@ -124,22 +119,79 @@ void GraphicsManager::DrawFinal()
 	}
 }
 
+void GraphicsManager::drawGameObject_HUD(GameObject* pGO)
+{
+	// Get the shader we want to use.
+	ShaderProgram* pProgram = loadShader(pGO->mShaderName);
+	if (pProgram == nullptr)
+	{
+		std::cout << "Warning: GameObject " << pGO->mName << " had an invalid shaderName. Aborting draw." << std::endl;
+		return;
+	}
+
+	// Components we'll need.
+	GLRect* pRect = static_cast<GLRect*>(pGO->GetComponent(ComponentTypes::TYPE_GLRECT)); // From game object being drawn
+	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // From game object being drawn
+
+	// Can't draw something with no graphics component.
+	if (pRect == nullptr)
+		return;
+
+	// No need for camera.
+	// TO-DO: Will I even need a glm:lookat?
+
+	// Get the vaoID we want to draw.
+	GLuint vaoID = pRect->getVAO(); // Note: it's possible for an object to not have a VAO.
+
+	// --- Draw --- //
+
+	// bind
+	pProgram->Use(); // Use current program.
+	glBindVertexArray(vaoID); // Bind the VAO
+	glActiveTexture(GL_TEXTURE0); // Will be needed if I one day one multiple textures on one rect.
+	glBindTexture(GL_TEXTURE_2D, pRect->getTexId()); // Bind the desired texture.
+	pRect->setUniformData(pProgram);
+
+	unsigned int loc;
+
+	// transform
+	loc = glGetUniformLocation(pProgram->ProgramID, "transform");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(pTransform->getTransformationMatrix()));
+	// Cam transforms
+	loc = glGetUniformLocation(pProgram->ProgramID, "viewTrans");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)) );
+	loc = glGetUniformLocation(pProgram->ProgramID, "viewProj");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)) );
+
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // <--- The actual draw call! <---
+
+
+	// unbind
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
+	pProgram->unUse();
+
+}
 
 // Draws the given GameObject pointed to.
 void GraphicsManager::drawGameObject(GameObject* pGO)
 {
 	// Get the shader we want to use.
 	ShaderProgram* pProgram = loadShader(pGO->mShaderName);
+	if (pProgram == nullptr)
+	{
+		std::cout << "Warning: GameObject " << pGO->mName << " had an invalid shaderName. Aborting draw." << std::endl;
+		return;
+	}
 
 	// Components we'll need.
 	GLRect* pRect = static_cast<GLRect*>(pGO->GetComponent(ComponentTypes::TYPE_GLRECT)); // From game object being drawn
 	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // From game object being drawn
 
-
 	// Can't draw something with no graphics component.
 	if (pRect == nullptr)
 		return;
-
 	
 	// Camera needs to exist.
 	Camera* pCamera = nullptr;
@@ -151,13 +203,6 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 
 	// Get the vaoID we want to draw.
 	GLuint vaoID = pRect->getVAO(); // Note: it's possible for an object to not have a VAO.
-
-
-	if (pProgram == nullptr)
-	{
-		std::cout << "Warning: GameObject " << pGO->mName << " had an invalid shaderName. Aborting draw." << std::endl;
-		return;
-	}
 
 	// --- Draw --- //
 

@@ -184,7 +184,7 @@ void gameLoop()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Draw the game object VAO's.
-		GlobalManager::getGraphicsManager()->drawAllGameObjects();
+		GlobalManager::getGraphicsManager()->Draw();
 
 		SDL_GL_SwapWindow(pWindow); // Swaps the buffered frame to view.
 

@@ -53,6 +53,26 @@
             "Name": "SecondShip_Indicator_Forward",
             "Archetype": "ForwardIndicator.json",
             "Parent":"SecondShip"
-        }
+        },
+
+
+        {
+            "Name": "HUD_DEBUG",
+            "Components":
+            {
+                "TYPE_GLRECT":
+                {
+                    "Texture": "Ship2.png",
+                    "Color": [0.0, 1.0, 1.0, 0.5]
+                },
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0.0, 0.0],
+                    "Rotation": 15,
+                    "Scale": [1.0, 0.5]
+                }
+            },
+            "Render Pass": "HUD"
+        }        
     ]
 }

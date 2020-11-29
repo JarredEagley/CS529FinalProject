@@ -9,6 +9,9 @@
 						provided in CS 541. This encpsulates Frame Buffer
 						Objects, allowing for multiple render passes to
 						be done more easily.
+						
+						DEPRICATED
+
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
 	Project:			JarredEagley_FinalProject
