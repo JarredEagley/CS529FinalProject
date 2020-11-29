@@ -40,6 +40,9 @@ public:
 	// No public variables.
 private:
 	GameObjectFactory();
+
+	void helper_objectRenderPass(GameObject* pGO, const char* renderPassType);
+
 private:
 	static GameObjectFactory *instance;
 };

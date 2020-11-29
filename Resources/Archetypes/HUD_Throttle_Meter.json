@@ -1,0 +1,13 @@
+{
+    "Type": "GameObject",
+    "Components":
+    {
+        "TYPE_TRANSFORM": {},
+        "TYPE_GLRECT":
+        {
+            "Texture": "HUDThrottleBase.png",
+            "Color": [1.0, 1.0, 1.0, 0.3]
+        }
+    },
+    "Render Pass" : "HUD"
+}

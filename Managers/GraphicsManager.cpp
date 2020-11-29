@@ -137,6 +137,12 @@ void GraphicsManager::drawGameObject_HUD(GameObject* pGO)
 	if (pRect == nullptr)
 		return;
 
+	if (pTransform == nullptr)
+	{
+		std::cout << "Warning: Aborting draw for " << pGO->mName << " because it did not have a transform component." << std::endl;
+		return;
+	}
+
 	// No need for camera.
 	// TO-DO: Will I even need a glm:lookat?
 

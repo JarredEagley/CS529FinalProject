@@ -66,10 +66,10 @@ private:
 	void buildTransformationMatrix();
 	void buildTransformationMatrix(Transform* pParentTransform);
 private:
-	glm::vec4 mPosition = glm::vec4(0.0f,0.0f,0.0f,1.0f);
-	float mRotation = 0.0f; // I'm not going to bother supporting 3D rotation.
-	glm::vec3 mScale = glm::vec3(1.0f,1.0f,1.0f);
-	glm::mat4 mTransMatrix = glm::mat4(1.0f);
+	glm::vec4 mPosition;
+	float mRotation; // I'm not going to bother supporting 3D rotation.
+	glm::vec3 mScale;
+	glm::mat4 mTransMatrix;
 	
 	bool mInheritRotation; // Do I inherit my angle from parent?
 	

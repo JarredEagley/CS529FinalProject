@@ -39,6 +39,15 @@ void GameObjectFactory::destroySingleton()
 
 GameObjectFactory::GameObjectFactory() { }
 
+void GameObjectFactory::helper_objectRenderPass(GameObject* pGO, const char* renderPassType)
+{
+	// If this GO Has a render pass aside from final, set its new render pass.
+	if (strcmp(renderPassType, "HUD") == 0)
+		pGO->setRenderPass(RenderPassType::HUD);
+	else
+		pGO->setRenderPass(RenderPassType::FINAL);
+}
+
 GameObject* GameObjectFactory::loadArchetype(const char* pFileName) 
 {
 	GameObject* pNewGO;
@@ -99,6 +108,15 @@ GameObject* GameObjectFactory::loadArchetype(const char* pFileName)
 		if (nullptr != pNewComponent)
 			pNewComponent->Serialize(itr);
 	}
+
+	// Set render pass via archetype if its specified.
+	if (
+		doc.GetObject().HasMember("Render Pass")
+		&& doc["Render Pass"].IsString()
+		)
+		helper_objectRenderPass(pNewGO, doc["Render Pass"].GetString());
+	else
+		pNewGO->setRenderPass(RenderPassType::FINAL);
 
 	return pNewGO;
 }
@@ -201,16 +219,9 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 		inputObj.HasMember("Render Pass")
 		&& inputObj["Render Pass"].IsString()
 		)
-	{
-		std::string newRenderPass = inputObj["Render Pass"].GetString();
-		if (strcmp(newRenderPass.c_str(), "HUD") == 0)
-			pCurrentGO->setRenderPass(RenderPassType::HUD);
-	}
+		helper_objectRenderPass(pCurrentGO, inputObj["Render Pass"].GetString());
 	else
-	{
-		// Default.
 		pCurrentGO->setRenderPass(RenderPassType::FINAL);
-	}
 
 	// Name
 	pCurrentGO->mName = currentGOName;

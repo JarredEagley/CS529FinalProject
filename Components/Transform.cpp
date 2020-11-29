@@ -22,11 +22,9 @@
 #include "../Managers/GlobalManager.h"
 //#include "../GameObject.h"
 
-Transform::Transform() : Component(ComponentTypes::TYPE_TRANSFORM), mInheritRotation(false) // Call the constructor of the base class with the correct type.
+Transform::Transform() : Component(ComponentTypes::TYPE_TRANSFORM), mInheritRotation(false), // Call the constructor of the base class with the correct type.
+mPosition(glm::vec4(0.0f)), mRotation(0.0f), mScale(glm::vec3(1.0f)), mTransMatrix(glm::mat4(1.0f))
 {
-	mPosition = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-	mRotation = 0;
-	mScale = glm::vec3(1, 1, 1);
 	initTransformationMatrix();
 }
 
@@ -143,9 +141,6 @@ void Transform::setScale(glm::vec2 scale)
 {
 	mScale = glm::vec3(scale, 1.0f);
 }
-
-
-
 
 /*
 void Transform::setParent(GameObject* pGO)

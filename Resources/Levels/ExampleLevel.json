@@ -73,6 +73,10 @@
                 }
             },
             "Render Pass": "HUD"
-        }        
+        },
+        {
+            "Name": "HUD_Throttle_Meter",
+            "Archetype": "HUD_Throttle_Meter.json"
+        }
     ]
 }
