@@ -226,6 +226,9 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 	// Name
 	pCurrentGO->mName = currentGOName;
 
+	// Initialize.
+	pCurrentGO->initializeComponents();
+
 	// Push onto the GOM.
 	GlobalManager::getGameObjectManager()->mGameObjects[currentGOName] = pCurrentGO;
 }
