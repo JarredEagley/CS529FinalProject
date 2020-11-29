@@ -109,6 +109,17 @@ GameObject* GameObjectFactory::loadArchetype(const char* pFileName)
 			pNewComponent->Serialize(itr);
 	}
 
+
+	// Set shader via archetype if specified.
+	if (
+		doc.HasMember("Shader")
+		&& doc["Shader"].IsString()
+		)
+	{
+		std::string newShaderName = doc["Shader"].GetString();
+		pNewGO->mShaderName = newShaderName.c_str();
+	}
+
 	// Set render pass via archetype if its specified.
 	if (
 		doc.GetObject().HasMember("Render Pass")

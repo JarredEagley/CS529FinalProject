@@ -26,12 +26,17 @@ public:
 	void Initialize();
 	void Update();
 
+	void setUniformData(ShaderProgram* pProgram);
+
 	void handleEvent(Event* pEvent);
 
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
+	// No public variables.
 private:
+	// No private methods.
 private:
+	float mFuel;
 };
 
