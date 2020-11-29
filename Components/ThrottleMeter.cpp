@@ -2,7 +2,7 @@
 #include "ShipData.h"
 #include "../Managers/GlobalManager.h"
 
-ThrottleMeter::ThrottleMeter() : Component(ComponentTypes::TYPE_METER_THROTTLE)
+ThrottleMeter::ThrottleMeter() : Component(ComponentTypes::TYPE_MARKER_THROTTLE)
 {
 }
 
@@ -28,7 +28,7 @@ void ThrottleMeter::handleEvent(Event* pEvent)
 		// Note: Player ship must always be named 'PLAYER'
 		if (pShipDataEvent->mpShipData->mpOwner->mName == "PLAYER")
 		{
-			std::cout << "DEBUG - Getting ship data updates from player success.";
+			//std::cout << "DEBUG - Getting ship data updates from player success.";
 		}
 	}
 }

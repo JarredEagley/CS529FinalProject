@@ -39,8 +39,8 @@ public:
 		if (strcmp(str, "TYPE_DIRINDICATOR") == 0)		return TYPE_DIRINDICATOR;
 		if (strcmp(str, "TYPE_SHIPDATA") == 0)			return TYPE_SHIPDATA;
 		if (strcmp(str, "TYPE_HUDELEMENT") == 0)		return TYPE_HUDELEMENT;
-		if (strcmp(str, "TYPE_METER_FUEL") == 0)		return TYPE_METER_FUEL;
-		if (strcmp(str, "TYPE_METER_THROTTLE") == 0)	return TYPE_METER_THROTTLE;
+		if (strcmp(str, "TYPE_MARKER_FUEL") == 0)		return TYPE_MARKER_FUEL;
+		if (strcmp(str, "TYPE_MARKER_THROTTLE") == 0)	return TYPE_MARKER_THROTTLE;
 		
 		return TYPE_UNDEFINED;
 	}
@@ -61,8 +61,8 @@ public:
 		TYPE_DIRINDICATOR,
 		TYPE_SHIPDATA,
 		TYPE_HUDELEMENT,
-		TYPE_METER_FUEL,
-		TYPE_METER_THROTTLE
+		TYPE_MARKER_FUEL,
+		TYPE_MARKER_THROTTLE
 	};
 private:
 	// No private methods.

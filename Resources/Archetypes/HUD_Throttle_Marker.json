@@ -10,7 +10,8 @@
         {
             "Texture": "HUDThrottleMarker.png",
             "Color": [1.0, 1.0, 1.0, 1.0]
-        }
+        },
+        "TYPE_MARKER_THROTTLE": {}
     },
     "Render Pass" : "HUD"
 }

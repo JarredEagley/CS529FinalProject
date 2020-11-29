@@ -135,7 +135,7 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_HUDELEMENT):
 		pNewComponent = new HUDElement();
 		break;
-	case (ComponentTypes::TYPE_METER_THROTTLE):
+	case (ComponentTypes::TYPE_MARKER_THROTTLE):
 		pNewComponent = new ThrottleMeter();
 		break;
 	
