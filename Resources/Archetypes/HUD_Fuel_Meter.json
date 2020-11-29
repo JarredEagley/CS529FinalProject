@@ -9,9 +9,12 @@
         "TYPE_GLRECT":
         {
             "Texture": "HUDFuelMeter.png",
-            "Color": [1.0, 1.0, 1.0, 0.6]
+            "Color": [0.9, 0.7, 0.1, 0.6]
         },
-        "TYPE_METER_FUEL": {}
+        "TYPE_METER_FUEL": 
+        {
+            "Secondary Color": [0.9, 0.3, 0.1, 0.6]
+        }
     },
     "Render Pass" : "HUD",
     "Shader": "meter"

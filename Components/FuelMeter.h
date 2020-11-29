@@ -16,6 +16,9 @@
 
 #pragma once
 #include "Component.h"
+#include "glm/glm.hpp"
+
+class GLRect;
 
 class FuelMeter : public Component
 {
@@ -37,6 +40,7 @@ public:
 private:
 	// No private methods.
 private:
+	glm::vec4 mSecondaryColor; // Color it fades toward as it depletes.
 	float mFuel;
 };
 
