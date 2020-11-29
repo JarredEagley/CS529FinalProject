@@ -31,6 +31,8 @@ DirectionIndicator::~DirectionIndicator()
 }
 
 
+void DirectionIndicator::Initialize() {}
+
 void DirectionIndicator::Update() 
 {
 	// Need graphics manager for the zoom level.

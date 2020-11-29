@@ -34,6 +34,7 @@ public:
 	BackgroundGrid();
 	~BackgroundGrid();
 
+	void Initialize();
 	void Update();
 
 	void transformEventUpdate(Event* pEvent);

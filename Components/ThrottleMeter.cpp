@@ -1,5 +1,7 @@
 #include "ThrottleMeter.h"
+
 #include "ShipData.h"
+#include "Transform.h"
 #include "../Managers/GlobalManager.h"
 
 ThrottleMeter::ThrottleMeter() : Component(ComponentTypes::TYPE_MARKER_THROTTLE)
@@ -13,6 +15,8 @@ ThrottleMeter::~ThrottleMeter()
 }
 
 
+void ThrottleMeter::Initialize() {}
+
 void ThrottleMeter::Update()
 {
 
@@ -21,6 +25,12 @@ void ThrottleMeter::Update()
 
 void ThrottleMeter::handleEvent(Event* pEvent)
 {
+	// Get transform if we don't have it.
+	if (mpTransform == nullptr)
+	{
+		mpTransform = static_cast<Transform*>(this->mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+	}
+
 	// Listen for shipdata updates.
 	if (pEvent->mType == EventType::SHIPDATA_UPDATED)
 	{
@@ -31,6 +41,7 @@ void ThrottleMeter::handleEvent(Event* pEvent)
 		if (pShipDataEvent->mpShipData->mpOwner->mName == "PLAYER")
 		{
 			//std::cout << "DEBUG - Getting ship data updates from player success.";
+			this->mpTransform->setY(pShipDataEvent->mpShipData->mThrottle);
 		}
 	}
 }

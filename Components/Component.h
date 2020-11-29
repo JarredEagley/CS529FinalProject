@@ -32,6 +32,7 @@ public:
 	virtual ~Component() {}; 
 
 	//virtual void Update() {}; // This would allow empty update functions
+	virtual void Initialize() = 0;
 	virtual void Update() = 0; // This would be a pure virtual function which would make Component an abstract class. Because it has one or more pure virt functs
 	
 	unsigned int getType() { return mType; };

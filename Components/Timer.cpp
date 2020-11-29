@@ -27,6 +27,8 @@ Timer::~Timer()
 }
 
 
+void Timer::Initialize() {}
+
 void Timer::Update()
 {
 	// Get frametime.

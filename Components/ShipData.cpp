@@ -18,6 +18,9 @@ ShipData::~ShipData()
 {
 }
 
+
+void ShipData::Initialize() {}
+
 void ShipData::Update()
 {
 	// Try to get physics component.

@@ -29,6 +29,8 @@ BackgroundGrid::~BackgroundGrid()
 }
 
 
+void BackgroundGrid::Initialize() {}
+
 void BackgroundGrid::Update()
 {
 	// Background grid will be updated by events rather than by its game object.

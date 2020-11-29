@@ -37,6 +37,8 @@ ControllerSlider::ControllerSlider(float speed) : Component(ComponentTypes::TYPE
 
 ControllerSlider::~ControllerSlider() {}
 
+void ControllerSlider::Initialize() {}
+
 void ControllerSlider::Update()
 {
 	//Transform* pT = (Transform*)(mpOwner->GetComponent(TYPE_TRANSFORM));

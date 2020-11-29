@@ -30,6 +30,7 @@ public:
 	DirectionIndicator();
 	~DirectionIndicator();
 
+	void Initialize();
 	void Update();
 
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);

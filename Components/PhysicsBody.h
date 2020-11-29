@@ -12,7 +12,9 @@ public:
 	PhysicsBody();
 	~PhysicsBody();
 
+	void Initialize();
 	void Update();
+
 	void Integrate(float deltaTime);
 
 	void calculateGravityForces(); // Applies all the gravitational force vectors.

@@ -14,6 +14,7 @@ public:
 	GLRect();
 	~GLRect();
 
+	void Initialize();
 	void Update();
 
 	void setColor(glm::vec4); // Sets the color of the whole square. Will implement gradiant coloring if necessary.

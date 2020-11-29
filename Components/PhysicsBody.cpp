@@ -26,6 +26,8 @@ PhysicsBody::~PhysicsBody()
 }
 
 
+void PhysicsBody::Initialize() {}
+
 void PhysicsBody::Update()
 {
 }

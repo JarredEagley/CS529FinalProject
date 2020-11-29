@@ -54,6 +54,12 @@ GameObject::~GameObject()
 	GlobalManager::getGraphicsManager()->removeFromAnyRenderPasses(this);
 }
 
+void GameObject::initializeComponents()
+{
+	for (auto pComponentPair : mComponents)
+		pComponentPair.second->Initialize();
+}
+
 void GameObject::Update()
 {
 	// Update components.

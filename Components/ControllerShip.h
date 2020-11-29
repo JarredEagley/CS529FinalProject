@@ -10,9 +10,10 @@ public:
 	ControllerShip();
 	//ControllerShip(float speed);
 	~ControllerShip();
-
+	
+	void Initialize();
 	void Update();
-	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
+	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 public:
 	float mAngularDamping; // How agressively ship tries to stop rotating with no input.
 

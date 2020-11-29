@@ -30,6 +30,7 @@ public:
 	Transform();
 	~Transform();
 
+	void Initialize();
 	void Update();
 
 	void setPosition(glm::vec2); // Ignores Z.

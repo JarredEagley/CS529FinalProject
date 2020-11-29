@@ -21,12 +21,15 @@
 #include "Component.h"
 #include "ComponentTypes.h"
 
+class Transform;
+
 class ThrottleMeter : public Component
 {
 public:
 	ThrottleMeter();
 	~ThrottleMeter();
 
+	void Initialize();
 	void Update();
 
 	void handleEvent(Event* pEvent);
@@ -37,6 +40,6 @@ public:
 private:
 	// No private methods.
 private:
-	// No private variables.
+	Transform* mpTransform;
 };
 

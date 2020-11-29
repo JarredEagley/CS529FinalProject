@@ -9,6 +9,7 @@ public:
 	ShipData();
 	~ShipData();
 
+	void Initialize();
 	void Update();
 
 	void throttleUp();

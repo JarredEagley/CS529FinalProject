@@ -31,6 +31,9 @@ mPosition(glm::vec4(0.0f)), mRotation(0.0f), mScale(glm::vec3(1.0f)), mTransMatr
 Transform::~Transform()
 {}
 
+
+void Transform::Initialize() {}
+
 void Transform::Update()
 {
 	buildTransformationMatrix();

@@ -24,6 +24,7 @@ public:
 	HUDElement();
 	~HUDElement();
 
+	void Initialize();
 	void Update();
 
 	void handleEvent(Event* pEvent);

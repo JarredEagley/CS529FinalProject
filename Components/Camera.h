@@ -12,6 +12,7 @@ public:
 	Camera();
 	~Camera();
 
+	void Initialize();
 	void Update();
 
 	glm::mat4 getProjMatrix() { return cameraProjection; }; // Gets the perspective transformation matrix. Currently ortho.

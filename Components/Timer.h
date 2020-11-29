@@ -38,6 +38,7 @@ public:
 	Timer();
 	~Timer();
 
+	void Initialize();
 	void Update();
 
 	void handleEvent(Event* pEvent);

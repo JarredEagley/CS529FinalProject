@@ -11,6 +11,8 @@ HUDElement::~HUDElement()
 }
 
 
+void HUDElement::Initialize() {}
+
 void HUDElement::Update()
 {
 

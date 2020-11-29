@@ -12,6 +12,8 @@ ControllerShip::~ControllerShip()
 
 }
 
+void ControllerShip::Initialize() {}
+
 void ControllerShip::Update()
 {
 	// Necessary components to talk to.

@@ -30,6 +30,7 @@ public:
 	~GameObject();
 
 	void Update();
+	void initializeComponents();
 
 	void setParent(GameObject* pParentGO);
 	GameObject* getParent();

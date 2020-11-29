@@ -28,7 +28,9 @@ public:
 	ControllerSlider(float speed);
 	~ControllerSlider();
 	
+	void Initialize();
 	void Update();
+
 	void setSpeed(float speed);
 	void handleEvent(Event* pEvent);
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);

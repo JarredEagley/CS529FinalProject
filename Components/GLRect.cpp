@@ -19,6 +19,7 @@ GLRect::~GLRect()
 	glDeleteVertexArrays(1, &vaoID);
 }
 
+void GLRect::Initialize() {}
 
 void GLRect::Update()
 {

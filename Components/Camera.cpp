@@ -14,6 +14,9 @@ Camera::~Camera()
 {
 }
 
+
+void Camera::Initialize() {}
+
 void Camera::Update()
 {
 	//pTransform->setZ(zoom);
