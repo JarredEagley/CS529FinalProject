@@ -41,5 +41,6 @@ private:
 	// No private methods.
 private:
 	Transform* mpTransform;
+	Transform* mpParentTransform;
 };
 

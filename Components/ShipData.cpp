@@ -31,6 +31,9 @@ void ShipData::Update()
 		return;
 	}
 
+	// Main thrust indirectly controlled via throttle. Update it here.
+	applyThrustMain();
+
 	// Broadcast ship data to those listening for it. IE fuel meter, health bar.
 	ShipDataUpdatedEvent* pShipDataEvent = new ShipDataUpdatedEvent(this);
 	GlobalManager::getEventManager()->broadcastEventToSubscribers(pShipDataEvent);
@@ -77,7 +80,7 @@ void ShipData::applyThrustMain()
 	if (mpPhysicsBody == nullptr)
 		return;
 
-	//mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mMainAcceleration * (mThrottle / 100.0f));
+	mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mMainAcceleration * (mThrottle / 100.0f));
 	
 	useFuel();
 }
@@ -90,8 +93,6 @@ void ShipData::applyThrustSecondary(glm::vec2 input)
 	if (input == glm::vec2(0.0f))
 		return;
 
-	// mForwardDir = glm::vec2(sin(glm::radians(-mAngle)), cos(glm::radians(mAngle)));
-	// mRightDir = glm::vec2(cos(glm::radians(mAngle)), sin(glm::radians(mAngle)));
 	float a = mpPhysicsBody->mAngle;
 	glm::vec2 thrustResult = glm::vec2(
 		cos(glm::radians(a))*input.x - sin(glm::radians(a))*input.y,
