@@ -16,11 +16,13 @@
 
 #pragma once
 
-#include "Managers/GlobalManager.h" 
+//#include "Managers/GlobalManager.h" 
 #include <unordered_map>
 
 class Component;
 class Event;
+
+enum class RenderPassType;
 
 class GameObject
 {
@@ -38,8 +40,8 @@ public:
 
 	// One object may only be in one render pass.
 	// May not be ideal but for my applications its fine.
-	void setRenderPass(GraphicsManager::RenderPassType renderpass);
-	GraphicsManager::RenderPassType getRenderPass();
+	void setRenderPass(RenderPassType renderPassType);
+	RenderPassType getRenderPassType(); // returns render pass enum
 
 	void handleEvent(Event *pEvent);
 public:
@@ -50,6 +52,6 @@ public:
 private:
 	GameObject* mpParentGO;
 private:
-	GraphicsManager::RenderPassType mRenderPass;
+	RenderPassType mRenderPassType; // render pass type enum
 };
 

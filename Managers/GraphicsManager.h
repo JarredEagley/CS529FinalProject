@@ -24,6 +24,15 @@
 #include "../ShaderProgram.h"
 #include <unordered_map>
 
+enum class RenderPassType
+{
+	NONE,
+	HUD,
+	FINAL,
+
+	NUM
+};
+
 // Handles shaders, drawing.
 class GraphicsManager
 {
@@ -36,19 +45,14 @@ public:
 	};
 	void destroySingleton();
 
-	enum RenderPassType
-	{
-		NONE,
-		HUD,
-		FINAL,
-
-		NUM
-	};
-
 	void removeFromAnyRenderPasses(GameObject* pGO);
-	void addToRenderPass(GameObject* pGO, RenderPassType pass);
+	void addToRenderPass(GameObject* pGO, RenderPassType renderPassType);
 
-	void drawAllGameObjects();
+	// Performs all draw passes.
+	void Draw();
+	void DrawHUD();
+	void DrawFinal();
+	void drawAllGameObjects();  // Depricated.
 	void drawGameObject(GameObject *pGO);
 
 	ShaderProgram* loadShader(const char* shaderName); // Loads a shader program. Creates the program if it cannot be found.
@@ -59,14 +63,14 @@ public:
 	// Was originally just in camera, but I'll be needing this in more components.
 	float getZoomLevel() { return mZoomLevel; };
 	void setMaxZoomLevel(float zoomLevel);
-	float getMaxZoomLevel() { return mMaxZoomLevel; };
+	float getMaxZoomLevel();
 	void setMinZoomLevel(float zoomLevel);
-	float getMinZoomLevel() { return mMinZoomLevel; };
+	float getMinZoomLevel();
 	void setZoomLevel(float zoom);
 	void incrementZoomLevel(float delta);
 
 public:
-	static std::unordered_map<const char*, ShaderProgram*> mShaderPrograms; // shaderName, ShaderProgram*
+	static std::unordered_map<std::string, ShaderProgram*> mShaderPrograms; // shaderName, ShaderProgram*
 	int mWindowWidth, mWindowHeight;
 
 	// Different objects for different render passes.
@@ -75,12 +79,14 @@ public:
 
 private:
 	GraphicsManager();
-	static float mZoomLevel;
-	static float mMinZoomLevel;
-	static float mMaxZoomLevel;
 
 private:
 	static GraphicsManager *instance;
+	
 	GameObject* pCurrentCameraGO = nullptr;
+
+	static float mZoomLevel;
+	static float mMinZoomLevel;
+	static float mMaxZoomLevel;
 };
 

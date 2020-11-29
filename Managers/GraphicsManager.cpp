@@ -17,7 +17,6 @@
 #include "GraphicsManager.h"
 
 #include "stb_image.h"
-#include "GlobalManager.h"
 #include "../Components/ComponentTypes.h"
 #include "../Components/GLRect.h" // May rename to 'GLGraphic' or something in the future... Not sure.
 #include "../Components/Transform.h"
@@ -27,11 +26,11 @@
 
 // Static initializations.
 GraphicsManager* GraphicsManager::instance = nullptr;
-std::unordered_map<const char*, ShaderProgram*> GraphicsManager::mShaderPrograms;
+std::unordered_map<std::string, ShaderProgram*> GraphicsManager::mShaderPrograms;
 float GraphicsManager::mMinZoomLevel = 0.1f;
 float GraphicsManager::mMaxZoomLevel = 100000.0f;
 float GraphicsManager::mZoomLevel = mZoomLevel;
-std::unordered_map<GraphicsManager::RenderPassType, std::list<GameObject*>> GraphicsManager::mRenderPasses;
+std::unordered_map<RenderPassType, std::list<GameObject*>> GraphicsManager::mRenderPasses;
 
 void GraphicsManager::destroySingleton()
 {
@@ -50,36 +49,35 @@ void GraphicsManager::destroySingleton()
 	delete instance;
 }
 
-GraphicsManager::GraphicsManager() 
+// --- End of singleton stuff --- //
+
+GraphicsManager::GraphicsManager() : pCurrentCameraGO(nullptr), mWindowHeight(0), mWindowWidth(0)
 {
-	pCurrentCameraGO = nullptr;
-	mWindowHeight = 0;
-	mWindowWidth = 0;
 }
 
 void GraphicsManager::removeFromAnyRenderPasses(GameObject* pGO)
 {
-	mRenderPasses[pGO->getRenderPass()].remove(pGO);
+	mRenderPasses[ pGO->getRenderPassType() ].remove(pGO);
 }
 
-void GraphicsManager::addToRenderPass(GameObject* pGO, RenderPassType pass)
+void GraphicsManager::addToRenderPass(GameObject* pGO, RenderPassType renderPassType)
 {
 	// Check for invalid pass name.
-	if (pass > RenderPassType::NUM)
+	if (renderPassType > RenderPassType::NUM)
 	{
 		std::cout << "Warning: GameObject" << pGO->mName << " was passed an invalid render pass type." << std::endl;
 		return;
 	}
 
 	// No need to set the same renderpass.
-	if (pGO->getRenderPass() == pass)
+	if (pGO->getRenderPassType() == renderPassType)
 		return;
 
 	// Remove from current pass.
-	mRenderPasses[pGO->getRenderPass()].remove(pGO);
+	mRenderPasses[ pGO->getRenderPassType() ].remove(pGO);
 
 	// Add to new pass.
-	mRenderPasses[pass].push_back(pGO);
+	mRenderPasses[renderPassType].push_back(pGO);
 }
 
 // Draws every GameObject stored in the GameObjectManger.
@@ -91,6 +89,41 @@ void GraphicsManager::drawAllGameObjects()
 		drawGameObject(pGOPair.second);
 	}
 }
+
+// If I had to do many many draw passes refactoring this code into something more generic
+// would be a good idea. This should be fine for my game, though.
+void GraphicsManager::Draw()
+{
+	DrawHUD();
+	DrawFinal();
+}
+
+void GraphicsManager::DrawHUD()
+{
+	// This will simply use a glm::lookat. No camera trickery needed. FBO Will be fed
+	// into the final pass and drawn on top of the final pass using a sampler.
+
+	// Loop through the GO's for this pass...
+	for (auto pGO : mRenderPasses[RenderPassType::HUD])
+	{
+		return; // TEMP
+
+
+
+
+
+	}
+}
+
+void GraphicsManager::DrawFinal()
+{
+	// Loop through the GO's for this pass...
+	for (auto pGO : mRenderPasses[RenderPassType::FINAL])
+	{
+		drawGameObject(pGO);
+	}
+}
+
 
 // Draws the given GameObject pointed to.
 void GraphicsManager::drawGameObject(GameObject* pGO)
@@ -196,10 +229,20 @@ void GraphicsManager::setMaxZoomLevel(float zoomLevel)
 	mZoomLevel = std::min(mMaxZoomLevel, mZoomLevel); // Clamp
 }
 
+float GraphicsManager::getMaxZoomLevel()
+{
+	return mMaxZoomLevel;
+}
+
 void GraphicsManager::setMinZoomLevel(float zoomLevel)
 {
 	mMinZoomLevel = zoomLevel;
 	mZoomLevel = std::max(mMinZoomLevel, mZoomLevel); // Clamp
+}
+
+float GraphicsManager::getMinZoomLevel()
+{
+	return mMinZoomLevel;
 }
 
 void GraphicsManager::setZoomLevel(float zoom)

@@ -42,7 +42,7 @@ public:
 		}
 		return instance;
 	};
-	static void destroySingleton(); // This will destroy all child singeltons. // TO-DO: This needs to be static I think.
+	static void destroySingleton(); // This will destroy all child singeltons. 
 
 public:
 	static void initSingletons();

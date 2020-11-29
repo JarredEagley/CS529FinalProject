@@ -18,7 +18,7 @@
 #include "GameObject.h"
 #include <iostream>
 
-#include "Managers/GlobalManager.h"
+//#include "Managers/GlobalManager.h"
 
 #include "Components/Component.h"
 #include "Components/ComponentTypes.h"
@@ -38,8 +38,9 @@
 #include "Components/ThrottleMeter.h"
 // #include "Components/FuelMeter.h"
 
+
 GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false),
-mRenderPass(GraphicsManager::RenderPassType::NONE)
+mRenderPassType(RenderPassType::NONE)
 {
 	std::unordered_map<unsigned int, Component*> mComponents;
 }
@@ -167,14 +168,14 @@ Component* GameObject::GetComponent(unsigned int Type)
 }
 
 
-void GameObject::setRenderPass(GraphicsManager::RenderPassType renderpass)
+void GameObject::setRenderPass(RenderPassType renderPassType)
 {
-	GlobalManager::getGraphicsManager()->addToRenderPass(this, renderpass);
+	GlobalManager::getGraphicsManager()->addToRenderPass(this, renderPassType);
 }
 
-GraphicsManager::RenderPassType GameObject::getRenderPass()
+RenderPassType GameObject::getRenderPassType()
 {
-	return this->mRenderPass;
+	return this->mRenderPassType;
 }
 
 
