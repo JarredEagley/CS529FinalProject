@@ -10,7 +10,8 @@
         {
             "Texture": "HUDFuelMeter.png",
             "Color": [1.0, 1.0, 1.0, 0.6]
-        }
+        },
+        "TYPE_METER_FUEL": {}
     },
     "Render Pass" : "HUD",
     "Shader": "meter"

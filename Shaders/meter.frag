@@ -5,13 +5,17 @@ in vec2 vertTexCoord;
 
 out vec4 FragColor;
 
-uniform sampler2D ourTexture;
 uniform float fillLevel;
+uniform sampler2D ourTexture;
 
 void main()
 {
 	// Render to fragColor based on texture.
 	FragColor = texture(ourTexture, vertTexCoord) * vertColor;
+	if (vertTexCoord.y > (fillLevel/100.0))
+	{
+		FragColor.a /= 2;
+	}
 }
 
 

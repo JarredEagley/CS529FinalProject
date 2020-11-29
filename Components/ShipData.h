@@ -46,6 +46,7 @@ public:
 	float mAngularAcceleration;		// RCS
 
 	float mThrottle; // Throttle
+	float mThrottleDeadzone; // Set this to zero for the throttle to be instantaneous.
 	float mThrottleSensitivity;
 
 	float mAngularDamping; // How agressively ship will try to stop spinning without input.

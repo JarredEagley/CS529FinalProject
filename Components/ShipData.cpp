@@ -7,7 +7,7 @@ mHealth(100.0f), mMaxHealth(100.0f), mPower(100.0f), mMaxPower(100.0f), mPowerPr
 mFuel(0.0f), mMaxFuel(0.0f), mCoilBullets(0), mMissiles(0),
 mMainAcceleration(0.0f), mSecondaryAcceleration(0.0f), mAngularAcceleration(0.0f),
 mFuelEfficiency(0.0f),
-mThrottle(0.0f), mThrottleSensitivity(1.0f),
+mThrottle(0.0f), mThrottleDeadzone(0.1f), mThrottleSensitivity(1.0f),
 mThrustInput(glm::vec3(0.0f)), mRotationInput(0.0f),
 mAngularDamping(5.0f),
 mpPhysicsBody(nullptr)
@@ -61,7 +61,7 @@ void ShipData::setThrottle(float throttle)
 // Should be called once per update while accelerating with the main drive.
 void ShipData::useFuel()
 {
-	mFuel -= GlobalManager::getFrameRateController()->getFrameTimeSec() / mFuelEfficiency;
+	mFuel -= (GlobalManager::getFrameRateController()->getFrameTimeSec() * (mThrottle/100.0f) ) / mFuelEfficiency;
 }
 
 void ShipData::usePower( float pwr )
@@ -80,7 +80,14 @@ void ShipData::applyThrustMain()
 	if (mpPhysicsBody == nullptr)
 		return;
 
-	mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mMainAcceleration * (mThrottle / 100.0f));
+	if (mThrottle < mThrottleDeadzone)
+		return;
+
+	if (mFuel > 0.0f)
+	{
+		mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mMainAcceleration * (mThrottle / 100.0f));
+	}
+
 	
 	useFuel();
 }
@@ -239,5 +246,12 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mThrottleSensitivity = inputObj["Throttle Sensitivity"].GetFloat();
 	}
 		std::cout << "Warning: ShipData 'Throttle Sensitivity' parameter was missing or improperly formatted. Default used." << std::endl;
+			
+
+	if (inputObj.HasMember("Throttle Deadzone") && inputObj["Throttle Sensitivity"].IsNumber())
+	{
+		this->mThrottleSensitivity = inputObj["Throttle Deadzone"].GetFloat();
+	}
+		std::cout << "Warning: ShipData 'Throttle Deadzone' parameter was missing or improperly formatted. Default used." << std::endl;
 
 }

@@ -17,10 +17,11 @@ void FuelMeter::Initialize()
 	GlobalManager::getEventManager()->Subscribe(EventType::SHIPDATA_UPDATED, mpOwner);
 }
 
-void FuelMeter::Update() {}
+void FuelMeter::Update() { }
 
 void FuelMeter::setUniformData(ShaderProgram* pProgram)
 {
+	std::cout << "sending fuel data: " << mFuel << std::endl;
 	unsigned int loc;
 	loc = glGetUniformLocation(pProgram->ProgramID, "fillLevel");
 	glUniform1f(loc, mFuel);

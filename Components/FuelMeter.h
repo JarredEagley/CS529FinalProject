@@ -17,7 +17,7 @@
 #pragma once
 #include "Component.h"
 
-class FuelMeter : Component
+class FuelMeter : public Component
 {
 public:
 	FuelMeter();
