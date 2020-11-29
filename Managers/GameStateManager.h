@@ -29,6 +29,8 @@ public:
 	};
 	void destroySingleton();
 
+	void readGameConfig();
+
 public:
 	enum sceneType
 	{

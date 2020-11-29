@@ -46,10 +46,11 @@ public:
 	void loadLevel(const char* pFileName);
 
 public:
-	const std::string pathResources = ".\\Resources\\"; // The base-folder for storing resources like configs and textures.
+	const std::string pathResources  = ".\\Resources\\"; // The base-folder for storing resources like configs and textures.
 	const std::string pathTextures	 = pathResources + "Textures\\";
 	const std::string pathLevels	 = pathResources + "Levels\\";
 	const std::string pathArchetypes = pathResources + "Archetypes\\";
+	const std::string pathConfig     = pathResources + "Config.json";
 	std::string currentLevel;
 
 private:

@@ -113,7 +113,7 @@ GLuint ResourceManager::loadTexture(const char* texName, TexType _texType)
 void ResourceManager::loadLevel(const char* pFileName)
 {
 	// Use serializer to read the json in.
-	std::ifstream inputStream(pFileName);
+	//std::ifstream inputStream(pFileName);
 	Serializer* pSer = GlobalManager::getSerializer();
 	std::string filePath = pathLevels + pFileName;
 	rapidjson::Document doc = pSer->loadJson(filePath.c_str());
