@@ -23,9 +23,6 @@
     <ClCompile Include="Components\DirectionIndicator.cpp">
       <Filter>Components\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="Components\UpDown.cpp">
-      <Filter>Components\AI</Filter>
-    </ClCompile>
     <ClCompile Include="Components\PhysicsBody.cpp">
       <Filter>Components\Data</Filter>
     </ClCompile>
@@ -111,9 +108,6 @@
     </ClInclude>
     <ClInclude Include="Components\DirectionIndicator.h">
       <Filter>Components\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\UpDown.h">
-      <Filter>Components\AI</Filter>
     </ClInclude>
     <ClInclude Include="Components\PhysicsBody.h">
       <Filter>Components\Data</Filter>

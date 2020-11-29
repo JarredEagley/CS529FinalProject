@@ -3,7 +3,7 @@
 #include "../Managers/GlobalManager.h"
 
 ControllerShip::ControllerShip() : Component(ComponentTypes::TYPE_CONTROLLERSHIP), 
-mAngularDamping(4.0f)
+mAngularDamping(4.0f), mpShipData(nullptr)
 {
 }
 

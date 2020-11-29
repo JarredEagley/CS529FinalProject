@@ -6,8 +6,6 @@
 
 ThrottleMeter::ThrottleMeter() : Component(ComponentTypes::TYPE_MARKER_THROTTLE)
 {
-	// Subscrie my GameObject to shipdata updates.
-	GlobalManager::getEventManager()->Subscribe(EventType::SHIPDATA_UPDATED, this->mpOwner);
 }
 
 ThrottleMeter::~ThrottleMeter()
@@ -15,7 +13,11 @@ ThrottleMeter::~ThrottleMeter()
 }
 
 
-void ThrottleMeter::Initialize() {}
+void ThrottleMeter::Initialize() 
+{
+	// Subscrie my GameObject to shipdata updates.
+	GlobalManager::getEventManager()->Subscribe(EventType::SHIPDATA_UPDATED, this->mpOwner);
+}
 
 void ThrottleMeter::Update()
 {

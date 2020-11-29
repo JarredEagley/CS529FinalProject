@@ -31,7 +31,6 @@ public:
 		if (strcmp(str, "TYPE_TIMER") == 0)				return TYPE_TIMER;
 		if (strcmp(str, "TYPE_CONTROLLERSLIDER") == 0)	return TYPE_CONTROLLERSLIDER;
 		if (strcmp(str, "TYPE_CONTROLLERSHIP") == 0)	return TYPE_CONTROLLERSHIP;
-		if (strcmp(str, "TYPE_UPDOWN") == 0)			return TYPE_UPDOWN;
 		if (strcmp(str, "TYPE_GLRECT") == 0)			return TYPE_GLRECT;
 		if (strcmp(str, "TYPE_CAMERA") == 0)			return TYPE_CAMERA;
 		if (strcmp(str, "TYPE_BACKGROUNDGRID") == 0)	return TYPE_BACKGROUNDGRID;
@@ -53,7 +52,6 @@ public:
 		TYPE_TIMER,
 		TYPE_CONTROLLERSLIDER,
 		TYPE_CONTROLLERSHIP,
-		TYPE_UPDOWN,
 		TYPE_GLRECT,
 		TYPE_CAMERA,
 		TYPE_BACKGROUNDGRID,

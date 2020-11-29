@@ -25,7 +25,6 @@
 #include "Components/Timer.h"
 #include "Components/ControllerSlider.h"
 #include "Components/ControllerShip.h"
-#include "Components/UpDown.h"
 #include "Components/GLRect.h"
 #include "Components/Camera.h"
 #include "Components/BackgroundGrid.h"
@@ -116,9 +115,6 @@ Component* GameObject::AddComponent(unsigned int Type)
 		break;
 	case (ComponentTypes::TYPE_CONTROLLERSHIP):
 		pNewComponent = new ControllerShip();
-		break;
-	case (ComponentTypes::TYPE_UPDOWN):
-		pNewComponent = new UpDown();
 		break;
 	case (ComponentTypes::TYPE_GLRECT):
 		pNewComponent = new GLRect();
