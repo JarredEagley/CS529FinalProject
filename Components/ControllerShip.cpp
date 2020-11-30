@@ -30,7 +30,6 @@ void ControllerShip::Update()
 	// Rotation
 	if (pIM->IsKeyPressed(SDL_SCANCODE_E))
 	{
-		GlobalManager::getGameObjectFactory()->generateProjectile("CoilBullet.json");
 		mpShipData->applySpin(-1.0f);
 	}
 	else if (pIM->IsKeyPressed(SDL_SCANCODE_Q))
