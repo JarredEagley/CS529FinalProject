@@ -92,6 +92,7 @@
     <ClCompile Include="Components\ControllerShip.cpp" />
     <ClCompile Include="Components\ControllerSlider.cpp" />
     <ClCompile Include="Components\DirectionIndicator.cpp" />
+    <ClCompile Include="Components\FollowCursor.cpp" />
     <ClCompile Include="Components\FuelMeter.cpp" />
     <ClCompile Include="Components\GLRect.cpp" />
     <ClCompile Include="Components\PhysicsBody.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="Components\ControllerShip.h" />
     <ClInclude Include="Components\ControllerSlider.h" />
     <ClInclude Include="Components\DirectionIndicator.h" />
+    <ClInclude Include="Components\FollowCursor.h" />
     <ClInclude Include="Components\FuelMeter.h" />
     <ClInclude Include="Components\GLRect.h" />
     <ClInclude Include="Components\PhysicsBody.h" />

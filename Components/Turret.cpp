@@ -5,7 +5,7 @@
 #include "GLRect.h"
 
 Turret::Turret() : Component(ComponentTypes::TYPE_TURRET),
-mpTransform(nullptr), mpParentGLRect(nullptr),
+mpTransform(nullptr), mpParentTransform(nullptr),mpGLRect(nullptr), mpParentGLRect(nullptr), 
 mAimPoint(glm::vec2(0.0f)), mAimAngle(0.0f)
 {}
 
@@ -29,6 +29,8 @@ void Turret::handleEvent(Event* pEvent)
 	if (pEvent->mType == EventType::TURRET_COMMAND)
 	{
 		// Try to get the necessary components to talk to.
+		if (mpOwner->getParent() == nullptr)
+			return;
 		if (mpTransform == nullptr || mpParentTransform == nullptr || mpGLRect == nullptr || mpParentGLRect == nullptr)
 		{
 			mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));

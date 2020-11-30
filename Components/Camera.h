@@ -18,6 +18,9 @@ public:
 	glm::mat4 getProjMatrix() { return cameraProjection; }; // Gets the perspective transformation matrix. Currently ortho.
 	glm::mat4 getTransMatrix() { return cameraTransform; }
 
+	glm::vec3 getPosition(); // Applies transform component too.
+	//glm::vec3 getForward();
+
 	void handleEvent(Event* pEvent);
 
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
@@ -26,7 +29,8 @@ public:
 private:
 	void buildTransform();
 private:
-	Transform* pTransform = nullptr;
+	float mCameraAngle = 0.15f;
+	Transform* mpTransform = nullptr;
 	glm::mat4 cameraTransform = glm::mat4(1.0f);
 	glm::mat4 cameraProjection = glm::mat4(1.0f);
 	glm::mat4 cameraOffset = glm::mat4(1.0f);

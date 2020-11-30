@@ -82,6 +82,9 @@
     <ClCompile Include="Components\Turret.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Components\FollowCursor.cpp">
+      <Filter>Components\Control</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -167,6 +170,9 @@
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Components\Turret.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\FollowCursor.h">
+      <Filter>Components\Control</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

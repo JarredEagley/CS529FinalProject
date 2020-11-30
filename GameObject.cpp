@@ -34,6 +34,7 @@
 #include "Components/ThrottleMeter.h"
 #include "Components/FuelMeter.h"
 #include "Components/Turret.h"
+#include "Components/FollowCursor.h"
 
 GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false),
 mRenderPassType(RenderPassType::NONE)
@@ -142,8 +143,9 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_TURRET):
 		pNewComponent = new Turret();
 		break;
-	
-
+	case (ComponentTypes::TYPE_FOLLOWCURSOR):
+		pNewComponent = new FollowCursor();
+		break;
 
 	default:
 		return nullptr; // Failed to create component.

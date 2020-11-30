@@ -4,7 +4,7 @@
 #include "Transform.h"
 #include "../Managers/GlobalManager.h"
 
-#include "SDL.h" // FOR INPUT, WILL BE MOVED ELSEWHERE.
+//#include "SDL.h" // FOR INPUT, WILL BE MOVED ELSEWHERE.
 
 Camera::Camera() : Component(ComponentTypes::TYPE_CAMERA)
 {
@@ -60,13 +60,13 @@ void Camera::buildTransform()
 	cameraProjection = glm::perspective(45.0f, 1.0f, 0.1f, 1000000.0f); // TO-DO: Move these params back into somewhere more generalized.
 
 	// Build transform.
-	cameraTransform = (glm::mat4(1.0f))/(pTransform->getTransformationMatrix());
-	cameraTransform = (pTransform->getTransformationMatrix());
+	cameraTransform = (glm::mat4(1.0f))/(mpTransform->getTransformationMatrix());
+	cameraTransform = (mpTransform->getTransformationMatrix());
 	// Offset Translation.
 	cameraTransform = glm::translate(cameraTransform, offset); 
 	
 	// Rotate.
-	cameraTransform = glm::rotate(cameraTransform, 0.15f, glm::vec3(1, 0, 0));
+	cameraTransform = glm::rotate(cameraTransform, mCameraAngle, glm::vec3(1, 0, 0));
 	
 	// Apply Zoom translation
 	cameraTransform = glm::translate(cameraTransform, glm::vec3(0.0f,0.0f, GlobalManager::getGraphicsManager()->getZoomLevel() ));
@@ -76,6 +76,26 @@ void Camera::buildTransform()
 	CameraTransformUpdatedEvent* pNewEvent = new CameraTransformUpdatedEvent();
 	GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewEvent);
 }
+
+
+glm::vec3 Camera::getPosition()
+{
+	return
+		(
+			glm::vec3(
+				cameraTransform[3][0],
+				cameraTransform[3][1],
+				cameraTransform[3][2]
+			)
+			);
+}
+
+/*
+glm::vec3 Camera::getForward()
+{
+	 return glm::rotate(glm::mat4(1.0f), mCameraAngle, glm::vec3(1, 0, 0)) * glm::vec4(0.0f, 0.0f, 1.0f, 1.0f);
+}
+*/
 
 
 void Camera::handleEvent(Event* pEvent)
@@ -100,5 +120,5 @@ void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	// For now, I'll just auto-bind.
 	GlobalManager::getGraphicsManager()->setCurrentCameraGO(this->mpOwner);
 
-	pTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+	mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 }

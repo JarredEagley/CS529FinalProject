@@ -89,6 +89,10 @@ void ControllerShip::Update()
 	}
 	*/
 
+	// Get mouse position in world space.
+
+
+	// Fire a turret command event.
 	TurretCommandEvent* pNewTurretEvent = new TurretCommandEvent();
 	pNewTurretEvent->mAimPoint = glm::vec2(0.0f, 0.0f);
 	pNewTurretEvent->mShoot = false;

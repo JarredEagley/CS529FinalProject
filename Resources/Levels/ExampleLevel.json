@@ -65,6 +65,10 @@
             "Name": "HUD_Throttle_Marker",
             "Archetype": "HUD_Throttle_Marker.json",
             "Parent": "HUD_Throttle_Meter"
+        },
+        {
+            "Name": "DEBUG_CURSOR",
+            "Archetype": "FollowCursor.json"
         }
     ]
 }
