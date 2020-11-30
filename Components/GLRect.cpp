@@ -22,8 +22,7 @@ GLRect::~GLRect()
 void GLRect::Initialize() {}
 
 void GLRect::Update()
-{
-}
+{}
 
 
 void GLRect::setColor(glm::vec4 rgba)

@@ -23,6 +23,9 @@ public:
 private:
 	float mAimAngle;
 private:
+	int fireRate = 100;
+	int fireTimer = 0;
+	bool mIsShooting;
 	Transform* mpTransform;
 	Transform* mpParentTransform;
 	GLRect* mpGLRect;

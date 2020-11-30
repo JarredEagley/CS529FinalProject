@@ -94,8 +94,11 @@ void ControllerShip::Update()
 
 	// Fire a turret command event.
 	TurretCommandEvent* pNewTurretEvent = new TurretCommandEvent();
+	if ( pIM->isMouseButtonPressed(SDL_BUTTON_LEFT) )
+		pNewTurretEvent->mShoot = true;
+	else
+		pNewTurretEvent->mShoot = false;
 	pNewTurretEvent->mAimPoint = glm::vec2(0.0f, 0.0f);
-	pNewTurretEvent->mShoot = false;
 	GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewTurretEvent);
 }
 

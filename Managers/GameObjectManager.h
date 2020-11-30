@@ -51,6 +51,13 @@ public:
 
 public:
 	static std::unordered_map<std::string, GameObject*> mGameObjects;
+
+	int mMaxParticles = 100; // Need to data drive these soon.
+	int mParticleCount = 0;
+	int mMaxProjectiles = 100;
+	int mProjectileCount = 0;
+
+
 private:
 	GameObjectManager(); // Constructor.
 private:

@@ -1,0 +1,24 @@
+{
+    "Name": "CoilBullet",
+    "Type": "GameObject",
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+            "Scale": [0.2, 0.2]
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "CoilBullet.png",
+            "Color": [0.8, 0.8, 0.1, 1.0]
+        },
+        "TYPE_PHYSICSBODY":
+        {
+            "Mass": 10.0,
+            "Circle":
+            {
+                "Radius": 5.0
+            }
+        }
+    }
+}

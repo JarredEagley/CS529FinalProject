@@ -4,9 +4,12 @@
 #include "Transform.h"
 #include "GLRect.h"
 
+#include "PhysicsBody.h"
+
 Turret::Turret() : Component(ComponentTypes::TYPE_TURRET),
 mpTransform(nullptr), mpParentTransform(nullptr),mpGLRect(nullptr), mpParentGLRect(nullptr), 
-mAimPoint(glm::vec2(0.0f)), mAimAngle(0.0f)
+mAimPoint(glm::vec2(0.0f)), mAimAngle(0.0f),
+mIsShooting(false)
 {}
 
 Turret::~Turret()
@@ -21,7 +24,27 @@ void Turret::Initialize()
 }
 
 void Turret::Update()
-{}
+{
+	if (!mIsShooting)
+		return;
+
+	if (fireTimer > fireRate)
+	{
+		GameObject* pBullet = GlobalManager::getGameObjectFactory()->generateProjectile("CoilBullet.json");
+		if (pBullet == nullptr)
+			return;
+		PhysicsBody* pBulletPhys = static_cast<PhysicsBody*>(pBullet->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+		Transform* pBulletTransform = static_cast<Transform*>(pBullet->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		if (pBulletPhys != nullptr || pBulletTransform != nullptr)
+		{
+			pBulletTransform->setPosition(mpParentTransform->getPosition());
+			glm::vec2 fireVec = glm::vec2(2.0f, 1.0f); // This is arbitrary for now.
+			pBulletPhys->applyForce(fireVec);
+		}
+		fireTimer = 0;
+	}
+	++fireTimer;
+}
 
 
 void Turret::handleEvent(Event* pEvent) 
@@ -52,6 +75,12 @@ void Turret::handleEvent(Event* pEvent)
 		mAimAngle = glm::degrees(mAimAngle);
 		//std::cout << "Aim angle is " << mAimAngle << std::endl;
 		this->mpTransform->setRotation(mAimAngle);
+
+		
+		if (pTurretEvent->mShoot)
+			mIsShooting = true;
+		else
+			mIsShooting = false;
 	}
 	/*
 	else if (pEvent->mType == EventType::TRANSFORM_UPDATED)

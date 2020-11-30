@@ -169,7 +169,7 @@ void gameLoop()
 		// Do updates.
 		for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects)
 			pGOPair.second->Update();
-		
+
 		// ----- Drawing ----- //
 
 		// Clear the buffer.

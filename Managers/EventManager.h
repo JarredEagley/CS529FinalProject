@@ -13,6 +13,8 @@ enum class EventType
 	CAMERA_TRANSFORM_UPDATED,
 	MOUSE_SCROLL,
 	TURRET_COMMAND,
+	DESTROY_PROJETILE,
+	CREATE_PROJECTILE,
 
 	NUM
 };
@@ -26,6 +28,7 @@ public:
 		mTimer = timer;
 	}
 	virtual ~Event() {};
+	bool mIsGlobal = false;
 
 public:
 	EventType mType;
@@ -81,6 +84,24 @@ public:
 	glm::vec2 mAimPoint;
 };
 
+// For example purposes, this is a timed event.
+class DestroyAllProjectilesEvent : public Event
+{
+public:
+	DestroyAllProjectilesEvent() : Event(EventType::DESTROY_PROJETILE) {};
+	~DestroyAllProjectilesEvent() {};
+};
+
+class CreateProjectileEvent : public Event
+{
+public:
+	// Holds onto the game object firing the projectile
+	CreateProjectileEvent(GameObject* pGO) : Event(EventType::CREATE_PROJECTILE), mpGO(pGO) {};
+	~CreateProjectileEvent() {};
+
+	GameObject* mpGO;
+	// May eventually also want to hold a projectile type, but I'm not doing that right now.
+};
 
 // ------------------------------------ //
 
@@ -97,7 +118,7 @@ public:
 
 	void broadcastEvent(Event* pEvent); // Broadcast to everybody.
 	void broadcastEventToSubscribers(Event* pEvent);
-	void addTimedEvent(Event* pEvent); // Note: Event will only be broadcasted to subscribers.
+	void addTimedEvent(Event* pEvent, bool globalEvent = false); // Note: Event will only be broadcasted to subscribers.
 	void Update();
 
 	void Subscribe(EventType Et, GameObject* pGameObject); 

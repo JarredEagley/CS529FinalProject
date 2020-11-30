@@ -19,6 +19,7 @@
 
 // Couldn't find a good way to do forward declaration here.
 #include "rapidjson/document.h"
+#include <string>
 
 class Serializer
 {
@@ -31,7 +32,7 @@ public:
 	};
 	void destroySingleton();
 
-	rapidjson::Document loadJson(const char* pFileName); // For now, this just directly deserializes and returns.
+	rapidjson::Document loadJson(std::string pFileName); // For now, this just directly deserializes and returns.
 	// void saveJson() {}; // Not going to do this.
 public:
 	// No public variables.

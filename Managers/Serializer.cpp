@@ -30,7 +30,7 @@ void Serializer::destroySingleton()
 	delete instance; // this will do more if i start keeping the jsons i need loaded.
 } 
 
-rapidjson::Document Serializer::loadJson(const char* pFileName)
+rapidjson::Document Serializer::loadJson(std::string pFileName)
 {
 	std::ifstream inputStream(pFileName);
 	// Make sure the stream opened.

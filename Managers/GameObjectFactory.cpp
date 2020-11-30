@@ -48,12 +48,10 @@ void GameObjectFactory::helper_objectRenderPass(GameObject* pGO, const char* ren
 		pGO->setRenderPass(RenderPassType::FINAL);
 }
 
-GameObject* GameObjectFactory::loadArchetype(const char* pFileName) 
+GameObject* GameObjectFactory::loadArchetype(std::string pFileName) 
 {
 	GameObject* pNewGO;
-	//std::string gameObjectName;
 	std::string componentName;
-	std::ifstream inputStream(pFileName); 
 
 	Serializer* pSer = GlobalManager::getSerializer();
 	rapidjson::Document doc = pSer->loadJson(pFileName);
@@ -126,8 +124,7 @@ GameObject* GameObjectFactory::loadArchetype(const char* pFileName)
 		&& doc["Render Pass"].IsString()
 		)
 		helper_objectRenderPass(pNewGO, doc["Render Pass"].GetString());
-	else
-		pNewGO->setRenderPass(RenderPassType::FINAL);
+	// Remain NONE otherwise.
 
 	return pNewGO;
 }
@@ -172,6 +169,8 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 		pCurrentGO = new GameObject;
 	}
 
+	// Name
+	pCurrentGO->mName = currentGOName;
 
 	// Test if theres additioanl components, ensure its valid format.
 	if (
@@ -225,22 +224,132 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 		pCurrentGO->mShaderName = newShaderName;
 	}
 
-	// If this GO Has a render pass aside from final, set its new render pass.
-	if (
-		inputObj.HasMember("Render Pass")
-		&& inputObj["Render Pass"].IsString()
-		)
-		helper_objectRenderPass(pCurrentGO, inputObj["Render Pass"].GetString());
-	else
-		pCurrentGO->setRenderPass(RenderPassType::FINAL);
-
-	// Name
-	pCurrentGO->mName = currentGOName;
+	// Is render pass already set by archetype?
+	if (pCurrentGO->getRenderPassType() == RenderPassType::NONE)
+	{
+		// If this GO Has a render pass aside from final, set its new render pass.
+		if (
+			inputObj.HasMember("Render Pass")
+			&& inputObj["Render Pass"].IsString()
+			)
+			helper_objectRenderPass(pCurrentGO, inputObj["Render Pass"].GetString());
+		else
+			pCurrentGO->setRenderPass(RenderPassType::FINAL);
+	}
 
 	// Initialize.
 	pCurrentGO->initializeComponents();
 
-	// Push onto the GOM.
+	// Push onto the GOM and return.
 	GlobalManager::getGameObjectManager()->mGameObjects[currentGOName] = pCurrentGO;
+	return pCurrentGO;
+}
+
+
+GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
+{
+	GameObject* pNewGO;
+	std::string componentName;
+
+	pFileName = GlobalManager::getResourceManager()->pathProjectiles + pFileName;
+
+	Serializer* pSer = GlobalManager::getSerializer();
+	rapidjson::Document doc = pSer->loadJson(pFileName);
+
+	// Nullcheck the document.
+	if (doc.IsNull() || !doc.IsObject())
+	{
+		// Game object creation failed.
+		std::cerr << "Error: Failed to load dynamic GameObject file " << pFileName << std::endl;
+		return nullptr; // Return nullptr on fail.
+	}
+
+	// Make sure we're deserializing a GameObject. 
+	if (!doc.HasMember("Type")
+		|| !doc["Type"].IsString()
+		|| strcmp(doc["Type"].GetString(), "GameObject") != 0)
+	{
+		// We're not deserializing a GameObject.
+		std::cerr << "Error: File " << pFileName << " was not of type GameObject." << std::endl;
+		return nullptr; // Return nullptr on fail.
+	}
+
+	// Get the name of this GO. 
+	std::string newGOName;
+	if (!doc.HasMember("Name") || !doc["Name"].IsString())
+	{
+		std::cout << "Error: Dynamic GameObject failed to deserialize because it lacked a name or contained an invalid name." << std::endl;
+		return nullptr;
+	}
+
+
+	newGOName = doc["Name"].GetString();
+	newGOName = "PROJECTILE_" + newGOName;// GlobalManager::getGameObjectManager()->mProjectileCount;
+	newGOName = newGOName + "_" + std::to_string(GlobalManager::getGameObjectManager()->mProjectileCount);
+	std::cout << "Deserializing GameObject " << newGOName << std::endl; // Having this uncommented might get obnoxious.
+
+	// I would like to delegate this to the game object manager, maybe. It's a bit ugly this way.
+	GlobalManager::getGameObjectManager()->mProjectileCount += 1;
+	GlobalManager::getGameObjectManager()->mProjectileCount = GlobalManager::getGameObjectManager()->mProjectileCount 
+		% GlobalManager::getGameObjectManager()->mMaxParticles;
+
+	// Create the GameObject and proceed to adding components.
+	pNewGO = new GameObject();
+
+	// Name
+	pNewGO->mName = newGOName;
+
+	// Make sure components exists.
+	if (!doc.HasMember("Components") || !doc["Components"].IsObject())
+	{
+		// No components to add to the game object. This is an empty game object.
+		std::cerr << "Warning: Dynamic GameObject " << pFileName << " did not contain any components." << std::endl;
+		return pNewGO; // Return empty GameObject since it was a valid GameObject but had no components.
+	}
+	
+	// Parse through components.
+	rapidjson::Value::ConstMemberIterator itr = doc["Components"].GetObject().MemberBegin();
+	for (; itr != doc["Components"].GetObject().MemberEnd(); ++itr)
+	{
+		if (itr->name.IsString() == false)
+		{
+			std::cout << "Warning: Failed to deserialize a component because. itr->name was not string." << std::endl;
+			continue;
+		}
+
+		Component* pNewComponent = nullptr;
+		std::cout << "Reading in: " << itr->name.GetString() << "\n";
+		pNewComponent = pNewGO->AddComponent(ComponentTypes::stringToEnum(itr->name.GetString()));
+
+		std::cout << "Done.\n";
+
+		// Rapidjson didn't like me passing just the value in, so pass the whole iterator.
+		if (nullptr != pNewComponent)
+			pNewComponent->Serialize(itr);
+	}
+
+
+	// Set shader via archetype if specified.
+	/*
+	if (
+		doc.HasMember("Shader")
+		&& doc["Shader"].IsString()
+		)
+	{
+		std::string newShaderName = doc["Shader"].GetString();
+		pNewGO->mShaderName = newShaderName;
+	}
+	*/
+
+	// Initialize components.
+	pNewGO->initializeComponents();
+
+	// Push onto the GameObjectManager and return.
+	GlobalManager::getGameObjectManager()->mGameObjects[newGOName] = pNewGO;
+
+	// I'm going to just assume all Dynamic GO's use final render pass.
+	pNewGO->setRenderPass(RenderPassType::FINAL);
+
+	return pNewGO;
 }
 

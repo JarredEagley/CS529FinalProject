@@ -17,6 +17,7 @@
 #pragma once
 #include "rapidjson/rapidjson.h"
 #include "rapidjson/document.h"
+#include <string>
 
 class GameObject;
 
@@ -33,8 +34,11 @@ public:
 	};
 	void destroySingleton();
 
-	GameObject* loadArchetype(const char* pFileName); // Returns a GameObject pointer matching the given archetype.
+	GameObject* loadArchetype(std::string pFileName); // Returns a GameObject pointer matching the given archetype.
 	GameObject* loadObject(rapidjson::GenericObject<true, rapidjson::Value> inputObj);
+
+	// Will generate a new game object using the designated filename.
+	GameObject* generateProjectile(std::string pFileName);
 
 public:
 	// No public variables.

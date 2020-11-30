@@ -34,8 +34,10 @@ void EventManager::broadcastEvent(Event* pEvent)
 		pGOPair.second->handleEvent(pEvent);
 }
 
-void EventManager::addTimedEvent(Event* pEvent)
+void EventManager::addTimedEvent(Event* pEvent, bool globalEvent)
 {
+	if (globalEvent)
+		pEvent->mIsGlobal = true;
 	mEvents.push_back(pEvent);
 }
 
@@ -53,9 +55,12 @@ void EventManager::Update()
 		pEvent->mTimer -= GlobalManager::getFrameRateController()->getFrameTime();
 		if (pEvent->mTimer <= 0.0f)
 		{
-			//broadcastEvent(pEvent);
-			// Broadcast that event to its subscribers then remove it.
-			broadcastEventToSubscribers(pEvent);
+			// A bit of a hacky switch between global and sub-based, but it works.
+			if (pEvent->mIsGlobal)
+				broadcastEvent(pEvent);
+			else
+				broadcastEventToSubscribers(pEvent);
+			
 			delete pEvent;
 			it = mEvents.erase(it); // This will update the iterator and remove the element!
 		}
