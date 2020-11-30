@@ -33,14 +33,16 @@ void Turret::Update()
 		GameObject* pBullet = GlobalManager::getGameObjectFactory()->generateProjectile("CoilBullet.json");
 		if (pBullet == nullptr)
 			return;
-		PhysicsBody* pBulletPhys = static_cast<PhysicsBody*>(pBullet->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
-		Transform* pBulletTransform = static_cast<Transform*>(pBullet->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		//PhysicsBody* pBulletPhys = static_cast<PhysicsBody*>(pBullet->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+		//Transform* pBulletTransform = static_cast<Transform*>(pBullet->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		/*
 		if (pBulletPhys != nullptr || pBulletTransform != nullptr)
 		{
 			pBulletTransform->setPosition(mpParentTransform->getPosition());
 			glm::vec2 fireVec = glm::vec2(2.0f, 1.0f); // This is arbitrary for now.
 			pBulletPhys->applyForce(fireVec);
 		}
+		*/
 		fireTimer = 0;
 	}
 	++fireTimer;

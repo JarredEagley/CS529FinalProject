@@ -345,7 +345,8 @@ GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
 	pNewGO->initializeComponents();
 
 	// Push onto the GameObjectManager and return.
-	GlobalManager::getGameObjectManager()->mGameObjects[newGOName] = pNewGO;
+	//GlobalManager::getGameObjectManager()->mGameObjects[newGOName] = pNewGO; // Bad bad bad.
+	GlobalManager::getGameObjectManager()->mNewGameObjects.push_back(pNewGO);
 
 	// I'm going to just assume all Dynamic GO's use final render pass.
 	pNewGO->setRenderPass(RenderPassType::FINAL);

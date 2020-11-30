@@ -49,6 +49,7 @@ public:
 
 	void handleEvent(Event *pEvent);
 public:
+	bool mMarkedForDeletion;
 	bool mHasChildren;
 	std::unordered_map<unsigned int, Component*> mComponents; // <TYPE, COMPONENT>
 	std::string mShaderName = "core";	// May have more shaders in the future.

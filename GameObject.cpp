@@ -37,7 +37,7 @@
 #include "Components/FollowCursor.h"
 
 GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false),
-mRenderPassType(RenderPassType::NONE)
+mRenderPassType(RenderPassType::NONE), mMarkedForDeletion(false)
 {
 	std::unordered_map<unsigned int, Component*> mComponents;
 }

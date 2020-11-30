@@ -78,6 +78,8 @@ void PhysicsBody::Integrate(float deltaTime)
 		pT->setPosition(mPosition);
 		pT->setRotation(mAngle);
 	}
+
+	//std::cout << "DEBUG - Physics integration position is (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
 }
 
 
@@ -100,17 +102,36 @@ void PhysicsBody::calculateGravityForces()
 		gravScale /= 1000.0 * 1000.0; // Convert m^2 to km^2
 
 		//std::cout << "DEBUG - Grav scale is " << gravScale << "\n";
-
+		
 		// I tried to avoid needing to normalize. I might try again if I have time.
 
 		glm::vec2 gravitationalForce = glm::normalize(pBody->mPosition - this->mPosition) * (float)std::max(gravScale, 10.0) / 1000.0f;
+
+		//std::cout << "DEBUG - grav force: (" << gravitationalForce.x << ", " << gravitationalForce.y << ")" << std::endl;
+		// We do not apply gravitational forces that don't make sense here.
+		if (
+			isnan(gravitationalForce.x)
+			|| isnan(gravitationalForce.y)
+			|| isinf(gravitationalForce.x)
+			|| isinf(gravitationalForce.y)
+			)
+			return;
 
 		applyForce(gravitationalForce);
 	}
 }
 
+
 void PhysicsBody::applyForce(glm::vec2 F)
 {
+	// Guard against crazy values.
+	if (
+		isnan(F.x)
+		|| isnan(F.y)
+		|| isinf(F.x)
+		|| isinf(F.y)
+		)
+		return;
 
 	// Frametime is in ms, convert to s.
 	mTotalForce += F * GlobalManager::getFrameRateController()->getFrameTimeSec();
@@ -118,6 +139,10 @@ void PhysicsBody::applyForce(glm::vec2 F)
 
 void PhysicsBody::applyTorque(float T)
 {
+	// Guard against crazy values.
+	if (isnan(T) || isinf(T))
+		return;
+
 	mTotalTorque += T * GlobalManager::getFrameRateController()->getFrameTimeSec();
 }
 

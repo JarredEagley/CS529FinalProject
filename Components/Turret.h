@@ -23,8 +23,8 @@ public:
 private:
 	float mAimAngle;
 private:
-	int fireRate = 100;
-	int fireTimer = 0;
+	int fireRate = 60;
+	int fireTimer = 40;
 	bool mIsShooting;
 	Transform* mpTransform;
 	Transform* mpParentTransform;

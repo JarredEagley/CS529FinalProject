@@ -21,12 +21,15 @@
 
 GameObjectManager* GameObjectManager::instance = nullptr;
 std::unordered_map<std::string, GameObject*> GameObjectManager::mGameObjects;
+std::list<GameObject*> GameObjectManager::mNewGameObjects;
+
 
 void GameObjectManager::destroySingleton()
 {
 	// Delete the game object instances.
 	for (auto keyValuePair : mGameObjects)
 		delete keyValuePair.second;
+	
 	// Clear the map.
 	mGameObjects.clear();
 		
@@ -36,4 +39,30 @@ void GameObjectManager::destroySingleton()
 
 GameObjectManager::GameObjectManager()
 {
+}
+
+
+void GameObjectManager::updateGameObjects()
+{
+	for (auto pGOPair : mGameObjects)
+		pGOPair.second->Update();
+}
+
+
+void GameObjectManager::addCreatedGameObjects()
+{
+	for (auto pGO : mNewGameObjects)
+	{
+		mGameObjects[pGO->mName] = pGO;
+	}
+	mNewGameObjects.clear();
+}
+
+void GameObjectManager::deleteRemovedGameObjects()
+{
+	for (auto pGOPair : mGameObjects)
+	{
+		if (pGOPair.second->mMarkedForDeletion)
+			mGameObjects.erase(pGOPair.first);
+	}
 }

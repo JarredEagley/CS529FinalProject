@@ -21,8 +21,7 @@
 
 //#include <vector>
 #include <unordered_map>
-
-class GameObject;
+#include "../GameObject.h"
 
 // Will be used to keep track of how many of a type of GameObject may be created
 // by the GameObjectFactory at runtime.
@@ -49,8 +48,13 @@ public:
 	};
 	void destroySingleton();
 
+	void updateGameObjects();
+	void addCreatedGameObjects(); // Updates mGameObjects
+	void deleteRemovedGameObjects(); // Updates mGameObjects
+
 public:
-	static std::unordered_map<std::string, GameObject*> mGameObjects;
+	static std::unordered_map<std::string, GameObject*> mGameObjects; // Should NEVER be modified mid-game loop.
+	static std::list<GameObject*> mNewGameObjects;
 
 	int mMaxParticles = 100; // Need to data drive these soon.
 	int mParticleCount = 0;
@@ -60,6 +64,7 @@ public:
 
 private:
 	GameObjectManager(); // Constructor.
+
 private:
 	static GameObjectManager* instance;
 };

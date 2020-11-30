@@ -164,11 +164,11 @@ void gameLoop()
 
 		// ----- Updates ----- //
 
+		// Do physics updates.
 		GlobalManager::getPhysicsManager()->Update();
 
-		// Do updates.
-		for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects)
-			pGOPair.second->Update();
+		// Do GameObject updates.
+		GlobalManager::getGameObjectManager()->updateGameObjects();
 
 		// ----- Drawing ----- //
 
@@ -182,6 +182,9 @@ void gameLoop()
 
 		SDL_GL_SwapWindow(pWindow); // Swaps the buffered frame to view.
 
+		// Mutate mGameObjects for this game loop.
+		//GlobalManager::getGameObjectManager()->deleteRemovedGameObjects();
+		GlobalManager::getGameObjectManager()->addCreatedGameObjects();
 
 		GlobalManager::getFrameRateController()->frameEnd();
 	}
