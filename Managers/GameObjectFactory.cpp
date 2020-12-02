@@ -351,6 +351,9 @@ GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
 	// I'm going to just assume all Dynamic GO's use final render pass.
 	pNewGO->setRenderPass(RenderPassType::FINAL);
 
+	// Automatically subscribe this to projectile events.
+	GlobalManager::getEventManager()->Subscribe(EventType::DESTROY_PROJETILE, pNewGO);
+
 	return pNewGO;
 }
 

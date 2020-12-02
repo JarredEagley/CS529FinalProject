@@ -192,6 +192,10 @@ void PhysicsBody::handleEvent(Event* pEvent)
 			this->mVelocity = pCollideEvent->mNewVel1;
 		}
 	}
+	else if (pEvent->mType == EventType::EXAMPLE_SPIN)
+	{
+		this->mAngularVelocity += .1f;
+	}
 }
 
 

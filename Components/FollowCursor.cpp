@@ -12,58 +12,94 @@ FollowCursor::~FollowCursor()
 
 
 void FollowCursor::Initialize()
-{}
+{
+	GlobalManager::getEventManager()->Subscribe(EventType::CAMERA_TRANSFORM_UPDATED, mpOwner);
+}
 
 void FollowCursor::Update()
 {
-	EventManager* pEM = GlobalManager::getEventManager();
-	InputManager* pIM = GlobalManager::getInputManager();
-	GraphicsManager* pGM = GlobalManager::getGraphicsManager();
-
-	// Need the camera for its projection matrix.
-	if (mpCameraComponent == nullptr || mpTransform == nullptr || mpCameraTransformComponent == nullptr)
-	{
-		mpCameraComponent = static_cast<Camera*>(pGM->getCurrentCameraGO()->GetComponent(ComponentTypes::TYPE_CAMERA));
-		mpCameraTransformComponent = static_cast<Transform*>(pGM->getCurrentCameraGO()->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-		mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-		return;
-	}
-
-	// Get mouse position.
-	int mouseX, mouseY;
-	pIM->getMousePosition(mouseX, mouseY);
-
-	// Map -1 to 1.
-	glm::vec2 mousePos = glm::vec2(
-		(((float)mouseX / (float)pGM->mWindowWidth) - 0.5f) * 2.0f,
-		( 0.5f - ((float)mouseY / (float)pGM->mWindowHeight)) * 2.0f
-	);
-
-	//std::cout << "(" << mousePos.x << ", " << mousePos.y << ")" << std::endl;
-
-	// Project mouse position to world coordinates.
-	auto projMtx = mpCameraComponent->getProjMatrix();
-	auto transfMtx = mpCameraComponent->getTransMatrix();
-	auto invMtx = projMtx * transfMtx;
-	invMtx = glm::inverse(invMtx);
-
-	glm::vec4 near = glm::vec4(mousePos.x, mousePos.y, -1.0f, 1.0f);
-	glm::vec4 far = glm::vec4(mousePos.x, mousePos.y, 1.0f, 1.0f);
-
-	glm::vec4 nearR = invMtx * near;
-	nearR /= nearR.w;
-	glm::vec4 farR = invMtx * far;
-	farR /= farR.w;
-
-	//float depth = mpCameraComponent;
-
-	//std::cout << "Depth = " << depth << std::endl;
-
-	//glm::vec4 pos = glm::vec4(mousePos.x, mousePos.y, depth, 1.0f ) * invMtx;
-
-	//mpTransform->setPosition(dir);
-
 }
 
 void FollowCursor::handleEvent(Event* pEvent)
-{}
+{
+	if (pEvent->mType == EventType::CAMERA_TRANSFORM_UPDATED)
+	{
+		CameraTransformUpdatedEvent* pCameraTransformEvent = static_cast<CameraTransformUpdatedEvent*>(pEvent);
+
+		EventManager* pEM = GlobalManager::getEventManager();
+		InputManager* pIM = GlobalManager::getInputManager();
+		GraphicsManager* pGM = GlobalManager::getGraphicsManager();
+
+		// Need the camera for its projection matrix.
+		if (mpCameraComponent == nullptr || mpTransform == nullptr || mpCameraTransformComponent == nullptr)
+		{
+			mpCameraComponent = static_cast<Camera*>(pGM->getCurrentCameraGO()->GetComponent(ComponentTypes::TYPE_CAMERA));
+			mpCameraTransformComponent = static_cast<Transform*>(pGM->getCurrentCameraGO()->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+			mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+			return;
+		}
+
+		Transform* cameraParentTransform = static_cast<Transform*>(mpCameraComponent->mpOwner->getParent()->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+
+
+		float angle = mpCameraComponent->getAngle();
+		float height = mpCameraComponent->getHeight();
+
+		//std::cout << "DEBUG: " << angle << "x + " << height << std::endl;
+
+		// Get mouse position.
+		int mouseX, mouseY;
+		pIM->getMousePosition(mouseX, mouseY);
+
+		// Map -1 to 1.
+		glm::vec2 mousePos = glm::vec2(
+			(((float)mouseX / (float)pGM->mWindowWidth) - 0.5f) * 2.0f,
+			(0.5f - ((float)mouseY / (float)pGM->mWindowHeight)) * 2.0f
+		);
+
+		//std::cout << "DEBUG: Mousepos is " << mousePos.x << ", " << mousePos.y << std::endl;
+
+		float depth = angle * mousePos.y + height;
+
+		/*
+		std::cout << "DEBUG: " << angle << " * "<< mousePos.y << " + " << height <<
+			" = " << depth << std::endl;
+
+		*/
+
+		//std::cout << "(" << mousePos.x << ", " << mousePos.y << ")" << std::endl;
+
+		float zoom = GlobalManager::getGraphicsManager()->getZoomLevel();
+
+		// Project mouse position to world coordinates.
+		//auto projMtx = mpCameraComponent->getProjMatrix();
+		//auto transfMtx = mpCameraComponent->getTransMatrix(); // 'view matrix'
+		auto invMtx =  pCameraTransformEvent->mProjectionMatrix * pCameraTransformEvent->mViewMatrix;
+		//invMtx = glm::inverse(invMtx);
+
+		// This causes it to overshoot... No great, but good enough.
+		//invMtx = glm::translate(invMtx, (mpCameraComponent->offset)  );
+
+
+		glm::vec4 newposition = glm::vec4(mousePos.x * (zoom + 1.0f), mousePos.y * (zoom + 1.0f), depth, 1.0f);
+		//glm::vec4 newposition = glm::vec4(mousePos.x , mousePos.y, depth, 1.0f);
+		newposition = newposition * invMtx;
+		newposition = newposition + glm::vec4( cameraParentTransform->getPosition(), 1.0f);
+
+
+		//std::cout << "DEBUG: " << newposition.x << " vs. " << mpCameraComponent->offset.x << std::endl;
+
+		/*
+		std::cout << "DEBUG: New pos will be (" << newposition.x
+			<< ", " << newposition.y << ", " << newposition.z << ", " << newposition.w << ")" << std::endl;
+		*/
+
+		//std::cout << "DEBUG: mouse z will be " << newposition.z / newposition.w << std::endl;
+		mpTransform->setPosition(newposition);
+
+		// Broadcast the new position.
+		CursorToWorldCoordinatesEvent* pNewEvent = new CursorToWorldCoordinatesEvent();
+		pNewEvent->mCoords = newposition;
+		GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewEvent);
+	}
+}

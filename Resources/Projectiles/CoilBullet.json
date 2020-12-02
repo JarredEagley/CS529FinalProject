@@ -5,7 +5,7 @@
     {
         "TYPE_TRANSFORM":
         {
-            "Scale": [20.2, 20.2]
+            "Scale": [1.2, 1.2]
         },
         "TYPE_GLRECT":
         {
@@ -17,7 +17,7 @@
             "Mass": 10.0,
             "Circle":
             {
-                "Radius": 5.0
+                "Radius": 2.0
             }
         }
     }

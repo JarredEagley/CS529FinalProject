@@ -18,10 +18,10 @@
             "Mass": 200.0,
             "AABB":
             {
-                "Left": 10.0,
-                "Right": 10.0,
-                "Top": 10.0,
-                "Bottom":10.0
+                "Left": 50.0,
+                "Right": 50.0,
+                "Top": 50.0,
+                "Bottom":50.0
             },
             "Velocity": [0.0, -0.55],
             "Angular Velocity": 0.05

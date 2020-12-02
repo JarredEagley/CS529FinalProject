@@ -3,6 +3,7 @@
 #include "ComponentTypes.h"
 #include "Transform.h"
 #include "GLRect.h"
+#include <random>
 
 #include "PhysicsBody.h"
 
@@ -10,7 +11,11 @@ Turret::Turret() : Component(ComponentTypes::TYPE_TURRET),
 mpTransform(nullptr), mpParentTransform(nullptr),mpGLRect(nullptr), mpParentGLRect(nullptr),
 mAimPoint(glm::vec2(0.0f)), mAimAngle(0.0f),
 mIsShooting(false)
-{}
+{
+	// Randomize this turret's fire timer start point.
+	srand(GlobalManager::getFrameRateController()->getFrameTime());
+	this->fireTimer = (rand() / RAND_MAX) * fireRate;
+}
 
 Turret::~Turret()
 {
@@ -38,9 +43,14 @@ void Turret::Update()
 		Transform* pBulletTransform = static_cast<Transform*>(pBullet->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 		if (pBulletPhys != nullptr && pBulletTransform != nullptr && pParentPhys != nullptr)
 		{
+			// Set trasnform
 			pBulletTransform->setPosition(mpParentTransform->getPosition());
+			pBulletTransform->setRotation(mAimAngle);
+
+			// Set physics
 			pBulletPhys->mVelocity = pParentPhys->mVelocity; // inherit velocity.
-			glm::vec2 fireVec = glm::vec2(2.0f, 1.0f); // This is arbitrary for now.
+			glm::vec2 fireVec = mAimPoint-glm::vec2(mpParentTransform->getPosition());
+			fireVec = glm::normalize(fireVec) * 5.0f; // Arbitrary velocity
 			pBulletPhys->applyForce(fireVec);
 		}
 		
@@ -69,14 +79,27 @@ void Turret::handleEvent(Event* pEvent)
 		mpGLRect->setColor(mpParentGLRect->getColor()); // Mirror color.
 
 		TurretCommandEvent* pTurretEvent = static_cast<TurretCommandEvent*>(pEvent);
-		this->mAimPoint = pTurretEvent->mAimPoint - glm::vec2(mpParentTransform->getPosition()); // Get aimpoint in local coordinates.
+		this->mAimPoint = pTurretEvent->mAimPoint ; // Get aimpoint in local coordinates.
+
+		float parentRotation = mpParentTransform->getRotation();
+
+		glm::vec2 vec1 = mAimPoint - glm::vec2( mpParentTransform->getPosition() );
+		vec1 = glm::normalize(vec1);
+		
+		glm::vec2 vec2 = glm::vec2(0.0f, 1.0f);
 
 		//std::cout << "aim point is " << mAimPoint.x << ", " << mAimPoint.y << std::endl;
 
+		if (vec1.x > 0)
+			mAimAngle = -acosf(glm::dot(vec2, vec1));
+		else
+			mAimAngle = acosf(glm::dot( vec2, vec1));
+
 		// Get the aim angle.
-		mAimAngle = glm::dot( glm::normalize(mAimPoint), glm::vec2(-1.0f,0.0f ));
-		mAimAngle = glm::degrees(mAimAngle);
+		//mAimAngle = glm::dot(vec1, vec2);
+		mAimAngle = glm::degrees(mAimAngle) - parentRotation;
 		//std::cout << "Aim angle is " << mAimAngle << std::endl;
+		
 		this->mpTransform->setRotation(mAimAngle);
 
 		

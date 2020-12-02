@@ -91,3 +91,48 @@ void EventManager::Subscribe(EventType Et, GameObject* pGameObject)
 	// Push onto that list.
 	listOfSubs.push_back(pGameObject);
 }
+
+void EventManager::UnsubscribeAll(GameObject* pGO)
+{
+	for (auto pair : mSubscriptions)
+	{
+		std::list<GameObject*> &listOfSubs = pair.second;
+		auto itr = listOfSubs.begin();
+		while (itr != listOfSubs.end())
+		{
+			bool hasGO = (std::find(listOfSubs.begin(), listOfSubs.end(), pGO) != listOfSubs.end());
+			if (hasGO)
+			{
+				itr = listOfSubs.erase(itr);
+			}
+			else
+				++itr;
+		}
+		// Super hacky and inefficient, but I think I'm getting copy by value problems.
+		mSubscriptions[pair.first] = listOfSubs;
+
+		/*
+		for (auto itr = listOfSubs.begin(); itr != listOfSubs.end(); ++itr)
+		{
+			bool hasGO = (std::find(listOfSubs.begin(), listOfSubs.end(), pGO) != listOfSubs.end());
+			if (hasGO)
+			{
+				listOfSubs.erase(itr);
+				continue;
+			}
+
+		}
+		*/
+		/*
+		bool hasGO = (std::find(listOfSubs.begin(), listOfSubs.end(), pGO) != listOfSubs.end());
+		if (hasGO)
+		{
+			std::cout << "DEBUG: GO" << std::endl;
+			listOfSubs.erase(pGO);
+		}
+		*/
+	}
+
+}
+
+

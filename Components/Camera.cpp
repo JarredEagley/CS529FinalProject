@@ -6,7 +6,8 @@
 
 //#include "SDL.h" // FOR INPUT, WILL BE MOVED ELSEWHERE.
 
-Camera::Camera() : Component(ComponentTypes::TYPE_CAMERA)
+Camera::Camera() : Component(ComponentTypes::TYPE_CAMERA),
+mCameraTransform(glm::mat4(1.0f)), mCameraProjection(glm::mat4(1.0f))
 {
 }
 
@@ -19,6 +20,12 @@ void Camera::Initialize() {}
 
 void Camera::Update()
 {
+	if (mpTransform == nullptr)
+	{
+		mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		return;
+	}
+
 	//pTransform->setZ(zoom);
 	
 	// Will be moved to a camera controller component.
@@ -37,8 +44,9 @@ void Camera::Update()
 	GlobalManager::getInputManager()->getMousePosition(mX, mY);
 	int const winH = GlobalManager::getGraphicsManager()->mWindowHeight;
 	int const winW = GlobalManager::getGraphicsManager()->mWindowWidth;
-	this->offset.x = (mX-(winW/2)) * (pGM->getZoomLevel()/500.0f);
-	this->offset.y = -(mY-(winH/2)) * (pGM->getZoomLevel()/500.0f);
+	
+	this->offset.x = (mX-(winW/2)) * (pGM->getZoomLevel()/ (float)winW);
+	this->offset.y = -(mY-(winH/2)) * (pGM->getZoomLevel()/ (float)winH);
 
 	// Stuff to only do if not parented.
 	if (this->mpOwner->getParent() == nullptr)
@@ -53,41 +61,39 @@ void Camera::Update()
 
 void Camera::buildTransform()
 {
-	cameraProjection = glm::mat4(1.0f);
+	mCameraProjection = glm::mat4(1.0f);
 	//cameraProjection = glm::ortho(this->left, this->right, this->bottom, this->top, this->clipNear, this->clipFar);
 
 	// Perspective
-	cameraProjection = glm::perspective(45.0f, 1.0f, 0.1f, 1000000.0f); // TO-DO: Move these params back into somewhere more generalized.
+	mCameraProjection = glm::perspective(45.0f, 1.0f, 0.1f, 1000000.0f); // TO-DO: Move these params back into somewhere more generalized.
 
 	// Build transform.
-	cameraTransform = (glm::mat4(1.0f))/(mpTransform->getTransformationMatrix());
-	cameraTransform = (mpTransform->getTransformationMatrix());
+	//cameraTransform = (glm::mat4(1.0f))/(mpTransform->getTransformationMatrix());
+	mCameraTransform = (mpTransform->getTransformationMatrix());
+
 	// Offset Translation.
-	cameraTransform = glm::translate(cameraTransform, offset); 
+	//cameraTransform = glm::translate(cameraTransform, offset); 
 	
 	// Rotate.
-	cameraTransform = glm::rotate(cameraTransform, mCameraAngle, glm::vec3(1, 0, 0));
+	mCameraTransform = glm::rotate(mCameraTransform, mCameraAngle, glm::vec3(1, 0, 0));
 	
 	// Apply Zoom translation
-	cameraTransform = glm::translate(cameraTransform, glm::vec3(0.0f,0.0f, GlobalManager::getGraphicsManager()->getZoomLevel() ));
+	mCameraTransform = glm::translate(mCameraTransform, glm::vec3(0.0f,0.0f, GlobalManager::getGraphicsManager()->getZoomLevel() ));
 
-	cameraTransform = glm::inverse(cameraTransform);
+	mCameraTransform = glm::inverse(mCameraTransform);
 
 	CameraTransformUpdatedEvent* pNewEvent = new CameraTransformUpdatedEvent();
+	pNewEvent->mProjectionMatrix = this->mCameraProjection;
+	pNewEvent->mViewMatrix = this->mCameraTransform;
 	GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewEvent);
 }
 
-
-glm::vec3 Camera::getPosition()
+float Camera::getHeight()
 {
-	return
-		(
-			glm::vec3(
-				cameraTransform[3][0],
-				cameraTransform[3][1],
-				cameraTransform[3][2]
-			)
-			);
+	float zoom = GlobalManager::getGraphicsManager()->getZoomLevel();
+	float height = sin(mCameraAngle) * zoom;
+
+	return height;
 }
 
 /*

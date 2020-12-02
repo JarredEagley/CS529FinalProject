@@ -1,0 +1,42 @@
+{
+    "Name": "ExampleLevel",
+    "Type": "Level",
+    "GameObjects":
+    [
+        {
+            "Name": "BackgroundGrid",
+            "Archetype":"BackgroundGrid.json"
+        },
+        {
+            "Name": "PLAYER",
+            "Archetype": "Player.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0.0, 0.0],
+                    "Rotation": 0
+                },
+                "TYPE_PHYSICSBODY":
+                {
+                    "Velocity": [0.0, 0.0]
+                }
+            }
+        },
+        {
+            "Name": "MainCamera",
+            "Archetype": "Camera.json",
+            "Parent": "PLAYER"
+        },
+        {
+            "Name": "PlayerShip_Indicator_Forward",
+            "Archetype": "ForwardIndicator.json",
+            "Parent":"PLAYER"
+        },
+
+        {
+            "Name": "DEBUG_CURSOR",
+            "Archetype": "FollowCursor.json"
+        }
+    ]
+}

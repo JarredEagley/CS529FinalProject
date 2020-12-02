@@ -47,7 +47,7 @@ public:
 	void destroySingleton();
 
 	void removeFromAnyRenderPasses(GameObject* pGO);
-	void addToRenderPass(GameObject* pGO, RenderPassType renderPassType);
+	void addToRenderPass(GameObject* pGO, RenderPassType newRenderPassType);
 
 	// Performs all draw passes.
 	void Draw();

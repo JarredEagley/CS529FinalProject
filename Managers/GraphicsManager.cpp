@@ -62,24 +62,26 @@ void GraphicsManager::removeFromAnyRenderPasses(GameObject* pGO)
 	mRenderPasses[ pGO->getRenderPassType() ].remove(pGO);
 }
 
-void GraphicsManager::addToRenderPass(GameObject* pGO, RenderPassType renderPassType)
+void GraphicsManager::addToRenderPass(GameObject* pGO, RenderPassType newRenderPassType)
 {
 	// Check for invalid pass name.
-	if (renderPassType > RenderPassType::NUM)
+	if (newRenderPassType > RenderPassType::NUM)
 	{
 		std::cout << "Warning: GameObject" << pGO->mName << " was passed an invalid render pass type." << std::endl;
 		return;
 	}
 
 	// No need to set the same renderpass.
-	if (pGO->getRenderPassType() == renderPassType)
+	if (pGO->getRenderPassType() == newRenderPassType)
 		return;
 
 	// Remove from current pass.
-	mRenderPasses[ pGO->getRenderPassType() ].remove(pGO);
+	mRenderPasses[pGO->getRenderPassType()].remove(pGO);
+
+	pGO->mRenderPassType = newRenderPassType; // Inform the game object.
 
 	// Add to new pass.
-	mRenderPasses[renderPassType].push_back(pGO);
+	mRenderPasses[newRenderPassType].push_back(pGO);
 }
 
 // Draws every GameObject stored in the GameObjectManger.

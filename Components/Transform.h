@@ -71,7 +71,7 @@ private:
 	float mRotation; // I'm not going to bother supporting 3D rotation.
 	glm::vec3 mScale;
 	glm::mat4 mTransMatrix;
-	
+
 	bool mInheritRotation; // Do I inherit my angle from parent?
 	
 	// Transform* pParentTransform = nullptr; // If a parent is present then all transformations will be based on the parent's transformation matrix.

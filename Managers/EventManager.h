@@ -15,6 +15,8 @@ enum class EventType
 	TURRET_COMMAND,
 	DESTROY_PROJETILE,
 	CREATE_PROJECTILE,
+	EXAMPLE_SPIN,
+	CURSOR_WORLD_COORDS,
 
 	NUM
 };
@@ -65,6 +67,8 @@ class CameraTransformUpdatedEvent : public Event
 public:
 	CameraTransformUpdatedEvent() : Event(EventType::CAMERA_TRANSFORM_UPDATED) {};
 	~CameraTransformUpdatedEvent() {};
+	glm::mat4 mProjectionMatrix;
+	glm::mat4 mViewMatrix;
 };
 
 class MouseScrollEvent : public Event
@@ -103,6 +107,25 @@ public:
 	// May eventually also want to hold a projectile type, but I'm not doing that right now.
 };
 
+// Anything recieving this event with a phpysics body will get a fixed number added to their angular velocity.
+// (not torque, pure number, just for fun)
+class ExampleSpinEvent : public Event
+{
+public:
+	ExampleSpinEvent() : Event(EventType::EXAMPLE_SPIN) {};
+	~ExampleSpinEvent() {};
+};
+
+
+class CursorToWorldCoordinatesEvent : public Event
+{
+public:
+	CursorToWorldCoordinatesEvent() : Event(EventType::CURSOR_WORLD_COORDS) {};
+	~CursorToWorldCoordinatesEvent() {};
+	glm::vec3 mCoords;
+};
+
+
 // ------------------------------------ //
 
 class EventManager
@@ -122,10 +145,11 @@ public:
 	void Update();
 
 	void Subscribe(EventType Et, GameObject* pGameObject); 
+	//void Unsubscribe(EventType Et, GameObject* pGO);
+	void UnsubscribeAll(GameObject *pGO);
 	 
 public:
 	static std::list<Event*> mEvents; // This is a list and not a vector because it's the fastest to remove an element from the middle. Priority queue would also make sense.
-
 	static std::unordered_map<EventType, std::list<GameObject*>> mSubscriptions; // unordered_multimap may be appropriate.
 
 private:

@@ -15,25 +15,27 @@ public:
 	void Initialize();
 	void Update();
 
-	glm::mat4 getProjMatrix() { return cameraProjection; }; // Gets the perspective transformation matrix. Currently ortho.
-	glm::mat4 getTransMatrix() { return cameraTransform; }
+	glm::mat4 getProjMatrix() { return this->mCameraProjection; }; 
+	glm::mat4 getTransMatrix() { return this->mCameraTransform; };
 
-	glm::vec3 getPosition(); // Applies transform component too.
+	float getHeight();
+	float getAngle() { return mCameraAngle; };
+
 	//glm::vec3 getForward();
 
 	void handleEvent(Event* pEvent);
 
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 public:
-	glm::vec3 offset = glm::vec3(0,0,0);
+	glm::vec3 offset = glm::vec3(0.0f);
 private:
 	void buildTransform();
 private:
-	float mCameraAngle = 0.15f;
+	float mCameraAngle = 0.0f;
 	Transform* mpTransform = nullptr;
-	glm::mat4 cameraTransform = glm::mat4(1.0f);
-	glm::mat4 cameraProjection = glm::mat4(1.0f);
-	glm::mat4 cameraOffset = glm::mat4(1.0f);
+	glm::mat4 mCameraTransform;
+	glm::mat4 mCameraProjection;
+	//glm::mat4 cameraOffset;
 	//GameObject* mpParentGO = nullptr; // May eventually be better placed in GameObject...
 
 };

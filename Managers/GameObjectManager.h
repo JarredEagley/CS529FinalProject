@@ -55,6 +55,7 @@ public:
 public:
 	static std::unordered_map<std::string, GameObject*> mGameObjects; // Should NEVER be modified mid-game loop.
 	static std::list<GameObject*> mNewGameObjects;
+	static std::list<std::string> mMarkedForDelete;
 
 	int mMaxParticles = 100; // Need to data drive these soon.
 	int mParticleCount = 0;

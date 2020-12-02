@@ -28,10 +28,45 @@
             }
         },
         {
-            "Name": "PLAYER_Turret",
+            "Name": "PLAYER_Turret_1",
             "Archetype":"Turret.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Scale": [0.5, 1.0]
+                }
+            },
             "Parent":"PLAYER"
         },
+        {
+            "Name": "PLAYER_Turret_2",
+            "Archetype":"Turret.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Scale": [0.5, 1.0],
+                    "Translation": [2, -2]
+                }
+            },
+            "Parent":"PLAYER"
+        },
+        {
+            "Name": "PLAYER_Turret_3",
+            "Archetype":"Turret.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Scale": [0.5, 1.0],
+                    "Translation":[-2,1]
+                }
+            },
+            "Parent":"PLAYER"
+        },
+
+
         {
             "Name":"Mars",
             "Archetype": "Mars.json"
@@ -67,7 +102,7 @@
             "Parent": "HUD_Throttle_Meter"
         },
         {
-            "Name": "DEBUG_CURSOR",
+            "Name": "PLAYER_CURSOR",
             "Archetype": "FollowCursor.json"
         }
     ]

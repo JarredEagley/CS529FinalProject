@@ -37,7 +37,7 @@
 #include "Components/FollowCursor.h"
 
 GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false),
-mRenderPassType(RenderPassType::NONE), mMarkedForDeletion(false)
+mRenderPassType(RenderPassType::NONE)
 {
 	std::unordered_map<unsigned int, Component*> mComponents;
 }
@@ -51,6 +51,9 @@ GameObject::~GameObject()
 
 	// Remove from render passes.
 	GlobalManager::getGraphicsManager()->removeFromAnyRenderPasses(this);
+
+	// Remove as a subscriber from anything.
+	GlobalManager::getEventManager()->UnsubscribeAll(this);
 }
 
 void GameObject::initializeComponents()
@@ -197,5 +200,11 @@ void GameObject::handleEvent(Event* pEvent)
 	for (auto pComponentPair : mComponents)
 	{
 		pComponentPair.second->handleEvent(pEvent);
+	}
+
+	// Normal game objects will never be handed a destroy projectile event.
+	if (pEvent->mType == EventType::DESTROY_PROJETILE)
+	{
+		GlobalManager::getGameObjectManager()->mMarkedForDelete.push_back(this->mName);
 	}
 }

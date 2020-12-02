@@ -12,7 +12,10 @@ ControllerShip::~ControllerShip()
 
 }
 
-void ControllerShip::Initialize() {}
+void ControllerShip::Initialize() 
+{
+	GlobalManager::getEventManager()->Subscribe(EventType::CURSOR_WORLD_COORDS, mpOwner);
+}
 
 void ControllerShip::Update()
 {
@@ -79,17 +82,23 @@ void ControllerShip::Update()
 		// Spool down
 		mpShipData->throttleDown();
 	}
-	// Apply thrust.
-	//std::cout << "DEBUG - Current throttle is " << mThrottle << ", fuel is at " << mpShipData->mFuel << std::endl;
-	/*
-	if (mpShipData->mFuel > 0.0f && mpShipData->mThrottle > 1.0f) // Throttle actually has a tiny deadzone. Making this configurable could make for an interesting game mechanic.
-	{
-		mpShipData->mFuel -=  GlobalManager::getFrameRateController()->getFrameTimeSec() / mpShipData->mFuelEfficiency;
-		mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mpShipData->mMainAcceleration * (mpShipData->mThrottle / 100.0f));
-	}
-	*/
 
 	// Get mouse position in world space.
+
+	// EXAMPLE TIMED EVENT.
+	if (pIM->isMouseButtonPressed(SDL_BUTTON_RIGHT))
+	{
+		DestroyAllProjectilesEvent* pDestroyEvent = new DestroyAllProjectilesEvent();
+		pDestroyEvent->mTimer = 2000.0f; // Wait 2 seconds.
+		GlobalManager::getEventManager()->addTimedEvent(pDestroyEvent);
+	}
+
+	// EXAMPLE GLOBAL EVENT.
+	if (pIM->IsKeyPressed(SDL_SCANCODE_SPACE))
+	{
+		ExampleSpinEvent* pExampleEvent = new ExampleSpinEvent();
+		GlobalManager::getEventManager()->broadcastEvent(pExampleEvent);
+	}
 
 
 	// Fire a turret command event.
@@ -98,11 +107,23 @@ void ControllerShip::Update()
 		pNewTurretEvent->mShoot = true;
 	else
 		pNewTurretEvent->mShoot = false;
-	pNewTurretEvent->mAimPoint = glm::vec2(0.0f, 0.0f);
+	pNewTurretEvent->mAimPoint = mPlayerAimPoint;
 	GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewTurretEvent);
 }
+
+
+void ControllerShip::handleEvent(Event* pEvent)
+{
+	if (pEvent->mType == EventType::CURSOR_WORLD_COORDS)
+	{
+		CursorToWorldCoordinatesEvent* pCursorEvent = static_cast<CursorToWorldCoordinatesEvent*>(pEvent);
+		this->mPlayerAimPoint = pCursorEvent->mCoords;
+	}
+}
+
 
 void ControllerShip::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
 
 }
+

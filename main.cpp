@@ -183,7 +183,7 @@ void gameLoop()
 		SDL_GL_SwapWindow(pWindow); // Swaps the buffered frame to view.
 
 		// Mutate mGameObjects for this game loop.
-		//GlobalManager::getGameObjectManager()->deleteRemovedGameObjects();
+		GlobalManager::getGameObjectManager()->deleteRemovedGameObjects();
 		GlobalManager::getGameObjectManager()->addCreatedGameObjects();
 
 		GlobalManager::getFrameRateController()->frameEnd();

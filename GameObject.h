@@ -49,14 +49,14 @@ public:
 
 	void handleEvent(Event *pEvent);
 public:
-	bool mMarkedForDeletion;
 	bool mHasChildren;
 	std::unordered_map<unsigned int, Component*> mComponents; // <TYPE, COMPONENT>
 	std::string mShaderName = "core";	// May have more shaders in the future.
 	std::string mName;
+	RenderPassType mRenderPassType; // render pass type enum
 private:
 	GameObject* mpParentGO;
 private:
-	RenderPassType mRenderPassType; // render pass type enum
+	// No private variables.
 };
 
