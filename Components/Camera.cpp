@@ -1,10 +1,25 @@
+/* Start Header -------------------------------------------------------
+
+	Copyright (C) 20xx DigiPen Institute of Technology.
+	Reproduction or disclosure of this file or its contents without the
+	prior written consent of DigiPen Institute of Technology is prohibited.
+
+	File Name:			Camera.cpp
+	Purpose				Implementations for Camera.h
+	Language:			C++, compiled using Microsoft Visual Studio 2019.
+	Platform:			Compiled using Visual Studio 2019, Windows 10.
+	Project:			JarredEagley_FinalProject
+	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
+	Creation date:		11/5/2020
+
+- End Header --------------------------------------------------------*/
+
 #include "Camera.h"
 #include "ComponentTypes.h"
 #include "../GameObject.h"
 #include "Transform.h"
 #include "../Managers/GlobalManager.h"
 
-//#include "SDL.h" // FOR INPUT, WILL BE MOVED ELSEWHERE.
 
 Camera::Camera() : Component(ComponentTypes::TYPE_CAMERA),
 mCameraTransform(glm::mat4(1.0f)), mCameraProjection(glm::mat4(1.0f))

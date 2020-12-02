@@ -1,3 +1,23 @@
+/* Start Header -------------------------------------------------------
+
+	Copyright (C) 20xx DigiPen Institute of Technology.
+	Reproduction or disclosure of this file or its contents without the
+	prior written consent of DigiPen Institute of Technology is prohibited.
+
+	File Name:			ShipData.h
+	Purpose:			Contains all the data needed for a space ship, such
+						as acceleration and health. Also holds the ship's
+						physics body and relays movement commands. This
+						way, ship movement isn't inherently tied to whatever
+						is commanding it; be it player or ai.
+	Language:			C++, compiled using Microsoft Visual Studio 2019.
+	Platform:			Compiled using Visual Studio 2019, Windows 10.
+	Project:			JarredEagley_FinalProject
+	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
+	Creation date:		11/25/2020
+
+- End Header --------------------------------------------------------*/
+
 #pragma once
 #include "Component.h"
 #include "ComponentTypes.h"
