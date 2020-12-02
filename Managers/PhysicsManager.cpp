@@ -6,6 +6,7 @@
 
 PhysicsManager* PhysicsManager::instance = nullptr;
 std::list<PhysicsBody*> PhysicsManager::gravityBodies; // Initialize the vector.
+bool PhysicsManager::isPhysicsPaused = false;
 
 void PhysicsManager::destroySingleton()
 {
@@ -36,6 +37,9 @@ PhysicsManager::PhysicsManager()
 
 void PhysicsManager::Update()
 {
+	if (isPhysicsPaused)
+		return;
+
 	float frameTime = GlobalManager::getFrameRateController()->getFrameTime();
 	// Integrate the physics bodies.
 	for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects)

@@ -18,6 +18,9 @@
 
 #pragma once
 
+#include <random>
+#include <time.h>
+
 class GameStateManager
 {
 public:
@@ -29,6 +32,8 @@ public:
 	};
 	void destroySingleton();
 
+	float getRandomFloat();
+
 	void readGameConfig();
 
 public:
@@ -37,10 +42,10 @@ public:
 		SCENE_LEVEL,
 		SCENE_MENU
 	};
-	bool physicsPaused;
 
 private:
 	GameStateManager();
+
 private:
 	static GameStateManager* instance; // The signleton instance.
 };

@@ -35,6 +35,8 @@ public:
 
 public:
 	static std::list<PhysicsBody*> gravityBodies;
+	static bool isPhysicsPaused;
+
 private:
 	PhysicsManager();
 private:

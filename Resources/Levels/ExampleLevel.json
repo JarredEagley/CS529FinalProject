@@ -34,7 +34,7 @@
             {
                 "TYPE_TRANSFORM":
                 {
-                    "Scale": [0.5, 1.0]
+                    "Translation":[0,-3.5]
                 }
             },
             "Parent":"PLAYER"
@@ -46,7 +46,6 @@
             {
                 "TYPE_TRANSFORM":
                 {
-                    "Scale": [0.5, 1.0],
                     "Translation": [2, -2]
                 }
             },
@@ -59,8 +58,7 @@
             {
                 "TYPE_TRANSFORM":
                 {
-                    "Scale": [0.5, 1.0],
-                    "Translation":[-2,1]
+                    "Translation":[-1, 2.2]
                 }
             },
             "Parent":"PLAYER"

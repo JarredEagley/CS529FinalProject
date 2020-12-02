@@ -72,7 +72,7 @@ void Camera::buildTransform()
 	mCameraTransform = (mpTransform->getTransformationMatrix());
 
 	// Offset Translation.
-	//cameraTransform = glm::translate(cameraTransform, offset); 
+	mCameraTransform = glm::translate(mCameraTransform, offset);
 	
 	// Rotate.
 	mCameraTransform = glm::rotate(mCameraTransform, mCameraAngle, glm::vec3(1, 0, 0));

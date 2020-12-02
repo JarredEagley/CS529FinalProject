@@ -3,9 +3,9 @@
 #include "ComponentTypes.h"
 #include "Transform.h"
 #include "GLRect.h"
-#include <random>
 
 #include "PhysicsBody.h"
+#include <random>
 
 Turret::Turret() : Component(ComponentTypes::TYPE_TURRET),
 mpTransform(nullptr), mpParentTransform(nullptr),mpGLRect(nullptr), mpParentGLRect(nullptr),
@@ -13,8 +13,8 @@ mAimPoint(glm::vec2(0.0f)), mAimAngle(0.0f),
 mIsShooting(false)
 {
 	// Randomize this turret's fire timer start point.
-	srand(GlobalManager::getFrameRateController()->getFrameTime());
-	this->fireTimer = (rand() / RAND_MAX) * fireRate;
+	float randomFloat = GlobalManager::getGameStateManager()->getRandomFloat();
+	this->fireTimer = (randomFloat / RAND_MAX) * fireRate;
 }
 
 Turret::~Turret()
@@ -38,6 +38,7 @@ void Turret::Update()
 		GameObject* pBullet = GlobalManager::getGameObjectFactory()->generateProjectile("CoilBullet.json");
 		if (pBullet == nullptr)
 			return;
+
 		PhysicsBody* pBulletPhys = static_cast<PhysicsBody*>(pBullet->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
 		PhysicsBody* pParentPhys = static_cast<PhysicsBody*>(mpOwner->getParent()->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
 		Transform* pBulletTransform = static_cast<Transform*>(pBullet->GetComponent(ComponentTypes::TYPE_TRANSFORM));
@@ -47,7 +48,7 @@ void Turret::Update()
 			pBulletPhys->setTimedIgnoreCollision(pParentPhys, 1000.0f);
 
 			// Set trasnform
-			pBulletTransform->setPosition(mpParentTransform->getPosition());
+			pBulletTransform->setPosition(mpParentTransform->getPosition() + mpTransform->getPosition());
 			pBulletTransform->setRotation(mAimAngle);
 
 			// Set physics

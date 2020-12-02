@@ -28,6 +28,13 @@ void GameStateManager::destroySingleton()
 
 GameStateManager::GameStateManager()
 {
+	srand(time(NULL));
+}
+
+
+float GameStateManager::getRandomFloat()
+{
+	return (rand());
 }
 
 
