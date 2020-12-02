@@ -43,6 +43,9 @@ void Turret::Update()
 		Transform* pBulletTransform = static_cast<Transform*>(pBullet->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 		if (pBulletPhys != nullptr && pBulletTransform != nullptr && pParentPhys != nullptr)
 		{
+			// Ignore our parent's physics body for one second. 
+			pBulletPhys->setTimedIgnoreCollision(pParentPhys, 1000.0f);
+
 			// Set trasnform
 			pBulletTransform->setPosition(mpParentTransform->getPosition());
 			pBulletTransform->setRotation(mAimAngle);

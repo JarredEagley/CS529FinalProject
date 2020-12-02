@@ -93,14 +93,6 @@ void ControllerShip::Update()
 		GlobalManager::getEventManager()->addTimedEvent(pDestroyEvent);
 	}
 
-	// EXAMPLE GLOBAL EVENT.
-	if (pIM->IsKeyPressed(SDL_SCANCODE_SPACE))
-	{
-		ExampleSpinEvent* pExampleEvent = new ExampleSpinEvent();
-		GlobalManager::getEventManager()->broadcastEvent(pExampleEvent);
-	}
-
-
 	// Fire a turret command event.
 	TurretCommandEvent* pNewTurretEvent = new TurretCommandEvent();
 	if ( pIM->isMouseButtonPressed(SDL_BUTTON_LEFT) )

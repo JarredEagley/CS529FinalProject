@@ -65,6 +65,11 @@ void PhysicsManager::Update()
 			PhysicsBody* pPhysicsBody2 = static_cast<PhysicsBody*>(pObjPair2->second->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
 			if (nullptr == pPhysicsBody2) continue;
 
+			// Check ignore collision.
+			if (pPhysicsBody1->getIgnoredPhysicsBody() == pPhysicsBody2
+				|| pPhysicsBody2->getIgnoredPhysicsBody() == pPhysicsBody1)
+				continue;
+
 			// If we're here, we have two GO's with body components.
 			GlobalManager::getCollisionManager()->checkCollisionAndGenerateContact(pPhysicsBody1->mpShape, pPhysicsBody1->mPosition, pPhysicsBody2->mpShape, pPhysicsBody2->mPosition);
 		}

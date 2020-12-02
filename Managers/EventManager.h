@@ -107,16 +107,6 @@ public:
 	// May eventually also want to hold a projectile type, but I'm not doing that right now.
 };
 
-// Anything recieving this event with a phpysics body will get a fixed number added to their angular velocity.
-// (not torque, pure number, just for fun)
-class ExampleSpinEvent : public Event
-{
-public:
-	ExampleSpinEvent() : Event(EventType::EXAMPLE_SPIN) {};
-	~ExampleSpinEvent() {};
-};
-
-
 class CursorToWorldCoordinatesEvent : public Event
 {
 public:

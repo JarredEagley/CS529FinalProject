@@ -20,6 +20,9 @@ public:
 	void calculateGravityForces(); // Applies all the gravitational force vectors.
 	void applyForce(glm::vec2 F);
 	void applyTorque(float T);
+	
+	void setTimedIgnoreCollision(PhysicsBody * pIgnored, float ignoreTime);
+	PhysicsBody* getIgnoredPhysicsBody() { return this->mpIgnoredPhysicsBody; };
 
 	bool hasGravity() { return mHasGravity; }; // hasGravity is read-only. Setter needs to inform the physics manager.
 	void enableGravity();
@@ -43,8 +46,12 @@ public:
 
 	Shape* mpShape; 
 
+
 private:
+	// No private methods.
 private:
+	PhysicsBody* mpIgnoredPhysicsBody;
+	float mIgnorePhysicsBodyTimer;
 	bool mHasGravity; 
 };
 

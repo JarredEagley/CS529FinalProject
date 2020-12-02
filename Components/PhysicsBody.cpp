@@ -15,7 +15,7 @@ mAcceleration(glm::vec2(0.0f)), mAngularAcceleration(0.0f),
 mTotalForce(glm::vec2(0.0f)), mTotalTorque(0.0f),
 mMass(1.0f), mInvMass(1.0f),
 mForwardDir(glm::vec2(0.0f,1.0f)), mRightDir(glm::vec2(1.0f,0.0f)),
-mpShape(nullptr)
+mpShape(nullptr), mpIgnoredPhysicsBody(nullptr), mIgnorePhysicsBodyTimer(0.0f)
 {
 }
 
@@ -30,6 +30,17 @@ void PhysicsBody::Initialize() {}
 
 void PhysicsBody::Update()
 {
+	if (mpIgnoredPhysicsBody != nullptr)
+	{
+		if (mIgnorePhysicsBodyTimer > 0.0f)
+		{
+			mIgnorePhysicsBodyTimer -= GlobalManager::getFrameRateController()->getFrameTime();
+		}
+		else
+		{
+			mpIgnoredPhysicsBody = nullptr;
+		}
+	}
 }
 
 
@@ -147,6 +158,13 @@ void PhysicsBody::applyTorque(float T)
 }
 
 
+void PhysicsBody::setTimedIgnoreCollision(PhysicsBody* pIgnored, float ignoreTime)
+{
+	mIgnorePhysicsBodyTimer = ignoreTime;
+	mpIgnoredPhysicsBody = pIgnored;
+}
+
+
 void PhysicsBody::enableGravity()
 {
 	if (mHasGravity)
@@ -191,10 +209,6 @@ void PhysicsBody::handleEvent(Event* pEvent)
 			//std::cout << "DEBUG: " << this->mpOwner->mName << " altered\n";
 			this->mVelocity = pCollideEvent->mNewVel1;
 		}
-	}
-	else if (pEvent->mType == EventType::EXAMPLE_SPIN)
-	{
-		this->mAngularVelocity += .1f;
 	}
 }
 
