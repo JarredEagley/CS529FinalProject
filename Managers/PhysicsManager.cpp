@@ -6,7 +6,7 @@
 
 PhysicsManager* PhysicsManager::instance = nullptr;
 std::list<PhysicsBody*> PhysicsManager::gravityBodies; // Initialize the vector.
-bool PhysicsManager::isPhysicsPaused = false;
+bool PhysicsManager::isPhysicsPaused = true;
 
 void PhysicsManager::destroySingleton()
 {

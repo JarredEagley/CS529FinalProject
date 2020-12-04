@@ -171,6 +171,10 @@ void gameLoop()
 		// Do GameObject updates.
 		GlobalManager::getGameObjectManager()->updateGameObjects();
 
+		// TO-DO: Move this somewhere more sensible and make it more flexible.
+		if (GlobalManager::getPhysicsManager()->isPhysicsPaused)
+			GlobalManager::getPhysicsManager()->isPhysicsPaused = false;
+
 		// ----- Drawing ----- //
 
 		// Clear the buffer.
