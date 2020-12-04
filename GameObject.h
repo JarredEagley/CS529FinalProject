@@ -37,6 +37,10 @@ public:
 	void setParent(std::string parentGOName);
 	GameObject* getParent();
 
+	// Bool getters.
+	bool hasChildren() { return (!mChildren.empty()); };
+	bool isParented() { return mIsParented; };
+
 	Component* AddComponent(unsigned int Type); // Returns the component which was allocated.
 	Component* GetComponent(unsigned int Type); // Because we need to access components.
 
@@ -49,15 +53,20 @@ public:
 
 	void handleEvent(Event *pEvent);
 public:
-	bool mHasChildren;
 	std::unordered_map<unsigned int, Component*> mComponents; // <TYPE, COMPONENT>
 	std::string mShaderName = "core";	// May have more shaders in the future.
 	std::string mName;
 	RenderPassType mRenderPassType; // render pass type enum
+
 private:
 	bool mIsParented;
+	
 	std::string mParentGOName; // Name of the GO we'll try to get for parenting.
 	GameObject* mpParentGO;
+
+protected:
+	std::list<GameObject*> mChildren; // Only other GO's should access this ever-- just to add themselves.
+
 private:
 	// No private variables.
 };

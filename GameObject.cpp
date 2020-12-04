@@ -36,7 +36,9 @@
 #include "Components/Turret.h"
 #include "Components/FollowCursor.h"
 
-GameObject::GameObject() : mName(""), mpParentGO(nullptr), mParentGOName(""), mIsParented(false), mHasChildren(false),
+GameObject::GameObject() : mName(""), 
+mpParentGO(nullptr), mParentGOName(""), 
+mIsParented(false),
 mRenderPassType(RenderPassType::NONE)
 {
 	std::unordered_map<unsigned int, Component*> mComponents;
@@ -49,11 +51,30 @@ GameObject::~GameObject()
 		delete pComponentPair.second;
 	mComponents.clear();
 
+
 	// Remove from render passes.
 	GlobalManager::getGraphicsManager()->removeFromAnyRenderPasses(this);
 
+
+	// If I have a parent, remove from parent's mChildren.
+	if (mpParentGO != nullptr)
+		mpParentGO->mChildren.remove(this);
+
 	// Remove as a subscriber from anything.
 	GlobalManager::getEventManager()->UnsubscribeAll(this);
+
+
+	// Broadcast desctruction to child GameObjects.
+	// Note: Camera GO will ignore this event. Don't want to kill the camera.
+	GameObjectDestroyedEvent* pDestroyEvent = new GameObjectDestroyedEvent(mName);
+	for (auto pGO : mChildren)
+	{
+		if (pGO != nullptr)
+		{
+			pGO->mpParentGO = nullptr; // NEED to notify child that parent is now gone.
+			pGO->handleEvent(pDestroyEvent);
+		}
+	}
 }
 
 void GameObject::initializeComponents()
@@ -97,7 +118,7 @@ void GameObject::setParent(std::string parentGOName)
 	this->mpParentGO = pParentGO;
 
 	// Tell parent it has children.
-	pParentGO->mHasChildren = true;
+	pParentGO->mChildren.push_back(this);
 
 	// Subscribe me to transform updates.
 	GlobalManager::getEventManager()->Subscribe(EventType::TRANSFORM_UPDATED, this);
@@ -217,6 +238,11 @@ void GameObject::handleEvent(Event* pEvent)
 	for (auto pComponentPair : mComponents)
 	{
 		pComponentPair.second->handleEvent(pEvent);
+	}
+
+	if (pEvent->mType == EventType::GAMEOBJECT_DESTROYED)
+	{
+		 // Do nothing right now...
 	}
 
 	// Normal game objects will never be handed a destroy projectile event.

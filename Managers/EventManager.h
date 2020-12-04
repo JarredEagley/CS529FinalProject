@@ -29,6 +29,7 @@ class GameObject;
 enum class EventType
 {
 	COLLIDE,
+	GAMEOBJECT_DESTROYED,
 	TRANSFORM_UPDATED,
 	SHIPDATA_UPDATED,
 	CAMERA_TRANSFORM_UPDATED,
@@ -134,6 +135,15 @@ public:
 	CursorToWorldCoordinatesEvent() : Event(EventType::CURSOR_WORLD_COORDS) {};
 	~CursorToWorldCoordinatesEvent() {};
 	glm::vec3 mCoords;
+};
+
+
+class GameObjectDestroyedEvent : public Event
+{
+public:
+	GameObjectDestroyedEvent(std::string destroyedGOName) : Event(EventType::GAMEOBJECT_DESTROYED), mDestroyedGOName(destroyedGOName) {};
+	~GameObjectDestroyedEvent() {};
+	std::string mDestroyedGOName;
 };
 
 

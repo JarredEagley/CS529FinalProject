@@ -193,6 +193,8 @@ void gameLoop()
 
 void Cleanup()
 {
+	GlobalManager::getGameObjectManager()->deleteAllGameObjects();
+
 	// Delete OpenGL context.
 	SDL_GL_DeleteContext(context);
 

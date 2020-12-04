@@ -39,7 +39,7 @@ void Transform::Update()
 	buildTransformationMatrix();
 	
 	// Send transform update to children.
-	if (this->mpOwner->mHasChildren)
+	if (this->mpOwner->hasChildren())
 	{
 		TransformUpdatedEvent* pTransformEvent = new TransformUpdatedEvent(this);
 		GlobalManager::getEventManager()->broadcastEventToSubscribers(pTransformEvent);

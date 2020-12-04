@@ -80,3 +80,12 @@ void GameObjectManager::deleteRemovedGameObjects()
 	}
 	mMarkedForDelete.clear();
 }
+
+
+void GameObjectManager::deleteAllGameObjects()
+{
+	for (auto pGOPair : mGameObjects)
+		delete pGOPair.second;
+	mGameObjects.clear();
+	mMarkedForDelete.clear();
+}
