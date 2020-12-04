@@ -91,7 +91,7 @@ void ControllerSlider::Serialize(rapidjson::Value::ConstMemberIterator inputMemb
 	// Check to ensure value makes sense.
 	if (!inputMemberIt->value.IsFloat())
 	{
-		std::cerr << "Warning: ControllerSlider did not recieve float value; deserialization failed." << std::endl;
+		std::cerr << "Error: ControllerSlider did not recieve float value; deserialization failed." << std::endl;
 		return;
 	}
 	// Speed Is stored as a float.

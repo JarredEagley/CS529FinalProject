@@ -82,12 +82,14 @@ void FuelMeter::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			}
 			else
 			{
-				std::cout << "Warning: GLRect had a 'Color' but its array was incorrectly formatted!" << std::endl;
+				if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+					std::cout << "Warning: GLRect had a 'Color' but its array was incorrectly formatted!" << std::endl;
 			}
 		}
 		else
 		{
-			std::cout << "Warning: GLRect had a 'Color' but its value was not an array of numbers!" << std::endl;
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+				std::cout << "Warning: GLRect had a 'Color' but its value was not an array of numbers!" << std::endl;
 		}
 	}
 

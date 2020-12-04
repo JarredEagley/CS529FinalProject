@@ -146,7 +146,7 @@ void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	// Sanity check for serializing GLRect.
 	if (!inputMemberIt->value.IsObject())
 	{
-		std::cerr << "Warning: GLRect failed to deserialize. Value was not formatted correctly.." << std::endl;
+		std::cerr << "Error: GLRect failed to deserialize. Value was not formatted correctly.." << std::endl;
 		return;
 	}
 	// Get the GLRect object.
@@ -165,7 +165,8 @@ void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		}
 		else
 		{
-			std::cout << "Warning: GLRect had a 'Texture' but its value was not a string!" << std::endl;
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+				std::cout << "Warning: GLRect had a 'Texture' but its value was not a string!" << std::endl;
 		}
 	}
 
@@ -186,12 +187,14 @@ void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			}
 			else
 			{
-				std::cout << "Warning: GLRect had a 'Color' but its array was incorrectly formatted!" << std::endl;
+				if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+					std::cout << "Warning: GLRect had a 'Color' but its array was incorrectly formatted!" << std::endl;
 			}
 		}
 		else
 		{
-			std::cout << "Warning: GLRect had a 'Color' but its value was not an array of numbers!" << std::endl;
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+				std::cout << "Warning: GLRect had a 'Color' but its value was not an array of numbers!" << std::endl;
 		}
 	}
 }

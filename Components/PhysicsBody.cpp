@@ -234,7 +234,7 @@ void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	// Sanity check type.
 	if (!inputMemberIt->value.IsObject())
 	{
-		std::cerr << "Warning: Physics Body component failed to deserialize. Value was not an object." << std::endl;
+		std::cerr << "Error: Physics Body component failed to deserialize. Value was not an object." << std::endl;
 		return;
 	}
 
@@ -250,10 +250,12 @@ void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			this->setMass(physBodyObj["Mass"].GetFloat());
 		}
 		else
-			std::cout << "Warning: Deserialized Physics Body component's mass parameter was formatted incorrectly. Mass will be default." << std::endl;
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+				std::cout << "Warning: Deserialized Physics Body component's mass parameter was formatted incorrectly. Mass will be default." << std::endl;
 	}
 	else
-		std::cout << "Warning: Deserialized Physics Body component did not contain a mass parameter. Mass will be default." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: Deserialized Physics Body component did not contain a mass parameter. Mass will be default." << std::endl;
 
 	// ----- Read in shapename. -----
 
@@ -280,7 +282,8 @@ void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			mpShape->mpOwnerBody = this;
 		}
 		else
-			std::cout << "Warning: Deserialized Physics Body component's AABB Shape was improperly formatted." << std::endl;
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+				std::cout << "Warning: Deserialized Physics Body component's AABB Shape was improperly formatted." << std::endl;
 	}
 	else if (physBodyObj.HasMember("Circle"))
 	{
@@ -296,10 +299,12 @@ void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			mpShape->mpOwnerBody = this;
 		}
 		else
-			std::cout << "Warning: Deserialized Physics Body component's Circle shape was improperly formatted." << std::endl;
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+				std::cout << "Warning: Deserialized Physics Body component's Circle shape was improperly formatted." << std::endl;
 	}
 	else
-		std::cout << "Warning: Deserialized Physics Body component did not contain a collision shape parameter." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: Deserialized Physics Body component did not contain a collision shape parameter." << std::endl;
 
 	// Has velocity?
 	if (physBodyObj.HasMember("Velocity"))
@@ -312,7 +317,8 @@ void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			);
 		}
 		else
-			std::cout << "Warning: Deserialized Physics Body component's starter velocity was improperly formatted." << std::endl;
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+				std::cout << "Warning: Deserialized Physics Body component's starter velocity was improperly formatted." << std::endl;
 	}
 	// Has Angular velocity?
 	if (physBodyObj.HasMember("Angular Velocity"))
@@ -331,8 +337,4 @@ void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	{
 		enableGravity();
 	}
-
-
-	// TO-DO: Allow static flag here. Don't need it just yet, though.
-
 }

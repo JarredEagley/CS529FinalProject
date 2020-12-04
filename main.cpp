@@ -4,6 +4,7 @@
 // https://headerphile.com/sdl2/opengl-part-1-sdl-opengl-awesome/
 // There's several ways to do this but I thought this tutorial's formatting was the cleanest.
 
+
 #include <string>
 #include <iostream>
 #include <Windows.h>

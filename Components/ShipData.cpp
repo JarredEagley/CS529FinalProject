@@ -158,7 +158,8 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mHealth = inputObj["Health"].GetFloat();
 	}
 	else
-		std::cout << "Warning: ShipData 'Health' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Health' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Health Max") && inputObj["Health Max"].IsNumber())
@@ -166,7 +167,8 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mMaxHealth = inputObj["Health Max"].GetFloat();
 	}
 	else
-		std::cout << "Warning: ShipData 'Health Max' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Health Max' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Power") && inputObj["Power"].IsNumber())
@@ -174,7 +176,8 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mPower = inputObj["Power"].GetFloat();
 	}
 	else
-		std::cout << "Warning: ShipData 'Power' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Power' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Power Max") && inputObj["Power Max"].IsNumber())
@@ -182,7 +185,8 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mMaxPower = inputObj["Power Max"].GetFloat();
 	}
 	else
-		std::cout << "Warning: ShipData 'Power Max' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Power Max' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Power Production") && inputObj["Power Production"].IsNumber())
@@ -190,7 +194,8 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mPowerProduction = inputObj["Power Production"].GetFloat();
 	}
 	else
-		std::cout << "Warning: ShipData 'Power Production' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Power Production' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Fuel") && inputObj["Fuel"].IsNumber())
@@ -198,7 +203,8 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mFuel = inputObj["Fuel"].GetFloat();
 	}
 	else
-		std::cout << "Warning: ShipData 'Fuel' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Fuel' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Fuel Max") && inputObj["Fuel Max"].IsNumber())
@@ -206,7 +212,8 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mMaxFuel = inputObj["Fuel Max"].GetFloat();
 	}
 	else
-		std::cout << "Warning: ShipData 'Fuel Max' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Fuel Max' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Fuel Efficiency") && inputObj["Fuel Efficiency"].IsNumber())
@@ -214,15 +221,19 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mFuelEfficiency = inputObj["Fuel Efficiency"].GetFloat();
 	}
 	else
-		std::cout << "Warning: ShipData 'Fuel Efficiency' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Fuel Efficiency' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Coil Bullets") && inputObj["Coil Bullets"].IsNumber())
 	{
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+
 		this->mCoilBullets = inputObj["Coil Bullets"].GetInt(); // Integer, not float.
 	}
 	else
-		std::cout << "Warning: ShipData 'Coil Bullets' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Coil Bullets' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Missiles") && inputObj["Missiles"].IsNumber())
@@ -230,7 +241,8 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mMissiles = inputObj["Missiles"].GetInt(); // Integer, not float.
 	}
 	else
-		std::cout << "Warning: ShipData 'Missiles' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Missiles' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Main Acceleration") && inputObj["Main Acceleration"].IsNumber())
@@ -238,7 +250,8 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mMainAcceleration = inputObj["Main Acceleration"].GetFloat();
 	}
 	else
-		std::cout << "Warning: ShipData 'Main Acceleration' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Main Acceleration' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Secondary Acceleration") && inputObj["Secondary Acceleration"].IsNumber())
@@ -246,7 +259,8 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mSecondaryAcceleration = inputObj["Secondary Acceleration"].GetFloat();
 	}
 	else
-		std::cout << "Warning: ShipData 'Secondary Acceleration' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Secondary Acceleration' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Angular Acceleration") && inputObj["Angular Acceleration"].IsNumber())
@@ -254,20 +268,25 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		this->mAngularAcceleration = inputObj["Angular Acceleration"].GetFloat();
 	}
 	else
-		std::cout << "Warning: ShipData 'Angular Acceleration' parameter was missing or improperly formatted. Default used." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Angular Acceleration' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
 	if (inputObj.HasMember("Throttle Sensitivity") && inputObj["Throttle Sensitivity"].IsNumber())
 	{
 		this->mThrottleSensitivity = inputObj["Throttle Sensitivity"].GetFloat();
 	}
-		std::cout << "Warning: ShipData 'Throttle Sensitivity' parameter was missing or improperly formatted. Default used." << std::endl;
+	else
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Throttle Sensitivity' parameter was missing or improperly formatted. Default used." << std::endl;
 			
 
 	if (inputObj.HasMember("Throttle Deadzone") && inputObj["Throttle Sensitivity"].IsNumber())
 	{
 		this->mThrottleSensitivity = inputObj["Throttle Deadzone"].GetFloat();
 	}
-		std::cout << "Warning: ShipData 'Throttle Deadzone' parameter was missing or improperly formatted. Default used." << std::endl;
+	else
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Throttle Deadzone' parameter was missing or improperly formatted. Default used." << std::endl;
 
 }

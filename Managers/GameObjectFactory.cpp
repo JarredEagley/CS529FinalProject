@@ -48,6 +48,7 @@ void GameObjectFactory::helper_objectRenderPass(GameObject* pGO, const char* ren
 		pGO->setRenderPass(RenderPassType::FINAL);
 }
 
+// Loads a simple archetype.
 GameObject* GameObjectFactory::loadArchetype(std::string pFileName) 
 {
 	GameObject* pNewGO;
@@ -82,7 +83,9 @@ GameObject* GameObjectFactory::loadArchetype(std::string pFileName)
 	if (!doc.HasMember("Components") || !doc["Components"].IsObject())
 	{
 		// No components to add to the game object. This is an empty game object.
-		std::cerr << "Warning: GameObject " << pFileName << " did not contain any components." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+				std::cerr << "Warning: GameObject " << pFileName << " did not contain any components." << std::endl;
 		return pNewGO; // Return empty GameObject since it was a valid GameObject but had no components.
 	}
 
@@ -92,15 +95,17 @@ GameObject* GameObjectFactory::loadArchetype(std::string pFileName)
 	{
 		if (itr->name.IsString() == false)
 		{
-			std::cout << "Warning: Failed to deserialize a component because. itr->name was not string." << std::endl;
+			std::cout << "Error: Failed to deserialize a component because. itr->name was not string." << std::endl;
 			continue;
 		}
 
 		Component* pNewComponent = nullptr;
-		std::cout << "Reading in: " << itr->name.GetString() << "\n";
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+			std::cout << "GOF Archetype - Reading in: " << itr->name.GetString() << "\n";
 		pNewComponent = pNewGO->AddComponent(ComponentTypes::stringToEnum(itr->name.GetString()));
 
-		std::cout << "Done.\n";
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+			std::cout << "GOF Archetype - Done Reading.\n";
 
 		// Rapidjson didn't like me passing just the value in, so pass the whole iterator.
 		if (nullptr != pNewComponent)
@@ -144,7 +149,8 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 
 	// Check if GO by this name aready exists...
 	if (GlobalManager::getGameObjectManager()->mGameObjects.find(currentGOName) != GlobalManager::getGameObjectManager()->mGameObjects.end())
-		std::cout << "Warning: GameObject by name " << currentGOName << " already exists and will be replaced." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+			std::cout << "Warning: GameObject by name " << currentGOName << " already exists and will be replaced." << std::endl;
 
 
 	GameObject* pCurrentGO = nullptr;
@@ -165,7 +171,8 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 	if (nullptr == pCurrentGO)
 	{
 		// Otherwise just create a fresh GameObject.
-		std::cerr << "Warning: Archetype for GameObject was invalid or not present." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+			std::cerr << "Warning: Archetype for GameObject was invalid or not present." << std::endl;
 		pCurrentGO = new GameObject;
 	}
 
@@ -186,11 +193,13 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 			// Check this components' validity.
 			if (!compItr->name.IsString())
 			{
-				std::cerr << "Warning: Failed to parse a component while building level's GameObjects." << std::endl;
+				if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+					std::cerr << "Warning: Failed to parse a component while building level's GameObjects." << std::endl;
 				continue;
 			}
 
-			std::cout << "Note: (re)loading component " << compItr->name.GetString() << std::endl;
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+				std::cout << "Note: (re)loading component " << compItr->name.GetString() << std::endl;
 
 			// Deserialize this component.
 			Component* pCurrentComp = pCurrentGO->AddComponent(ComponentTypes::stringToEnum(compItr->name.GetString()));
@@ -209,7 +218,8 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 
 		// Make sure parent wasn't invalid.
 		if (pParent == nullptr)
-			std::cout << "Warning: Parent was either invalid or not initialized before child GameObject. Parenting failed for " << currentGOName << std::endl;
+			std::cout << "Error: Parent was either invalid or not initialized before child GameObject. Parenting failed for " << 
+			currentGOName << std::endl;
 		else
 			pCurrentGO->setParent(pParent);
 	}
@@ -286,7 +296,8 @@ GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
 	newGOName = doc["Name"].GetString();
 	newGOName = "PROJECTILE_" + newGOName;// GlobalManager::getGameObjectManager()->mProjectileCount;
 	newGOName = newGOName + "_" + std::to_string(GlobalManager::getGameObjectManager()->mProjectileCount);
-	std::cout << "Deserializing GameObject " << newGOName << std::endl; // Having this uncommented might get obnoxious.
+	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+		std::cout << "Deserializing GameObject " << newGOName << std::endl; // Having this uncommented might get obnoxious.
 
 	// I would like to delegate this to the game object manager, maybe. It's a bit ugly this way.
 	GlobalManager::getGameObjectManager()->mProjectileCount += 1;
@@ -303,7 +314,8 @@ GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
 	if (!doc.HasMember("Components") || !doc["Components"].IsObject())
 	{
 		// No components to add to the game object. This is an empty game object.
-		std::cerr << "Warning: Dynamic GameObject " << pFileName << " did not contain any components." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+			std::cerr << "Warning: Dynamic GameObject " << pFileName << " did not contain any components." << std::endl;
 		return pNewGO; // Return empty GameObject since it was a valid GameObject but had no components.
 	}
 	
@@ -313,33 +325,23 @@ GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
 	{
 		if (itr->name.IsString() == false)
 		{
-			std::cout << "Warning: Failed to deserialize a component because. itr->name was not string." << std::endl;
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+				std::cout << "Warning: Failed to deserialize a component because. itr->name was not string." << std::endl;
 			continue;
 		}
 
 		Component* pNewComponent = nullptr;
-		std::cout << "Reading in: " << itr->name.GetString() << "\n";
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+			std::cout << "GOF Projectile - Reading in: " << itr->name.GetString() << "\n";
 		pNewComponent = pNewGO->AddComponent(ComponentTypes::stringToEnum(itr->name.GetString()));
 
-		std::cout << "Done.\n";
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+			std::cout << "GOF Projectile - Done.\n";
 
 		// Rapidjson didn't like me passing just the value in, so pass the whole iterator.
 		if (nullptr != pNewComponent)
 			pNewComponent->Serialize(itr);
 	}
-
-
-	// Set shader via archetype if specified.
-	/*
-	if (
-		doc.HasMember("Shader")
-		&& doc["Shader"].IsString()
-		)
-	{
-		std::string newShaderName = doc["Shader"].GetString();
-		pNewGO->mShaderName = newShaderName;
-	}
-	*/
 
 	// Initialize components.
 	pNewGO->initializeComponents();

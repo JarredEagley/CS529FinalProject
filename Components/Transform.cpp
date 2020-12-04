@@ -186,7 +186,7 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	// Sanity check for transform.
 	if (!inputMemberIt->value.IsObject())
 	{
-		std::cerr << "Warning: Transform component failed to deserialize. Value was not an object." << std::endl;
+		std::cerr << "Error: Transform component failed to deserialize. Value was not an object." << std::endl;
 		return;
 	}
 
@@ -204,11 +204,13 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			setX( transObj["Translation"].GetArray()[2].GetFloat() ); // Optional Z.
 		}
 		else
-			std::cout << "Warning: Deserialized Transform component's 'Translation' member was incorrectly formatted." << std::endl;
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+				std::cout << "Warning: Deserialized Transform component's 'Translation' member was incorrectly formatted." << std::endl;
 	}
 	else
 	{
-		std::cout << "Warning: Deserialized Transform component did not contain a Translation member." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: Deserialized Transform component did not contain a Translation member." << std::endl;
 	}
 
 	// Check if it has rotation.
@@ -219,11 +221,13 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			setRotation(transObj["Rotation"].GetFloat());
 		}
 		else
-			std::cout << "Warning: Deserialized Transform component's 'Rotation' member was incorrectly formatted." << std::endl;
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+				std::cout << "Warning: Deserialized Transform component's 'Rotation' member was incorrectly formatted." << std::endl;
 	}
 	else
 	{
-		std::cout << "Warning: Deserialized Transform component did not contain a Rotation member." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: Deserialized Transform component did not contain a Rotation member." << std::endl;
 	}
 
 	// Check if it has scale.
@@ -238,11 +242,13 @@ void Transform::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			);
 		}
 		else
-			std::cout << "Warning: Deserialized Transform component's 'Scale' member was incorrectly formatted." << std::endl;
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+				std::cout << "Warning: Deserialized Transform component's 'Scale' member was incorrectly formatted." << std::endl;
 	}
 	else
 	{
-		std::cout << "Warning: Deserialized Transform component did not contain a Scale member." << std::endl;
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: Deserialized Transform component did not contain a Scale member." << std::endl;
 	}
 
 	// Check inherit rotation.
