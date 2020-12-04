@@ -30,8 +30,10 @@ public:
 	void setMaxFramerate(unsigned int maxFrameRate);
 	void frameStart();
 	void frameEnd();
-	unsigned int getFrameTime() { return mFrameTime; }
-	float getFrameTimeSec() { return mFrameTime / 1000.0f; }
+	unsigned int getFrameTime();
+	float getFrameTimeSec();
+
+	void setMaxFrameTime(unsigned int maxFrameTime);
 
 public:
 private:
@@ -43,4 +45,6 @@ private:
 	unsigned int mMaxFrameRate;
 	unsigned int mTicksPerFrame;
 	unsigned int mFrameTime;
+
+	unsigned int mMaxFrameTime = 500; // Makes physics iterations sometimes behave a little nicer. (I hope)
 };

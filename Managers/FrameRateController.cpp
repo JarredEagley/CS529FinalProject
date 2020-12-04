@@ -43,6 +43,11 @@ void FrameRateController::setMaxFramerate(unsigned int maxFrameRate)
 	mTicksPerFrame = 1000 / mMaxFrameRate;
 }
 
+void FrameRateController::setMaxFrameTime(unsigned int maxFrameTime)
+{
+	mMaxFrameTime = maxFrameTime;
+}
+
 void FrameRateController::frameStart()
 {
 	mTickStart = SDL_GetTicks();
@@ -57,3 +62,15 @@ void FrameRateController::frameEnd()
 	mFrameTime = mTickEnd - mTickStart;
 }
 
+
+unsigned int FrameRateController::getFrameTime()
+{ 
+	if (mFrameTime > mMaxFrameTime)
+		return mMaxFrameTime;
+	return mFrameTime;
+}
+
+float FrameRateController::getFrameTimeSec()
+{ 
+	return ((float)getFrameTime() / 1000.0f);
+}
