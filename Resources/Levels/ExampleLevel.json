@@ -1,6 +1,5 @@
 {
     "Name": "ExampleLevel",
-    "Type": "Level",
     "GameObjects":
     [
         {
@@ -69,11 +68,13 @@
             "Name":"Mars",
             "Archetype": "Mars.json"
         },
+
         {
             "Name": "MainCamera",
             "Archetype": "Camera.json",
             "Parent": "PLAYER"
         },
+
         {
             "Name": "PlayerShip_Indicator_Forward",
             "Archetype": "ForwardIndicator.json",

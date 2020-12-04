@@ -125,16 +125,6 @@ void ResourceManager::loadLevel(const char* pFileName)
 		return;
 	}
 
-	// Make sure we're deserializing a level.
-	if (
-		!doc.HasMember("Type") 
-		|| !doc["Type"].IsString() 
-		|| strcmp(doc["Type"].GetString(), "Level") != 0
-		)
-	{
-		std::cerr << "Error: File " << pFileName << " is not of type 'Level'" << std::endl;
-		return;
-	}
 
 	// Make sure this level has GameObjects to parse.
 	// Note: GameObjects member is an array/list of documents.
