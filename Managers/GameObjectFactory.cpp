@@ -65,17 +65,6 @@ GameObject* GameObjectFactory::loadArchetype(std::string pFileName)
 		return nullptr; // Return nullptr on fail.
 	}
 
-	// Make sure we're deserializing a GameObject. 
-	if ( !doc.HasMember("Type") 
-		|| !doc["Type"].IsString() 
-		|| strcmp(doc["Type"].GetString(), "GameObject") != 0)
-	{
-		// We're not deserializing a GameObject.
-		std::cerr << "Error: File " << pFileName << " was not of type GameObject." << std::endl;
-		return nullptr; // Return nullptr on fail.
-	}
-
-	
 	// Create the new GameObject now that we know the json is reasonable.
 	pNewGO = new GameObject; 
 
@@ -347,7 +336,6 @@ GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
 	pNewGO->initializeComponents();
 
 	// Push onto the GameObjectManager and return.
-	//GlobalManager::getGameObjectManager()->mGameObjects[newGOName] = pNewGO; // Bad bad bad.
 	GlobalManager::getGameObjectManager()->mNewGameObjects.push_back(pNewGO);
 
 	// I'm going to just assume all Dynamic GO's use final render pass.
