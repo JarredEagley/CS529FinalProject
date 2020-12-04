@@ -303,8 +303,14 @@ GameObject* GameObjectFactory::createDynamicGameObject(std::string filePath, std
 	// Use archetyping to create the initial gameobject.
 	GameObject* pNewGO = loadArchetype(filePath);
 
+	if (pNewGO == nullptr)
+		return nullptr;
+
 	// Set its name.
 	pNewGO->mName = gameObjectName;
+
+	// By default, set it to final render pass.
+	pNewGO->setRenderPass(RenderPassType::FINAL);
 
 	// Initialize onto the GOM.
 	helper_initializeObject(pNewGO);

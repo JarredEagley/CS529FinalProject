@@ -72,6 +72,7 @@ GameObject::~GameObject()
 		if (pGO != nullptr)
 		{
 			pGO->mpParentGO = nullptr; // NEED to notify child that parent is now gone.
+			// Also pass down a gameobject destroyed event from the parent to the child.
 			pGO->handleEvent(pDestroyEvent);
 		}
 	}
@@ -102,7 +103,6 @@ void GameObject::setParent(std::string parentGOName)
 	// Set true so we can continue trying to aquire parent if we failed.
 	this->mIsParented = true;
 	this->mParentGOName = parentGOName;
-
 
 	// Get the GameObject and check if it exists.
 	GameObject* pParentGO = GlobalManager::getGameObjectManager()->getGameObject(parentGOName);
@@ -242,7 +242,19 @@ void GameObject::handleEvent(Event* pEvent)
 
 	if (pEvent->mType == EventType::GAMEOBJECT_DESTROYED)
 	{
-		 // Do nothing right now...
+		// Make sure it was our parent GO getting destroyed.
+		auto pGODestroyedEvent = static_cast<GameObjectDestroyedEvent*>(pEvent);
+		if (pGODestroyedEvent->mDestroyedGOName != mParentGOName)
+			return;
+
+		if (GlobalManager::getGraphicsManager()->getCurrentCameraGO() == this)
+		{
+			// Camera GO ignores destruction, but maybe apply parent's transform while you still can?
+		}
+		else
+		{
+			//GlobalManager::getGameObjectManager()->mMarkedForDelete.push_back(this->mName);
+		}
 	}
 
 	// Normal game objects will never be handed a destroy projectile event.

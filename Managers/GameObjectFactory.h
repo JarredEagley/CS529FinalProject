@@ -39,7 +39,8 @@ public:
 
 	GameObject* loadObject(rapidjson::GenericObject<true, rapidjson::Value> inputObj);
 
-	GameObject* createDynamicGameObject(std::string filePath, std::string gameObjectName);
+	GameObject* createDynamicGameObject(std::string filePath, std::string gameObjectName); // This version overrides the name paramater.
+	//GameObject* createDynamicGameObject(std::string filePath); // Needs some refactoring to work.
 
 	// Will generate a new game object using the designated filename.
 	GameObject* generateProjectile(std::string pFileName);

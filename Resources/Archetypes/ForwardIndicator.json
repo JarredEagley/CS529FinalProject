@@ -13,8 +13,6 @@
         {
             "Texture": "DirectionIndicator.png"
         },
-        "TYPE_DIRINDICATOR":
-        {
-        }
+        "TYPE_DIRINDICATOR":{}
     }
 }

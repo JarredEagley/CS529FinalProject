@@ -64,7 +64,12 @@ void GameObjectManager::addCreatedGameObjects()
 	{
 		// Don't want to add a null object.
 		if (pGO != nullptr)
+		{
+			// If it already exists then delete it first.
+			if (mGameObjects.count(pGO->mName) > 0)
+				delete mGameObjects[pGO->mName];
 			mGameObjects[pGO->mName] = pGO;
+		}
 	}
 	mNewGameObjects.clear();
 }

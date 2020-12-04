@@ -5,12 +5,13 @@
     {
         "TYPE_TRANSFORM":
         {
-            "Scale": [10.0, 10.0]
+            "Scale": [5.0, 5.0]
         },
         "TYPE_GLRECT":
         {
-            "Texture": "IconBullet.png"
+            "Texture": "IconBullet.png",
+            "Color": [0.0, 0.0, 0.0, 0.0]
         },
-        "TYPE_DIRINDICATOR": {}
+        "TYPE_DIRINDICATOR":{}
     }
 }

@@ -48,6 +48,8 @@ void DirectionIndicator::Update()
 	}
 
 	// Set color to owner's color.
+	if (mpOwner->getParent() == nullptr)
+		return;
 	GLRect* pParentRect = static_cast<GLRect*>(this->mpOwner->getParent()->GetComponent(ComponentTypes::TYPE_GLRECT));
 	if (pParentRect != nullptr && this->mpGLRect != nullptr)
 		this->mpGLRect->setColor(pParentRect->getColor());
