@@ -110,14 +110,18 @@ void EventManager::Subscribe(EventType Et, GameObject* pGameObject)
 
 void EventManager::UnsubscribeAll(GameObject* pGO)
 {
+	// Loop through each event type.
 	for (auto pair : mSubscriptions)
 	{
+		// Get this event type's list of subscribers. (Need to get by reference!)
 		std::list<GameObject*> &listOfSubs = pair.second;
+
+		// Look for this game object inside this list of subscribers.
 		auto itr = listOfSubs.begin();
 		while (itr != listOfSubs.end())
 		{
-			bool hasGO = (std::find(listOfSubs.begin(), listOfSubs.end(), pGO) != listOfSubs.end());
-			if (hasGO)
+			// If we've found it, remove it.
+			if(*itr == pGO)
 			{
 				itr = listOfSubs.erase(itr);
 			}
@@ -126,27 +130,7 @@ void EventManager::UnsubscribeAll(GameObject* pGO)
 		}
 		// Super hacky and inefficient, but I think I'm getting copy by value problems.
 		mSubscriptions[pair.first] = listOfSubs;
-
-		/*
-		for (auto itr = listOfSubs.begin(); itr != listOfSubs.end(); ++itr)
-		{
-			bool hasGO = (std::find(listOfSubs.begin(), listOfSubs.end(), pGO) != listOfSubs.end());
-			if (hasGO)
-			{
-				listOfSubs.erase(itr);
-				continue;
-			}
-
-		}
-		*/
-		/*
-		bool hasGO = (std::find(listOfSubs.begin(), listOfSubs.end(), pGO) != listOfSubs.end());
-		if (hasGO)
-		{
-			std::cout << "DEBUG: GO" << std::endl;
-			listOfSubs.erase(pGO);
-		}
-		*/
+		
 	}
 
 }
