@@ -40,6 +40,8 @@ public:
 
 	// Will generate a new game object using the designated filename.
 	GameObject* generateProjectile(std::string pFileName);
+	// Used for generating the icons parented to things like bullets created mid game.
+	//GameObject* generateParentedGameObject(std::string pFileName, std::string parentName);
 
 public:
 	// No public variables.

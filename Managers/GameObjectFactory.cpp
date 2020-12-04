@@ -256,8 +256,7 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 
 GameObject* GameObjectFactory::generateProjectile(std::string filePath)
 {
-	GameObject* pNewGO;
-	std::string componentName;
+	GameObject* pNewGO = nullptr;
 
 	filePath = GlobalManager::getResourceManager()->pathProjectiles + filePath;
 
@@ -272,16 +271,6 @@ GameObject* GameObjectFactory::generateProjectile(std::string filePath)
 		return nullptr; // Return nullptr on fail.
 	}
 
-	// Make sure we're deserializing a GameObject. 
-	if (!doc.HasMember("Type")
-		|| !doc["Type"].IsString()
-		|| strcmp(doc["Type"].GetString(), "GameObject") != 0)
-	{
-		// We're not deserializing a GameObject.
-		std::cerr << "Error: File " << filePath << " was not of type GameObject." << std::endl;
-		return nullptr; // Return nullptr on fail.
-	}
-
 	// Get the name of this GO. 
 	std::string newGOName;
 	if (!doc.HasMember("Name") || !doc["Name"].IsString())
@@ -290,13 +279,13 @@ GameObject* GameObjectFactory::generateProjectile(std::string filePath)
 		return nullptr;
 	}
 
-
 	newGOName = doc["Name"].GetString();
 	newGOName = "PROJECTILE_" + newGOName;// GlobalManager::getGameObjectManager()->mProjectileCount;
 	newGOName = newGOName + "_" + std::to_string(GlobalManager::getGameObjectManager()->mProjectileCount);
 	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-		std::cout << "GOF Projectile - Deserializing GameObject " << newGOName << std::endl; // Having this uncommented might get obnoxious.
+		std::cout << "GOF Projectile - Deserializing GameObject " << newGOName << std::endl; 
 
+	// Counter.
 	// I would like to delegate this to the game object manager, maybe. It's a bit ugly this way.
 	GlobalManager::getGameObjectManager()->mProjectileCount += 1;
 	GlobalManager::getGameObjectManager()->mProjectileCount = GlobalManager::getGameObjectManager()->mProjectileCount 
@@ -355,8 +344,45 @@ GameObject* GameObjectFactory::generateProjectile(std::string filePath)
 
 // For hooking up indicators to projectiles.
 /*
-GameObject* GameObjectFactory::generateParentedGameObject(std::string pFileName)
+GameObject* GameObjectFactory::generateParentedGameObject(std::string filePath, std::string parentName)
 {
+	GameObject* pParentGO = GlobalManager::getGameObjectManager()->getGameObject(parentName);
+	if (pParentGO == nullptr)
+	{
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+			std::cout << "GOF generateParentedGameObject - Parent did not exist. Aborting object creation."
+	}
+
+	GameObject* pNewGO = nullptr;
+
+	// Deserialize.
+	Serializer* pSer = GlobalManager::getSerializer();
+	rapidjson::Document doc = pSer->loadJson(filePath);
+	// Nullcheck the document.
+	if (doc.IsNull() || !doc.IsObject())
+	{
+		// Game object creation failed.
+		std::cerr << "Error: Failed to load dynamic GameObject file " << filePath << std::endl;
+		return nullptr; // Return nullptr on fail.
+	}
+
+
+	// Get the name of this GO. 
+	std::string newGOName;
+	if (!doc.HasMember("Name") || !doc["Name"].IsString())
+	{
+		std::cout << "Error: Dynamic GameObject failed to deserialize because it lacked a name or contained an invalid name." << std::endl;
+		return nullptr;
+	}
+
+	newGOName = doc["Name"].GetString();
+	newGOName = "PROJECTILE_" + newGOName;// GlobalManager::getGameObjectManager()->mProjectileCount;
+	newGOName = newGOName + "_" + std::to_string(GlobalManager::getGameObjectManager()->mProjectileCount);
+	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+		std::cout << "GOF Projectile - Deserializing GameObject " << newGOName << std::endl;
+
+	// Create the GameObject and proceed to adding components.
+	pNewGO = new GameObject();
 
 }
 */
