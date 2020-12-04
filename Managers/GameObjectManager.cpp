@@ -62,7 +62,9 @@ void GameObjectManager::addCreatedGameObjects()
 {
 	for (auto pGO : mNewGameObjects)
 	{
-		mGameObjects[pGO->mName] = pGO;
+		// Don't want to add a null object.
+		if (pGO != nullptr)
+			mGameObjects[pGO->mName] = pGO;
 	}
 	mNewGameObjects.clear();
 }
@@ -71,7 +73,9 @@ void GameObjectManager::deleteRemovedGameObjects()
 {
 	for (auto key : mMarkedForDelete)
 	{
-		delete mGameObjects[key];
+		// Make sure we're not deleting something which doesn't exist.
+		if (mGameObjects[key] != nullptr)
+			delete mGameObjects[key];
 		mGameObjects.erase(key);
 	}
 	mMarkedForDelete.clear();
