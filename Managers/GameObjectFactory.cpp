@@ -39,6 +39,7 @@ void GameObjectFactory::destroySingleton()
 
 GameObjectFactory::GameObjectFactory() { }
 
+
 void GameObjectFactory::helper_objectRenderPass(GameObject* pGO, const char* renderPassType)
 {
 	// If this GO Has a render pass aside from final, set its new render pass.
@@ -47,6 +48,15 @@ void GameObjectFactory::helper_objectRenderPass(GameObject* pGO, const char* ren
 	else
 		pGO->setRenderPass(RenderPassType::FINAL);
 }
+
+
+// Pushes onto the game object manager.
+void GameObjectFactory::helper_initializeObject(GameObject* pGO)
+{
+	pGO->initializeComponents();
+	GlobalManager::getGameObjectManager()->mNewGameObjects.push_back(pGO);
+}
+
 
 // Loads a simple archetype.
 GameObject* GameObjectFactory::loadArchetype(std::string pFileName) 
@@ -120,12 +130,13 @@ GameObject* GameObjectFactory::loadArchetype(std::string pFileName)
 		helper_objectRenderPass(pNewGO, doc["Render Pass"].GetString());
 	// Remain NONE otherwise.
 
+	// Simply return. Archetypes dont touch the game object manager.
 	return pNewGO;
 }
 
 GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjson::Value> inputObj)
 {
-	// Get the name of the current GO. 
+	// Get the name
 	std::string currentGOName;
 	if (!inputObj.HasMember("Name") || !inputObj["Name"].IsString())
 	{
@@ -134,15 +145,21 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 	}
 
 	currentGOName = inputObj["Name"].GetString();
-	std::cout << "Deserializing GameObject " << currentGOName << std::endl;
+	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+		std::cout << "GOF loadObject - Deserializing GameObject " << currentGOName << std::endl;
+
 
 	// Check if GO by this name aready exists...
 	if (GlobalManager::getGameObjectManager()->mGameObjects.find(currentGOName) != GlobalManager::getGameObjectManager()->mGameObjects.end())
+	{
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
 			std::cout << "Warning: GameObject by name " << currentGOName << " already exists and will be replaced." << std::endl;
+	}
 
-
+	
+	// Initialize as a nullptr.
 	GameObject* pCurrentGO = nullptr;
+
 
 	// Load the archetype if one is provided and ensure its a string.
 	if (inputObj.HasMember("Archetype")
@@ -167,6 +184,7 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 
 	// Name
 	pCurrentGO->mName = currentGOName;
+
 
 	// Test if theres additioanl components, ensure its valid format.
 	if (
@@ -203,14 +221,7 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 		)
 	{
 		std::string parentName = inputObj["Parent"].GetString();
-		GameObject* pParent = GlobalManager::getGameObjectManager()->mGameObjects[parentName];
-
-		// Make sure parent wasn't invalid.
-		if (pParent == nullptr)
-			std::cout << "Error: Parent was either invalid or not initialized before child GameObject. Parenting failed for " << 
-			currentGOName << std::endl;
-		else
-			pCurrentGO->setParent(pParent);
+		pCurrentGO->setParent(parentName); // Will keep trying until it aquires the named gameobject.
 	}
 
 	// If this GO is to have another shader aside from core, set its new shader.
@@ -237,29 +248,27 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 	}
 
 	// Initialize.
-	pCurrentGO->initializeComponents();
-
-	// Push onto the GOM and return.
-	GlobalManager::getGameObjectManager()->mGameObjects[currentGOName] = pCurrentGO;
+	helper_initializeObject(pCurrentGO);
+	
 	return pCurrentGO;
 }
 
 
-GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
+GameObject* GameObjectFactory::generateProjectile(std::string filePath)
 {
 	GameObject* pNewGO;
 	std::string componentName;
 
-	pFileName = GlobalManager::getResourceManager()->pathProjectiles + pFileName;
+	filePath = GlobalManager::getResourceManager()->pathProjectiles + filePath;
 
 	Serializer* pSer = GlobalManager::getSerializer();
-	rapidjson::Document doc = pSer->loadJson(pFileName);
+	rapidjson::Document doc = pSer->loadJson(filePath);
 
 	// Nullcheck the document.
 	if (doc.IsNull() || !doc.IsObject())
 	{
 		// Game object creation failed.
-		std::cerr << "Error: Failed to load dynamic GameObject file " << pFileName << std::endl;
+		std::cerr << "Error: Failed to load dynamic GameObject file " << filePath << std::endl;
 		return nullptr; // Return nullptr on fail.
 	}
 
@@ -269,7 +278,7 @@ GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
 		|| strcmp(doc["Type"].GetString(), "GameObject") != 0)
 	{
 		// We're not deserializing a GameObject.
-		std::cerr << "Error: File " << pFileName << " was not of type GameObject." << std::endl;
+		std::cerr << "Error: File " << filePath << " was not of type GameObject." << std::endl;
 		return nullptr; // Return nullptr on fail.
 	}
 
@@ -286,7 +295,7 @@ GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
 	newGOName = "PROJECTILE_" + newGOName;// GlobalManager::getGameObjectManager()->mProjectileCount;
 	newGOName = newGOName + "_" + std::to_string(GlobalManager::getGameObjectManager()->mProjectileCount);
 	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-		std::cout << "Deserializing GameObject " << newGOName << std::endl; // Having this uncommented might get obnoxious.
+		std::cout << "GOF Projectile - Deserializing GameObject " << newGOName << std::endl; // Having this uncommented might get obnoxious.
 
 	// I would like to delegate this to the game object manager, maybe. It's a bit ugly this way.
 	GlobalManager::getGameObjectManager()->mProjectileCount += 1;
@@ -304,7 +313,7 @@ GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
 	{
 		// No components to add to the game object. This is an empty game object.
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-			std::cerr << "Warning: Dynamic GameObject " << pFileName << " did not contain any components." << std::endl;
+			std::cerr << "Warning: Dynamic GameObject " << filePath << " did not contain any components." << std::endl;
 		return pNewGO; // Return empty GameObject since it was a valid GameObject but had no components.
 	}
 	
@@ -332,18 +341,22 @@ GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
 			pNewComponent->Serialize(itr);
 	}
 
-	// Initialize components.
-	pNewGO->initializeComponents();
-
-	// Push onto the GameObjectManager and return.
-	GlobalManager::getGameObjectManager()->mNewGameObjects.push_back(pNewGO);
-
 	// I'm going to just assume all Dynamic GO's use final render pass.
 	pNewGO->setRenderPass(RenderPassType::FINAL);
 
 	// Automatically subscribe this to projectile events.
 	GlobalManager::getEventManager()->Subscribe(EventType::DESTROY_PROJETILE, pNewGO);
 
+	// Initialize and return.
+	helper_initializeObject(pNewGO);
+
 	return pNewGO;
 }
 
+// For hooking up indicators to projectiles.
+/*
+GameObject* GameObjectFactory::generateParentedGameObject(std::string pFileName)
+{
+
+}
+*/

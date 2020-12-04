@@ -125,7 +125,6 @@ void ResourceManager::loadLevel(const char* pFileName)
 		return;
 	}
 
-
 	// Make sure this level has GameObjects to parse.
 	// Note: GameObjects member is an array/list of documents.
 	if (!doc.HasMember("GameObjects") || !doc["GameObjects"].IsArray())
@@ -133,7 +132,6 @@ void ResourceManager::loadLevel(const char* pFileName)
 		std::cerr << "Warning: File " << pFileName << " did not contain any GameObjects." << std::endl;
 		return;
 	}
-
 
 	// Loop through the GameObjects array.
 	for (rapidjson::Value::ConstValueIterator arrItr = doc["GameObjects"].GetArray().Begin();

@@ -19,7 +19,7 @@
 #include <iostream>
 
 GameObjectManager* GameObjectManager::instance = nullptr;
-std::unordered_map<std::string, GameObject*> GameObjectManager::mGameObjects;
+std::map<std::string, GameObject*> GameObjectManager::mGameObjects;
 std::list<GameObject*> GameObjectManager::mNewGameObjects;
 std::list<std::string> GameObjectManager::mMarkedForDelete;
 
@@ -39,6 +39,15 @@ void GameObjectManager::destroySingleton()
 
 GameObjectManager::GameObjectManager()
 {
+}
+
+
+GameObject* GameObjectManager::getGameObject(std::string gameObjectName)
+{
+	// Safely check if entry exists...
+	if (mGameObjects.count(gameObjectName) <= 0)
+		return nullptr;
+	return mGameObjects[gameObjectName];
 }
 
 

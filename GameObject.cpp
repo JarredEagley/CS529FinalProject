@@ -9,7 +9,7 @@
 						This entails managing and updating components.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
-	Project:			JarredEagley_Milestone2
+	Project:			JarredEagley_FinalProject
 	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
 	Creation date:		10/13/2020
 
@@ -36,7 +36,7 @@
 #include "Components/Turret.h"
 #include "Components/FollowCursor.h"
 
-GameObject::GameObject() : mName(""), mpParentGO(nullptr), mHasChildren(false),
+GameObject::GameObject() : mName(""), mpParentGO(nullptr), mParentGOName(""), mIsParented(false), mHasChildren(false),
 mRenderPassType(RenderPassType::NONE)
 {
 	std::unordered_map<unsigned int, Component*> mComponents;
@@ -64,17 +64,34 @@ void GameObject::initializeComponents()
 
 void GameObject::Update()
 {
+	// Check parent.
+	if (mIsParented && mpParentGO == nullptr)
+	{
+		setParent(mParentGOName);
+	}
+
 	// Update components.
 	for (auto pComponentPair : mComponents)
 		pComponentPair.second->Update();
 }
 
 
-void GameObject::setParent(GameObject* pParentGO)
+void GameObject::setParent(std::string parentGOName)
 {
-	// Nullcheck.
+	// Set true so we can continue trying to aquire parent if we failed.
+	this->mIsParented = true;
+	this->mParentGOName = parentGOName;
+
+
+	// Get the GameObject and check if it exists.
+	GameObject* pParentGO = GlobalManager::getGameObjectManager()->getGameObject(parentGOName);
 	if (pParentGO == nullptr)
+	{
+		// Cannot proceed if it doesn't exist... 
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGameObjects)
+			std::cout << "GameObject '" << this->mName << "' failed to set parent to '" << parentGOName << "'. " << std::endl;
 		return;
+	}
 
 	// Set the parent.
 	this->mpParentGO = pParentGO;

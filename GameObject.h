@@ -8,7 +8,7 @@
 	Purpose:			The header file for GameObject.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
-	Project:			JarredEagley_Milestone2
+	Project:			JarredEagley_FinalProject
 	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
 	Creation date:		10/13/2020
 
@@ -34,7 +34,7 @@ public:
 	void Update();
 	void initializeComponents();
 
-	void setParent(GameObject* pParentGO);
+	void setParent(std::string parentGOName);
 	GameObject* getParent();
 
 	Component* AddComponent(unsigned int Type); // Returns the component which was allocated.
@@ -55,6 +55,8 @@ public:
 	std::string mName;
 	RenderPassType mRenderPassType; // render pass type enum
 private:
+	bool mIsParented;
+	std::string mParentGOName; // Name of the GO we'll try to get for parenting.
 	GameObject* mpParentGO;
 private:
 	// No private variables.
