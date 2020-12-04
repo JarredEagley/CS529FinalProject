@@ -74,4 +74,5 @@ void GameObjectManager::deleteRemovedGameObjects()
 		delete mGameObjects[key];
 		mGameObjects.erase(key);
 	}
+	mMarkedForDelete.clear();
 }
