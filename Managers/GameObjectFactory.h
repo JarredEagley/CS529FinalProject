@@ -35,8 +35,11 @@ public:
 	void destroySingleton();
 
 	GameObject* loadArchetype(std::string pFileName); // Returns a GameObject pointer matching the given archetype.
+	GameObject* loadArchetype(rapidjson::GenericObject<false, rapidjson::Value> inputObj); // Returns a GameObject pointer matching the given archetype.
 
 	GameObject* loadObject(rapidjson::GenericObject<true, rapidjson::Value> inputObj);
+
+	GameObject* createDynamicGameObject(std::string filePath, std::string gameObjectName);
 
 	// Will generate a new game object using the designated filename.
 	GameObject* generateProjectile(std::string pFileName);

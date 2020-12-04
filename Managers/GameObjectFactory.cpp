@@ -58,33 +58,59 @@ void GameObjectFactory::helper_initializeObject(GameObject* pGO)
 }
 
 
-// Loads a simple archetype.
-GameObject* GameObjectFactory::loadArchetype(std::string pFileName) 
+GameObject* GameObjectFactory::loadArchetype(std::string filePath)
 {
+	// Deserialize the given path.
+	Serializer* pSer = GlobalManager::getSerializer();
+	rapidjson::Document doc = pSer->loadJson(filePath);
+	// Nullcheck the document.
+	if (doc.IsNull() || !doc.IsObject())
+	{
+		// Game object creation failed.
+		std::cerr << "Error: Failed to load GameObject file " << filePath << std::endl;
+		return nullptr; // Return nullptr on fail.
+	}
+
+	// Pass to obj loadArchetype.
+	return loadArchetype(doc.GetObject());
+}
+
+/// <summary>
+/// Takes a file path as a string, loads the archetype found at that path,
+/// then returns the resulting archetyped gameObject. 
+/// DOES NOT PUSH ONTO GOM.
+/// DOES NOT GENERATE A FULL-FLEDGED GAMEOBJECT.
+/// </summary>
+/// <param name="filePath"></param>
+/// <returns>Archetyped GameObject or nullptr if failed</returns>
+GameObject* GameObjectFactory::loadArchetype(rapidjson::GenericObject<false, rapidjson::Value> inputObj)
+{
+	/*
 	GameObject* pNewGO;
 	std::string componentName;
 
 	Serializer* pSer = GlobalManager::getSerializer();
-	rapidjson::Document doc = pSer->loadJson(pFileName);
+	rapidjson::Document doc = pSer->loadJson(filePath);
 
 	// Nullcheck the document.
 	if (doc.IsNull())
 	{
 		// Game object creation failed.
-		std::cerr << "Error: Failed to load GameObject file " << pFileName << std::endl;
+		std::cerr << "Error: Failed to load GameObject file " << filePath << std::endl;
 		return nullptr; // Return nullptr on fail.
 	}
+	*/
 
 	// Create the new GameObject now that we know the json is reasonable.
-	pNewGO = new GameObject; 
+	GameObject *pNewGO = new GameObject; 
 
 	// Make sure components exists.
-	if (!doc.HasMember("Components") || !doc["Components"].IsObject())
+	if (!inputObj.HasMember("Components") || !inputObj["Components"].IsObject())
 	{
 		// No components to add to the game object. This is an empty game object.
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
 			if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-				std::cerr << "Warning: GameObject " << pFileName << " did not contain any components." << std::endl;
+				std::cerr << "Warning: GameObject Archetype did not contain any components." << std::endl;
 		return pNewGO; // Return empty GameObject since it was a valid GameObject but had no components.
 	}
 
@@ -134,6 +160,17 @@ GameObject* GameObjectFactory::loadArchetype(std::string pFileName)
 	return pNewGO;
 }
 
+
+/// <summary>
+/// Takes a rapidjson const genericObject 'inputObj' and parses it into a gameObject which is then 
+/// pushed onto the game object manager.
+/// Generated GameObject is also returned.
+/// 
+/// Note:
+/// This is used by level loading. This should not be used mid-game.
+/// </summary>
+/// <param name="inputObj"></param>
+/// <returns>Generated GameObject or nullptr if failed</returns>
 GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjson::Value> inputObj)
 {
 	// Get the name
@@ -155,11 +192,9 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
 			std::cout << "Warning: GameObject by name " << currentGOName << " already exists and will be replaced." << std::endl;
 	}
-
 	
 	// Initialize as a nullptr.
 	GameObject* pCurrentGO = nullptr;
-
 
 	// Load the archetype if one is provided and ensure its a string.
 	if (inputObj.HasMember("Archetype")
@@ -254,6 +289,38 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 }
 
 
+/// <summary>
+/// Used to dynamically create a new gameobject at game time. 
+/// Takes a filepath (like an archetype) and takes a name.
+/// 
+/// Note: loadObject is used by level loading. THIS is used by things like creating indicators for bullets.
+/// </summary>
+/// <param name="filePath"></param>
+/// <param name="gameObjectName"></param>
+/// <returns></returns>
+GameObject* GameObjectFactory::createDynamicGameObject(std::string filePath, std::string gameObjectName)
+{
+	// Use archetyping to create the initial gameobject.
+	GameObject* pNewGO = loadArchetype(filePath);
+
+	// Set its name.
+	pNewGO->mName = gameObjectName;
+
+	// Initialize onto the GOM.
+	helper_initializeObject(pNewGO);
+
+	return pNewGO;
+}
+
+
+/// <summary>
+/// May soon be depricated.
+/// 
+/// Generates a projectile according to the game object manager projectile counter.
+/// 
+/// </summary>
+/// <param name="filePath"></param>
+/// <returns></returns>
 GameObject* GameObjectFactory::generateProjectile(std::string filePath)
 {
 	GameObject* pNewGO = nullptr;
