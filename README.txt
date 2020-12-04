@@ -28,13 +28,41 @@ Both should be present to compile the project.
 
 ***************************************
 
-MILESTONE 4 NOTES:
-Alongside my core gameplay events such as collision, I have set up a handful of demonstration game event triggers.
- - hold left click to spawn in a projectile (targeted event to subscribers)
- - press right click, after two seconds all projectile GameObjects will be deleted. (timed event)
- - press space and a global event will be broadcasted telling all GameObjects with physics bodies to spin. (global event)
-There is also collision, which is an event which only two gameobjects may recieve.
+
+
+
+ ----- The Resources Folder -----
+ Resources contains many useful folders and files used for data driving the game.
  
- ***************************************
- 
-This is still heavily work in progress, bugs may be possible.
+ Config.json:
+ Used in initial startup state for the game. Options such as max framerate and Windows
+ size can be set in here. I have listed all the managers in there for future proofing,
+ but not all of them will have paramaters to tweak.
+
+Textures
+Textures for the game. I'm using png files.
+
+Levels
+Level json files for the game. A level file can have a name, and a list of GameObjects.
+GameObjects must have a name. GameObjects may have an Archetype, and a list of components.
+Components which exist in the archetype may be overidden.
+
+Archetypes
+A special json file which designates a generic type of GameObject. An archetype cannot
+be instantiated and therefore has no Name. It's basically just a bunch of components and
+perhaps a render pass option to keep the level file clean.
+
+Projectiles
+A type of GameObject which can be dynamically spawned in mid-game with its own cap. These
+must define a full GameObject and therefore have a Name parameter.
+
+Particles
+Similar to projectiles, but lower priority and purely for visual effect.
+
+
+ ----- Render passes -----
+In this version of the game, there are two render passes. There is the final pass and
+the HUD pass. The final pass includes the camera view and perspective projections. The
+HUD pass displays objects in normalized device coordinates with no distortion.
+HUD objects are rendered after the final pass, allowing for a 2D display on top of the
+game world.
