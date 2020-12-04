@@ -30,9 +30,9 @@ void Serializer::destroySingleton()
 	delete instance; // this will do more if i start keeping the jsons i need loaded.
 } 
 
-rapidjson::Document Serializer::loadJson(std::string pFileName)
+rapidjson::Document Serializer::loadJson(std::string filePath)
 {
-	std::ifstream inputStream(pFileName);
+	std::ifstream inputStream(filePath);
 	// Make sure the stream opened.
 	if (inputStream.is_open())
 	{
@@ -54,7 +54,7 @@ rapidjson::Document Serializer::loadJson(std::string pFileName)
 	else
 	{
 		// Failed to open input stream.
-		std::cerr << "Error: Failed to open input stream for filename " << pFileName << std::endl;
+		std::cerr << "Error: Failed to open input stream for file '" << filePath << "'" << std::endl;
 		return NULL;
 	}
 }
