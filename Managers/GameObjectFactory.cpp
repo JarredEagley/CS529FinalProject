@@ -115,8 +115,8 @@ GameObject* GameObjectFactory::loadArchetype(rapidjson::GenericObject<false, rap
 	}
 
 	// Parse through components.
-	rapidjson::Value::ConstMemberIterator itr = doc["Components"].GetObject().MemberBegin();
-	for (; itr != doc["Components"].GetObject().MemberEnd(); ++itr )
+	rapidjson::Value::ConstMemberIterator itr = inputObj["Components"].GetObject().MemberBegin();
+	for (; itr != inputObj["Components"].GetObject().MemberEnd(); ++itr )
 	{
 		if (itr->name.IsString() == false)
 		{
@@ -140,20 +140,20 @@ GameObject* GameObjectFactory::loadArchetype(rapidjson::GenericObject<false, rap
 
 	// Set shader via archetype if specified.
 	if (
-		doc.HasMember("Shader")
-		&& doc["Shader"].IsString()
+		inputObj.HasMember("Shader")
+		&& inputObj["Shader"].IsString()
 		)
 	{
-		std::string newShaderName = doc["Shader"].GetString();
+		std::string newShaderName = inputObj["Shader"].GetString();
 		pNewGO->mShaderName = newShaderName;
 	}
 
 	// Set render pass via archetype if its specified.
 	if (
-		doc.GetObject().HasMember("Render Pass")
-		&& doc["Render Pass"].IsString()
+		inputObj.HasMember("Render Pass")
+		&& inputObj["Render Pass"].IsString()
 		)
-		helper_objectRenderPass(pNewGO, doc["Render Pass"].GetString());
+		helper_objectRenderPass(pNewGO, inputObj["Render Pass"].GetString());
 	// Remain NONE otherwise.
 
 	// Simply return. Archetypes dont touch the game object manager.
