@@ -11,9 +11,13 @@
             "Archetype": "Enemy.json",
             "Components":
             {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [6000, 1200]
+                },
                 "TYPE_PHYSICSBODY":
                 {
-                    "Velocity": [0.2, -0.1]
+                    "Velocity": [0.1, -0.3]
                 }
             }
         },
