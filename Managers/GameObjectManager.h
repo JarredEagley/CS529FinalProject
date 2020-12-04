@@ -20,7 +20,7 @@
 #pragma once
 
 //#include <vector>
-#include <unordered_map>
+#include <map>
 #include "../GameObject.h"
 
 // Will be used to keep track of how many of a type of GameObject may be created
@@ -53,7 +53,7 @@ public:
 	void deleteRemovedGameObjects(); // Updates mGameObjects
 
 public:
-	static std::unordered_map<std::string, GameObject*> mGameObjects; // Should NEVER be modified mid-game loop.
+	static std::map<std::string, GameObject*> mGameObjects; // Should NEVER be modified mid-game loop.
 	static std::list<GameObject*> mNewGameObjects;
 	static std::list<std::string> mMarkedForDelete;
 

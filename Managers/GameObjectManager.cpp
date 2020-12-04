@@ -15,12 +15,11 @@
 - End Header --------------------------------------------------------*/
 
 #include "GameObjectManager.h"
-//#include "GameObject.h"
 
 #include <iostream>
 
 GameObjectManager* GameObjectManager::instance = nullptr;
-std::unordered_map<std::string, GameObject*> GameObjectManager::mGameObjects;
+std::map<std::string, GameObject*> GameObjectManager::mGameObjects;
 std::list<GameObject*> GameObjectManager::mNewGameObjects;
 std::list<std::string> GameObjectManager::mMarkedForDelete;
 
