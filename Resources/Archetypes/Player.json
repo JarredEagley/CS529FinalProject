@@ -1,50 +1,95 @@
-{
-    "Type": "GameObject",
+[
+    "PLAYER",
+
+    {
+        "Name": "PLAYER",
+        "Components":
+        {
+            "TYPE_TRANSFORM":
+            {
+                "Translation": [100.0, 100.0],
+                "Rotation": 0,
+                "Scale": [10.0, 20.0]
+            },
+            "TYPE_CONTROLLERSHIP": "",
+            "TYPE_GLRECT":
+            {
+                "Texture": "Ship1.png",
+                "Color": [0.0, 0.6, 0.1, 1.0]
+            },
+            "TYPE_PHYSICSBODY":
+            {
+                "Mass": 200.0,
+                "AABB":
+                {
+                    "Left": 5.0,
+                    "Right": 5.0,
+                    "Top": 5.0,
+                    "Bottom":5.0
+                }
+            },
+            "TYPE_SHIPDATA":
+            {
+                "Health": 100,
+                "Health Max": 100,
+                "Power": 100,
+                "Power Max": 100,
+                "Power Production": 2,
+
+                "Fuel": 100,
+                "Fuel Max": 100,
+                "Fuel Efficiency": 0.1,
+
+                "Coil Bullets": 500,
+                "Missiles": 10,
+
+                "Main Acceleration": 4.0,
+                "Secondary Acceleration": 1.0,
+                "Angular Acceleration": 1.0,
+
+                "Throttle Sensitivity": 5.0
+            }
+        }
+    },
+    {
+    "Name": "PLAYER_Turret_1",
+    "Archetype":"Turret.json",
     "Components":
     {
         "TYPE_TRANSFORM":
         {
-            "Translation": [100.0, 100.0],
-            "Rotation": 0,
-            "Scale": [10.0, 20.0]
-        },
-        "TYPE_CONTROLLERSHIP": "",
-        "TYPE_GLRECT":
+            "Translation":[0,-3.5]
+        }
+    },
+    "Parent":"PLAYER"
+    },
+    {
+        "Name": "PLAYER_Turret_2",
+        "Archetype":"Turret.json",
+        "Components":
         {
-            "Texture": "Ship1.png",
-            "Color": [0.0, 0.6, 0.1, 1.0]
-        },
-        "TYPE_PHYSICSBODY":
-        {
-            "Mass": 200.0,
-            "AABB":
+            "TYPE_TRANSFORM":
             {
-                "Left": 5.0,
-                "Right": 5.0,
-                "Top": 5.0,
-                "Bottom":5.0
+                "Translation": [2, -2]
             }
         },
-        "TYPE_SHIPDATA":
+        "Parent":"PLAYER"
+    },
+    {
+        "Name": "PLAYER_Turret_3",
+        "Archetype":"Turret.json",
+        "Components":
         {
-            "Health": 100,
-            "Health Max": 100,
-            "Power": 100,
-            "Power Max": 100,
-            "Power Production": 2,
-
-            "Fuel": 100,
-            "Fuel Max": 100,
-            "Fuel Efficiency": 0.1,
-
-            "Coil Bullets": 500,
-            "Missiles": 10,
-
-            "Main Acceleration": 4.0,
-            "Secondary Acceleration": 1.0,
-            "Angular Acceleration": 1.0,
-
-            "Throttle Sensitivity": 5.0
-        }
+            "TYPE_TRANSFORM":
+            {
+                "Translation":[-1, 2.2]
+            }
+        },
+        "Parent":"PLAYER"
+    },
+    {
+        "Name": "PLAYER_Indicator_Forward",
+        "Archetype": "ForwardIndicator.json",
+        "Parent":"PLAYER"
     }
-}
+]

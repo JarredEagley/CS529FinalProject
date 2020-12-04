@@ -39,6 +39,8 @@ void GameObjectFactory::destroySingleton()
 
 GameObjectFactory::GameObjectFactory() { }
 
+
+
 void GameObjectFactory::helper_objectRenderPass(GameObject* pGO, const char* renderPassType)
 {
 	// If this GO Has a render pass aside from final, set its new render pass.
@@ -255,7 +257,6 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 	return pCurrentGO;
 }
 
-
 GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
 {
 	GameObject* pNewGO;
@@ -357,5 +358,81 @@ GameObject* GameObjectFactory::generateProjectile(std::string pFileName)
 	GlobalManager::getEventManager()->Subscribe(EventType::DESTROY_PROJETILE, pNewGO);
 
 	return pNewGO;
+}
+
+// ALL ABOVE ARE DEPRICATED.
+
+// Pass in a genericObject. If an archetype is found, it'll recursively load that first.
+std::string GameObjectFactory::loadGameObject(rapidjson::GenericObject<false, rapidjson::Value> inputObj, std::string namePre, std::string namePost)
+{
+	// Types field is now depricated. Only worrying about name now.
+
+	// Get GOM.
+	auto pGOM = GlobalManager::getGameObjectManager();
+
+	// Set a default name.
+	std::string GOName = "UNNAMED_GAME_OBJECT";
+
+	// This is nullptr to start.
+	GameObject* pGameObject = nullptr;
+
+	// Try to build archetype first.
+	if (inputObj.HasMember("Archetype") && inputObj["Archetype"].IsString())
+	{
+		// Create the path.
+		std::string archetypeName = inputObj["Archetype"].GetString();
+		std::string pathName = GlobalManager::getResourceManager()->pathArchetypes + archetypeName;
+
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+			std::cout << "GOF LoadGameObject - Loading in Archetype path '" << pathName << "'" << std::endl;
+
+		// Deserialize.
+		Serializer* pSer = GlobalManager::getSerializer();
+		rapidjson::Document archDoc = pSer->loadJson(pathName);
+
+		// Am I a list or a object?
+		if (archDoc.IsObject())
+			GOName = loadGameObject(archDoc.GetObject(), namePre, namePost);
+		else if (archDoc.IsArray())
+			GOName = loadGameObjectList(archDoc.GetArray(), namePre, namePost);
+		else
+			std::cout << "Error: GameObjectFactory loadGameObject was unable to parse archetype '" << pathName << "'" << std::endl;
+	}
+	else
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+			std::cout << "GOF LoadGameObject - GameObject had no archetype." << std::endl;
+
+
+	// Deserialize a name for this specific GO if one is specified (So we're not ALWAYS overwriting anything else w/ this archetype).
+	if (inputObj.HasMember("Name") && inputObj["Name"].IsString())
+		GOName = inputObj["Name"].GetString();
+
+	// Test if this GameObject exists already.
+	bool _exists = pGOM->mGameObjects.count(GOName) > 0;
+	// Fetch it if it does.
+	if (_exists)
+		pGameObject = pGOM->mGameObjects[GOName];
+	else
+	{
+		// Create and hand to the game object manager.
+		pGameObject = new GameObject();
+	}
+}
+
+std::string GameObjectFactory::loadGameObject(rapidjson::GenericObject<false, rapidjson::Value> inputObj)
+{
+	loadGameObject(inputObj, "", "");
+}
+
+// Pass in a list of GameObject generic objects and this will build each of them.
+std::string GameObjectFactory::loadGameObjectList(rapidjson::GenericArray<false, rapidjson::Value > inputArr,
+	std::string namePre, std::string namePost)
+{
+
+}
+
+std::string GameObjectFactory::loadGameObjectList(rapidjson::GenericArray<true, rapidjson::GenericObject<true, rapidjson::Value>> inputArr)
+{
+	loadGameObjectList(inputArr, "", "");
 }
 

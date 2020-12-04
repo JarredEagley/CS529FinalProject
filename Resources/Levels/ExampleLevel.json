@@ -11,8 +11,8 @@
             "Name": "SecondShip",
             "Archetype": "Enemy.json"
         },
+
         {
-            "Name": "PLAYER",
             "Archetype": "Player.json",
             "Components":
             {
@@ -28,63 +28,21 @@
             }
         },
         {
-            "Name": "PLAYER_Turret_1",
-            "Archetype":"Turret.json",
-            "Components":
-            {
-                "TYPE_TRANSFORM":
-                {
-                    "Translation":[0,-3.5]
-                }
-            },
-            "Parent":"PLAYER"
+            "Name": "MainCamera",
+            "Archetype": "Camera.json",
+            "Parent": "PLAYER"
         },
-        {
-            "Name": "PLAYER_Turret_2",
-            "Archetype":"Turret.json",
-            "Components":
-            {
-                "TYPE_TRANSFORM":
-                {
-                    "Translation": [2, -2]
-                }
-            },
-            "Parent":"PLAYER"
-        },
-        {
-            "Name": "PLAYER_Turret_3",
-            "Archetype":"Turret.json",
-            "Components":
-            {
-                "TYPE_TRANSFORM":
-                {
-                    "Translation":[-1, 2.2]
-                }
-            },
-            "Parent":"PLAYER"
-        },
-
 
         {
             "Name":"Mars",
             "Archetype": "Mars.json"
         },
-        {
-            "Name": "MainCamera",
-            "Archetype": "Camera.json",
-            "Parent": "PLAYER"
-        },
-        {
-            "Name": "PlayerShip_Indicator_Forward",
-            "Archetype": "ForwardIndicator.json",
-            "Parent":"PLAYER"
-        },
+
         {
             "Name": "SecondShip_Indicator_Forward",
             "Archetype": "ForwardIndicator.json",
             "Parent":"SecondShip"
         },
-
 
         {
             "Name": "HUD_Fuel_Meter",
@@ -99,6 +57,7 @@
             "Archetype": "HUD_Throttle_Marker.json",
             "Parent": "HUD_Throttle_Meter"
         },
+        
         {
             "Name": "PLAYER_CURSOR",
             "Archetype": "FollowCursor.json"

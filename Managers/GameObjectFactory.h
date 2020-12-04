@@ -37,6 +37,16 @@ public:
 	GameObject* loadArchetype(std::string pFileName); // Returns a GameObject pointer matching the given archetype.
 	GameObject* loadObject(rapidjson::GenericObject<true, rapidjson::Value> inputObj);
 
+	// Creates a GameObject from a rapidjson GenericObject. Archetypes will be created recursively.
+	// Will return the name of the created GO.
+	std::string loadGameObject(rapidjson::GenericObject<false, rapidjson::Value> inputObj, std::string namePre, std::string namePost);
+	std::string loadGameObject(rapidjson::GenericObject<false, rapidjson::Value> inputObj);
+
+	// Will return the string header at the top of the list, OR ""
+	std::string loadGameObjectList(rapidjson::GenericArray<false, rapidjson::Value> inputArr,
+		std::string namePre, std::string namePost);
+	std::string loadGameObjectList(rapidjson::GenericArray<false, rapidjson::Value> inputArr);
+
 	// Will generate a new game object using the designated filename.
 	GameObject* generateProjectile(std::string pFileName);
 
