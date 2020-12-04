@@ -78,7 +78,7 @@ void Turret::Update()
 			// Set physics
 			pBulletPhys->mVelocity = pParentPhys->mVelocity; // inherit velocity.
 			glm::vec2 fireVec = mAimPoint-glm::vec2(mpParentTransform->getPosition());
-			fireVec = glm::normalize(fireVec) * 5.0f; // Arbitrary velocity
+			fireVec = glm::normalize(fireVec) * mProjectileVelocity; // Arbitrary velocity
 			pBulletPhys->applyForce(fireVec);
 		}
 		
