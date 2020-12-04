@@ -4,7 +4,7 @@
     {
         "TYPE_TRANSFORM":
         {
-            "Scale": [0.5, 1.0],
+            "Scale": [1.0, 2.0],
             "Inherit Rotation": true
         },
         "TYPE_GLRECT":

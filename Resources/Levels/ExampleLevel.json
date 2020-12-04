@@ -8,7 +8,14 @@
         },
         {
             "Name": "SecondShip",
-            "Archetype": "Enemy.json"
+            "Archetype": "Enemy.json",
+            "Components":
+            {
+                "TYPE_PHYSICSBODY":
+                {
+                    "Velocity": [0.2, -0.1]
+                }
+            }
         },
         {
             "Name": "PLAYER",
@@ -22,7 +29,7 @@
                 },
                 "TYPE_PHYSICSBODY":
                 {
-                    "Velocity": [0.0, -0.1]
+                    "Velocity": [0.3, -0.2]
                 }
             }
         },
