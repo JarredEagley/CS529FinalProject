@@ -34,6 +34,7 @@
 #include "Components/FuelMeter.h"
 #include "Components/Turret.h"
 #include "Components/FollowCursor.h"
+#include "Components/Explosion.h"
 
 GameObject::GameObject() : mName(""),
 mpParentGO(nullptr), mParentGOName(""),
@@ -186,6 +187,8 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_FOLLOWCURSOR):
 		pNewComponent = new FollowCursor();
 		break;
+	case (ComponentTypes::TYPE_EXPLOSION):
+		pNewComponent = new Expl
 
 	default:
 		return nullptr; // Failed to create component.

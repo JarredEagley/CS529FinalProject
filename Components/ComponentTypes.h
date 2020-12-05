@@ -40,6 +40,8 @@ public:
 		if (strcmp(str, "TYPE_METER_FUEL") == 0)		return TYPE_METER_FUEL;
 		if (strcmp(str, "TYPE_MARKER_THROTTLE") == 0)	return TYPE_MARKER_THROTTLE;
 		if (strcmp(str, "TYPE_FOLLOWCURSOR") == 0)		return TYPE_FOLLOWCURSOR;
+		if (strcmp(str, "TYPE_EXPLOSION") == 0)			return TYPE_EXPLOSION;
+		
 		
 		return TYPE_UNDEFINED;
 	}
@@ -61,7 +63,8 @@ public:
 		TYPE_TURRET,
 		TYPE_METER_FUEL,
 		TYPE_MARKER_THROTTLE,
-		TYPE_FOLLOWCURSOR
+		TYPE_FOLLOWCURSOR,
+		TYPE_EXPLOSION
 	};
 private:
 	// No private methods.

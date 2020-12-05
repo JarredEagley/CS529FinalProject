@@ -1,20 +1,15 @@
 {
-    "Name": "CoilBullet_Indicator",
+    "Name": "Explosion_Missile",
     "Components": {
         "TYPE_TRANSFORM": {},
         "TYPE_GLRECT": {
-            "Texture": "IconBullet.png",
+            "Texture": "Explosion_NoDebris.png",
             "Color": [
                 0.0,
                 0.0,
                 0.0,
                 0.0
             ]
-        },
-        "TYPE_DIRINDICATOR": 
-        {
-            "Scale Factor": 500,
-            "Alpha Factor": 4 
         }
     }
 }
