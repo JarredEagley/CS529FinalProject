@@ -28,7 +28,6 @@ public:
 	{
 		// Wish I could do this with a switch case block it would be so much prettier.
 		if (strcmp(str, "TYPE_TRANSFORM") == 0)			return TYPE_TRANSFORM;
-		if (strcmp(str, "TYPE_TIMER") == 0)				return TYPE_TIMER;
 		if (strcmp(str, "TYPE_CONTROLLERSLIDER") == 0)	return TYPE_CONTROLLERSLIDER;
 		if (strcmp(str, "TYPE_CONTROLLERSHIP") == 0)	return TYPE_CONTROLLERSHIP;
 		if (strcmp(str, "TYPE_GLRECT") == 0)			return TYPE_GLRECT;
