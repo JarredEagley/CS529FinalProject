@@ -53,6 +53,8 @@ public:
 
 	void handleEvent(Event *pEvent);
 public:
+	bool mIsAlive; // Becomes true when the GO gets added to the main GO hashmap.
+	bool mIsMarkedForDelete;
 	std::unordered_map<unsigned int, Component*> mComponents; // <TYPE, COMPONENT>
 	std::string mShaderName = "core";	// May have more shaders in the future.
 	std::string mName;

@@ -110,6 +110,8 @@ void GraphicsManager::DrawHUD()
 	// Loop through the GO's for this pass...
 	for (auto pGO : mRenderPasses[RenderPassType::HUD])
 	{
+		if (pGO == nullptr)
+			continue;
 		drawGameObject_HUD(pGO);
 	}
 }
@@ -119,6 +121,8 @@ void GraphicsManager::DrawFinal()
 	// Loop through the GO's for this pass...
 	for (auto pGO : mRenderPasses[RenderPassType::FINAL])
 	{
+		if (pGO == nullptr)
+			continue;
 		drawGameObject(pGO);
 	}
 }

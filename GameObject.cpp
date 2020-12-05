@@ -36,9 +36,9 @@
 #include "Components/Turret.h"
 #include "Components/FollowCursor.h"
 
-GameObject::GameObject() : mName(""), 
-mpParentGO(nullptr), mParentGOName(""), 
-mIsParented(false),
+GameObject::GameObject() : mName(""),
+mpParentGO(nullptr), mParentGOName(""),
+mIsParented(false), mIsAlive(false), mIsMarkedForDelete(false),
 mRenderPassType(RenderPassType::NONE)
 {
 	std::unordered_map<unsigned int, Component*> mComponents;
@@ -46,15 +46,14 @@ mRenderPassType(RenderPassType::NONE)
 
 GameObject::~GameObject()
 {
+	//std::cout << "Destructor called on " << mName << std::endl;
 	// Remove all my components.
 	for (auto pComponentPair : mComponents)
 		delete pComponentPair.second;
 	mComponents.clear();
 
-
 	// Remove from render passes.
 	GlobalManager::getGraphicsManager()->removeFromAnyRenderPasses(this);
-
 
 	// If I have a parent, remove from parent's mChildren.
 	if (mpParentGO != nullptr)
@@ -67,13 +66,13 @@ GameObject::~GameObject()
 	// Broadcast desctruction to child GameObjects.
 	// Note: Camera GO will ignore this event. Don't want to kill the camera.
 	GameObjectDestroyedEvent* pDestroyEvent = new GameObjectDestroyedEvent(mName);
-	for (auto pGO : mChildren)
+	for (auto pChildGO : mChildren)
 	{
-		if (pGO != nullptr)
+		if (pChildGO != nullptr)
 		{
-			pGO->mpParentGO = nullptr; // NEED to notify child that parent is now gone.
+			pChildGO->mpParentGO = nullptr; // NEED to notify child that parent is now gone.
 			// Also pass down a gameobject destroyed event from the parent to the child.
-			pGO->handleEvent(pDestroyEvent);
+			pChildGO->handleEvent(pDestroyEvent);
 		}
 	}
 }
@@ -103,6 +102,10 @@ void GameObject::setParent(std::string parentGOName)
 	// Set true so we can continue trying to aquire parent if we failed.
 	this->mIsParented = true;
 	this->mParentGOName = parentGOName;
+
+	// If we're not alive yet, just stop here.
+	if (!mIsAlive)
+		return;
 
 	// Get the GameObject and check if it exists.
 	GameObject* pParentGO = GlobalManager::getGameObjectManager()->getGameObject(parentGOName);
@@ -253,13 +256,16 @@ void GameObject::handleEvent(Event* pEvent)
 		}
 		else
 		{
+			//std::cout << "GameObject " << mName << " destroyed by parent object " << pGODestroyedEvent->mDestroyedGOName << std::endl;
 			//GlobalManager::getGameObjectManager()->mMarkedForDelete.push_back(this->mName);
+			this->mIsMarkedForDelete = true;
 		}
 	}
 
 	// Normal game objects will never be handed a destroy projectile event.
 	if (pEvent->mType == EventType::DESTROY_PROJETILE)
 	{
-		GlobalManager::getGameObjectManager()->mMarkedForDelete.push_back(this->mName);
+		//GlobalManager::getGameObjectManager()->mMarkedForDelete.push_back(this->mName);
+		this->mIsMarkedForDelete = true;
 	}
 }

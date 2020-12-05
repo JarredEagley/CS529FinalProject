@@ -63,7 +63,7 @@ public:
 
 	// These modify mGameObjects at the end of the gameloop.
 	static std::list<GameObject*> mNewGameObjects;
-	static std::list<std::string> mMarkedForDelete;
+	//static std::list<std::string> mMarkedForDelete;
 
 	int mMaxParticles = 100; // Need to data drive these soon.
 	int mParticleCount = 0;

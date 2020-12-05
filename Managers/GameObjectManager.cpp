@@ -21,7 +21,7 @@
 GameObjectManager* GameObjectManager::instance = nullptr;
 std::map<std::string, GameObject*> GameObjectManager::mGameObjects;
 std::list<GameObject*> GameObjectManager::mNewGameObjects;
-std::list<std::string> GameObjectManager::mMarkedForDelete;
+//std::list<std::string> GameObjectManager::mMarkedForDelete;
 
 
 void GameObjectManager::destroySingleton()
@@ -60,15 +60,18 @@ void GameObjectManager::updateGameObjects()
 
 void GameObjectManager::addCreatedGameObjects()
 {
-	for (auto pGO : mNewGameObjects)
+	for (auto pNewGO : mNewGameObjects)
 	{
 		// Don't want to add a null object.
-		if (pGO != nullptr)
+		if (pNewGO != nullptr)
 		{
+			//std::cout << "Creating key " << pNewGO->mName << std::endl;
 			// If it already exists then delete it first.
-			if (mGameObjects.count(pGO->mName) > 0)
-				delete mGameObjects[pGO->mName];
-			mGameObjects[pGO->mName] = pGO;
+			if (mGameObjects.count(pNewGO->mName) > 0)
+				delete mGameObjects[pNewGO->mName];
+			
+			mGameObjects[pNewGO->mName] = pNewGO;
+			pNewGO->mIsAlive = true; // Inform GO its now on the list.
 		}
 	}
 	mNewGameObjects.clear();
@@ -76,21 +79,47 @@ void GameObjectManager::addCreatedGameObjects()
 
 void GameObjectManager::deleteRemovedGameObjects()
 {
+	auto itr = mGameObjects.begin();
+	while (itr != mGameObjects.end())
+	{
+		// Clean up null GameObjects.
+		if (itr->second == nullptr)
+		{
+			itr = mGameObjects.erase(itr);
+			continue;
+		}
+
+		// Kill GO's marked for deletion.
+		if (itr->second->mIsMarkedForDelete)
+		{
+			delete itr->second;
+			itr = mGameObjects.erase(itr);
+			continue;
+		}
+
+		// Continue iterating.
+		++itr;
+	}
+	/*
 	for (auto key : mMarkedForDelete)
 	{
+		//std::cout << "Deleting Key " << key << std::endl;
 		// Make sure we're not deleting something which doesn't exist.
 		if (mGameObjects[key] != nullptr)
 			delete mGameObjects[key];
 		mGameObjects.erase(key);
 	}
 	mMarkedForDelete.clear();
+	*/
 }
 
 
 void GameObjectManager::deleteAllGameObjects()
 {
+	/*
 	for (auto pGOPair : mGameObjects)
 		delete pGOPair.second;
 	mGameObjects.clear();
 	mMarkedForDelete.clear();
+	*/
 }
