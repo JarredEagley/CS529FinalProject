@@ -229,6 +229,15 @@ void PhysicsBody::handleEvent(Event* pEvent)
 }
 
 
+void PhysicsBody::setUniformData(ShaderProgram* pProgram)
+{
+	// TO-DO:
+	// 1. Collision type: 0 = none, 1 = aabb, 2 = circle
+	// 2. if aabb, pass in aabb stuff
+	// 3. if circle pass in circle stuff.
+	// 4. -- inside the FRAGMENT shader, Apply red to anything within collider.
+}
+
 void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
 	// Sanity check type.

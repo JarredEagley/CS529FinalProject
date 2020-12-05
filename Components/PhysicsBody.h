@@ -48,8 +48,13 @@ public:
 	void disableGravity();
 	void setMass(float mass); // sets mass, calculates and sets invMass.
 
+	// For debug drawing our collision shape.
+
 	void handleEvent(Event* pEvent);
-	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
+	
+	void setUniformData(ShaderProgram* pProgram);
+	
+	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
 	glm::vec2 mForwardDir;
