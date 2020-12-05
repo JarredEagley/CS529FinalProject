@@ -10,6 +10,10 @@
         {
             "Texture": "DirectionIndicator.png"
         },
-        "TYPE_DIRINDICATOR":{}
+        "TYPE_DIRINDICATOR":
+        {
+            "Scale Factor": 2000,
+            "Alpha Factor": 10
+        }
     }
 }

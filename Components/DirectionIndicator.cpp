@@ -7,7 +7,11 @@
 	File Name:			DirectionIndicator.cpp
 	Purpose				Implementations for DirectionIndicator.
 						Will interface with PhysicsBody and Transform.
-						May eventually track rotation angle as well.
+						
+						NOTE: This component's functionality grew beyond
+						its original intent and is now more of a generic
+						indicator component which grows with zoom.
+
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
 	Project:			JarredEagley_FinalProject
@@ -73,4 +77,15 @@ void DirectionIndicator::Update()
 
 void DirectionIndicator::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
+	auto inputObj = inputMemberIt->value.GetObject();
+
+	if (inputObj.HasMember("Alpha Factor") && inputObj["Alpha Factor"].IsNumber())
+	{
+		this->mIndicatorAlphaFactor = inputObj["Alpha Factor"].GetFloat();
+	}
+
+	if (inputObj.HasMember("Scale Factor") && inputObj["Scale Factor"].IsNumber())
+	{
+		this->mIndicatorSizeFactor = inputObj["Scale Factor"].GetFloat();
+	}
 }

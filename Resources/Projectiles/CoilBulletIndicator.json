@@ -12,6 +12,10 @@
                 0.0
             ]
         },
-        "TYPE_DIRINDICATOR": {}
+        "TYPE_DIRINDICATOR": 
+        {
+            "Scale Factor": 500,
+            "Alpha Factor": 4 
+        }
     }
 }
