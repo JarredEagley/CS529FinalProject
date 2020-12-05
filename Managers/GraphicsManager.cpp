@@ -84,6 +84,15 @@ void GraphicsManager::addToRenderPass(GameObject* pGO, RenderPassType newRenderP
 	mRenderPasses[newRenderPassType].push_back(pGO);
 }
 
+
+void GraphicsManager::setUniformDefaults(ShaderProgram* pProgram)
+{
+	unsigned int loc;
+	loc = glGetUniformLocation(pProgram->ProgramID, "col_type");
+	glUniform1i(loc, 0); // 0 for collision type none.
+}
+
+
 // Draws every GameObject stored in the GameObjectManger.
 void GraphicsManager::drawAllGameObjects()
 {
@@ -217,7 +226,7 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 
 	// Get the vaoID we want to draw.
 	GLuint vaoID = pRect->getVAO(); // Note: it's possible for an object to not have a VAO.
-
+	
 	// --- Draw --- //
 
 	// bind
@@ -226,6 +235,7 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	glActiveTexture(GL_TEXTURE0); // Will be needed if I one day one multiple textures on one rect.
 	glBindTexture(GL_TEXTURE_2D, pRect->getTexId()); // Bind the desired texture.
 	//pRect->setUniformData(pProgram);
+	setUniformDefaults(pProgram);
 	pGO->setAllUniformData(pProgram);
 
 	unsigned int loc;

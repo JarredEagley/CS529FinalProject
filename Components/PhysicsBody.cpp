@@ -233,6 +233,25 @@ void PhysicsBody::setUniformData(ShaderProgram* pProgram)
 {
 	// TO-DO:
 	// 1. Collision type: 0 = none, 1 = aabb, 2 = circle
+	auto myShapeType = this->mpShape->mType;
+
+	unsigned int loc;
+	if (myShapeType == Shape::ShapeType::CIRCLE)
+	{
+		loc = glGetUniformLocation(pProgram->ProgramID, "col_type");
+		glUniform1i(loc, 1);
+	}
+	else if (myShapeType == Shape::ShapeType::AABB)
+	{
+		loc = glGetUniformLocation(pProgram->ProgramID, "col_type");
+		glUniform1i(loc, 2);
+	}
+	else
+	{
+		loc = glGetUniformLocation(pProgram->ProgramID, "col_type");
+		glUniform1i(loc, 0);
+	}
+
 	// 2. if aabb, pass in aabb stuff
 	// 3. if circle pass in circle stuff.
 	// 4. -- inside the FRAGMENT shader, Apply red to anything within collider.

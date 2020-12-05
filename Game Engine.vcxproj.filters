@@ -41,9 +41,6 @@
     <ClCompile Include="Components\ThrottleMeter.cpp">
       <Filter>Components\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="Components\Timer.cpp">
-      <Filter>Components\Data</Filter>
-    </ClCompile>
     <ClCompile Include="Components\BackgroundGrid.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -84,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="Components\FollowCursor.cpp">
       <Filter>Components\Control</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Explosion.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +130,6 @@
     <ClInclude Include="Components\ThrottleMeter.h">
       <Filter>Components\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Components\Timer.h">
-      <Filter>Components\Data</Filter>
-    </ClInclude>
     <ClInclude Include="Components\BackgroundGrid.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -173,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="Components\FollowCursor.h">
       <Filter>Components\Control</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Explosion.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

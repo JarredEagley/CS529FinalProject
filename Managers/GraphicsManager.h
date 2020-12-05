@@ -81,6 +81,7 @@ public:
 
 private:
 	GraphicsManager();
+	void setUniformDefaults(ShaderProgram* pProgram); // Private function which sets default values for uniforms used in things like physics bodies.
 
 private:
 	static GraphicsManager *instance;

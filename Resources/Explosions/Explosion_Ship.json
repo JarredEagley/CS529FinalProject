@@ -1,0 +1,19 @@
+{
+    "Name": "Explosion_Ship",
+    "Components": {
+        "TYPE_TRANSFORM": {},
+        "TYPE_GLRECT": {
+            "Texture": "Explosion.png",
+            "Color": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "TYPE_EXPLOSION":
+        {
+            
+        }
+    }
+}
