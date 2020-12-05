@@ -2,19 +2,14 @@
     "Name": "CoilBullet_Indicator",
     "Type": "GameObject",
     "Components": {
-        "TYPE_TRANSFORM": {
-            "Scale": [
-                1.0,
-                1.0
-            ]
-        },
+        "TYPE_TRANSFORM": {},
         "TYPE_GLRECT": {
             "Texture": "IconBullet.png",
             "Color": [
                 0.0,
                 0.0,
                 0.0,
-                1.0
+                0.0
             ]
         },
         "TYPE_DIRINDICATOR": {}
