@@ -1,8 +1,21 @@
-// This is a file for testing openGL.
+/* Start Header -------------------------------------------------------
 
-// Based on a tutorial found at:
-// https://headerphile.com/sdl2/opengl-part-1-sdl-opengl-awesome/
-// There's several ways to do this but I thought this tutorial's formatting was the cleanest.
+	Copyright (C) 20xx DigiPen Institute of Technology.
+	Reproduction or disclosure of this file or its contents without the
+	prior written consent of DigiPen Institute of Technology is prohibited.
+
+	File Name:			main.cpp
+	Purpose:			A rewrite of the original main file when I switched
+						over to hardware accelerated graphics.
+						This initializes the game, runs the game loop,
+						and cleans up after the game is closed.
+	Language:			C++, compiled using Microsoft Visual Studio 2019.
+	Platform:			Compiled using Visual Studio 2019, Windows 10.
+	Project:			JarredEagley_FinalProject
+	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
+	Creation date:		10/26/2020
+
+- End Header --------------------------------------------------------*/
 
 
 #include <string>

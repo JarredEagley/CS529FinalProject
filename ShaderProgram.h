@@ -1,3 +1,26 @@
+/* Start Header -------------------------------------------------------
+
+	Copyright (C) 20xx DigiPen Institute of Technology.
+	Reproduction or disclosure of this file or its contents without the
+	prior written consent of DigiPen Institute of Technology is prohibited.
+
+	File Name:			ShaderProgram.h
+	Purpose:			A header file which defines and implements a
+						ShaderProgram class. This setup and similar can
+						be found both on learnopengl.com and in the below
+						video.
+						Essentially, it encapsulates handling of openGL
+						shader programs, and linking vertex and fragment 
+						shaders.
+						It is an extremely useful class.
+	Language:			C++, compiled using Microsoft Visual Studio 2019.
+	Platform:			Compiled using Visual Studio 2019, Windows 10.
+	Project:			JarredEagley_FinalProject
+	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
+	Creation date:		11/4/2020
+
+- End Header --------------------------------------------------------*/
+
 // heavily modified, based on modern openGL tutorial:
 // https://www.youtube.com/watch?v=aA112viAx7c&list=PLRtjMdoYXLf6zUMDJVRZYV-6g6n62vet8&index=14
 // Also based on the learnopengl tutorials.

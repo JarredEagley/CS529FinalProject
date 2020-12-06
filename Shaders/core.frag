@@ -1,3 +1,21 @@
+/* Start Header -------------------------------------------------------
+
+	Copyright (C) 20xx DigiPen Institute of Technology.
+	Reproduction or disclosure of this file or its contents without the
+	prior written consent of DigiPen Institute of Technology is prohibited.
+
+	File Name:			core.frag
+	Purpose:			The core fragment shader used for most of the game.
+						Things like ships, indicators, ect. use this. 
+						Pretty much anything that is a GLRect, but not a meter.
+	Language:			C++, compiled using Microsoft Visual Studio 2019.
+	Platform:			Compiled using Visual Studio 2019, Windows 10.
+	Project:			JarredEagley_FinalProject
+	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
+	Creation date:		10/27/2020
+
+- End Header --------------------------------------------------------*/
+
 #version 330 core
 
 in vec4 vertColor;
