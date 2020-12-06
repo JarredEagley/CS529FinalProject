@@ -226,5 +226,11 @@
     <None Include="Shaders\meter.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\text.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\text.frag">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
