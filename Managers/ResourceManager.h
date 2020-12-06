@@ -65,6 +65,8 @@ public:
 	const std::string pathFont		 = pathResources + "Font\\";
 	std::string currentLevel;
 
+	static std::map<char, Character> mCharacters;
+
 private:
 	ResourceManager();
 
@@ -73,6 +75,5 @@ private:
 private:
 	static ResourceManager* instance;
 	static std::unordered_map<const char*, GLuint> mTextures; // textureName, texId
-	static std::map<char, Character> mCharacters;
 
 };

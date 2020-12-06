@@ -16,12 +16,12 @@
 - End Header --------------------------------------------------------*/
 
 #pragma once
+
 #include "Component.h"
 #include "ComponentTypes.h"
 #include "glm/glm.hpp"
+#include <string>
 #include <map>
-
-
 
 class GLText : public Component
 {
@@ -41,7 +41,7 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
-	
+	std::string mTextContent;
 
 private:
 	// No private methods.
