@@ -22,9 +22,13 @@ void GLText::Update()
 
 // Used for components which draw to openGL.
 void GLText::setUniformData(ShaderProgram* pProgram)
+{}
+
+void GLText::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj)
 {
 
 }
+
 
 void GLText::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {

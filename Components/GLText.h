@@ -36,6 +36,8 @@ public:
 	// Used for components which draw to openGL.
 	void setUniformData(ShaderProgram* pProgram);
 
+	void Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj);
+
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:

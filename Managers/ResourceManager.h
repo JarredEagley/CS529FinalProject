@@ -18,9 +18,17 @@
 #pragma once
 
 #include <unordered_map>
+#include <map>
 #include "stb_image.h"
-
 #include "GL/glew.h" 
+
+// Defines a FreeType character glyph.
+struct Character {
+	unsigned int mTexId; // ID of the glyph texture.
+	glm::ivec2 mSize; // Size of the glyph.
+	glm::ivec2 mBearing; // Offset from baseline to left/top of the glyph.
+	unsigned int mAdvance; // Offset to advance to the next glyph.
+};
 
 class ResourceManager
 {
@@ -53,11 +61,17 @@ public:
 	const std::string pathProjectiles= pathResources + "Projectiles\\";
 	const std::string pathParticles  = pathResources + "Particles\\";
 	const std::string pathConfig     = pathResources + "Config.json";
+	const std::string pathFont		 = pathResources + "Font\\";
 	std::string currentLevel;
 
 private:
 	ResourceManager();
+
+	void initializeCharacterMap();
+
 private:
 	static ResourceManager* instance;
 	static std::unordered_map<const char*, GLuint> mTextures; // textureName, texId
+	static std::map<char, Character> mCharacters;
+
 };

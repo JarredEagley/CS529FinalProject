@@ -19,10 +19,13 @@
 #include <iostream>
 #include <fstream>
 
+#include "freetype/freetype.h" // May cause conflicts in the near future. I'll have to keep an eye on this.
+
 #include "stb_image.h"
 
 ResourceManager* ResourceManager::instance = nullptr;
 std::unordered_map<const char*, GLuint> ResourceManager::mTextures;
+std::map<char, Character> ResourceManager::mCharacters;
 
 void ResourceManager::destroySingleton()
 {	
@@ -147,5 +150,63 @@ void ResourceManager::loadLevel(const char* pFileName)
 
 		// Load the object.
 		GlobalManager::getGameObjectFactory()->loadObject(arrItr->GetObject());
+	}
+}
+
+
+void ResourceManager::initializeCharacterMap()
+{
+	FT_Library ft;
+	if (FT_Init_FreeType(&ft))
+	{
+		std::cout << "Error::FreeType: Could not initialize FreeType Library." << std::endl;
+		return;
+	}
+
+	FT_Face face;
+	std::string font = pathFont + "arial.ttf";
+	if (FT_New_Face(ft, pathFont.c_str(), 0, &face))
+	{
+		std::cout << "Error::FreeType: Failed to load font '" << pathFont << "'." << std::endl;
+	}
+
+	FT_Set_Pixel_Sizes(face, 0, 48);
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Not sure if this'll mess up my existing texture loading... 
+	for (unsigned char c = 0; c < 128; ++c)
+	{
+		// Load the glyph.
+		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+		{
+			std::cout << "Error::FreeType: Failed to load glyph '" << c << "'." << std::endl;
+			continue;
+		}
+
+		// Generate texture.
+		GLuint texId;
+		glGenTextures(1, &texId);
+		glBindTexture(GL_TEXTURE_2D, texId);
+		glTexImage2D(
+			GL_TEXTURE_2D, 0, GL_RED,
+			face->glyph->bitmap.width,
+			face->glyph->bitmap.rows,
+			0, GL_RED, GL_UNSIGNED_BYTE,
+			face->glyph->bitmap.buffer
+		);
+
+		// Set texture options.
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		// Store character in the map to use later.
+		Character character = {
+			texId,
+			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+			face->glyph->advance.x,
+		};
+		mCharacters.insert(std::pair<char, Character>(c, character));
 	}
 }
