@@ -43,9 +43,9 @@ public:
 		SCENE_MENU
 	};
 	// Debug flags.
-	bool DEBUG_VerboseGameObjects = false;
-	bool DEBUG_VerboseComponents = false; // Enable or disable non-vital warnings.
-	bool DEBUG_VerboseGOF = false; // Enable or disable non-vital logging from the game object factory.
+	bool DEBUG_VerboseGameObjects;
+	bool DEBUG_VerboseComponents; // Enable or disable non-vital warnings.
+	bool DEBUG_VerboseGOF; // Enable or disable non-vital logging from the game object factory.
 
 private:
 	GameStateManager();

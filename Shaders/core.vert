@@ -18,8 +18,8 @@
 
 #version 330 core
 
-layout (location = 0) in vec4 aPosition;
-layout (location = 1) in vec2 aTexCoord;
+layout (location = 0) in vec4 vertex;
+layout (location = 1) in vec2 texCoord;
 
 out vec4 vertColor;
 out vec2 vertTexCoord;
@@ -39,7 +39,7 @@ int COLLISION_AABB = 2;
 void main()
 {
 
-	gl_Position = viewProj * viewTrans * modelTrans * aPosition;
+	gl_Position = viewProj * viewTrans * modelTrans * vertex;
 	vertColor = color;
-	vertTexCoord = ( aTexCoord + uvOffset ) * uvScale;
+	vertTexCoord = ( texCoord + uvOffset ) * uvScale;
 }

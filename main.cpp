@@ -69,6 +69,7 @@ bool Init()
 	}
 
 	// Init my stuff.
+	// This init function doesnt actually work the way i want it to...
 	GlobalManager::initSingletons();
 	GlobalManager::getGameStateManager()->readGameConfig();
 

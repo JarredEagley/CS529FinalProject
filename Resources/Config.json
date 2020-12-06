@@ -4,7 +4,10 @@
 
     "Gamestate Manager":
     {
-        "Description": "Not Currently Implemented."
+        "Description": "Controls the state of the game, as well as enabling and disabling certain flags useful for debugging..",
+        "DEBUG Verbose GameObjects": false,
+        "DEBUG Verbose Components": false,
+        "DEBUG Verbose GameObject Factory": false
     }, 
     "Framerate Controller":
     {
@@ -35,7 +38,7 @@
     {
         "Description": "Responsible for any and all graphics-related things. Window height and width settable here, along with zoom properties. Note: Zoom properties may be overridden by levels.",
         "Window Width": 1200,
-        "Window Height": 1000,
+        "Window Height": 900,
         "Zoom Level": 100,
         "Max Zoom Level": 100000,
         "Min Zoom Level": 0.1

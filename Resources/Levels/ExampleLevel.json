@@ -22,6 +22,10 @@
             }
         },
         {
+            "Name": "TEST_TEXT",
+            "Archetype": "TestText.json"
+        },
+        {
             "Name": "PLAYER",
             "Archetype": "Player.json",
             "Components":

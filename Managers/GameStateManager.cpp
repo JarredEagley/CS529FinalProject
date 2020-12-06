@@ -26,7 +26,8 @@ void GameStateManager::destroySingleton()
 
 // End of singleton stuff. //
 
-GameStateManager::GameStateManager()
+GameStateManager::GameStateManager() : 
+	DEBUG_VerboseComponents(false), DEBUG_VerboseGameObjects(false), DEBUG_VerboseGOF(false)
 {
 	srand(time(NULL));
 }
@@ -43,9 +44,19 @@ void GameStateManager::readGameConfig()
 	// Use serializer to read the json in.
 	Serializer* pSer = GlobalManager::getSerializer();
 	rapidjson::Document doc = pSer->loadJson(GlobalManager::getResourceManager()->pathConfig.c_str());
-
-	//if (doc.HasMember("Gamestate Manager") && doc["Gamestate Manager"].IsObject())
+	if (doc.HasMember("Gamestate Manager") && doc["Gamestate Manager"].IsObject())
 	{
+		auto currentObj = doc["Gamestate Manager"].GetObject();
+
+		// Debug flags
+		if (currentObj.HasMember("DEBUG Verbose GameObjects") && currentObj["DEBUG Verbose GameObjects"].IsBool())
+			DEBUG_VerboseGameObjects = currentObj["DEBUG Verbose GameObjects"].GetBool();
+
+		if (currentObj.HasMember("DEBUG Verbose Components") && currentObj["DEBUG Verbose Components"].IsBool())
+			DEBUG_VerboseGameObjects = currentObj["DEBUG Verbose Components"].GetBool();
+
+		if (currentObj.HasMember("DEBUG Verbose GameObject Factory") && currentObj["DEBUG Verbose GameObject Factory"].IsBool())
+			DEBUG_VerboseGOF = currentObj["DEBUG Verbose GameObject Factory"].GetBool();
 	}
 
 	if (doc.HasMember("Framerate Controller") && doc["Framerate Controller"].IsObject())

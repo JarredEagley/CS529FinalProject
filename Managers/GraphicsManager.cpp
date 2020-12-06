@@ -183,6 +183,11 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 
 	// Components we'll need.
 	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // From game object being drawn
+	if (pTransform == nullptr)
+	{
+		std::cout << "Warning: GameObject " << pGO->mName << " had no transform." << std::endl;
+		return;
+	}
 
 	// Camera needs to exist.
 	Camera* pCamera = nullptr;

@@ -1,0 +1,14 @@
+{
+    "Components":
+    {
+        "TYPE_TRANSFORM": {},
+        "TYPE_GLTEXT":
+        {
+            "Message": "Hello Graphics Card",
+            "Position": [25, 25],
+            "Scale": 1.0
+        }
+    },
+    "Render Pass" : "HUD",
+    "Shader": "text"
+}

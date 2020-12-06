@@ -45,7 +45,6 @@ void main()
 	}
 	*/
 	
-
 	/*
 	if (col_type == 0)
 		FragColor += vec4(1,0,0,0);

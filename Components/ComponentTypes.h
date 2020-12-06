@@ -31,6 +31,7 @@ public:
 		if (strcmp(str, "TYPE_CONTROLLERSLIDER") == 0)	return TYPE_CONTROLLERSLIDER;
 		if (strcmp(str, "TYPE_CONTROLLERSHIP") == 0)	return TYPE_CONTROLLERSHIP;
 		if (strcmp(str, "TYPE_GLRECT") == 0)			return TYPE_GLRECT;
+		if (strcmp(str, "TYPE_GLTEXT") == 0)			return TYPE_GLTEXT;
 		if (strcmp(str, "TYPE_CAMERA") == 0)			return TYPE_CAMERA;
 		if (strcmp(str, "TYPE_BACKGROUNDGRID") == 0)	return TYPE_BACKGROUNDGRID;
 		if (strcmp(str, "TYPE_PHYSICSBODY") == 0)		return TYPE_PHYSICSBODY;
@@ -55,6 +56,7 @@ public:
 		TYPE_CONTROLLERSLIDER,
 		TYPE_CONTROLLERSHIP,
 		TYPE_GLRECT,
+		TYPE_GLTEXT,
 		TYPE_CAMERA,
 		TYPE_BACKGROUNDGRID,
 		TYPE_PHYSICSBODY,
