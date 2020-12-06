@@ -59,6 +59,8 @@ void GLText::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 	float x = mX;
 	float y = mY;
 
+	glDisable(GL_BLEND);
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(VAO);
 
@@ -68,13 +70,13 @@ void GLText::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 
 	unsigned int loc;
 	loc = glGetUniformLocation(pProgram->ProgramID, "viewProj");
-	glUniformMatrix2fv(loc, 1, GL_FALSE, glm::value_ptr(testProj));
-	/*
+	glUniformMatrix2fv(loc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
+	
 	loc = glGetUniformLocation(pProgram->ProgramID, "viewTrans");
 	glUniformMatrix2fv(loc, 1, GL_FALSE, glm::value_ptr(viewTrans));
 	loc = glGetUniformLocation(pProgram->ProgramID, "modelTrans");
 	glUniformMatrix2fv(loc, 1, GL_FALSE, glm::value_ptr(modelTrans));
-	*/
+	
 
 	loc = glGetUniformLocation(pProgram->ProgramID, "textColor");
 	glUniform3f(loc, 1.0f, 1.0f, 1.0f);
@@ -97,6 +99,7 @@ void GLText::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 		std::cout << "---\n";
 
 		// Update the VBO for each character...
+		/*
 		float vertices[6][4] = {
 			{ xPos,     yPos + h,   0.0f, 0.0f },
 			{ xPos,     yPos,       0.0f, 1.0f },
@@ -106,11 +109,25 @@ void GLText::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 			{ xPos + w, yPos,       1.0f, 1.0f },
 			{ xPos + w, yPos + h,   1.0f, 0.0f }
 		};
+		*/
+		
+		float vertices[6][4] = {
+			{ -1.0,     1.0,   0.0f, 0.0f },
+			{ -1.0,     -1.0,       0.0f, 1.0f },
+			{ 1.0,	   -1.0,       1.0f, 1.0f },
+
+			{ 0.0,     1.0,   0.0f, 0.0f },
+			{ 1.0, 0.0,       1.0f, 1.0f },
+			{ 1.0, 1.0,   1.0f, 0.0f }
+		};
+
+
+
 		// Render glyph texture over this quad.
 		glBindTexture(GL_TEXTURE_2D, ch.mTexId);
 		// Update content of VBO Memory.
-		glBindBuffer(GL_ARRAY_BUFFER, VBO); // Need the vbo to be a thing.
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); // More things to do...
+		glBindBuffer(GL_ARRAY_BUFFER, VBO); 
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		// Draw call.
@@ -123,6 +140,8 @@ void GLText::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 	// Unbind.
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	glEnable(GL_BLEND);
 }
 
 void GLText::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
