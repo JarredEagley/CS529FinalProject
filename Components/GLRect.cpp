@@ -134,9 +134,36 @@ void GLRect::setUniformData(ShaderProgram* pProgram)
 	loc = glGetUniformLocation(pProgram->ProgramID, "uvScale");
 	glUniform1f(loc, getUvScale());
 	loc = glGetUniformLocation(pProgram->ProgramID, "uvOffset");
-	glUniform2fv(loc, 1, &mUvOffset.x );
+	glUniform2fv(loc, 1, &mUvOffset.x);
 	loc = glGetUniformLocation(pProgram->ProgramID, "color");
-	glUniform4fv(loc, 1, &mColor.x );
+	glUniform4fv(loc, 1, &mColor.x);
+}
+
+#include "Transform.h"
+#include "Camera.h"
+#include "glm/gtc/type_ptr.hpp"
+void GLRect::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj)
+{
+	// Bind
+	glBindVertexArray(this->vaoID);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, this->mTexID);
+
+	// Uniforms.
+	unsigned int loc;
+	loc = glGetUniformLocation(pProgram->ProgramID, "modelTrans");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(modelTrans) );
+	loc = glGetUniformLocation(pProgram->ProgramID, "viewTrans");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(viewTrans) );
+	loc = glGetUniformLocation(pProgram->ProgramID, "viewProj");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(viewProj) );
+
+	// Draw.
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	// Unbind
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindVertexArray(0);
 }
 
 

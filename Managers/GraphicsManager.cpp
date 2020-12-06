@@ -147,52 +147,24 @@ void GraphicsManager::drawGameObject_HUD(GameObject* pGO)
 	}
 
 	// Components we'll need.
-	GLRect* pRect = static_cast<GLRect*>(pGO->GetComponent(ComponentTypes::TYPE_GLRECT)); // From game object being drawn
 	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // From game object being drawn
-
-	// Can't draw something with no graphics component.
-	if (pRect == nullptr)
-		return;
-
 	if (pTransform == nullptr)
 	{
 		std::cout << "Warning: Aborting draw for " << pGO->mName << " because it did not have a transform component." << std::endl;
 		return;
 	}
 
-	// No need for camera.
-
-	// Get the vaoID we want to draw.
-	GLuint vaoID = pRect->getVAO(); // Note: it's possible for an object to not have a VAO.
-
 	// --- Draw --- //
 
 	// bind
 	pProgram->Use(); // Use current program.
-	glBindVertexArray(vaoID); // Bind the VAO
-	glActiveTexture(GL_TEXTURE0); // Will be needed if I one day one multiple textures on one rect.
-	glBindTexture(GL_TEXTURE_2D, pRect->getTexId()); // Bind the desired texture.
-	//pRect->setUniformData(pProgram);
+
 	pGO->setAllUniformData(pProgram);
+	pGO->Draw(pProgram, 
+		pTransform->getTransformationMatrix(), 
+		glm::mat4(1.0f),
+		glm::mat4(1.0f));
 
-	unsigned int loc;
-
-	// transform
-	loc = glGetUniformLocation(pProgram->ProgramID, "transform");
-	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(pTransform->getTransformationMatrix()));
-	// Cam transforms
-	loc = glGetUniformLocation(pProgram->ProgramID, "viewTrans");
-	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)) );
-	loc = glGetUniformLocation(pProgram->ProgramID, "viewProj");
-	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)) );
-
-
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // <--- The actual draw call! <---
-
-
-	// unbind
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindVertexArray(0);
 	pProgram->unUse();
 
 }
@@ -209,13 +181,8 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	}
 
 	// Components we'll need.
-	GLRect* pRect = static_cast<GLRect*>(pGO->GetComponent(ComponentTypes::TYPE_GLRECT)); // From game object being drawn
 	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // From game object being drawn
 
-	// Can't draw something with no graphics component.
-	if (pRect == nullptr)
-		return;
-	
 	// Camera needs to exist.
 	Camera* pCamera = nullptr;
 	if (pCurrentCameraGO == nullptr)
@@ -224,38 +191,17 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 		pCamera = static_cast<Camera*>(pCurrentCameraGO->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
 
 
-	// Get the vaoID we want to draw.
-	GLuint vaoID = pRect->getVAO(); // Note: it's possible for an object to not have a VAO.
-	
 	// --- Draw --- //
 
 	// bind
 	pProgram->Use(); // Use current program.
-	glBindVertexArray(vaoID); // Bind the VAO
-	glActiveTexture(GL_TEXTURE0); // Will be needed if I one day one multiple textures on one rect.
-	glBindTexture(GL_TEXTURE_2D, pRect->getTexId()); // Bind the desired texture.
-	//pRect->setUniformData(pProgram);
-	setUniformDefaults(pProgram);
+
 	pGO->setAllUniformData(pProgram);
+	pGO->Draw(pProgram, 
+		pTransform->getTransformationMatrix(),
+		pCamera->getTransMatrix(), // View matrix
+		pCamera->getProjMatrix());
 
-	unsigned int loc;
-
-	// transform
-	loc = glGetUniformLocation(pProgram->ProgramID, "transform");
-	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr( pTransform->getTransformationMatrix() ));
-	// Cam transforms
-	loc = glGetUniformLocation(pProgram->ProgramID, "viewTrans");
-	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(pCamera->getTransMatrix() ));
-	loc = glGetUniformLocation(pProgram->ProgramID, "viewProj");
-	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr( pCamera->getProjMatrix() ));
-
-
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // <--- The actual draw call! <---
-
-
-	// unbind
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindVertexArray(0);
 	pProgram->unUse();
 }
 
@@ -331,3 +277,32 @@ void GraphicsManager::incrementZoomLevel(float delta)
 	mZoomLevel = std::min(mMaxZoomLevel, mZoomLevel); // Clamp
 }
 
+/*
+#include "freetype/freetype.h"
+void GraphicsManager::initializeCharacterMap()
+{
+	FT_Library ft;
+	if (FT_Init_FreeType(&ft))
+	{
+		std::cout << "Error::FreeType: Could not initialize FreeType Library." << std::endl;
+		return;
+	}
+
+	FT_Face face;
+	if (FT_New_Face(ft, "fonts/arial.ttf", 0, &face))
+	{
+		std::cout << "Error::Freetype: Failed to load font." << std::endl;
+		return;
+	}
+
+	FT_Set_Pixel_Sizes(face, 0, 48);
+
+	if (FT_Load_Char(face, 'X', FT_LOAD_RENDER))
+	{
+		std::cout << "Error::FreeType: Failed to load Glyph. " << std::endl;
+		return;
+	}
+
+
+}
+*/

@@ -1,5 +1,6 @@
 #include "Explosion.h"
 #include "ComponentTypes.h"
+#include "../Managers/GlobalManager.h"
 
 Explosion::Explosion() : Component(ComponentTypes::TYPE_EXPLOSION)
 {
@@ -19,7 +20,19 @@ void Explosion::Initialize()
 
 void Explosion::Update()
 {
+	if (mIntensity > 0)
+	{
+		// 
 
+
+
+		// Decrement intensity.
+		mIntensity -= GlobalManager::getFrameRateController()->getFrameTime();
+	}
+	else
+	{
+		mpOwner->mIsMarkedForDelete = true;
+	}
 }
 
 

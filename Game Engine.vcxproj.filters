@@ -85,6 +85,9 @@
     <ClCompile Include="Components\Explosion.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Components\GLText.cpp">
+      <Filter>Components\Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -173,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="Components\Explosion.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\GLText.h">
+      <Filter>Components\Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,8 +22,16 @@
 
 #include "../GameObject.h"
 #include "../ShaderProgram.h"
+#include <map>
 #include <unordered_map>
 #include "../FrameBufferObject.h"
+
+struct Character {
+	unsigned int mTexId; // ID of the glyph texture.
+	glm::ivec2 mSize; // Size of the glyph.
+	glm::ivec2 mBearing; // Offset from baseline to left/top of the glyph.
+	unsigned int mAdvance; // Offset to advance to the next glyph.
+};
 
 enum class RenderPassType
 {
@@ -87,6 +95,7 @@ private:
 	static GraphicsManager *instance;
 	
 	GameObject* pCurrentCameraGO = nullptr;
+	std::map<char, Character> mCharacters;
 
 	static float mZoomLevel;
 	static float mMinZoomLevel;

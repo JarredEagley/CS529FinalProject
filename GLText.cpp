@@ -1,1 +1,0 @@
-#include "GLText.h"

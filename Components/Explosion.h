@@ -17,7 +17,12 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
+	float mIntensity = 100.0f;
+	float mSize = 1.0f;
+
 private:
+	// No private methods.
 private:
+	// No private variables.
 };
 

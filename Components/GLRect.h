@@ -34,9 +34,8 @@ public:
 	void Initialize();
 	void Update();
 
-	void setColor(glm::vec4); // Sets the color of the whole square. Will implement gradiant coloring if necessary.
+	void setColor(glm::vec4); // Sets the color of the whole square. 
 	glm::vec4 getColor() { return mColor; };
-
 	void setUvScale(float scale);
 	float getUvScale();
 	void setUvOffset(glm::vec2 offset);
@@ -48,6 +47,7 @@ public:
 	int getTexId() { return mTexID; }; // Returns the ID of the texture stored on the graphics card which we want this component to draw.
 
 	void setUniformData(ShaderProgram* pProgram);
+	void Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj);
 
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
@@ -64,15 +64,6 @@ private:
 		glm::vec4(0.5f, -0.5f, 0.0f, 1.0f),		// Right bot
 		glm::vec4(0.5f, 0.5f, 0.0f, 1.0f),		// Right top
 	};
-	/*
-	glm::vec4 mVertCol[4] = { 
-		// RGBA
-		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-		glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
-	};
-	*/
 	glm::vec2 mVertUV[4] = {
 		glm::vec2(0.0f, 1.0f),
 		glm::vec2(0.0f, 0.0f),

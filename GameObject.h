@@ -17,6 +17,7 @@
 #pragma once
 
 #include <unordered_map>
+#include <glm/mat4x4.hpp>
 
 class Component;
 class Event;
@@ -50,6 +51,7 @@ public:
 	RenderPassType getRenderPassType(); // returns render pass enum
 
 	void setAllUniformData(ShaderProgram* pProgram); // Calls setUniformData on all this GO's components.
+	void Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj);
 
 	void handleEvent(Event *pEvent);
 public:

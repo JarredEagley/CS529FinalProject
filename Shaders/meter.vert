@@ -6,14 +6,14 @@ layout (location = 1) in vec2 aTexCoord;
 out vec4 vertColor;
 out vec2 vertTexCoord;
 
-uniform mat4 transform, viewTrans, viewProj;//, viewOffset;
+uniform mat4 modelTrans, viewTrans, viewProj;//, viewOffset;
 uniform float uvScale;
 uniform vec2 uvOffset;
 uniform vec4 color;
 
 void main()
 {
-	gl_Position = viewProj * viewTrans * transform * aPosition;
+	gl_Position = viewProj * viewTrans * modelTrans * aPosition;
 	vertColor = color;
 	vertTexCoord = ( aTexCoord + uvOffset ) * uvScale;
 }

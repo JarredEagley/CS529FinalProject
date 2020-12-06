@@ -233,6 +233,13 @@ void GameObject::setAllUniformData(ShaderProgram* pProgram)
 		pCompPair.second->setUniformData(pProgram); // Will be empty call for most components.
 }
 
+void GameObject::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj)
+{
+	for (auto pCompPair : mComponents)
+		pCompPair.second->Draw(pProgram, modelTrans, viewTrans, viewProj);
+}
+
+
 
 void GameObject::handleEvent(Event* pEvent)
 {
