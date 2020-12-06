@@ -94,6 +94,7 @@ void GraphicsManager::setUniformDefaults(ShaderProgram* pProgram)
 
 
 // Draws every GameObject stored in the GameObjectManger.
+/*
 void GraphicsManager::drawAllGameObjects()
 {
 	GameObjectManager *pGOM = GlobalManager::getGameObjectManager();
@@ -102,6 +103,7 @@ void GraphicsManager::drawAllGameObjects()
 		drawGameObject(pGOPair.second);
 	}
 }
+*/
 
 // If I had to do many many draw passes refactoring this code into something more generic
 // would be a good idea. This should be fine for my game, though.
@@ -113,9 +115,6 @@ void GraphicsManager::Draw()
 
 void GraphicsManager::DrawHUD()
 {
-	// This will simply use a glm::lookat. No camera trickery needed. FBO Will be fed
-	// into the final pass and drawn on top of the final pass using a sampler.
-
 	// Loop through the GO's for this pass...
 	for (auto pGO : mRenderPasses[RenderPassType::HUD])
 	{
@@ -146,6 +145,7 @@ void GraphicsManager::drawGameObject_HUD(GameObject* pGO)
 		return;
 	}
 
+
 	// Components we'll need.
 	Transform* pTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // From game object being drawn
 	if (pTransform == nullptr)
@@ -158,6 +158,7 @@ void GraphicsManager::drawGameObject_HUD(GameObject* pGO)
 
 	// bind
 	pProgram->Use(); // Use current program.
+	setUniformDefaults(pProgram);
 
 	pGO->setAllUniformData(pProgram);
 	pGO->Draw(pProgram, 
@@ -195,6 +196,7 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 
 	// bind
 	pProgram->Use(); // Use current program.
+	setUniformDefaults(pProgram);
 
 	pGO->setAllUniformData(pProgram);
 	pGO->Draw(pProgram, 

@@ -21,6 +21,7 @@
 #include "Component.h"
 
 #include "glm/glm.hpp"
+#include "GL/glew.h"
 
 class Shape;
 
@@ -53,6 +54,7 @@ public:
 	void handleEvent(Event* pEvent);
 	
 	void setUniformData(ShaderProgram* pProgram);
+	void Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj);
 	
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
@@ -77,5 +79,27 @@ private:
 	PhysicsBody* mpIgnoredPhysicsBody;
 	float mIgnorePhysicsBodyTimer;
 	bool mHasGravity; 
+
+	// Used in debug drawing:
+	glm::vec4 mVertPos[4] = {
+		// Supporting 3d transfomrations. 
+		glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f),		// Left Top
+		glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f),	// Left Bot
+		glm::vec4(0.5f, -0.5f, 0.0f, 1.0f),		// Right bot
+		glm::vec4(0.5f, 0.5f, 0.0f, 1.0f),		// Right top
+	};
+	glm::vec2 mVertUV[4] = {
+		glm::vec2(0.0f, 1.0f),
+		glm::vec2(0.0f, 0.0f),
+		glm::vec2(1.0f, 0.0f),
+		glm::vec2(1.0f, 1.0f),
+	};
+	unsigned int mIndices[6] = {
+		0, 1, 3, // First triangle.
+		1, 2, 3	 // Second triangle.
+	};
+	GLuint vboID[3];
+	GLuint vaoID;
+
 };
 

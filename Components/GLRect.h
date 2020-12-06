@@ -70,7 +70,6 @@ private:
 		glm::vec2(1.0f, 0.0f),
 		glm::vec2(1.0f, 1.0f),
 	};
-
 	unsigned int mIndices[6] = {
 		0, 1, 3, // First triangle.
 		1, 2, 3	 // Second triangle.

@@ -61,7 +61,7 @@ public:
 	void Draw();
 	void DrawHUD();
 	void DrawFinal();
-	void drawAllGameObjects();  // Depricated.
+	//void drawAllGameObjects();  // Depricated.
 	void drawGameObject(GameObject *pGO);
 	void drawGameObject_HUD(GameObject* pGO);
 

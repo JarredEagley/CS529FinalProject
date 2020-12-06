@@ -26,6 +26,7 @@ void main()
 		FragColor = vec4(vertTexCoord,0,1);
 	}
 	*/
+	
 
 	/*
 	if (col_type == 0)

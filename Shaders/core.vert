@@ -11,8 +11,16 @@ uniform float uvScale;
 uniform vec2 uvOffset;
 uniform vec4 color;
 
+uniform int col_type;
+uniform float col_circleRadius;
+uniform float col_aabbLeft, col_aabbRight, col_aabbTop, col_aabbBottom;
+int COLLISION_NONE = 0;
+int COLLISION_CICLE = 1;
+int COLLISION_AABB = 2;
+
 void main()
 {
+
 	gl_Position = viewProj * viewTrans * modelTrans * aPosition;
 	vertColor = color;
 	vertTexCoord = ( aTexCoord + uvOffset ) * uvScale;

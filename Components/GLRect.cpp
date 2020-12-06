@@ -17,6 +17,11 @@
 #include "GLRect.h"
 #include "../Managers/GlobalManager.h"
 #include "ComponentTypes.h"
+
+#include "Transform.h"
+#include "Camera.h"
+#include "glm/gtc/type_ptr.hpp"
+
 #include <iostream>
 
 GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT),
@@ -139,9 +144,7 @@ void GLRect::setUniformData(ShaderProgram* pProgram)
 	glUniform4fv(loc, 1, &mColor.x);
 }
 
-#include "Transform.h"
-#include "Camera.h"
-#include "glm/gtc/type_ptr.hpp"
+
 void GLRect::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj)
 {
 	// Bind
