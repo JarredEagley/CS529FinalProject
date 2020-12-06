@@ -21,6 +21,7 @@
 #include <map>
 #include "stb_image.h"
 #include "GL/glew.h" 
+#include "glm/vec2.hpp"
 
 // Defines a FreeType character glyph.
 struct Character {

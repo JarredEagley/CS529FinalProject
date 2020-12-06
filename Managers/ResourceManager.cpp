@@ -19,7 +19,10 @@
 #include <iostream>
 #include <fstream>
 
-#include "freetype/freetype.h" // May cause conflicts in the near future. I'll have to keep an eye on this.
+#include "ft2build.h"
+#include FT_FREETYPE_H
+
+//#include "freetype/freetype.h" // May cause conflicts in the near future. I'll have to keep an eye on this.
 
 #include "stb_image.h"
 
@@ -39,6 +42,7 @@ void ResourceManager::destroySingleton()
 ResourceManager::ResourceManager() 
 {
 	stbi_set_flip_vertically_on_load(true);
+	initializeCharacterMap();
 }
 
 GLuint ResourceManager::loadTexture(const char* texName)
@@ -165,9 +169,9 @@ void ResourceManager::initializeCharacterMap()
 
 	FT_Face face;
 	std::string font = pathFont + "arial.ttf";
-	if (FT_New_Face(ft, pathFont.c_str(), 0, &face))
+	if (FT_New_Face(ft, font.c_str(), 0, &face))
 	{
-		std::cout << "Error::FreeType: Failed to load font '" << pathFont << "'." << std::endl;
+		std::cout << "Error::FreeType: Failed to load font '" << font << "'." << std::endl;
 	}
 
 	FT_Set_Pixel_Sizes(face, 0, 48);
