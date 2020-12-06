@@ -22,7 +22,6 @@
 #include "ft2build.h"
 #include FT_FREETYPE_H
 
-//#include "freetype/freetype.h" // May cause conflicts in the near future. I'll have to keep an eye on this.
 
 #include "stb_image.h"
 
@@ -172,6 +171,7 @@ void ResourceManager::initializeCharacterMap()
 	if (FT_New_Face(ft, font.c_str(), 0, &face))
 	{
 		std::cout << "Error::FreeType: Failed to load font '" << font << "'." << std::endl;
+		return;
 	}
 
 	FT_Set_Pixel_Sizes(face, 0, 48);
