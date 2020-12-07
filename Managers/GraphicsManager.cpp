@@ -47,8 +47,8 @@ void GraphicsManager::destroySingleton()
 	mShaderPrograms.clear();
 
 	// Destroy Vertex Data.
-	glDeleteBuffers(3, &vboIDRect[0]);
-	glDeleteVertexArrays(1, &vaoIDRect);
+	glDeleteBuffers(3, &instance->vboIDRect[0]);
+	glDeleteVertexArrays(1, &instance->vaoIDRect);
 
 	delete instance;
 }

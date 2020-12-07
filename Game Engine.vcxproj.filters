@@ -88,6 +88,9 @@
     <ClCompile Include="Components\GLText.cpp">
       <Filter>Components\Data</Filter>
     </ClCompile>
+    <ClCompile Include="Components\HealthMeter.cpp">
+      <Filter>Components\Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -179,6 +182,9 @@
     </ClInclude>
     <ClInclude Include="Components\GLText.h">
       <Filter>Components\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\HealthMeter.h">
+      <Filter>Components\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

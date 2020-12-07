@@ -197,7 +197,7 @@ void PhysicsBody::applyForce(glm::vec2 F)
 		return;
 
 	// Frametime is in ms, convert to s.
-	mTotalForce += F * GlobalManager::getFrameRateController()->getFrameTimeSec();
+	mTotalForce += F;// *GlobalManager::getFrameRateController()->getFrameTimeSec();
 }
 
 void PhysicsBody::applyTorque(float T)
@@ -206,7 +206,7 @@ void PhysicsBody::applyTorque(float T)
 	if (isnan(T) || isinf(T))
 		return;
 
-	mTotalTorque += T * GlobalManager::getFrameRateController()->getFrameTimeSec();
+	mTotalTorque += T;// *GlobalManager::getFrameRateController()->getFrameTimeSec();
 }
 
 
