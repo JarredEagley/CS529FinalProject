@@ -27,17 +27,10 @@
 GLRect::GLRect() : Component(ComponentTypes::TYPE_GLRECT),
 mColor(glm::vec4(1.0f)), mUvScale(1.0f), mUvOffset(glm::vec2(0.0f))
 {
-	// Texture is null until loaded.
-	//mTexture->texture = nullptr;
-	vaoID = NULL;
-	buildVAO();
 }
 
 GLRect::~GLRect()
 {
-	// Dispose of vertex data.
-	glDeleteBuffers(3, &vboID[0]);
-	glDeleteVertexArrays(1, &vaoID);
 }
 
 void GLRect::Initialize() {}
@@ -86,52 +79,6 @@ void GLRect::setTexture(const char* imageName)
 }
 
 
-// PRIVATE.
-// Builds the openGL vertex array object. 
-void GLRect::buildVAO()
-{
-	// VAO
-	glGenVertexArrays(1, &vaoID);
-	glBindVertexArray(vaoID);
-
-	// VBO
-	glGenBuffers(2, &vboID[0]);
-
-	// Position, uv
-	glBindBuffer(GL_ARRAY_BUFFER, vboID[0]); 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertPos) , &mVertPos[0][0] , GL_STATIC_DRAW ); 
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0 );
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	// Color is nolonger a vertex attribute.
-
-	glBindBuffer(GL_ARRAY_BUFFER, vboID[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(mVertUV) , &mVertUV[0][0] , GL_STATIC_DRAW );
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0); 
-	glEnableVertexAttribArray(1);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	
-	// EBO
-	GLuint eboID;
-	glGenBuffers(1, &eboID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 3 * 2, mIndices, GL_STATIC_DRAW ); 
-
-	glBindVertexArray(0); // Set back to default.
-}
-
-
-unsigned int GLRect::getVAO()
-{
-	if (vaoID == NULL)
-		buildVAO();
-
-	return vaoID;
-}
-
-
 // Binds the uniform data associated with this paticular GLRect.
 void GLRect::setUniformData(ShaderProgram* pProgram)
 {
@@ -148,7 +95,8 @@ void GLRect::setUniformData(ShaderProgram* pProgram)
 void GLRect::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj)
 {
 	// Bind
-	glBindVertexArray(this->vaoID);
+	unsigned int vaoID = GlobalManager::getGraphicsManager()->getVAORect();
+	glBindVertexArray(vaoID);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->mTexID);
 

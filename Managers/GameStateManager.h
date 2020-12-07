@@ -52,5 +52,6 @@ private:
 
 private:
 	static GameStateManager* instance; // The signleton instance.
+
 };
 

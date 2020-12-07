@@ -46,6 +46,10 @@ void GraphicsManager::destroySingleton()
 	// Clear the hash map.
 	mShaderPrograms.clear();
 
+	// Destroy Vertex Data.
+	glDeleteBuffers(3, &vboIDRect[0]);
+	glDeleteVertexArrays(1, &vaoIDRect);
+
 	delete instance;
 }
 
@@ -53,9 +57,12 @@ void GraphicsManager::destroySingleton()
 
 GraphicsManager::GraphicsManager() : 
 	pCurrentCameraGO(nullptr), 
-	mWindowHeight(0), mWindowWidth(0)
+	mWindowHeight(0), mWindowWidth(0),
+	vaoIDRect(NULL)
 {
 }
+
+// --- Render pass stuff --- //
 
 void GraphicsManager::removeFromAnyRenderPasses(GameObject* pGO)
 {
@@ -84,6 +91,7 @@ void GraphicsManager::addToRenderPass(GameObject* pGO, RenderPassType newRenderP
 	mRenderPasses[newRenderPassType].push_back(pGO);
 }
 
+// --- Drawing --- //
 
 void GraphicsManager::setUniformDefaults(ShaderProgram* pProgram)
 {
@@ -104,6 +112,7 @@ void GraphicsManager::drawAllGameObjects()
 	}
 }
 */
+
 
 // If I had to do many many draw passes refactoring this code into something more generic
 // would be a good idea. This should be fine for my game, though.
@@ -212,6 +221,7 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	pProgram->unUse();
 }
 
+// --- Shader Loading --- //
 
 ShaderProgram* GraphicsManager::loadShader(std::string shaderName)
 {
@@ -241,12 +251,14 @@ ShaderProgram* GraphicsManager::loadShader(std::string shaderName)
 	return program;
 }
 
+// --- Camera --- //
 
 void GraphicsManager::setCurrentCameraGO(GameObject* pCam)
 {
 	pCurrentCameraGO = pCam;
 }
 
+// --- Zoom level --- //
 
 void GraphicsManager::setMaxZoomLevel(float zoomLevel)
 {
@@ -284,32 +296,47 @@ void GraphicsManager::incrementZoomLevel(float delta)
 	mZoomLevel = std::min(mMaxZoomLevel, mZoomLevel); // Clamp
 }
 
-/*
-#include "freetype/freetype.h"
-void GraphicsManager::initializeCharacterMap()
+
+// --- GLRect Stuff --- //
+
+unsigned int GraphicsManager::getVAORect()
 {
-	FT_Library ft;
-	if (FT_Init_FreeType(&ft))
-	{
-		std::cout << "Error::FreeType: Could not initialize FreeType Library." << std::endl;
-		return;
-	}
-
-	FT_Face face;
-	if (FT_New_Face(ft, "fonts/arial.ttf", 0, &face))
-	{
-		std::cout << "Error::Freetype: Failed to load font." << std::endl;
-		return;
-	}
-
-	FT_Set_Pixel_Sizes(face, 0, 48);
-
-	if (FT_Load_Char(face, 'X', FT_LOAD_RENDER))
-	{
-		std::cout << "Error::FreeType: Failed to load Glyph. " << std::endl;
-		return;
-	}
-
-
+	if (vaoIDRect == NULL)
+		buildVAORect();
+	return vaoIDRect;
 }
-*/
+
+void GraphicsManager::buildVAORect()
+{
+	// VAO
+	glGenVertexArrays(1, &vaoIDRect);
+	glBindVertexArray(vaoIDRect);
+
+	// VBO
+	glGenBuffers(2, &vboIDRect[0]);
+
+	// Position, uv
+	glBindBuffer(GL_ARRAY_BUFFER, vboIDRect[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertPosRect), &vertPosRect[0][0], GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// Color is nolonger a vertex attribute.
+
+	glBindBuffer(GL_ARRAY_BUFFER, vboIDRect[1]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertUVRect), &vertUVRect[0][0], GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(1);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// EBO
+	GLuint eboID;
+	glGenBuffers(1, &eboID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 3 * 2, indicesRect, GL_STATIC_DRAW);
+
+	glBindVertexArray(0); // Set back to default.
+}
+

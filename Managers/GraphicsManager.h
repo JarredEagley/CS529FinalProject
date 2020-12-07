@@ -24,6 +24,7 @@
 #include "../ShaderProgram.h"
 #include <unordered_map>
 #include "../FrameBufferObject.h"
+#include "GL/glew.h"
 
 enum class RenderPassType
 {
@@ -71,6 +72,8 @@ public:
 	void setZoomLevel(float zoom);
 	void incrementZoomLevel(float delta);
 
+	unsigned int getVAORect();
+
 public:
 	static std::unordered_map<std::string, ShaderProgram*> mShaderPrograms; // shaderName, ShaderProgram*
 	int mWindowWidth, mWindowHeight;
@@ -81,7 +84,11 @@ public:
 
 private:
 	GraphicsManager();
+
 	void setUniformDefaults(ShaderProgram* pProgram); // Private function which sets default values for uniforms used in things like physics bodies.
+
+	// GLRect VAO
+	void buildVAORect();
 
 private:
 	static GraphicsManager *instance;
@@ -91,5 +98,28 @@ private:
 	static float mZoomLevel;
 	static float mMinZoomLevel;
 	static float mMaxZoomLevel;
+
+
+	// GLRect stuff-- We essentially have one quad that we stamp across the scene to save memory.
+	GLuint vboIDRect[3];
+	GLuint vaoIDRect; // The OpenGL identifier for the Vertex Array Object for this gameObject.
+	// A 1x1 flat white square with default uv's.
+	glm::vec4 vertPosRect[4] = {
+		// Supporting 3d transfomrations. 
+		glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f),		// Left Top
+		glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f),	// Left Bot
+		glm::vec4(0.5f, -0.5f, 0.0f, 1.0f),		// Right bot
+		glm::vec4(0.5f, 0.5f, 0.0f, 1.0f),		// Right top
+	};
+	glm::vec2 vertUVRect[4] = {
+		glm::vec2(0.0f, 1.0f),
+		glm::vec2(0.0f, 0.0f),
+		glm::vec2(1.0f, 0.0f),
+		glm::vec2(1.0f, 1.0f),
+	};
+	unsigned int indicesRect[6] = {
+		0, 1, 3, // First triangle.
+		1, 2, 3	 // Second triangle.
+	};
 };
 
