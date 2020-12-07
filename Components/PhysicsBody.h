@@ -24,6 +24,15 @@
 
 class Shape;
 
+// Behavior of this physics body for collision handling.
+enum class bodyType
+{
+	NORMAL, // Does elastic collision, penatrates if below a certain size and above a certain speed.
+	EXPLOSION, // No collision, just does damage to anything inside according to an explosion component.
+
+	NUM
+};
+
 // Roughly equivalent to the example 'body.h'.
 class PhysicsBody : public Component
 {
