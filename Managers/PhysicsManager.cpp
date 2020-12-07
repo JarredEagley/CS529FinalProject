@@ -100,6 +100,10 @@ void PhysicsManager::Update()
 		PhysicsBody* pBody1 = pContact->mBodies[0];
 		PhysicsBody* pBody2 = pContact->mBodies[1];
 
+		// Inform each about the other.
+		cEvent2.mpOtherBody = pBody1;
+		cEvent1.mpOtherBody = pBody2;
+
 		// Are they approaching?
 		glm::vec2 approachVector = (pBody2->mVelocity - pBody1->mVelocity) * (pBody2->mPosition - pBody1->mPosition);
 		if ((approachVector.x + approachVector.y) < 0)
@@ -109,82 +113,31 @@ void PhysicsManager::Update()
 		}
 
 		// Create the collision normal. 
-		cEvent1.mCollisionNormal = glm::normalize(pBody2->mPosition - pBody1->mPosition);
-		cEvent2.mCollisionNormal = -cEvent1.mCollisionNormal;
+		glm::vec2 collisionNormal = glm::normalize(pBody2->mPosition - pBody1->mPosition);
+		cEvent1.mCollisionNormal = collisionNormal;
+		cEvent2.mCollisionNormal = -collisionNormal; // Not sure if this needs to be inverted TO-DO
 
-		// Get the total speed.
-		glm::vec2 totalVelocity = pBody1->mVelocity + pBody2->mVelocity;
-		cEvent1.mTotalSpeed = glm::length(totalVelocity);
-		cEvent2.mTotalSpeed = cEvent1.mTotalSpeed;
+		float combinedMassInverse = 1.0f/(pBody1->mMass + pBody2->mMass);
+		glm::vec2 relativePosition = pBody1->mPosition - pBody2->mPosition;
+		float distSqr = relativePosition.x*relativePosition.x + relativePosition.y * relativePosition.y;
 
-		// Get the collision angle.
-		// Not 100% on my math here...
-		cEvent1.mCollideAngle = glm::dot(totalVelocity, cEvent1.mCollisionNormal);
-		cEvent2.mCollideAngle = -cEvent1.mCollideAngle;
+		float velDotPos1 = glm::dot(pBody1->mVelocity - pBody2->mVelocity, pBody1->mPosition - pBody2->mPosition);
+		float velDotPos2 = glm::dot(pBody2->mVelocity - pBody1->mVelocity ,pBody2->mPosition - pBody1->mPosition);
 
+		// Calculate new velocity for body 1.
+		cEvent1.mNewVelocity =
+			pBody1->mVelocity - (2.0f * pBody2->mMass * combinedMassInverse) 
+			* (velDotPos1/distSqr) * (pBody1->mPosition - pBody2->mPosition);
+
+		// Calculate new velocity for body 2.
+		cEvent2.mNewVelocity =
+			pBody2->mVelocity - (2.0f * pBody1->mMass * combinedMassInverse)
+			* (( velDotPos2) / (distSqr)) * ( pBody2->mPosition - pBody1->mPosition);
+
+		// Broadcast events.
 
 		pBody1->handleEvent(&cEvent1);
 		pBody2->handleEvent(&cEvent2);
 
-		// / / / / // / //
-		// old stuff
-
-
-		// Let the two physics bodies know about eachother.
-		
-		/*
-		cEvent.mpBodies[0] = pContact->mBodies[0];
-		cEvent.mpBodies[1] = pContact->mBodies[1];
-
-		// --- // 
-		glm::vec2 vel0 = cEvent.mpBodies[0]->mVelocity;
-		glm::vec2 vel1 = cEvent.mpBodies[1]->mVelocity;
-		glm::vec2 pos0 = cEvent.mpBodies[0]->mPosition;
-		glm::vec2 pos1 = cEvent.mpBodies[1]->mPosition;
-		float mass0 = cEvent.mpBodies[0]->mMass;
-		float mass1 = cEvent.mpBodies[1]->mMass;
-
-		// Check if the two objects are approaching.
-		glm::vec2 approachVec = (vel1 - vel0) * (pos1 - pos0);
-		if ((approachVec.x + approachVec.y) >= 0)
-			continue; 
-
-		glm::vec2 collisionNormal = glm::normalize( pos0 - pos1 ); 
-
-		
-		//std::cout << "DEBUG - normal is " << collisionNormal.x << ", " << collisionNormal.y << std::endl;
-
-		float totalMassInv = 1 / (cEvent.mpBodies[0]->mMass + cEvent.mpBodies[1]->mMass);
-		float massDiff01 = cEvent.mpBodies[0]->mMass - cEvent.mpBodies[1]->mMass;
-		float massDiff10 = cEvent.mpBodies[1]->mMass - cEvent.mpBodies[0]->mMass;
-
-		// Equations according to wikipedia for elastic collision.
-		float v0Term2 = (2.0f  * mass1) / ( mass0 + mass1);
-		float v1Term2 = (2.0f  * mass0) / ( mass0 + mass1);
-
-		glm::vec2 temp;
-		float templensqr;
-
-		temp = pos0 - pos1;
-		templensqr = (temp.x * temp.x) + (temp.y * temp.y);
-		float v0Term3 = glm::dot( (vel0-vel1) , (pos0-pos1) ) / templensqr;
-		temp =  pos1 - pos0;
-		templensqr = (temp.x * temp.x) + (temp.y * temp.y);
-		float v1Term3 = glm::dot( (vel1-vel0) , (pos1-pos0) ) / templensqr;
-
-		glm::vec2 v0Term4 = pos0 - pos1;
-		glm::vec2 v1Term4 = pos1 - pos0;
-
-
-		// Combine velocities.
-		cEvent.mNewVel0 = vel0 - (v0Term2 * v0Term3 * v0Term4);
-		cEvent.mNewVel1 = vel1 - (v1Term2 * v1Term3 * v1Term4);
-
-		// --- //
-
-		// Send the collide event to the bodies.
-		pContact->mBodies[0]->mpOwner->handleEvent(&cEvent);
-		pContact->mBodies[1]->mpOwner->handleEvent(&cEvent);
-		*/
 	}
 }

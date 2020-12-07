@@ -215,7 +215,28 @@ void PhysicsBody::handleEvent(Event* pEvent)
 	{
 		CollideEvent* pCollideEvent = static_cast<CollideEvent*>(pEvent);
 
+		collisionType myCollideType = this->mCollisionType;
+		collisionType otherCollideType = pCollideEvent->mpOtherBody->mCollisionType;
 
+		// Elastic collision, else just pass through.
+		if (myCollideType == collisionType::NORMAL && otherCollideType == collisionType::NORMAL)
+		{
+			if (pCollideEvent->mObjectsAreApproaching)
+			{
+				this->mVelocity = pCollideEvent->mNewVelocity;
+			}
+		
+			/*
+			std::cout << "DEBUG: Applying force of " << pCollideEvent->mTotalForce.x / GlobalManager::getPhysicsManager()->getGameTime() <<
+				", " << pCollideEvent->mTotalForce.y / GlobalManager::getPhysicsManager()->getGameTime() << std::endl;
+			*/
+
+			/*
+			std::cout << "DEBUG: " << this->mpOwner->mName << "'s Velocity is " << this->mVelocity.x << ", " << this->mVelocity.y <<
+				" After recieving momentum " << pCollideEvent->mTotalForce.x << ", " << pCollideEvent->mpOtherBody << std::endl;
+			std::cout << "DEBUG: Also " << this->mpOwner->mName << "'s position is now " << this->mPosition.x << ", " << this->mPosition.y << std::endl; 
+			*/
+		}
 
 
 		/*

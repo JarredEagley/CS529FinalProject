@@ -20,6 +20,7 @@
 #include <string>
 
 class GameObject;
+class PhysicsBody;
 
 enum class EventType
 {
@@ -72,8 +73,9 @@ public:
 	
 	glm::vec2 mCollisionNormal;
 
-	float mCollideAngle;
-	float mTotalSpeed;
+	glm::vec2 mNewVelocity;
+
+
 };
 
 
