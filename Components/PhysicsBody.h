@@ -21,7 +21,6 @@
 #include "Component.h"
 
 #include "glm/glm.hpp"
-#include "GL/glew.h"
 
 class Shape;
 
@@ -54,7 +53,7 @@ public:
 	void handleEvent(Event* pEvent);
 	
 	void setUniformData(ShaderProgram* pProgram);
-	void Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj);
+	//void Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj);
 	
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
