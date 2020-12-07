@@ -33,6 +33,7 @@
 #include "Components/ShipData.h"
 #include "Components/ThrottleMeter.h"
 #include "Components/FuelMeter.h"
+#include "Components/HealthMeter.h"
 #include "Components/Turret.h"
 #include "Components/FollowCursor.h"
 #include "Components/Explosion.h"
@@ -183,6 +184,9 @@ Component* GameObject::AddComponent(unsigned int Type)
 		pNewComponent = new ThrottleMeter();
 		break;
 	case (ComponentTypes::TYPE_METER_FUEL):
+		pNewComponent = new FuelMeter();
+		break;
+	case (ComponentTypes::TYPE_METER_HEALTH):
 		pNewComponent = new FuelMeter();
 		break;
 	case (ComponentTypes::TYPE_TURRET):
