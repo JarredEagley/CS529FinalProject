@@ -77,17 +77,17 @@ void ShipData::setThrottle(float throttle)
 // Should be called once per update while accelerating with the main drive.
 void ShipData::useFuel()
 {
-	mFuel -= (GlobalManager::getFrameRateController()->getFrameTimeSec() * (mThrottle/100.0f) ) / mFuelEfficiency;
+	mFuel -= (GlobalManager::getPhysicsManager()->getGameTime() * (mThrottle/100.0f) ) / mFuelEfficiency;
 }
 
 void ShipData::usePower( float pwr )
 {
-	mPower -= GlobalManager::getFrameRateController()->getFrameTimeSec() * pwr;
+	mPower -= GlobalManager::getPhysicsManager()->getGameTime() * pwr;
 }
 
 void ShipData::generatePower()
 {
-	mPower += GlobalManager::getFrameRateController()->getFrameTimeSec() * mPowerProduction;
+	mPower += GlobalManager::getPhysicsManager()->getGameTime() * mPowerProduction;
 }
 
 

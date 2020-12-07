@@ -17,7 +17,7 @@
             "Mass": 10.0,
             "Circle":
             {
-                "Radius": 2.0
+                "Radius": 5.0
             }
         }
     }

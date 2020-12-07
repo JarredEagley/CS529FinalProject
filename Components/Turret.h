@@ -44,9 +44,9 @@ private:
 	// No private methods.
 private:
 	float mAimAngle;
-	int fireRate = 10; // TO-DO: Serialize
-	int fireTimer = 10; // TO-DO: Serialize
-	float mProjectileVelocity = 10; // TO-DO: Serialize
+	float fireRate = 10; // TO-DO: Serialize
+	float fireTimer = 10; // TO-DO: Serialize
+	float mProjectileVelocity = 100; // TO-DO: Serialize
 	bool mIsShooting;
 	Transform* mpTransform;
 	Transform* mpParentTransform;

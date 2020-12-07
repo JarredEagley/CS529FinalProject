@@ -86,7 +86,7 @@ void PhysicsBody::Update()
 	{
 		if (mIgnorePhysicsBodyTimer > 0.0f)
 		{
-			mIgnorePhysicsBodyTimer -= GlobalManager::getFrameRateController()->getFrameTime();
+			mIgnorePhysicsBodyTimer -= GlobalManager::getPhysicsManager()->getGameTime();
 		}
 		else
 		{

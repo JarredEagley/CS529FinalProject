@@ -86,7 +86,7 @@ void Turret::Update()
 		
 		fireTimer = 0;
 	}
-	++fireTimer;
+	fireTimer += GlobalManager::getPhysicsManager()->getGameTime();
 }
 
 

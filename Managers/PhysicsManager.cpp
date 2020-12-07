@@ -7,6 +7,7 @@
 PhysicsManager* PhysicsManager::instance = nullptr;
 std::list<PhysicsBody*> PhysicsManager::gravityBodies; // Initialize the vector.
 bool PhysicsManager::isPhysicsPaused = true;
+float PhysicsManager::gameTimeMultiplier = 50.0f; // Game seconds per real life second.
 
 void PhysicsManager::destroySingleton()
 {
@@ -35,18 +36,26 @@ PhysicsManager::PhysicsManager()
 }
 
 
+float PhysicsManager::getGameTime()
+{
+	return GlobalManager::getFrameRateController()->getFrameTimeSec() * gameTimeMultiplier;
+}
+
+
 void PhysicsManager::Update()
 {
 	if (isPhysicsPaused)
 		return;
 
-	float frameTime = GlobalManager::getFrameRateController()->getFrameTime();
+	//float frameTime = GlobalManager::getFrameRateController()->getFrameTimeSec();
+	float gameTime = getGameTime();
+
 	// Integrate the physics bodies.
 	for (auto pGOPair : GlobalManager::getGameObjectManager()->mGameObjects)
 	{
 		PhysicsBody* pPhysicsBody = static_cast<PhysicsBody*>(pGOPair.second->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
 		if (nullptr != pPhysicsBody)
-			pPhysicsBody->Integrate(frameTime);
+			pPhysicsBody->Integrate(gameTime);
 	}
 
 	// Reset previous contacts.
