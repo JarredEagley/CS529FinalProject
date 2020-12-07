@@ -53,7 +53,7 @@ void GameStateManager::readGameConfig()
 			DEBUG_VerboseGameObjects = currentObj["DEBUG Verbose GameObjects"].GetBool();
 
 		if (currentObj.HasMember("DEBUG Verbose Components") && currentObj["DEBUG Verbose Components"].IsBool())
-			DEBUG_VerboseGameObjects = currentObj["DEBUG Verbose Components"].GetBool();
+			DEBUG_VerboseComponents = currentObj["DEBUG Verbose Components"].GetBool();
 
 		if (currentObj.HasMember("DEBUG Verbose GameObject Factory") && currentObj["DEBUG Verbose GameObject Factory"].IsBool())
 			DEBUG_VerboseGOF = currentObj["DEBUG Verbose GameObject Factory"].GetBool();
