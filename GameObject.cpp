@@ -187,7 +187,7 @@ Component* GameObject::AddComponent(unsigned int Type)
 		pNewComponent = new FuelMeter();
 		break;
 	case (ComponentTypes::TYPE_METER_HEALTH):
-		pNewComponent = new FuelMeter();
+		pNewComponent = new HealthMeter();
 		break;
 	case (ComponentTypes::TYPE_TURRET):
 		pNewComponent = new Turret();

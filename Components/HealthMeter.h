@@ -41,6 +41,6 @@ private:
 	// No private methods.
 private:
 	glm::vec4 mSecondaryColor; // Color it fades toward as it depletes.
-	float mFuel;
+	float mHealth;
 };
 

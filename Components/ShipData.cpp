@@ -55,6 +55,18 @@ void ShipData::Update()
 	GlobalManager::getEventManager()->broadcastEventToSubscribers(pShipDataEvent);
 }
 
+void ShipData::handleEvent(Event* pEvent)
+{
+	// Use collision events to apply damage.
+	if (pEvent->mType == EventType::COLLIDE)
+	{
+		CollideEvent* pCollideEvent = static_cast<CollideEvent*>(pEvent);
+
+		this->takeDamage(10.0f);
+		
+	}
+}
+
 
 void ShipData::throttleUp()
 {
@@ -73,6 +85,15 @@ void ShipData::setThrottle(float throttle)
 	mThrottle = std::max(mThrottle, 0.0f);
 }
 
+
+void ShipData::takeDamage(float dmg)
+{
+	this->mHealth -= dmg;
+	if (this->mHealth < 0.0f)
+	{
+		// TO-DO: DESTROY!
+	}
+}
 
 // Should be called once per update while accelerating with the main drive.
 void ShipData::useFuel()

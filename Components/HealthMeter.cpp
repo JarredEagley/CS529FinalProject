@@ -21,7 +21,7 @@
 #include "ShipData.h"
 
 HealthMeter::HealthMeter() : Component(ComponentTypes::TYPE_METER_FUEL),
-mFuel(0.0f), mSecondaryColor(glm::vec4(1.0f))
+mHealth(100.0f), mSecondaryColor(glm::vec4(1.0f))
 {}
 
 HealthMeter::~HealthMeter()
@@ -43,7 +43,7 @@ void HealthMeter::setUniformData(ShaderProgram* pProgram)
 	//std::cout << "sending fuel data: " << mFuel << std::endl;
 	unsigned int loc;
 	loc = glGetUniformLocation(pProgram->ProgramID, "fillLevel");
-	glUniform1f(loc, mFuel);
+	glUniform1f(loc, mHealth);
 	loc = glGetUniformLocation(pProgram->ProgramID, "secondaryColor");
 	glUniform4fv(loc, 1, &mSecondaryColor.x);
 
@@ -56,7 +56,7 @@ void HealthMeter::handleEvent(Event* pEvent)
 	if (pEvent->mType == EventType::SHIPDATA_UPDATED)
 	{
 		ShipDataUpdatedEvent* pShipDataEvent = static_cast<ShipDataUpdatedEvent*>(pEvent);
-		this->mFuel = pShipDataEvent->mpShipData->mFuel;
+		this->mHealth = pShipDataEvent->mpShipData->mHealth;
 	}
 }
 

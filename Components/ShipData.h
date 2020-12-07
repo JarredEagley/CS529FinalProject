@@ -31,11 +31,13 @@ public:
 
 	void Initialize();
 	void Update();
+	void handleEvent(Event* pEvent);
 
 	void throttleUp();
 	void throttleDown();
 	void setThrottle(float throttle);
 	
+	void takeDamage(float dmg);
 	void useFuel(); // Uses fuel inverse to efficiency.
 	void usePower(float pwr);
 	void generatePower();
