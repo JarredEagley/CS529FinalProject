@@ -33,48 +33,12 @@ mMass(1.0f), mInvMass(1.0f),
 mForwardDir(glm::vec2(0.0f,1.0f)), mRightDir(glm::vec2(1.0f,0.0f)),
 mpShape(nullptr), mpIgnoredPhysicsBody(nullptr), mIgnorePhysicsBodyTimer(0.0f)
 {
-	// ----- Just the logic from GLRect::buildVAO() copied over -----
-	vaoID = NULL;
-	{
-		// VAO
-		glGenVertexArrays(1, &vaoID);
-		glBindVertexArray(vaoID);
-
-		// VBO
-		glGenBuffers(2, &vboID[0]);
-
-		// Position, uv
-		glBindBuffer(GL_ARRAY_BUFFER, vboID[0]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(mVertPos), &mVertPos[0][0], GL_STATIC_DRAW);
-		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		glBindBuffer(GL_ARRAY_BUFFER, vboID[1]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(mVertUV), &mVertUV[0][0], GL_STATIC_DRAW);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(1);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		// EBO
-		GLuint eboID;
-		glGenBuffers(1, &eboID);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 3 * 2, mIndices, GL_STATIC_DRAW);
-
-		glBindVertexArray(0); // Set back to default.
-	}
 }
 
 PhysicsBody::~PhysicsBody()
 {
 	if (mpShape != nullptr)
 		delete mpShape;
-
-	// Delete our debug drawing quad.
-	glDeleteBuffers(3, &vboID[0]);
-	glDeleteVertexArrays(1, &vaoID);
 }
 
 
@@ -298,6 +262,7 @@ void PhysicsBody::setUniformData(ShaderProgram* pProgram)
 
 
 // TO-DO
+/*
 #include "glm/gtc/type_ptr.hpp"
 void PhysicsBody::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj)
 {
@@ -321,6 +286,7 @@ void PhysicsBody::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 
 	// Unbind
 	glBindVertexArray(0);
 }
+*/
 
 
 void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
