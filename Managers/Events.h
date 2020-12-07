@@ -37,6 +37,7 @@ enum class EventType
 	NUM
 };
 
+
 class Event
 {
 public:
@@ -53,7 +54,29 @@ public:
 	float mTimer;
 };
 
-// I couldn't think of a better place for these.
+// ----- //
+
+// Altered from the original example; now we instead send
+// two different collide events to the two different bodies
+// so that they may behave accordingly.
+class CollideEvent : public Event 
+{
+public:
+	CollideEvent();
+	~CollideEvent();
+
+	// The other physics body.
+	PhysicsBody * mpOtherBody;
+	// Are they approaching eachother?
+	bool mObjectsAreApproaching = false;
+	
+	glm::vec2 mCollisionNormal;
+
+	float mCollideAngle;
+	float mTotalSpeed;
+};
+
+
 class Transform;
 class TransformUpdatedEvent : public Event
 {
@@ -139,3 +162,7 @@ public:
 	~GameObjectDestroyedEvent() {};
 	std::string mDestroyedGOName;
 };
+
+
+
+

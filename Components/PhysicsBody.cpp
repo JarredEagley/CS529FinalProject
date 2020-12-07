@@ -215,6 +215,10 @@ void PhysicsBody::handleEvent(Event* pEvent)
 	{
 		CollideEvent* pCollideEvent = static_cast<CollideEvent*>(pEvent);
 
+
+
+
+		/*
 		// Only react to your own collisions. Figure out which one you are.
 		if (pCollideEvent->mpBodies[0] == this)
 		{
@@ -226,6 +230,7 @@ void PhysicsBody::handleEvent(Event* pEvent)
 			//std::cout << "DEBUG: " << this->mpOwner->mName << " altered\n";
 			this->mVelocity = pCollideEvent->mNewVel1;
 		}
+		*/
 	}
 }
 

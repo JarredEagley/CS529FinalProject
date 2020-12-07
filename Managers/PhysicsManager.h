@@ -5,21 +5,6 @@
 
 class PhysicsBody;
 
-class CollideEvent : public Event // Event declared in EventManager.h
-{
-public:
-	CollideEvent();
-	~CollideEvent();
-
-	PhysicsBody* mpBodies[2];
-
-	glm::vec2 mNewVel0;
-	glm::vec2 mNewVel1;
-
-	bool mObjectsAreApproaching;
-};
-
-
 class PhysicsManager
 {
 public:

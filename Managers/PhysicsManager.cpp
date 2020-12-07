@@ -92,10 +92,47 @@ void PhysicsManager::Update()
 
 	for (auto pContact : GlobalManager::getCollisionManager()->mContacts)
 	{
-		// Create a collide event.
-		CollideEvent cEvent;
+		// Create collide events.
+		CollideEvent cEvent1;
+		CollideEvent cEvent2;
+
+		// Get the two bodies.
+		PhysicsBody* pBody1 = pContact->mBodies[0];
+		PhysicsBody* pBody2 = pContact->mBodies[1];
+
+		// Are they approaching?
+		glm::vec2 approachVector = (pBody2->mVelocity - pBody1->mVelocity) * (pBody2->mPosition - pBody1->mPosition);
+		if ((approachVector.x + approachVector.y) < 0)
+		{
+			cEvent1.mObjectsAreApproaching = true;
+			cEvent2.mObjectsAreApproaching = true;
+		}
+
+		// Create the collision normal. 
+		cEvent1.mCollisionNormal = glm::normalize(pBody2->mPosition - pBody1->mPosition);
+		cEvent2.mCollisionNormal = -cEvent1.mCollisionNormal;
+
+		// Get the total speed.
+		glm::vec2 totalVelocity = pBody1->mVelocity + pBody2->mVelocity;
+		cEvent1.mTotalSpeed = glm::length(totalVelocity);
+		cEvent2.mTotalSpeed = cEvent1.mTotalSpeed;
+
+		// Get the collision angle.
+		// Not 100% on my math here...
+		cEvent1.mCollideAngle = glm::dot(totalVelocity, cEvent1.mCollisionNormal);
+		cEvent2.mCollideAngle = -cEvent1.mCollideAngle;
+
+
+		pBody1->handleEvent(&cEvent1);
+		pBody2->handleEvent(&cEvent2);
+
+		// / / / / // / //
+		// old stuff
+
 
 		// Let the two physics bodies know about eachother.
+		
+		/*
 		cEvent.mpBodies[0] = pContact->mBodies[0];
 		cEvent.mpBodies[1] = pContact->mBodies[1];
 
@@ -114,6 +151,7 @@ void PhysicsManager::Update()
 
 		glm::vec2 collisionNormal = glm::normalize( pos0 - pos1 ); 
 
+		
 		//std::cout << "DEBUG - normal is " << collisionNormal.x << ", " << collisionNormal.y << std::endl;
 
 		float totalMassInv = 1 / (cEvent.mpBodies[0]->mMass + cEvent.mpBodies[1]->mMass);
@@ -147,5 +185,6 @@ void PhysicsManager::Update()
 		// Send the collide event to the bodies.
 		pContact->mBodies[0]->mpOwner->handleEvent(&cEvent);
 		pContact->mBodies[1]->mpOwner->handleEvent(&cEvent);
+		*/
 	}
 }
