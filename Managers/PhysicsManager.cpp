@@ -104,6 +104,9 @@ void PhysicsManager::Update()
 		cEvent2.mpOtherBody = pBody1;
 		cEvent1.mpOtherBody = pBody2;
 
+		collisionType collisionType1 = pBody1->mCollisionType;
+		collisionType collisionType2 = pBody2->mCollisionType;
+
 		// Are they approaching?
 		glm::vec2 approachVector = (pBody2->mVelocity - pBody1->mVelocity) * (pBody2->mPosition - pBody1->mPosition);
 		if ((approachVector.x + approachVector.y) < 0)
@@ -112,30 +115,67 @@ void PhysicsManager::Update()
 			cEvent2.mObjectsAreApproaching = true;
 		}
 
-		// Create the collision normal. 
-		glm::vec2 collisionNormal = glm::normalize(pBody2->mPosition - pBody1->mPosition);
-		cEvent1.mCollisionNormal = collisionNormal;
-		cEvent2.mCollisionNormal = -collisionNormal; // Not sure if this needs to be inverted TO-DO
+		// If either is noclip...
+		if (
+			collisionType1 == collisionType::NOCLIP
+			|| collisionType2 == collisionType::NOCLIP
+			|| !cEvent1.mObjectsAreApproaching
+			|| !cEvent2.mObjectsAreApproaching
+			)
+		{
+			// Just pass through eachother.
+			cEvent1.mResponse = CollideEvent::collisionResponse::PASS;
+			cEvent2.mResponse = CollideEvent::collisionResponse::PASS;
+		}
+		else
+		{
+			glm::vec2 relativeVelocity = pBody1->mVelocity - pBody2->mVelocity;
+			cEvent1.mRelativeVelocity = relativeVelocity;
+			cEvent2.mRelativeVelocity = relativeVelocity;
+			float relativeSpeedSqr = relativeVelocity.x * relativeVelocity.x + relativeVelocity.y * relativeVelocity.y;
+			
+			float const PIERCING_THRESHOLD = 10.0f; // Need to move this to the manager.
 
-		float combinedMassInverse = 1.0f/(pBody1->mMass + pBody2->mMass);
-		glm::vec2 relativePosition = pBody1->mPosition - pBody2->mPosition;
-		float distSqr = relativePosition.x*relativePosition.x + relativePosition.y * relativePosition.y;
+			// Create the collision normal. 
+			glm::vec2 collisionNormal = glm::normalize(pBody2->mPosition - pBody1->mPosition);
 
-		float velDotPos1 = glm::dot(pBody1->mVelocity - pBody2->mVelocity, pBody1->mPosition - pBody2->mPosition);
-		float velDotPos2 = glm::dot(pBody2->mVelocity - pBody1->mVelocity ,pBody2->mPosition - pBody1->mPosition);
+			// Above certain speed squared.
+			if (relativeSpeedSqr > PIERCING_THRESHOLD)
+			{
+				// Pierce (go through, do more damage!)
+				cEvent1.mResponse = CollideEvent::collisionResponse::PIERCE;
+				cEvent2.mResponse = CollideEvent::collisionResponse::PIERCE;
 
-		// Calculate new velocity for body 1.
-		cEvent1.mNewVelocity =
-			pBody1->mVelocity - (2.0f * pBody2->mMass * combinedMassInverse) 
-			* (velDotPos1/distSqr) * (pBody1->mPosition - pBody2->mPosition);
+				cEvent1.mResistance = pBody1->mpShape->mArea ;
+				cEvent2.mResistance = pBody2->mpShape->mArea ;
+			}
+			else
+			{
+				// Deflect
+				cEvent1.mResponse = CollideEvent::collisionResponse::DEFLECT;
+				cEvent2.mResponse = CollideEvent::collisionResponse::DEFLECT;
 
-		// Calculate new velocity for body 2.
-		cEvent2.mNewVelocity =
-			pBody2->mVelocity - (2.0f * pBody1->mMass * combinedMassInverse)
-			* (( velDotPos2) / (distSqr)) * ( pBody2->mPosition - pBody1->mPosition);
+				float combinedMassInverse = 1.0f/(pBody1->mMass + pBody2->mMass);
+				glm::vec2 relativePosition = pBody1->mPosition - pBody2->mPosition;
+				float distSqr = relativePosition.x*relativePosition.x + relativePosition.y * relativePosition.y;
+
+				float velDotPos1 = glm::dot(pBody1->mVelocity - pBody2->mVelocity, pBody1->mPosition - pBody2->mPosition);
+				float velDotPos2 = glm::dot(pBody2->mVelocity - pBody1->mVelocity ,pBody2->mPosition - pBody1->mPosition);
+
+				// Calculate new velocity for body 1.
+				cEvent1.mNewVelocity =
+					pBody1->mVelocity - (2.0f * pBody2->mMass * combinedMassInverse) 
+					* (velDotPos1/distSqr) * (pBody1->mPosition - pBody2->mPosition);
+
+				// Calculate new velocity for body 2.
+				cEvent2.mNewVelocity =
+					pBody2->mVelocity - (2.0f * pBody1->mMass * combinedMassInverse)
+					* (( velDotPos2) / (distSqr)) * ( pBody2->mPosition - pBody1->mPosition);
+			}
+
+		}
 
 		// Broadcast events.
-
 		pBody1->handleEvent(&cEvent1);
 		pBody2->handleEvent(&cEvent2);
 

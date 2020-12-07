@@ -66,15 +66,27 @@ public:
 	CollideEvent();
 	~CollideEvent();
 
+	enum collisionResponse
+	{
+		DEFLECT, // Bounce
+		PIERCE,  // Pass, but slow down and do damage.
+		PASS	 // No collision
+	};
+
 	// The other physics body.
 	PhysicsBody * mpOtherBody;
 	// Are they approaching eachother?
 	bool mObjectsAreApproaching = false;
+	collisionResponse mResponse;
 	
-	glm::vec2 mCollisionNormal;
+	//glm::vec2 mCollisionNormal;
 
-	glm::vec2 mNewVelocity;
+	// Elastic collision
+	glm::vec2 mNewVelocity; // Specifically for bounce.
 
+	// Piercing collision
+	glm::vec2 mRelativeVelocity;
+	float mResistance; // Bigger objects (more area) resist harder.
 
 };
 

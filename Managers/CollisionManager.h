@@ -43,6 +43,7 @@ public:
 public:
 	PhysicsBody* mpOwnerBody;
 	ShapeType mType;
+	float mArea;
 
 private:
 private:

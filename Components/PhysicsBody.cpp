@@ -218,40 +218,25 @@ void PhysicsBody::handleEvent(Event* pEvent)
 		collisionType myCollideType = this->mCollisionType;
 		collisionType otherCollideType = pCollideEvent->mpOtherBody->mCollisionType;
 
-		// Elastic collision, else just pass through.
-		if (myCollideType == collisionType::NORMAL && otherCollideType == collisionType::NORMAL)
+
+		// Elastic collision
+		if (pCollideEvent->mResponse == CollideEvent::collisionResponse::DEFLECT)
 		{
 			if (pCollideEvent->mObjectsAreApproaching)
 			{
 				this->mVelocity = pCollideEvent->mNewVelocity;
 			}
 		
-			/*
-			std::cout << "DEBUG: Applying force of " << pCollideEvent->mTotalForce.x / GlobalManager::getPhysicsManager()->getGameTime() <<
-				", " << pCollideEvent->mTotalForce.y / GlobalManager::getPhysicsManager()->getGameTime() << std::endl;
-			*/
-
-			/*
-			std::cout << "DEBUG: " << this->mpOwner->mName << "'s Velocity is " << this->mVelocity.x << ", " << this->mVelocity.y <<
-				" After recieving momentum " << pCollideEvent->mTotalForce.x << ", " << pCollideEvent->mpOtherBody << std::endl;
-			std::cout << "DEBUG: Also " << this->mpOwner->mName << "'s position is now " << this->mPosition.x << ", " << this->mPosition.y << std::endl; 
-			*/
 		}
-
-
-		/*
-		// Only react to your own collisions. Figure out which one you are.
-		if (pCollideEvent->mpBodies[0] == this)
+		else if (pCollideEvent->mResponse == CollideEvent::collisionResponse::PIERCE)
 		{
-			//std::cout << "DEBUG: " << this->mpOwner->mName << " altered\n";
-			this->mVelocity = pCollideEvent->mNewVel0;
+			// Pierce.
+			this->applyForce(glm::normalize(pCollideEvent->mRelativeVelocity) * pCollideEvent->mResistance);
 		}
-		else if (pCollideEvent->mpBodies[1] == this)
+		else
 		{
-			//std::cout << "DEBUG: " << this->mpOwner->mName << " altered\n";
-			this->mVelocity = pCollideEvent->mNewVel1;
+			// Pass through.
 		}
-		*/
 	}
 }
 

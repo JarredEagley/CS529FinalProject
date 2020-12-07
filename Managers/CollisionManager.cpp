@@ -34,11 +34,13 @@ Shape::Shape(ShapeType Type)
 {
 	mpOwnerBody = nullptr;
 	mType = Type;
+	mArea = 1.0f;
 }
 
 ShapeCircle::ShapeCircle(float radius) : Shape(Shape::ShapeType::CIRCLE)
 {
 	mRadius = radius;
+	mArea = 3.14159265 * radius * radius;
 }
 
 bool ShapeCircle::testPoint(glm::vec2 point)
@@ -61,6 +63,7 @@ ShapeAABB::ShapeAABB(float left, float right, float top, float bottom) : Shape(S
 	mRight = right;
 	mTop = top;
 	mBottom = bottom;
+	mArea = (left + right) * (top + bottom);
 }
 
 bool ShapeAABB::testPoint(glm::vec2 point)
