@@ -100,26 +100,26 @@ void GameObjectManager::deleteRemovedGameObjects()
 		// Continue iterating.
 		++itr;
 	}
-	/*
-	for (auto key : mMarkedForDelete)
-	{
-		//std::cout << "Deleting Key " << key << std::endl;
-		// Make sure we're not deleting something which doesn't exist.
-		if (mGameObjects[key] != nullptr)
-			delete mGameObjects[key];
-		mGameObjects.erase(key);
-	}
-	mMarkedForDelete.clear();
-	*/
 }
 
 
 void GameObjectManager::deleteAllGameObjects()
 {
-	/*
+	addCreatedGameObjects();
+	for (auto pGOPair : mGameObjects)
+		pGOPair.second->mIsMarkedForDelete = true;
+}
+
+// Dangerous-- forces delition of all game objects.
+void GameObjectManager::forceDeleteAllGameObjects()
+{
+	
 	for (auto pGOPair : mGameObjects)
 		delete pGOPair.second;
 	mGameObjects.clear();
-	mMarkedForDelete.clear();
-	*/
+	
+	// Destroy game objects pending creation too.
+	for (auto pGO : mNewGameObjects)
+		delete pGO;
+	mNewGameObjects.clear();
 }

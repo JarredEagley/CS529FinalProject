@@ -43,12 +43,15 @@ mpParentGO(nullptr), mParentGOName(""),
 mIsParented(false), mIsAlive(false), mIsMarkedForDelete(false),
 mRenderPassType(RenderPassType::NONE)
 {
+	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGameObjects)
+		std::cout << "Constructing new GameObject..." << std::endl;
 	std::unordered_map<unsigned int, Component*> mComponents;
 }
 
 GameObject::~GameObject()
 {
-	//std::cout << "Destructor called on " << mName << std::endl;
+	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGameObjects)
+		std::cout << "Destructor called on " << mName << std::endl;
 	// Remove all my components.
 	for (auto pComponentPair : mComponents)
 		delete pComponentPair.second;
@@ -81,6 +84,8 @@ GameObject::~GameObject()
 
 void GameObject::initializeComponents()
 {
+	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGameObjects)
+		std::cout << "Initializing GameObject " << this->mName << std::endl;
 	for (auto pComponentPair : mComponents)
 		pComponentPair.second->Initialize();
 }

@@ -57,6 +57,7 @@ public:
 	void deleteRemovedGameObjects(); // Updates mGameObjects
 
 	void deleteAllGameObjects();
+	void forceDeleteAllGameObjects();
 
 public:
 	static std::map<std::string, GameObject*> mGameObjects; // Should NEVER be modified mid-game loop.
