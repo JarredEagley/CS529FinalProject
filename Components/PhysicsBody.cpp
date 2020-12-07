@@ -31,7 +31,8 @@ mAcceleration(glm::vec2(0.0f)), mAngularAcceleration(0.0f),
 mTotalForce(glm::vec2(0.0f)), mTotalTorque(0.0f),
 mMass(1.0f), mInvMass(1.0f),
 mForwardDir(glm::vec2(0.0f,1.0f)), mRightDir(glm::vec2(1.0f,0.0f)),
-mpShape(nullptr), mpIgnoredPhysicsBody(nullptr), mIgnorePhysicsBodyTimer(0.0f)
+mpShape(nullptr), mpIgnoredPhysicsBody(nullptr), mIgnorePhysicsBodyTimer(0.0f),
+mCollisionType(collisionType::NORMAL)
 {
 }
 

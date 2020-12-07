@@ -25,10 +25,10 @@
 class Shape;
 
 // Behavior of this physics body for collision handling.
-enum class bodyType
+enum class collisionType
 {
 	NORMAL, // Does elastic collision, penatrates if below a certain size and above a certain speed.
-	EXPLOSION, // No collision, just does damage to anything inside according to an explosion component.
+	NOCLIP, // No collision, Will be used for explosions.
 
 	NUM
 };
@@ -79,6 +79,7 @@ public:
 	float mMass, mInvMass;
 
 	Shape* mpShape; 
+	collisionType mCollisionType;
 
 
 private:
