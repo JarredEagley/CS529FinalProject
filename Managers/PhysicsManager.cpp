@@ -142,11 +142,6 @@ void PhysicsManager::Update()
 		cEvent.mNewVel0 = vel0 - (v0Term2 * v0Term3 * v0Term4);
 		cEvent.mNewVel1 = vel1 - (v1Term2 * v1Term3 * v1Term4);
 
-		//std::cout << "DEBUG - new vel 0 is " << cEvent.mNewVel0.x << ", "<< cEvent.mNewVel0.y << std::endl;
-		//std::cout << "DEBUG - new vel 1 is " << cEvent.mNewVel1.x << ", "<< cEvent.mNewVel1.y << std::endl;
-
-		// TO-DO: Perhaps make collision inelastic?
-
 		// --- //
 
 		// Send the collide event to the bodies.

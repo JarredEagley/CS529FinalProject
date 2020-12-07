@@ -41,9 +41,6 @@
     <ClCompile Include="Components\ThrottleMeter.cpp">
       <Filter>Components\Interface</Filter>
     </ClCompile>
-    <ClCompile Include="Components\BackgroundGrid.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Managers\GameStateManager.cpp">
       <Filter>Managers</Filter>
@@ -91,6 +88,9 @@
     <ClCompile Include="Components\HealthMeter.cpp">
       <Filter>Components\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="Components\BackgroundGrid.cpp">
+      <Filter>Components\Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -135,9 +135,6 @@
     </ClInclude>
     <ClInclude Include="Components\ThrottleMeter.h">
       <Filter>Components\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\BackgroundGrid.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Managers\GameStateManager.h">
       <Filter>Managers</Filter>
@@ -185,6 +182,12 @@
     </ClInclude>
     <ClInclude Include="Components\HealthMeter.h">
       <Filter>Components\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\BackgroundGrid.h">
+      <Filter>Components\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Managers\Events.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

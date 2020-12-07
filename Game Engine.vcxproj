@@ -142,6 +142,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Managers\CollisionManager.h" />
     <ClInclude Include="Managers\EventManager.h" />
+    <ClInclude Include="Managers\Events.h" />
     <ClInclude Include="Managers\FrameRateController.h" />
     <ClInclude Include="Managers\GameObjectFactory.h" />
     <ClInclude Include="Managers\GameObjectManager.h" />
