@@ -35,12 +35,6 @@
     <ClCompile Include="Components\ShipData.cpp">
       <Filter>Components\Data</Filter>
     </ClCompile>
-    <ClCompile Include="Components\FuelMeter.cpp">
-      <Filter>Components\Interface</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\ThrottleMeter.cpp">
-      <Filter>Components\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Managers\GameStateManager.cpp">
       <Filter>Managers</Filter>
@@ -85,11 +79,20 @@
     <ClCompile Include="Components\GLText.cpp">
       <Filter>Components\Data</Filter>
     </ClCompile>
-    <ClCompile Include="Components\HealthMeter.cpp">
-      <Filter>Components\Interface</Filter>
-    </ClCompile>
     <ClCompile Include="Components\BackgroundGrid.cpp">
       <Filter>Components\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\FuelMeter.cpp">
+      <Filter>Components\Interface\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\HealthMeter.cpp">
+      <Filter>Components\Interface\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\ThrottleMeter.cpp">
+      <Filter>Components\Interface\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\MenuItem.cpp">
+      <Filter>Components\Interface\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,12 +132,6 @@
     </ClInclude>
     <ClInclude Include="Components\ShipData.h">
       <Filter>Components\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\FuelMeter.h">
-      <Filter>Components\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\ThrottleMeter.h">
-      <Filter>Components\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Managers\GameStateManager.h">
       <Filter>Managers</Filter>
@@ -180,14 +177,23 @@
     <ClInclude Include="Components\GLText.h">
       <Filter>Components\Data</Filter>
     </ClInclude>
-    <ClInclude Include="Components\HealthMeter.h">
-      <Filter>Components\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Components\BackgroundGrid.h">
       <Filter>Components\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Managers\Events.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\FuelMeter.h">
+      <Filter>Components\Interface\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\HealthMeter.h">
+      <Filter>Components\Interface\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ThrottleMeter.h">
+      <Filter>Components\Interface\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MenuItem.h">
+      <Filter>Components\Interface\Menu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +226,12 @@
     </Filter>
     <Filter Include="Managers\gameobjectmanagement">
       <UniqueIdentifier>{34ff5738-3535-4122-9cf0-12a8eee11307}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Interface\Menu">
+      <UniqueIdentifier>{eb746183-f72e-43ce-812d-0393871afae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Interface\HUD">
+      <UniqueIdentifier>{7f57f9d4-4cc2-46cd-85ff-1fad3f078425}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
