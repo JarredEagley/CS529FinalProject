@@ -44,6 +44,16 @@ void Explosion::setUniformData(ShaderProgram* pProgram)
 
 void Explosion::handleEvent(Event* pEvent)
 {
+	if (pEvent->mType == EventType::COLLIDE)
+	{
+		CollideEvent* pCollideEvent = static_cast<CollideEvent*>(pEvent);
+
+		// TO-DO:
+		// Our physics body's shape needs to grow in size
+		
+		// Figure out how far away "colliding" object is
+		// Deal damage to it based on distance and intensity.
+	}
 }
 
 void Explosion::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt) 
