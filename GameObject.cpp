@@ -202,6 +202,7 @@ Component* GameObject::AddComponent(unsigned int Type)
 		break;
 	case (ComponentTypes::TYPE_EXPLOSION):
 		pNewComponent = new Explosion();
+		break;
 
 	default:
 		return nullptr; // Failed to create component.

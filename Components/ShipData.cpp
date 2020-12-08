@@ -47,6 +47,9 @@ void ShipData::Update()
 		return;
 	}
 
+	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_SPACE))
+		takeDamage(20);
+
 	// Main thrust indirectly controlled via throttle. Update it here.
 	applyThrustMain();
 
@@ -84,13 +87,37 @@ void ShipData::setThrottle(float throttle)
 	mThrottle = std::max(mThrottle, 0.0f);
 }
 
-
+#include "Transform.h"
 void ShipData::takeDamage(float dmg)
 {
 	this->mHealth -= dmg;
 	if (this->mHealth < 0.0f)
 	{
-		// TO-DO: DESTROY!
+		// Create the explosion GameObject.
+		std::string explosionName = mpOwner->mName + "_Explosion";
+		std::string explosionPath = GlobalManager::getResourceManager()->pathExplosions + "Explosion_Ship.json";
+		std::cout << "Creating explosion " << explosionName << std::endl;
+		GameObject* explosionGO = GlobalManager::getGameObjectFactory()->createDynamicGameObject(explosionPath, explosionName);
+		std::cout << "Done creating explosion " << explosionGO->mName << std::endl;
+		if (explosionGO == nullptr)
+			return;
+
+		// Send an event to update the trasnform position.
+		//SetTransformPositionEvent* pNewEvent = new SetTransformPositionEvent(this->mpPhysicsBody->mPosition);
+		//explosionGO->handleEvent(pNewEvent);
+		auto pExplosionTransform = static_cast<Transform*>(explosionGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		auto pExplosionPhysics = static_cast<PhysicsBody*>(explosionGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+		if (pExplosionPhysics != nullptr && pExplosionTransform != nullptr)
+		{
+			pExplosionTransform->setPosition(this->mpPhysicsBody->mPosition);
+			pExplosionPhysics->mTotalForce = glm::vec2(0.0f);
+			pExplosionPhysics->mVelocity = this->mpPhysicsBody->mVelocity;
+			pExplosionPhysics->mCollisionType = collisionType::NOCLIP;
+		}
+
+
+		// TEMP DEBUG
+		this->mHealth = 100;
 	}
 }
 

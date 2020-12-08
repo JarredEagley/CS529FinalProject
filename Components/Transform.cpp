@@ -166,6 +166,7 @@ glm::mat4 Transform::getTransformationMatrix()
 
 void Transform::handleEvent(Event* pEvent)
 {
+	// Parent transform update
 	if (pEvent->mType == EventType::TRANSFORM_UPDATED)
 	{
 		TransformUpdatedEvent* pTransformEvent = static_cast<TransformUpdatedEvent*>(pEvent);
@@ -178,6 +179,15 @@ void Transform::handleEvent(Event* pEvent)
 			buildTransformationMatrix(pParentTransform);
 		}
 	}
+
+	// Position set ordered by event
+	if (pEvent->mType == EventType::TRANSFORM_SETPOSITION)
+	{
+		SetTransformPositionEvent* pPositionEvent = static_cast<SetTransformPositionEvent*>(pEvent);
+		this->setPosition(pPositionEvent->mPos);
+	}
+
+
 }
 
 

@@ -59,6 +59,7 @@ public:
 	const std::string pathTextures	 = pathResources + "Textures\\";
 	const std::string pathLevels	 = pathResources + "Levels\\";
 	const std::string pathArchetypes = pathResources + "Archetypes\\";
+	const std::string pathExplosions = pathArchetypes+ "Explosions\\";
 	const std::string pathProjectiles= pathArchetypes+ "Projectiles\\";
 	const std::string pathParticles  = pathArchetypes+ "Particles\\";
 	const std::string pathIndicators = pathArchetypes + "Indicators\\";

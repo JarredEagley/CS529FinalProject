@@ -45,6 +45,11 @@ void GLRect::setColor(glm::vec4 rgba)
 	mColor = rgba;
 }
 
+void GLRect::setAlpha(float alpha)
+{
+	mColor.a = alpha;
+}
+
 void GLRect::setUvScale(float scale)
 {
 	// Keep track.

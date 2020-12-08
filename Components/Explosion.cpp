@@ -1,8 +1,10 @@
 #include "Explosion.h"
 #include "../Managers/GlobalManager.h"
 
-Explosion::Explosion() : Component(ComponentTypes::TYPE_EXPLOSION)
-{}
+Explosion::Explosion() : Component(ComponentTypes::TYPE_EXPLOSION),
+mpPhysicsBody(nullptr), mpTransform(nullptr), mpRect(nullptr)
+{
+}
 
 Explosion::~Explosion()
 {
@@ -19,15 +21,18 @@ void Explosion::Update()
 	// Input is the intensity.
 	// Rate of change is same for size and intensity.
 	// For now, fixed rate of change. If I need to change this later, I will.
-	if (mpPhysicsBody == nullptr || mpTransform == nullptr)
+	if (mpPhysicsBody == nullptr || mpTransform == nullptr || mpRect == nullptr)
 	{
 		mpPhysicsBody = static_cast<PhysicsBody*>(mpOwner->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
 		mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		mpRect = static_cast<GLRect*>(mpOwner->GetComponent(ComponentTypes::TYPE_GLRECT));
 		return;
 	}
-	
+
 	if (mIntensity > 0)
 	{
+		//std::cout << "Explosion update: Intensity is " << mIntensity << ", and size is " << mSize << std::endl;
+
 		float deltaTime = GlobalManager::getPhysicsManager()->getGameTime();
 		// Decrement intensity.
 		mIntensity -= deltaTime;
@@ -41,6 +46,7 @@ void Explosion::Update()
 	}
 
 	mpTransform->setScale(glm::vec2(mSize));
+	mpRect->setAlpha( mIntensity/mStartIntensity );
 	if (mpPhysicsBody->mpShape->mType == Shape::ShapeType::CIRCLE)
 	{
 		ShapeCircle* pShape = static_cast<ShapeCircle*>(mpPhysicsBody->mpShape);
@@ -81,6 +87,7 @@ void Explosion::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	if (inputObj.HasMember("Intensity") && inputObj["Intensity"].IsNumber())
 	{
 		this->mIntensity = inputObj["Intensity"].GetFloat();
+		this->mStartIntensity = mIntensity;
 	}
 	else
 	{

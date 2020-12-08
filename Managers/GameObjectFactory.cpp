@@ -85,22 +85,6 @@ GameObject* GameObjectFactory::loadArchetype(std::string filePath)
 /// <returns>Archetyped GameObject or nullptr if failed</returns>
 GameObject* GameObjectFactory::loadArchetype(rapidjson::GenericObject<false, rapidjson::Value> inputObj)
 {
-	/*
-	GameObject* pNewGO;
-	std::string componentName;
-
-	Serializer* pSer = GlobalManager::getSerializer();
-	rapidjson::Document doc = pSer->loadJson(filePath);
-
-	// Nullcheck the document.
-	if (doc.IsNull())
-	{
-		// Game object creation failed.
-		std::cout << "Error: Failed to load GameObject file " << filePath << std::endl;
-		return nullptr; // Return nullptr on fail.
-	}
-	*/
-
 	// Create the new GameObject now that we know the json is reasonable.
 	GameObject *pNewGO = new GameObject; 
 

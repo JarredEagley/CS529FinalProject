@@ -27,6 +27,7 @@ enum class EventType
 	COLLIDE,
 	GAMEOBJECT_DESTROYED,
 	TRANSFORM_UPDATED,
+	TRANSFORM_SETPOSITION,
 	SHIPDATA_UPDATED,
 	CAMERA_TRANSFORM_UPDATED,
 	MOUSE_SCROLL,
@@ -103,6 +104,16 @@ public:
 
 	Transform* mpTransform;
 };
+
+// Used to set the position of another game object.
+class SetTransformPositionEvent : public Event
+{
+public:
+	SetTransformPositionEvent(glm::vec2 pos) : Event(EventType::TRANSFORM_SETPOSITION), mPos(pos)  {};
+	~SetTransformPositionEvent() {};
+	glm::vec2 mPos;
+};
+
 
 class ShipData;
 class ShipDataUpdatedEvent : public Event

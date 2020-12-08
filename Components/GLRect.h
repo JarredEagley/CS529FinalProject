@@ -36,6 +36,7 @@ public:
 
 	void setColor(glm::vec4); // Sets the color of the whole square. 
 	glm::vec4 getColor() { return mColor; };
+	void setAlpha(float alpha);
 	void setUvScale(float scale);
 	float getUvScale();
 	void setUvOffset(glm::vec2 offset);

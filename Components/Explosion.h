@@ -4,6 +4,7 @@
 
 #include "Transform.h"
 #include "PhysicsBody.h"
+#include "GLRect.h"
 
 
 class Explosion : public Component
@@ -28,7 +29,9 @@ public:
 private:
 	// No private methods.
 private:
+	float mStartIntensity = 100.0f;
 	Transform* mpTransform;
 	PhysicsBody* mpPhysicsBody;
+	GLRect* mpRect;
 };
 

@@ -4,15 +4,23 @@
         "TYPE_GLRECT": {
             "Texture": "Explosion_NoDebris.png",
             "Color": [
-                0.0,
-                0.0,
-                0.0,
-                0.0
+                1.0,
+                1.0,
+                1.0,
+                1.0
             ]
+        },
+        "TYPE_PHYSICSBODY":
+        {
+            "Mass": 60,
+            "Circle":
+            {
+                "Radius": 0.1
+            }
         },
         "TYPE_EXPLOSION":
         {
-            
+            "Intensity": 100
         }
     }
 }
