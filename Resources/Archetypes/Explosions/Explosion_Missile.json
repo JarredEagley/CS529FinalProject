@@ -1,5 +1,4 @@
 {
-    "Name": "Explosion_Missile",
     "Components": {
         "TYPE_TRANSFORM": {},
         "TYPE_GLRECT": {
@@ -10,6 +9,10 @@
                 0.0,
                 0.0
             ]
+        },
+        "TYPE_EXPLOSION":
+        {
+            
         }
     }
 }

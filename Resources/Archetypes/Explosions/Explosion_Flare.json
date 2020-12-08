@@ -2,7 +2,7 @@
     "Components": {
         "TYPE_TRANSFORM": {},
         "TYPE_GLRECT": {
-            "Texture": "Explosion.png",
+            "Texture": "Flash.png",
             "Color": [
                 0.0,
                 0.0,
@@ -10,9 +10,6 @@
                 0.0
             ]
         },
-        "TYPE_EXPLOSION":
-        {
-            "Intensity": 100
-        }
+        "TODO:": "Flares will have their own behavior-- just a harmless but very distracting flash that grows then shrinks away then is deleted."
     }
 }
