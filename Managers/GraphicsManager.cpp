@@ -215,7 +215,7 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	pGO->setAllUniformData(pProgram);
 	pGO->Draw(pProgram, 
 		pTransform->getTransformationMatrix(),
-		pCamera->getTransMatrix(), // View matrix
+		pCamera->getViewMatrix(), // View matrix
 		pCamera->getProjMatrix());
 
 	pProgram->unUse();

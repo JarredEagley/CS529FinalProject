@@ -34,7 +34,7 @@ public:
 	void Update();
 
 	glm::mat4 getProjMatrix() { return this->mCameraProjection; }; 
-	glm::mat4 getTransMatrix() { return this->mCameraTransform; };
+	glm::mat4 getViewMatrix() { return this->mCameraTransform; };
 
 	float getHeight();
 	float getAngle() { return mCameraAngle; };
