@@ -70,8 +70,19 @@ void GameStateManager::readGameConfig()
 		}
 	}
 
-	//if (doc.HasMember("GameObject Manager") && doc["GameObject Manager"].IsObject())
+	if (doc.HasMember("GameObject Manager") && doc["GameObject Manager"].IsObject())
 	{
+		auto currentObj = doc["GameObject Manager"].GetObject();
+		GameObjectManager* pGOM = GlobalManager::getGameObjectManager();
+
+		if (currentObj.HasMember("Max Particles") && currentObj["Max Particles"].IsNumber())
+			pGOM->mMaxParticles = currentObj["Max Particles"].GetInt();
+
+		if (currentObj.HasMember("Max Projectiles") && currentObj["Max Projectiles"].IsNumber())
+			pGOM->mMaxProjectiles = currentObj["Max Projectiles"].GetInt();
+
+		if (currentObj.HasMember("Max Debris") && currentObj["Max Debris"].IsNumber())
+			pGOM->mMaxDebris = currentObj["Max Debris"].GetInt();
 	}
 
 	//if (doc.HasMember("Input Manager") && doc["Input Manager"].IsObject())

@@ -76,6 +76,8 @@ public:
 	int mParticleCount = 0;
 	int mMaxProjectiles = 100;
 	int mProjectileCount = 0;
+	int mMaxDebris = 100;
+	int mDebrisCount = 0;
 
 
 private:

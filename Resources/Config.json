@@ -16,7 +16,10 @@
     },
     "GameObject Manager":
     {
-        "Description": "Not Currently Implemented."
+        "Description": "Keeps track of game objects, including how many of a paticular type of game object may exist.",
+        "Max Particles": 50,
+        "Max Projectiles": 150,
+        "Max Debris": 100
     },
     "Input Manager":
     {
