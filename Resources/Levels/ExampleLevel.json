@@ -88,32 +88,32 @@
 
         {
             "Name": "PlayerShip_Indicator_Forward",
-            "Archetype": "ForwardIndicator.json",
+            "Archetype": "Indicators\\ForwardIndicator.json",
             "Parent":"PLAYER"
         },
         {
             "Name": "SecondShip_Indicator_Forward",
-            "Archetype": "ForwardIndicator.json",
+            "Archetype": "Indicators\\ForwardIndicator.json",
             "Parent":"SecondShip"
         },
 
 
         {
             "Name": "HUD_Fuel_Meter",
-            "Archetype": "HUD_Fuel_Meter.json"
+            "Archetype": "HUD\\HUD_Fuel_Meter.json"
         },
         {
             "Name": "HUD_Throttle_Meter",
-            "Archetype": "HUD_Throttle_Meter.json"
+            "Archetype": "HUD\\HUD_Throttle_Meter.json"
         },
         {
             "Name": "HUD_Throttle_Marker",
-            "Archetype": "HUD_Throttle_Marker.json",
+            "Archetype": "HUD\\HUD_Throttle_Marker.json",
             "Parent": "HUD_Throttle_Meter"
         },
         {
             "Name": "HUD_Health_Meter",
-            "Archetype": "HUD_Health_Meter.json"
+            "Archetype": "HUD\\HUD_Health_Meter.json"
         },
 
 
