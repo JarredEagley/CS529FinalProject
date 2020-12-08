@@ -96,9 +96,8 @@ void ShipData::takeDamage(float dmg)
 		// Create the explosion GameObject.
 		std::string explosionName = mpOwner->mName + "_Explosion";
 		std::string explosionPath = GlobalManager::getResourceManager()->pathExplosions + "Explosion_Ship.json";
-		std::cout << "Creating explosion " << explosionName << std::endl;
 		GameObject* explosionGO = GlobalManager::getGameObjectFactory()->createDynamicGameObject(explosionPath, explosionName);
-		std::cout << "Done creating explosion " << explosionGO->mName << std::endl;
+		
 		if (explosionGO == nullptr)
 			return;
 

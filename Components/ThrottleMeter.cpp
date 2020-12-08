@@ -58,7 +58,7 @@ void ThrottleMeter::handleEvent(Event* pEvent)
 
 		// Check if it's the player ship.
 		// Note: Player ship must always be named 'PLAYER'
-		if (pShipDataEvent->mpShipData->mpOwner->mName == "PLAYER")
+		if (pShipDataEvent->mpShipData->mpOwner->mName.compare("PLAYER") == 0)
 		{
 			glm::vec3 parentScale = mpParentTransform->getScale();
 

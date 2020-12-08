@@ -56,7 +56,8 @@ void FuelMeter::handleEvent(Event* pEvent)
 	if (pEvent->mType == EventType::SHIPDATA_UPDATED)
 	{
 		ShipDataUpdatedEvent* pShipDataEvent = static_cast<ShipDataUpdatedEvent*>(pEvent);
-		this->mFuel = pShipDataEvent->mpShipData->mFuel;
+		if (pShipDataEvent->mpShipData->mpOwner->mName.compare("PLAYER") == 0)
+			this->mFuel = pShipDataEvent->mpShipData->mFuel;
 	}
 }
 
