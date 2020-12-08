@@ -29,5 +29,10 @@ private:
 	PhysicsManager();
 private:
 	static PhysicsManager* instance;
+
+	float piercingThreshold;
+	float piercingDamageMultiplier;
+	float deflectDamageMultiplier;
+	float explosionDamageMultiplier;
 };
 
