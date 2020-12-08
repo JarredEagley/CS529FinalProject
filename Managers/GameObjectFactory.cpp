@@ -324,7 +324,6 @@ GameObject* GameObjectFactory::generateProjectile(std::string fileName)
 	return generateProjectile(fileName, "");
 }
 
-
 /// <summary>
 /// May soon be depricated.
 /// 

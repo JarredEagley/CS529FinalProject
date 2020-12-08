@@ -100,6 +100,9 @@ void PhysicsManager::Update()
 		PhysicsBody* pBody1 = pContact->mBodies[0];
 		PhysicsBody* pBody2 = pContact->mBodies[1];
 
+		if (pBody1 == nullptr || pBody2 == nullptr)
+			continue;
+
 		// Inform each about the other.
 		cEvent2.mpOtherBody = pBody1;
 		cEvent1.mpOtherBody = pBody2;
@@ -172,12 +175,9 @@ void PhysicsManager::Update()
 					pBody2->mVelocity - (2.0f * pBody1->mMass * combinedMassInverse)
 					* (( velDotPos2) / (distSqr)) * ( pBody2->mPosition - pBody1->mPosition);
 			}
-
 		}
-
 		// Broadcast events.
 		pBody1->handleEvent(&cEvent1);
 		pBody2->handleEvent(&cEvent2);
-
 	}
 }

@@ -19,6 +19,7 @@
 #include "ComponentTypes.h"
 #include "../GameObject.h"
 #include "../Managers/GlobalManager.h"
+#include <limits>
 
 #define G_CONST 0.0000000000667 // The universal gravitational constant. in N * m^2 / kg^2
 
@@ -31,7 +32,8 @@ mAcceleration(glm::vec2(0.0f)), mAngularAcceleration(0.0f),
 mTotalForce(glm::vec2(0.0f)), mTotalTorque(0.0f),
 mMass(1.0f), mInvMass(1.0f),
 mForwardDir(glm::vec2(0.0f,1.0f)), mRightDir(glm::vec2(1.0f,0.0f)),
-mpShape(nullptr), mpIgnoredPhysicsBody(nullptr), mIgnorePhysicsBodyTimer(0.0f),
+mpShape(nullptr), //mpIgnoredPhysicsBody(nullptr), 
+mIgnorePhysicsBodyTimer(0.0f),
 mCollisionType(collisionType::NORMAL)
 {
 }
@@ -43,10 +45,13 @@ PhysicsBody::~PhysicsBody()
 }
 
 
-void PhysicsBody::Initialize() {}
+void PhysicsBody::Initialize() 
+{
+}
 
 void PhysicsBody::Update()
 {
+	// TO-DO: This ignored physics body thing may cause issues if the ship that fired it dies.
 	if (mpIgnoredPhysicsBody != nullptr)
 	{
 		if (mIgnorePhysicsBodyTimer > 0.0f)
@@ -77,23 +82,40 @@ void PhysicsBody::Integrate(float deltaTime)
 	mPrevPosition = mPosition;
 	mPrevAngle = mAngle;
 
+	// Do not allow forces that simply are not sane.
+	if (mTotalForce.x > 1000000000.0 || mTotalForce.y > 1000000000.0)
+		mTotalForce = glm::vec2(0.0f);
+
+
 	// Compute acceleration.
 	// Normally global gravity would be here on this line.
 	mAcceleration = mTotalForce * mInvMass;
 	mAngularAcceleration = mTotalTorque * mInvMass;
 
+	//std::cout << "DEBUG1 - Physics integration position for "
+	//	<< mpOwner->mName << " is (" << mTotalForce.x << ", " << mTotalForce.y << ")" << std::endl;
+
 	// Clear force and torque.
-	mTotalForce = glm::vec2(0.0f);
-	mTotalTorque = 0.0f;
+	this->mTotalForce = glm::vec2(0.0f);
+	this->mTotalTorque = 0.0f;
+
+	//std::cout << "DEBUG2 - Physics integration position for "
+	//	<< mpOwner->mName << " is (" << mTotalForce.x << ", " << mTotalForce.y << ")" << std::endl;
 
 	// Integrate velocity. V1 = a*t + V0
-	mVelocity = mAcceleration * deltaTime + mVelocity;
+	this->mVelocity = this->mAcceleration * deltaTime + this->mVelocity;
 	mAngularVelocity = mAngularAcceleration * deltaTime + mAngularVelocity;
 
 
+	//std::cout << "DEBUG3 - Physics integration position for "
+	//	<< mpOwner->mName << " is (" << mTotalForce.x << ", " << mTotalForce.y << ")" << std::endl;
+
 	// Integrate position. P1 = V1*t + P0
-	mPosition = mVelocity * deltaTime + mPosition;
+	this->mPosition = this->mVelocity * deltaTime + this->mPosition;
 	mAngle = mAngularVelocity * deltaTime + mAngle;
+
+	//Sstd::cout << "DEBUG4 - Physics integration position for "
+	//	<< mpOwner->mName << " is (" << mTotalForce.x << ", " << mTotalForce.y << ")" << std::endl;
 
 
 	// Compute new direction vectors.
@@ -103,11 +125,12 @@ void PhysicsBody::Integrate(float deltaTime)
 
 	if (nullptr != pT)
 	{
-		pT->setPosition(mPosition);
+		pT->setPosition(this->mPosition);
 		pT->setRotation(mAngle);
 	}
 
-	//std::cout << "DEBUG - Physics integration position is (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
+	//std::cout << "DEBUG - Physics integration position for " 
+	//<< mpOwner->mName << " is (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
 }
 
 
@@ -126,14 +149,14 @@ void PhysicsBody::calculateGravityForces()
 		if (denominator == 0.0f)
 			continue;
 
-		double gravScale = numerator / (denominator);
+		float gravScale = numerator / (denominator);
 		gravScale /= 1000.0 * 1000.0; // Convert m^2 to km^2
 
 		//std::cout << "DEBUG - Grav scale is " << gravScale << "\n";
 		
 		// I tried to avoid needing to normalize. I might try again if I have time.
 
-		glm::vec2 gravitationalForce = glm::normalize(pBody->mPosition - this->mPosition) * (float)std::max(gravScale, 10.0) / 1000.0f;
+		glm::vec2 gravitationalForce = glm::normalize(pBody->mPosition - this->mPosition) * gravScale / 1000.0f;
 
 		//std::cout << "DEBUG - grav force: (" << gravitationalForce.x << ", " << gravitationalForce.y << ")" << std::endl;
 		// We do not apply gravitational forces that don't make sense here.
@@ -163,6 +186,8 @@ void PhysicsBody::applyForce(glm::vec2 F)
 		)
 		return;
 
+	//std::cout << "Applying force to " << mpOwner->mName << ": (" << F.x << ", " << F.y << ")\n";
+
 	this->mTotalForce += F;// *GlobalManager::getFrameRateController()->getFrameTimeSec();
 }
 
@@ -179,7 +204,7 @@ void PhysicsBody::applyTorque(float T)
 void PhysicsBody::setTimedIgnoreCollision(PhysicsBody* pIgnored, float ignoreTime)
 {
 	mIgnorePhysicsBodyTimer = ignoreTime;
-	mpIgnoredPhysicsBody = pIgnored;
+	mpIgnoredPhysicsBody = pIgnored; // TO-DO: Rewire this to be event based...
 }
 
 
@@ -233,12 +258,14 @@ void PhysicsBody::handleEvent(Event* pEvent)
 		else if (pCollideEvent->mResponse == CollideEvent::collisionResponse::PIERCE)
 		{
 			// Pierce.
-			glm::vec2 appliedforce = glm::normalize(pCollideEvent->mRelativeVelocity) * pCollideEvent->mResistance;
+			glm::vec2 appliedforce =  glm::normalize(pCollideEvent->mRelativeVelocity) * pCollideEvent->mResistance;
+			
+
 			//std::cout << "DEBUG - Force is (" << appliedforce.x << ", " << appliedforce.y << ")" << std::endl;
 			//std::cout << "DEBUG - Resistance is " << pCollideEvent->mResistance << std::endl;
-
-			this->applyForce(appliedforce);
-			//this->applyForce(glm::normalize(pCollideEvent->mRelativeVelocity) * pCollideEvent->mResistance);
+			
+			this->applyForce(glm::normalize(pCollideEvent->mRelativeVelocity) * pCollideEvent->mResistance);
+			
 		}
 		else
 		{

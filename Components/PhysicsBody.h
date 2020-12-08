@@ -50,7 +50,12 @@ public:
 	void applyTorque(float T);
 	
 	void setTimedIgnoreCollision(PhysicsBody * pIgnored, float ignoreTime);
-	PhysicsBody* getIgnoredPhysicsBody() { return this->mpIgnoredPhysicsBody; };
+	PhysicsBody* getIgnoredPhysicsBody() 
+	{
+		if (mpIgnoredPhysicsBody == nullptr)
+			return nullptr;
+		return mpIgnoredPhysicsBody; 
+	};
 
 	bool hasGravity() { return mHasGravity; }; // hasGravity is read-only. Setter needs to inform the physics manager.
 	void enableGravity();
