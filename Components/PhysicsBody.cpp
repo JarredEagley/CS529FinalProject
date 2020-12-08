@@ -245,27 +245,34 @@ void PhysicsBody::handleEvent(Event* pEvent)
 		collisionType myCollideType = this->mCollisionType;
 		collisionType otherCollideType = pCollideEvent->mpOtherBody->mCollisionType;
 
-
-		// Elastic collision
-		if (pCollideEvent->mResponse == CollideEvent::collisionResponse::DEFLECT)
+		// Only do collision if the objects are approaching each other.
+		if (pCollideEvent->mObjectsAreApproaching)
 		{
-			if (pCollideEvent->mObjectsAreApproaching)
+			// Elastic collision
+			if (pCollideEvent->mResponse == CollideEvent::collisionResponse::DEFLECT)
 			{
 				this->mVelocity = pCollideEvent->mNewVelocity;
-			}
-		
-		}
-		else if (pCollideEvent->mResponse == CollideEvent::collisionResponse::PIERCE)
-		{
-			// Pierce.
-			// Very very loosely based on drag formula.
-			glm::vec2 appliedForce = pCollideEvent->mRelativeVelocity * glm::length(pCollideEvent->mRelativeVelocity) * 2.0f;
-			applyForce(appliedForce);
 
-		}
-		else
-		{
-			// Pass through.
+				float relativeSpeed = glm::length(pCollideEvent->mRelativeVelocity); // TO-DO: Move relative speed calculation up a layer
+				DoDamageEvent* pNewDamageEvent = new DoDamageEvent(relativeSpeed);
+				mpOwner->handleEvent(pNewDamageEvent);
+		
+			}
+			else if (pCollideEvent->mResponse == CollideEvent::collisionResponse::PIERCE)
+			{
+				// Pierce.
+				// Very very loosely based on drag formula.
+				float relativeSpeed = glm::length(pCollideEvent->mRelativeVelocity);
+				glm::vec2 appliedForce = pCollideEvent->mRelativeVelocity * relativeSpeed * 2.0f;
+				applyForce(appliedForce);
+
+				DoDamageEvent* pNewDamageEvent = new DoDamageEvent(relativeSpeed);
+				mpOwner->handleEvent(pNewDamageEvent);
+			}
+			else
+			{
+				// Pass through.
+			}
 		}
 	}
 }

@@ -58,11 +58,10 @@ void ShipData::Update()
 void ShipData::handleEvent(Event* pEvent)
 {
 	// Use collision events to apply damage.
-	if (pEvent->mType == EventType::COLLIDE)
+	if (pEvent->mType == EventType::DO_DAMAGE)
 	{
-		CollideEvent* pCollideEvent = static_cast<CollideEvent*>(pEvent);
-
-		this->takeDamage(10.0f);
+		DoDamageEvent* pDamageEvent = static_cast<DoDamageEvent*>(pEvent);
+		this->takeDamage(pDamageEvent->mDamage);
 		
 	}
 }
