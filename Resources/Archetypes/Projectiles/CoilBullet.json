@@ -1,6 +1,4 @@
 {
-    "Name": "CoilBullet",
-    "Type": "GameObject",
     "Components":
     {
         "TYPE_TRANSFORM":

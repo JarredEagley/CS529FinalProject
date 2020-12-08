@@ -67,7 +67,7 @@ GameObject* GameObjectFactory::loadArchetype(std::string filePath)
 	if (doc.IsNull() || !doc.IsObject())
 	{
 		// Game object creation failed.
-		std::cerr << "Error: Failed to load GameObject file " << filePath << std::endl;
+		std::cout << "Error: Failed to load GameObject file " << filePath.c_str() << std::endl;
 		return nullptr; // Return nullptr on fail.
 	}
 
@@ -96,7 +96,7 @@ GameObject* GameObjectFactory::loadArchetype(rapidjson::GenericObject<false, rap
 	if (doc.IsNull())
 	{
 		// Game object creation failed.
-		std::cerr << "Error: Failed to load GameObject file " << filePath << std::endl;
+		std::cout << "Error: Failed to load GameObject file " << filePath << std::endl;
 		return nullptr; // Return nullptr on fail.
 	}
 	*/
@@ -110,7 +110,7 @@ GameObject* GameObjectFactory::loadArchetype(rapidjson::GenericObject<false, rap
 		// No components to add to the game object. This is an empty game object.
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
 			if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-				std::cerr << "Warning: GameObject Archetype did not contain any components." << std::endl;
+				std::cout << "Warning: GameObject Archetype did not contain any components." << std::endl;
 		return pNewGO; // Return empty GameObject since it was a valid GameObject but had no components.
 	}
 
@@ -126,11 +126,11 @@ GameObject* GameObjectFactory::loadArchetype(rapidjson::GenericObject<false, rap
 
 		Component* pNewComponent = nullptr;
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-			std::cout << "GOF Archetype - Reading in: " << itr->name.GetString() << "\n";
+			std::cout << "GOF::Archetype - Reading in: " << itr->name.GetString() << "\n";
 		pNewComponent = pNewGO->AddComponent(ComponentTypes::stringToEnum(itr->name.GetString()));
 
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-			std::cout << "GOF Archetype - Done Reading.\n";
+			std::cout << "GOF::Archetype - Done Reading.\n";
 
 		// Rapidjson didn't like me passing just the value in, so pass the whole iterator.
 		if (nullptr != pNewComponent)
@@ -183,14 +183,14 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 
 	currentGOName = inputObj["Name"].GetString();
 	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-		std::cout << "GOF loadObject - Deserializing GameObject " << currentGOName << std::endl;
+		std::cout << "GOF::loadObject - Deserializing GameObject " << currentGOName.c_str() << std::endl;
 
 
 	// Check if GO by this name aready exists...
 	if (GlobalManager::getGameObjectManager()->mGameObjects.find(currentGOName) != GlobalManager::getGameObjectManager()->mGameObjects.end())
 	{
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-			std::cout << "Warning: GameObject by name " << currentGOName << " already exists and will be replaced." << std::endl;
+			std::cout << "Warning: GameObject by name " << currentGOName.c_str() << " already exists and will be replaced." << std::endl;
 	}
 	
 	// Initialize as a nullptr.
@@ -213,7 +213,7 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 	{
 		// Otherwise just create a fresh GameObject.
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-			std::cerr << "Warning: Archetype for GameObject was invalid or not present." << std::endl;
+			std::cout << "Warning: Archetype for GameObject was invalid or not present." << std::endl;
 		pCurrentGO = new GameObject;
 	}
 
@@ -236,7 +236,7 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 			if (!compItr->name.IsString())
 			{
 				if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-					std::cerr << "Warning: Failed to parse a component while building level's GameObjects." << std::endl;
+					std::cout << "Warning: Failed to parse a component while building level's GameObjects." << std::endl;
 				continue;
 			}
 
@@ -319,6 +319,12 @@ GameObject* GameObjectFactory::createDynamicGameObject(std::string filePath, std
 }
 
 
+GameObject* GameObjectFactory::generateProjectile(std::string fileName)
+{
+	return generateProjectile(fileName, "");
+}
+
+
 /// <summary>
 /// May soon be depricated.
 /// 
@@ -327,81 +333,18 @@ GameObject* GameObjectFactory::createDynamicGameObject(std::string filePath, std
 /// </summary>
 /// <param name="filePath"></param>
 /// <returns></returns>
-GameObject* GameObjectFactory::generateProjectile(std::string filePath)
+GameObject* GameObjectFactory::generateProjectile(std::string fileName, std::string indicatorName)
 {
-	GameObject* pNewGO = nullptr;
+	std::string filePath = GlobalManager::getResourceManager()->pathProjectiles + fileName;
+	GameObject* pNewGO = loadArchetype(filePath);
 
-	filePath = GlobalManager::getResourceManager()->pathProjectiles + filePath;
+	int projectileNumber = GlobalManager::getGameObjectManager()->getNextProjectile();
+	std::string newGOName = "PROJECTILE_" + std::to_string(projectileNumber);
 
-	Serializer* pSer = GlobalManager::getSerializer();
-	rapidjson::Document doc = pSer->loadJson(filePath);
-
-	// Nullcheck the document.
-	if (doc.IsNull() || !doc.IsObject())
-	{
-		// Game object creation failed.
-		std::cerr << "Error: Failed to load dynamic GameObject file " << filePath << std::endl;
-		return nullptr; // Return nullptr on fail.
-	}
-
-	// Get the name of this GO. 
-	std::string newGOName;
-	if (!doc.HasMember("Name") || !doc["Name"].IsString())
-	{
-		std::cout << "Error: Dynamic GameObject failed to deserialize because it lacked a name or contained an invalid name." << std::endl;
-		return nullptr;
-	}
-
-	newGOName = doc["Name"].GetString();
-	newGOName = "PROJECTILE_" + newGOName;// GlobalManager::getGameObjectManager()->mProjectileCount;
-	newGOName = newGOName + "_" + std::to_string(GlobalManager::getGameObjectManager()->mProjectileCount);
-	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-		std::cout << "GOF Projectile - Deserializing GameObject " << newGOName << std::endl; 
-
-	// Counter.
-	// I would like to delegate this to the game object manager, maybe. It's a bit ugly this way.
-	GlobalManager::getGameObjectManager()->mProjectileCount += 1;
-	GlobalManager::getGameObjectManager()->mProjectileCount = GlobalManager::getGameObjectManager()->mProjectileCount 
-		% GlobalManager::getGameObjectManager()->mMaxParticles;
-
-	// Create the GameObject and proceed to adding components.
-	pNewGO = new GameObject();
-
-	// Name
 	pNewGO->mName = newGOName;
 
-	// Make sure components exists.
-	if (!doc.HasMember("Components") || !doc["Components"].IsObject())
-	{
-		// No components to add to the game object. This is an empty game object.
-		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-			std::cerr << "Warning: Dynamic GameObject " << filePath << " did not contain any components." << std::endl;
-		return pNewGO; // Return empty GameObject since it was a valid GameObject but had no components.
-	}
-	
-	// Parse through components.
-	rapidjson::Value::ConstMemberIterator itr = doc["Components"].GetObject().MemberBegin();
-	for (; itr != doc["Components"].GetObject().MemberEnd(); ++itr)
-	{
-		if (itr->name.IsString() == false)
-		{
-			if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-				std::cout << "Warning: Failed to deserialize a component because. itr->name was not string." << std::endl;
-			continue;
-		}
-
-		Component* pNewComponent = nullptr;
-		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-			std::cout << "GOF Projectile - Reading in: " << itr->name.GetString() << "\n";
-		pNewComponent = pNewGO->AddComponent(ComponentTypes::stringToEnum(itr->name.GetString()));
-
-		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
-			std::cout << "GOF Projectile - Done.\n";
-
-		// Rapidjson didn't like me passing just the value in, so pass the whole iterator.
-		if (nullptr != pNewComponent)
-			pNewComponent->Serialize(itr);
-	}
+	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+		std::cout << "GOF::Projectile - Deserializing GameObject '" << newGOName.c_str() <<"'" << std::endl;
 
 	// I'm going to just assume all Dynamic GO's use final render pass.
 	pNewGO->setRenderPass(RenderPassType::FINAL);
@@ -412,8 +355,36 @@ GameObject* GameObjectFactory::generateProjectile(std::string filePath)
 	// Initialize and return.
 	helper_initializeObject(pNewGO);
 
+	// If indicator was specified, create that too.
+	if (indicatorName.compare("") != 0)
+	{
+		filePath = GlobalManager::getResourceManager()->pathIndicators + indicatorName;
+		GameObject* pNewIndicatorGO = loadArchetype(filePath);
+		if (pNewIndicatorGO == nullptr)
+		{
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+				std::cout << "GOF::Projectile - Supplied indicator archetype " << filePath.c_str() << " failed to deserialize. Projectile will not have indicator." << std::endl;
+
+			return pNewGO;
+		}
+
+		std::string newIndicatorGOName = newGOName + "_Indicator";
+
+		pNewIndicatorGO->mName = newIndicatorGOName;
+
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
+			std::cout << "GOF::Projectile - Deserializing GameObject '" << newIndicatorGOName.c_str() << "'" << std::endl;
+
+		pNewIndicatorGO->setRenderPass(RenderPassType::FINAL);
+
+		helper_initializeObject(pNewIndicatorGO);
+
+		pNewIndicatorGO->setParent(pNewGO->mName);
+	}
+
 	return pNewGO;
 }
+
 
 // For hooking up indicators to projectiles.
 /*
@@ -435,7 +406,7 @@ GameObject* GameObjectFactory::generateParentedGameObject(std::string filePath, 
 	if (doc.IsNull() || !doc.IsObject())
 	{
 		// Game object creation failed.
-		std::cerr << "Error: Failed to load dynamic GameObject file " << filePath << std::endl;
+		std::cout << "Error: Failed to load dynamic GameObject file " << filePath << std::endl;
 		return nullptr; // Return nullptr on fail.
 	}
 

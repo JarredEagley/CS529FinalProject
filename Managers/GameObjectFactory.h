@@ -43,7 +43,8 @@ public:
 	//GameObject* createDynamicGameObject(std::string filePath); // Needs some refactoring to work.
 
 	// Will generate a new game object using the designated filename.
-	GameObject* generateProjectile(std::string pFileName);
+	GameObject* generateProjectile(std::string FileName);
+	GameObject* generateProjectile(std::string FileName, std::string indicatorName);
 	// Used for generating the icons parented to things like bullets created mid game.
 	//GameObject* generateParentedGameObject(std::string pFileName, std::string parentName);
 

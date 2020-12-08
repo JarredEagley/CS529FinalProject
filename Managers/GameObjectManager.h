@@ -52,6 +52,12 @@ public:
 	// Prevents nullptrs from being added to mGameObjects.
 	GameObject* getGameObject(std::string gameObjectName);
 
+	// Not worth putting in cpp
+	int getNextProjectile()
+	{
+		return (++mProjectileCount) % mMaxProjectiles;
+	};
+
 	void updateGameObjects();
 	void addCreatedGameObjects(); // Updates mGameObjects
 	void deleteRemovedGameObjects(); // Updates mGameObjects

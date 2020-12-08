@@ -52,15 +52,10 @@ void Turret::Update()
 	if (fireTimer > fireRate)
 	{
 		auto pGOF = GlobalManager::getGameObjectFactory();
+		auto pGOM = GlobalManager::getGameObjectManager();
 
 		// Create the game objects.
-		GameObject* pBullet = pGOF->generateProjectile("CoilBullet.json");
-		std::string indicatorName = pBullet->mName;
-		indicatorName = "INDICATOR_" + indicatorName;
-		GameObject* pBulletIndicator = pGOF->createDynamicGameObject(GlobalManager::getResourceManager()
-			->pathProjectiles + "\\CoilBulletIndicator.json", indicatorName);
-		
-		pBulletIndicator->setParent(pBullet->mName);
+		GameObject* pBullet = pGOF->generateProjectile("CoilBullet.json", "CoilBulletIndicator.json");
 
 		if (pBullet == nullptr)
 			return;
