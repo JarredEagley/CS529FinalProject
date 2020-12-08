@@ -30,7 +30,7 @@ mPrevPosition(glm::vec2(0.0f)), mPrevAngle(0.0f),
 mVelocity(glm::vec2(0.0f)), mAngularVelocity(0.0f),
 mAcceleration(glm::vec2(0.0f)), mAngularAcceleration(0.0f),
 mTotalForce(glm::vec2(0.0f)), mTotalTorque(0.0f),
-mMass(1.0f), mInvMass(1.0f),
+mMass(1.0f), mInvMass(1.0f), 
 mForwardDir(glm::vec2(0.0f,1.0f)), mRightDir(glm::vec2(1.0f,0.0f)),
 mpShape(nullptr), //mpIgnoredPhysicsBody(nullptr), 
 mIgnorePhysicsBodyTimer(0.0f),
@@ -45,9 +45,7 @@ PhysicsBody::~PhysicsBody()
 }
 
 
-void PhysicsBody::Initialize() 
-{
-}
+void PhysicsBody::Initialize() {}
 
 void PhysicsBody::Update()
 {
@@ -83,7 +81,10 @@ void PhysicsBody::Integrate(float deltaTime)
 	mPrevAngle = mAngle;
 
 	// Do not allow forces that simply are not sane.
-	if (mTotalForce.x > 1000000000.0 || mTotalForce.y > 1000000000.0)
+	if (
+		mTotalForce.x > 1000000000.0f || mTotalForce.y > 1000000000.0f
+		|| mTotalForce.x < -1000000000.0f || mTotalForce.y < -1000000000.0f
+		)
 		mTotalForce = glm::vec2(0.0f);
 
 
@@ -141,9 +142,9 @@ void PhysicsBody::calculateGravityForces()
 		if (this == pBody)
 			continue;
 
-		double numerator = (G_CONST * this->mMass * pBody->mMass);
+		float numerator = (G_CONST * this->mMass * pBody->mMass);
 
-		double denominator = (pBody->mPosition.x - this->mPosition.x) * (pBody->mPosition.x - this->mPosition.x)
+		float denominator = (pBody->mPosition.x - this->mPosition.x) * (pBody->mPosition.x - this->mPosition.x)
 			+ (pBody->mPosition.y - this->mPosition.y) * (pBody->mPosition.y - this->mPosition.y);
 		
 		if (denominator == 0.0f)
@@ -251,21 +252,16 @@ void PhysicsBody::handleEvent(Event* pEvent)
 			if (pCollideEvent->mObjectsAreApproaching)
 			{
 				this->mVelocity = pCollideEvent->mNewVelocity;
-				this->applyForce(glm::vec2(1.0f, 1.0f));
 			}
 		
 		}
 		else if (pCollideEvent->mResponse == CollideEvent::collisionResponse::PIERCE)
 		{
 			// Pierce.
-			glm::vec2 appliedforce =  glm::normalize(pCollideEvent->mRelativeVelocity) * pCollideEvent->mResistance;
-			
+			// Very very loosely based on drag formula.
+			glm::vec2 appliedForce = pCollideEvent->mRelativeVelocity * glm::length(pCollideEvent->mRelativeVelocity) * 2.0f;
+			applyForce(appliedForce);
 
-			//std::cout << "DEBUG - Force is (" << appliedforce.x << ", " << appliedforce.y << ")" << std::endl;
-			//std::cout << "DEBUG - Resistance is " << pCollideEvent->mResistance << std::endl;
-			
-			this->applyForce(glm::normalize(pCollideEvent->mRelativeVelocity) * pCollideEvent->mResistance);
-			
 		}
 		else
 		{
@@ -443,4 +439,5 @@ void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	{
 		enableGravity();
 	}
+
 }
