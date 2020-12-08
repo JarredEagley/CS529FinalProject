@@ -55,8 +55,14 @@ void FollowCursor::handleEvent(Event* pEvent)
 			return;
 		}
 
-		Transform* cameraParentTransform = static_cast<Transform*>(mpCameraComponent->mpOwner->getParent()->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		GameObject* camGOParent = mpCameraComponent->mpOwner->getParent();
+		// Null check the camera parent in case it died.
+		if (camGOParent == nullptr)
+			return;
 
+		Transform* cameraParentTransform = static_cast<Transform*>(camGOParent->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		if (cameraParentTransform == nullptr)
+			return;
 
 		float angle = mpCameraComponent->getAngle();
 		float height = mpCameraComponent->getHeight();
