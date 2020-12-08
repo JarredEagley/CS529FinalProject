@@ -158,11 +158,12 @@ void PhysicsBody::applyForce(glm::vec2 F)
 		|| isnan(F.y)
 		|| isinf(F.x)
 		|| isinf(F.y)
+		|| F.x == 0.0f
+		|| F.y == 0.0f
 		)
 		return;
 
-	// Frametime is in ms, convert to s.
-	mTotalForce += F;// *GlobalManager::getFrameRateController()->getFrameTimeSec();
+	this->mTotalForce += F;// *GlobalManager::getFrameRateController()->getFrameTimeSec();
 }
 
 void PhysicsBody::applyTorque(float T)
@@ -225,13 +226,19 @@ void PhysicsBody::handleEvent(Event* pEvent)
 			if (pCollideEvent->mObjectsAreApproaching)
 			{
 				this->mVelocity = pCollideEvent->mNewVelocity;
+				this->applyForce(glm::vec2(1.0f, 1.0f));
 			}
 		
 		}
 		else if (pCollideEvent->mResponse == CollideEvent::collisionResponse::PIERCE)
 		{
 			// Pierce.
-			this->applyForce(glm::normalize(pCollideEvent->mRelativeVelocity) * pCollideEvent->mResistance);
+			glm::vec2 appliedforce = glm::normalize(pCollideEvent->mRelativeVelocity) * pCollideEvent->mResistance;
+			//std::cout << "DEBUG - Force is (" << appliedforce.x << ", " << appliedforce.y << ")" << std::endl;
+			//std::cout << "DEBUG - Resistance is " << pCollideEvent->mResistance << std::endl;
+
+			this->applyForce(appliedforce);
+			//this->applyForce(glm::normalize(pCollideEvent->mRelativeVelocity) * pCollideEvent->mResistance);
 		}
 		else
 		{

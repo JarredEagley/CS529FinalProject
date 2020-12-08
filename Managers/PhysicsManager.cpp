@@ -134,7 +134,7 @@ void PhysicsManager::Update()
 			cEvent2.mRelativeVelocity = relativeVelocity;
 			float relativeSpeedSqr = relativeVelocity.x * relativeVelocity.x + relativeVelocity.y * relativeVelocity.y;
 			
-			float const PIERCING_THRESHOLD = 10.0f; // Need to move this to the manager.
+			float const PIERCING_THRESHOLD = 10.0f; // Need to move this to the manager. ///////////////////
 
 			// Create the collision normal. 
 			glm::vec2 collisionNormal = glm::normalize(pBody2->mPosition - pBody1->mPosition);

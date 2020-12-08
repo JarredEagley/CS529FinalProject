@@ -6,7 +6,7 @@
     {
         "Description": "Controls the state of the game, as well as enabling and disabling certain flags useful for debugging..",
         "DEBUG Verbose GameObjects": true,
-        "DEBUG Verbose Components": false,
+        "DEBUG Verbose Components": true,
         "DEBUG Verbose GameObject Factory": false
     }, 
     "Framerate Controller":

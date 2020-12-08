@@ -14,7 +14,7 @@
         },
         "TYPE_PHYSICSBODY":
         {
-            "Mass": 100.0,
+            "Mass": 60.0,
             "Circle":
             {
                 "Radius": 5.0
