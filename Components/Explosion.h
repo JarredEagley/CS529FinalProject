@@ -18,7 +18,7 @@ public:
 
 public:
 	float mIntensity = 100.0f;
-	float mSize = 1.0f;
+	float mSize = 0.1f;
 
 private:
 	// No private methods.
