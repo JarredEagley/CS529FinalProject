@@ -33,7 +33,7 @@
             "Power Max": 100,
             "Power Production": 2,
 
-            "Fuel": 100,
+            "Fuel": 100000,
             "Fuel Max": 100,
             "Fuel Efficiency": 1.2,
 
