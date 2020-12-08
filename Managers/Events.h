@@ -34,6 +34,7 @@ enum class EventType
 	DESTROY_PROJETILE,
 	CREATE_PROJECTILE,
 	CURSOR_WORLD_COORDS,
+	DO_DAMAGE,
 
 	NUM
 };
@@ -177,6 +178,14 @@ public:
 	std::string mDestroyedGOName;
 };
 
+
+class DoDamageEvent : public Event
+{
+public:
+	DoDamageEvent(float damage) : Event(EventType::DO_DAMAGE), mDamage(damage) {};
+	~DoDamageEvent() {};
+	float mDamage;
+};
 
 
 
