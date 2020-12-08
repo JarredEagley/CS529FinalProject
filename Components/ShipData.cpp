@@ -114,9 +114,7 @@ void ShipData::takeDamage(float dmg)
 			pExplosionPhysics->mCollisionType = collisionType::NOCLIP;
 		}
 
-
-		// TEMP DEBUG
-		this->mHealth = 100;
+		mpOwner->mIsMarkedForDelete = true;
 	}
 }
 
