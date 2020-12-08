@@ -10,6 +10,10 @@
         {
             "Texture": "Turret1.png"
         },
-        "TYPE_TURRET": {}
+        "TYPE_TURRET": 
+        {
+            "Fire Rate": 10.0,
+            "Fire Force": 300.0
+        }
     }
 }

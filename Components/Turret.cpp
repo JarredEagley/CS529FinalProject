@@ -30,7 +30,7 @@ mIsShooting(false)
 {
 	// Randomize this turret's fire timer start point.
 	float randomFloat = GlobalManager::getGameStateManager()->getRandomFloat();
-	this->fireTimer = (randomFloat / RAND_MAX) * fireRate;
+	this->mFireTimer = (randomFloat / RAND_MAX) * mFireRate;
 }
 
 Turret::~Turret()
@@ -49,7 +49,7 @@ void Turret::Update()
 	if (!mIsShooting)
 		return;
 
-	if (fireTimer > fireRate)
+	if (mFireTimer > mFireRate)
 	{
 		auto pGOF = GlobalManager::getGameObjectFactory();
 		auto pGOM = GlobalManager::getGameObjectManager();
@@ -75,13 +75,13 @@ void Turret::Update()
 			// Set physics
 			pBulletPhys->mVelocity = pParentPhys->mVelocity; // inherit velocity.
 			glm::vec2 fireVec = mAimPoint-glm::vec2(mpParentTransform->getPosition());
-			fireVec = glm::normalize(fireVec) * mProjectileVelocity; // Arbitrary velocity
+			fireVec = glm::normalize(fireVec) * mFireForce; // Arbitrary velocity
 			pBulletPhys->applyForce(fireVec);
 		}
 		
-		fireTimer = 0;
+		mFireTimer = 0;
 	}
-	fireTimer += GlobalManager::getPhysicsManager()->getGameTime();
+	mFireTimer += GlobalManager::getPhysicsManager()->getGameTime();
 }
 
 
@@ -143,5 +143,23 @@ void Turret::handleEvent(Event* pEvent)
 
 
 void Turret::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
-{}
+{
+	auto inputObj = inputMemberIt->value.GetObject();
+
+	if (inputObj.HasMember("Fire Rate") && inputObj["Fire Rate"].IsNumber())
+	{
+		this->mFireRate = inputObj["Fire Rate"].GetFloat();
+		
+		// Randomize this turret's fire timer start point.
+		float randomFloat = GlobalManager::getGameStateManager()->getRandomFloat();
+		this->mFireTimer = (randomFloat / RAND_MAX) * mFireRate;
+	}
+
+	if (inputObj.HasMember("Fire Force") && inputObj["Fire Force"].IsNumber())
+	{
+		this->mFireForce = inputObj["Fire Force"].GetFloat();
+	}
+
+
+}
 
