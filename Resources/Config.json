@@ -17,8 +17,8 @@
     "GameObject Manager":
     {
         "Description": "Keeps track of game objects, including how many of a paticular type of game object may exist.",
+        "Max Projectiles": 100,
         "Max Particles": 50,
-        "Max Projectiles": 150,
         "Max Debris": 100
     },
     "Input Manager":
@@ -49,6 +49,15 @@
     "Collision Manager":
     {
         "Description": "Not Currently Implemented."
+    },
+    "Physics Manager":
+    {
+        "Description": "Values associated with physics-based calculations, as well as gameplay elements like damage.",
+        "GameTime": 100,
+        "Piercing Threshold": 40,
+        "Pierce Damage Multiplier": 20,
+        "Deflect Damage Multiplier": 10,
+        "Explosion Damage Multiplier": 10
     },
     "Event Manager":
     {
