@@ -1,5 +1,10 @@
 #pragma once
 #include "Component.h"
+#include "ComponentTypes.h"
+
+#include "Transform.h"
+#include "PhysicsBody.h"
+
 
 class Explosion : public Component
 {
@@ -23,6 +28,7 @@ public:
 private:
 	// No private methods.
 private:
-	// No private variables.
+	Transform* mpTransform;
+	PhysicsBody* mpPhysicsBody;
 };
 

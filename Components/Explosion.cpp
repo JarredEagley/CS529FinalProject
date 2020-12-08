@@ -1,20 +1,16 @@
 #include "Explosion.h"
-#include "ComponentTypes.h"
 #include "../Managers/GlobalManager.h"
 
 Explosion::Explosion() : Component(ComponentTypes::TYPE_EXPLOSION)
-{
-}
+{}
 
 Explosion::~Explosion()
 {
-
 }
 
 
 void Explosion::Initialize()
 {
-
 }
 
 void Explosion::Update()
@@ -23,6 +19,13 @@ void Explosion::Update()
 	// Input is the intensity.
 	// Rate of change is same for size and intensity.
 	// For now, fixed rate of change. If I need to change this later, I will.
+	if (mpPhysicsBody == nullptr || mpTransform == nullptr)
+	{
+		mpPhysicsBody = static_cast<PhysicsBody*>(mpOwner->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+		mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		return;
+	}
+	
 	if (mIntensity > 0)
 	{
 		float deltaTime = GlobalManager::getPhysicsManager()->getGameTime();
@@ -34,7 +37,22 @@ void Explosion::Update()
 	else
 	{
 		mpOwner->mIsMarkedForDelete = true;
+		return;
 	}
+
+	mpTransform->setScale(glm::vec2(mSize));
+	if (mpPhysicsBody->mpShape->mType == Shape::ShapeType::CIRCLE)
+	{
+		ShapeCircle* pShape = static_cast<ShapeCircle*>(mpPhysicsBody->mpShape);
+		pShape->mRadius = mSize;
+		// Note: Not going to set mass in here too; an explosion's radius increases and its density decreases. Not that that'll be needed for anything.
+	}
+	else
+	{
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Error::Explosion: Shape type for '" << mpOwner->mName << "' was not circle. Failed to update physics shape." << std::endl;
+	}
+
 }
 
 
