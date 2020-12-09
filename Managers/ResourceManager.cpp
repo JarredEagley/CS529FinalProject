@@ -130,6 +130,27 @@ void ResourceManager::loadLevel(std::string fileName)
 		return;
 	}
 
+	// Load in level archetypes first-- so we can overload if needed
+	if (doc.HasMember("Level Archetypes") && doc["Level Archetypes"].IsArray())
+	{
+		// Loop through the filenames.
+		for (rapidjson::Value::ConstValueIterator arrItr = doc["Level Archetypes"].GetArray().Begin();
+			arrItr != doc["Level Archetypes"].End();
+			++arrItr)
+		{
+			if (!arrItr->IsString())
+			{
+				std::cout << "Warning: Failed to parse level archetype." << std::endl;
+				continue;
+			}
+
+			// Just call load level on it.
+			std::string filePathCurrent = pathLevelArchetypes + arrItr->GetString();
+			loadLevel(filePathCurrent);
+
+		}
+	}
+
 	// Make sure this level has GameObjects to parse.
 	// Note: GameObjects member is an array/list of documents.
 	if (!doc.HasMember("GameObjects") || !doc["GameObjects"].IsArray())
@@ -152,27 +173,6 @@ void ResourceManager::loadLevel(std::string fileName)
 
 		// Load the object.
 		GlobalManager::getGameObjectFactory()->loadObject(arrItr->GetObject());
-	}
-
-	// Load in level archetypes last.
-	if (doc.HasMember("Level Archetypes") && doc["Level Archetypes"].IsArray())
-	{
-		// Loop through the filenames.
-		for (rapidjson::Value::ConstValueIterator arrItr = doc["Level Archetypes"].GetArray().Begin();
-			arrItr != doc["Level Archetypes"].End();
-			++arrItr)
-		{
-			if (!arrItr->IsString())
-			{
-				std::cout << "Warning: Failed to parse level archetype." << std::endl;
-				continue;
-			}
-
-			// Just call load level on it.
-			std::string filePathCurrent = pathLevelArchetypes + arrItr->GetString();
-			loadLevel(filePathCurrent);
-
-		}
 	}
 }
 
