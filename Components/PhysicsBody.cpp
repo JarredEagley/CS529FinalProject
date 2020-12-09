@@ -254,9 +254,9 @@ void PhysicsBody::handleEvent(Event* pEvent)
 			{
 				this->mVelocity = pCollideEvent->mNewVelocity;
 
-				// Damage
-				float relativeSpeed = glm::length(pCollideEvent->mRelativeVelocity); // TO-DO: Move relative speed calculation up a layer
-				DoDamageEvent* pNewDamageEvent = new DoDamageEvent(relativeSpeed);
+				// Damage based on relative speed
+				float damage = GlobalManager::getPhysicsManager()->deflectDamageMultiplier * pCollideEvent->mRelativeSpeed;
+				DoDamageEvent* pNewDamageEvent = new DoDamageEvent(damage);
 				mpOwner->handleEvent(pNewDamageEvent);
 		
 			}
@@ -264,13 +264,12 @@ void PhysicsBody::handleEvent(Event* pEvent)
 			else if (pCollideEvent->mResponse == CollideEvent::collisionResponse::PIERCE)
 			{
 				// Very very loosely based on drag formula.
-				float relativeSpeed = glm::length(pCollideEvent->mRelativeVelocity);
-				glm::vec2 appliedForce = pCollideEvent->mRelativeVelocity * relativeSpeed * 2.0f;
+				glm::vec2 appliedForce = pCollideEvent->mRelativeVelocity * pCollideEvent->mRelativeSpeed * 2.0f;
 				applyForce(appliedForce);
 
-				// Damage
-				float damage = relativeSpeed;
-				DoDamageEvent* pNewDamageEvent = new DoDamageEvent(relativeSpeed);
+				// Damage based on relative speed
+				float damage = GlobalManager::getPhysicsManager()->piercingDamageMultiplier * pCollideEvent->mRelativeSpeed;
+				DoDamageEvent* pNewDamageEvent = new DoDamageEvent(damage);
 				mpOwner->handleEvent(pNewDamageEvent);
 			}
 			else
