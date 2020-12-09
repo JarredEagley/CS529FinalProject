@@ -7,7 +7,14 @@
 PhysicsManager* PhysicsManager::instance = nullptr;
 std::list<PhysicsBody*> PhysicsManager::gravityBodies; // Initialize the vector.
 bool PhysicsManager::isPhysicsPaused = true;
+
+// All of these get replaced by the config reading-- they're only here just in case.
 float PhysicsManager::gameTimeMultiplier = 50.0f; // Game seconds per real life second.
+float PhysicsManager::piercingThreshold = 40.0f;
+float PhysicsManager::piercingDamageMultiplier = 3.0f;
+float PhysicsManager::deflectDamageMultiplier = 1.0f;
+float PhysicsManager::explosionDamageMultiplier = 1.0f;
+
 
 void PhysicsManager::destroySingleton()
 {
@@ -118,6 +125,22 @@ void PhysicsManager::Update()
 			cEvent2.mObjectsAreApproaching = true;
 		}
 
+		// Get their relative speed and velocity.
+		glm::vec2 relativeVelocity = pBody1->mVelocity - pBody2->mVelocity;
+		cEvent1.mRelativeVelocity = relativeVelocity;
+		cEvent2.mRelativeVelocity = relativeVelocity;
+
+		float relativeSpeedSqr = relativeVelocity.x * relativeVelocity.x + relativeVelocity.y * relativeVelocity.y;
+		float relativeSpeed = sqrt(relativeSpeedSqr);
+		cEvent1.mRelativeSpeed = relativeSpeed;
+		cEvent2.mRelativeSpeed = relativeSpeed;
+
+		// Get relative position, since its used in squared distance.
+		glm::vec2 relativePosition = pBody1->mPosition - pBody2->mPosition;
+
+		// Get distance squared, since its used in two places.
+		float distSqr = relativePosition.x * relativePosition.x + relativePosition.y * relativePosition.y;
+
 		// If either is noclip...
 		if (
 			collisionType1 == collisionType::NOCLIP
@@ -129,28 +152,26 @@ void PhysicsManager::Update()
 			// Just pass through eachother.
 			cEvent1.mResponse = CollideEvent::collisionResponse::PASS;
 			cEvent2.mResponse = CollideEvent::collisionResponse::PASS;
+
+			// Store distance, incase one is an explosion.
+			float distance = sqrt(distSqr);
+			cEvent1.mDistance = distance;
+			cEvent2.mDistance = distance;
+
+			//std::cout << "TEST: " << pBody1->mpOwner->mName <<", " << pBody2->mpOwner->mName << "\n";
 		}
+		// The two types of collision:
 		else
 		{
-			glm::vec2 relativeVelocity = pBody1->mVelocity - pBody2->mVelocity;
-			cEvent1.mRelativeVelocity = relativeVelocity;
-			cEvent2.mRelativeVelocity = relativeVelocity;
-			float relativeSpeedSqr = relativeVelocity.x * relativeVelocity.x + relativeVelocity.y * relativeVelocity.y;
-			
-			float const PIERCING_THRESHOLD = 40.0f; // Need to move this to the manager. ///////////////////
-
 			// Create the collision normal. 
 			glm::vec2 collisionNormal = glm::normalize(pBody2->mPosition - pBody1->mPosition);
 
 			// Above certain speed squared.
-			if (relativeSpeedSqr > PIERCING_THRESHOLD)
+			if (relativeSpeedSqr > GlobalManager::getPhysicsManager()->piercingThreshold)
 			{
 				// Pierce (go through, do more damage!)
 				cEvent1.mResponse = CollideEvent::collisionResponse::PIERCE;
 				cEvent2.mResponse = CollideEvent::collisionResponse::PIERCE;
-
-				cEvent1.mResistance = pBody1->mpShape->mArea ;
-				cEvent2.mResistance = pBody2->mpShape->mArea ;
 			}
 			else
 			{
@@ -159,8 +180,6 @@ void PhysicsManager::Update()
 				cEvent2.mResponse = CollideEvent::collisionResponse::DEFLECT;
 
 				float combinedMassInverse = 1.0f/(pBody1->mMass + pBody2->mMass);
-				glm::vec2 relativePosition = pBody1->mPosition - pBody2->mPosition;
-				float distSqr = relativePosition.x*relativePosition.x + relativePosition.y * relativePosition.y;
 
 				float velDotPos1 = glm::dot(pBody1->mVelocity - pBody2->mVelocity, pBody1->mPosition - pBody2->mPosition);
 				float velDotPos2 = glm::dot(pBody2->mVelocity - pBody1->mVelocity ,pBody2->mPosition - pBody1->mPosition);
@@ -176,8 +195,9 @@ void PhysicsManager::Update()
 					* (( velDotPos2) / (distSqr)) * ( pBody2->mPosition - pBody1->mPosition);
 			}
 		}
-		// Broadcast events.
-		pBody1->handleEvent(&cEvent1);
-		pBody2->handleEvent(&cEvent2);
+
+		// Broadcast events to the gameobjects.
+		pBody1->mpOwner->handleEvent(&cEvent1);
+		pBody2->mpOwner->handleEvent(&cEvent2);
 	}
 }

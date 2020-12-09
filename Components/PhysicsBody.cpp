@@ -245,6 +245,7 @@ void PhysicsBody::handleEvent(Event* pEvent)
 		collisionType myCollideType = this->mCollisionType;
 		collisionType otherCollideType = pCollideEvent->mpOtherBody->mCollisionType;
 
+
 		// Only do collision if the objects are approaching each other.
 		if (pCollideEvent->mObjectsAreApproaching)
 		{
@@ -253,19 +254,22 @@ void PhysicsBody::handleEvent(Event* pEvent)
 			{
 				this->mVelocity = pCollideEvent->mNewVelocity;
 
+				// Damage
 				float relativeSpeed = glm::length(pCollideEvent->mRelativeVelocity); // TO-DO: Move relative speed calculation up a layer
 				DoDamageEvent* pNewDamageEvent = new DoDamageEvent(relativeSpeed);
 				mpOwner->handleEvent(pNewDamageEvent);
 		
 			}
+			// Piercing collision.
 			else if (pCollideEvent->mResponse == CollideEvent::collisionResponse::PIERCE)
 			{
-				// Pierce.
 				// Very very loosely based on drag formula.
 				float relativeSpeed = glm::length(pCollideEvent->mRelativeVelocity);
 				glm::vec2 appliedForce = pCollideEvent->mRelativeVelocity * relativeSpeed * 2.0f;
 				applyForce(appliedForce);
 
+				// Damage
+				float damage = relativeSpeed;
 				DoDamageEvent* pNewDamageEvent = new DoDamageEvent(relativeSpeed);
 				mpOwner->handleEvent(pNewDamageEvent);
 			}

@@ -1,5 +1,4 @@
 {
-    "Type": "GameObject",
     "Components":
     {
         "TYPE_TRANSFORM":
@@ -16,7 +15,7 @@
         },
         "TYPE_PHYSICSBODY":
         {
-            "Mass": 200.0,
+            "Mass": 90000.0,
             "AABB":
             {
                 "Left": 5.0,
@@ -33,16 +32,17 @@
             "Power Max": 100,
             "Power Production": 2,
 
-            "Fuel": 100000,
+            "Fuel": 100,
             "Fuel Max": 100,
             "Fuel Efficiency": 1.2,
 
             "Coil Bullets": 500,
             "Missiles": 10,
 
-            "Main Acceleration": 10.0,
-            "Secondary Acceleration": 5.0,
-            "Angular Acceleration": 15.0,
+            "Side Note": "These aren't acceleration; these control the force applied by the engines",
+            "Main Acceleration": 1200.0,
+            "Secondary Acceleration": 750.0,
+            "Angular Acceleration": 900.0,
 
             "Throttle Sensitivity": 2.5
         }

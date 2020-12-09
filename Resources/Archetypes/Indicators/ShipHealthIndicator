@@ -1,0 +1,18 @@
+{
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+            "Inherit Rotation": true
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "DirectionIndicator.png"
+        },
+        "TYPE_DIRINDICATOR":
+        {
+            "Scale Factor": 2000,
+            "Alpha Factor": 10
+        }
+    }
+}

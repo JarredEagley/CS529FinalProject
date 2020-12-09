@@ -141,6 +141,43 @@ void GameStateManager::readGameConfig()
 	//if (doc.HasMember("Collision Manager") && doc["Collision Manager"].IsObject())
 	{
 	}
+	
+	if (doc.HasMember("Physics Manager") && doc["Physics Manager"].IsObject())
+	{
+		auto currentObj = doc["Physics Manager"].GetObject();
+		PhysicsManager* pPhyM = GlobalManager::getPhysicsManager();
+
+		std::string currentattr = "GameTime Multiplier";
+		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())
+		{
+			pPhyM->gameTimeMultiplier = currentObj[currentattr.c_str()].GetFloat();
+		}
+
+		currentattr = "Piercing Threshold";
+		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())
+		{
+			pPhyM->piercingThreshold = currentObj[currentattr.c_str()].GetFloat();
+		}
+
+		currentattr = "Deflect Damage Multiplier";
+		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())
+		{
+			pPhyM->deflectDamageMultiplier = currentObj[currentattr.c_str()].GetFloat();
+		}
+
+		currentattr = "Pierce Damage Multiplier";
+		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())
+		{
+			pPhyM->piercingDamageMultiplier = currentObj[currentattr.c_str()].GetFloat();
+		}
+
+		currentattr = "Explosion Damage Multiplier";
+		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())
+		{
+			pPhyM->explosionDamageMultiplier = currentObj[currentattr.c_str()].GetFloat();
+		}
+	}
+
 
 	//if (doc.HasMember("Event Manager") && doc["Event Manager"].IsObject())
 	{

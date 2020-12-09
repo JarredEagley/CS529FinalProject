@@ -50,7 +50,7 @@ void Explosion::Update()
 	if (mpPhysicsBody->mpShape->mType == Shape::ShapeType::CIRCLE)
 	{
 		ShapeCircle* pShape = static_cast<ShapeCircle*>(mpPhysicsBody->mpShape);
-		pShape->mRadius = mSize;
+		pShape->mRadius = mSize*0.5f;
 		// Note: Not going to set mass in here too; an explosion's radius increases and its density decreases. Not that that'll be needed for anything.
 	}
 	else
@@ -62,23 +62,30 @@ void Explosion::Update()
 }
 
 
-void Explosion::setUniformData(ShaderProgram* pProgram)
-{}
-
-
 void Explosion::handleEvent(Event* pEvent)
 {
 	if (pEvent->mType == EventType::COLLIDE)
 	{
 		CollideEvent* pCollideEvent = static_cast<CollideEvent*>(pEvent);
 
-		// TO-DO:
-		// Our physics body's shape needs to grow in size
-		
-		// Figure out how far away "colliding" object is
-		// Deal damage to it based on distance and intensity.
+		PhysicsBody* pOtherBody = pCollideEvent->mpOtherBody;
+		float distance = pCollideEvent->mDistance;
+		if (distance == 0.0f)
+			distance = 0.01f;
+
+		// Deal damage based on distance, size and intensity.
+		// Dividing multiplier by 1000 gives slightly more comfortable config control.
+		float damage = ((mSize*0.5f) / distance) * mIntensity * (GlobalManager::getPhysicsManager()->explosionDamageMultiplier/1000.0f);
+
+		DoDamageEvent* pDamageEvent = new DoDamageEvent(damage);
+		pOtherBody->mpOwner->handleEvent(pDamageEvent);
 	}
 }
+
+
+void Explosion::setUniformData(ShaderProgram* pProgram)
+{}
+
 
 void Explosion::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt) 
 {

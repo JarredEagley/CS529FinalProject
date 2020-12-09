@@ -47,7 +47,8 @@ void ShipData::Update()
 		return;
 	}
 
-	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_SPACE))
+	// DEBUG
+	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_SPACE) && this->mpOwner->mName != "PLAYER")
 		takeDamage(20);
 
 	// Main thrust indirectly controlled via throttle. Update it here.

@@ -1,12 +1,11 @@
 {
-    "Type": "GameObject",
     "Components":
     {
         "TYPE_TRANSFORM":
         {
             "Translation": [4000.0, 1000.0],
             "Rotation": 0,
-            "Scale": [25.0, 50.0]
+            "Scale": [20.0, 10.0]
         },
         "TYPE_GLRECT":
         {
@@ -15,16 +14,14 @@
         },
         "TYPE_PHYSICSBODY":
         {
-            "Mass": 200.0,
+            "Mass": 90000.0,
             "AABB":
             {
                 "Left": 50.0,
                 "Right": 50.0,
                 "Top": 50.0,
                 "Bottom":50.0
-            },
-            "Velocity": [0.0, -0.55],
-            "Angular Velocity": 0.05
+            }
         },
         "TYPE_SHIPDATA":
         {

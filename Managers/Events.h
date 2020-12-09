@@ -75,12 +75,12 @@ public:
 		PASS	 // No collision
 	};
 
-	// The other physics body.
+	// Potentially used by all
 	PhysicsBody * mpOtherBody;
-	// Are they approaching eachother?
-	bool mObjectsAreApproaching = false;
 	collisionResponse mResponse;
-	
+	bool mObjectsAreApproaching = false;
+	float mRelativeSpeed;
+
 	//glm::vec2 mCollisionNormal;
 
 	// Elastic collision
@@ -88,7 +88,9 @@ public:
 
 	// Piercing collision
 	glm::vec2 mRelativeVelocity;
-	float mResistance; // Bigger objects (more area) resist harder.
+
+	// Used by explosions.
+	float mDistance;
 
 };
 
