@@ -18,6 +18,7 @@
 #include "GlobalManager.h"
 
 GameStateManager* GameStateManager::instance = nullptr;
+std::vector<std::string> GameStateManager::mMenuItemNames;
 
 void GameStateManager::destroySingleton()
 {
@@ -77,7 +78,8 @@ void GameStateManager::displayPauseMenu()
 	ResourceManager* pRM = GlobalManager::getResourceManager();
 
 	std::string pathName = pRM->pathArchetypes + "Menu\\Pause_Title.json";
-	pGOF->createDynamicGameObject(pathName, "PAUSEMENU_Title");
+	GameObject* pNewGO = pGOF->createDynamicGameObject(pathName, "PAUSEMENU_Title");
+	mMenuItemNames.push_back(pNewGO->mName);
 
 	//std::cout << pathName << std::endl;
 
@@ -87,9 +89,11 @@ void GameStateManager::displayPauseMenu()
 
 void GameStateManager::destroyPauseMenu()
 {
-	// TO-DO
-
-
+	for (auto name : mMenuItemNames)
+	{
+		// Storing a vector of pointers would be faster, but more dangerous.
+		GlobalManager::getGameObjectManager()->getGameObject(name)->mIsMarkedForDelete = true;
+	}
 }
 
 

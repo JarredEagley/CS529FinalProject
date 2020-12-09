@@ -20,6 +20,7 @@
 
 #include <random>
 #include <time.h>
+#include <vector>
 
 class GameStateManager
 {
@@ -64,6 +65,8 @@ private:
 
 private:
 	static GameStateManager* instance; // The signleton instance.
+
+	static std::vector<std::string> mMenuItemNames;
 
 };
 
