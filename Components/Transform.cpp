@@ -51,6 +51,14 @@ void Transform::Initialize() {}
 
 void Transform::Update()
 {
+	// Self destruct if insane values.
+	float maxDist = GlobalManager::getGameStateManager()->gameCleanupDistance;
+	if (this->mPosition.x > maxDist || this->mPosition.y > maxDist)
+	{
+		this->mpOwner->mIsMarkedForDelete = true;
+		return;
+	}
+
 	buildTransformationMatrix();
 	
 	// Send transform update to children.

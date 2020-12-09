@@ -51,6 +51,9 @@ public:
 
 	bool mIsGamePaused = false;
 
+	// The maximum coordinates before a transform component self destructs its game object.
+	float gameCleanupDistance = 500000.0f;
+
 	// Debug flags.
 	bool DEBUG_VerboseGameObjects;
 	bool DEBUG_VerboseComponents; // Enable or disable non-vital warnings.
