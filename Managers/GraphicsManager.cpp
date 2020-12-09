@@ -135,7 +135,7 @@ void GraphicsManager::DrawHUD()
 	// Loop through the GO's for this pass...
 	for (auto pGO : mRenderPasses[RenderPassType::HUD])
 	{
-		if (pGO == nullptr)
+		if (pGO == nullptr || !pGO->mIsAlive)
 			continue;
 		drawGameObject_HUD(pGO);
 	}
@@ -146,7 +146,7 @@ void GraphicsManager::drawPass(RenderPassType passType)
 	// Loop through the GO's for this pass...
 	for (auto pGO : mRenderPasses[passType])
 	{
-		if (pGO == nullptr)
+		if (pGO == nullptr || !pGO->mIsAlive)
 			continue;
 		drawGameObject(pGO);
 	}
