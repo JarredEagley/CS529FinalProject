@@ -96,7 +96,7 @@ void GLLine::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	// Sanity check for serializing GLRect.
 	if (!inputMemberIt->value.IsObject())
 	{
-		std::cerr << "Error: GLRect failed to deserialize. Value was not formatted correctly.." << std::endl;
+		std::cerr << "Error: GLLine failed to deserialize. Value was not formatted correctly.." << std::endl;
 		return;
 	}
 	// Get the GLRect object.
@@ -123,13 +123,13 @@ void GLLine::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			else
 			{
 				if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
-					std::cout << "Warning: GLRect had a 'Color' but its array was incorrectly formatted!" << std::endl;
+					std::cout << "Warning: GLLine had a 'Color' but its array was incorrectly formatted!" << std::endl;
 			}
 		}
 		else
 		{
 			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
-				std::cout << "Warning: GLRect had a 'Color' but its value was not an array of numbers!" << std::endl;
+				std::cout << "Warning: GLLine had a 'Color' but its value was not an array of numbers!" << std::endl;
 		}
 	}
 }
