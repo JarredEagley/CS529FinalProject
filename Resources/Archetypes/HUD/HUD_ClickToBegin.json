@@ -1,0 +1,18 @@
+{
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "Menu\\MissionStart.png",
+            "Color": [1.0, 1.0, 1.0, 0.9]
+        },
+        "TYPE_MENUITEM":
+        {
+            "Command": "BEGIN_LEVEL"
+        }
+    },
+    "Render Pass": "HUD"
+}
