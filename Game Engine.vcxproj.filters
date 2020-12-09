@@ -94,6 +94,9 @@
     <ClCompile Include="Components\MenuItem.cpp">
       <Filter>Components\Interface\Menu</Filter>
     </ClCompile>
+    <ClCompile Include="Components\NPCHealthMeter.cpp">
+      <Filter>Components\Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="Components\MenuItem.h">
       <Filter>Components\Interface\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\NPCHealthMeter.h">
+      <Filter>Components\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

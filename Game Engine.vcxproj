@@ -99,6 +99,7 @@
     <ClCompile Include="Components\GLText.cpp" />
     <ClCompile Include="Components\HealthMeter.cpp" />
     <ClCompile Include="Components\MenuItem.cpp" />
+    <ClCompile Include="Components\NPCHealthMeter.cpp" />
     <ClCompile Include="Components\PhysicsBody.cpp" />
     <ClCompile Include="Components\ShipData.cpp" />
     <ClCompile Include="Components\ThrottleMeter.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Components\GLText.h" />
     <ClInclude Include="Components\HealthMeter.h" />
     <ClInclude Include="Components\MenuItem.h" />
+    <ClInclude Include="Components\NPCHealthMeter.h" />
     <ClInclude Include="Components\PhysicsBody.h" />
     <ClInclude Include="Components\ShipData.h" />
     <ClInclude Include="Components\ThrottleMeter.h" />

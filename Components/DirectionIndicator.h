@@ -30,6 +30,14 @@ public:
 	DirectionIndicator();
 	~DirectionIndicator();
 
+	enum ScaleModeType
+	{
+		LOG,
+		LINEAR,
+
+		NUM
+	};
+
 	void Initialize();
 	void Update();
 
@@ -38,6 +46,10 @@ public:
 public:
 	float mIndicatorSizeFactor = 2000.0f;
 	float mIndicatorAlphaFactor = 10.0f;
+	float mScaleMin = 0.0f;
+	float mScaleMax = 100000.0f; // just a super high number by default.
+	bool mIgnoreParentColor = false;
+	ScaleModeType mScaleMode = LOG;
 private:
 	// No private methods.
 private:

@@ -1,0 +1,3 @@
+This folder will be used for 'level fragments' or 'Level archetypes'-- bascially archetypes for levels. 
+Basically pieces you can snap into a level, such as all the stuff needed for the player HUD.
+Saves lots of time.

@@ -1,18 +1,28 @@
 {
     "Components":
     {
-        "TYPE_TRANSFORM":
+        "TYPE_TRANSFORM": 
         {
-            "Inherit Rotation": true
+            "Rotation": -90
         },
         "TYPE_GLRECT":
         {
-            "Texture": "DirectionIndicator.png"
+            "Texture": "HullMeterNPC.png",
+            "Color": [0.5, 0.9, 0.1, 0.8]
         },
         "TYPE_DIRINDICATOR":
         {
-            "Scale Factor": 2000,
-            "Alpha Factor": 10
+            "Scale Factor": 0.1,
+            "Scale Mode": "Linear",
+            "Scale Min": 25,
+            "Scale Max": 500,
+            "Alpha Factor": 10,
+            "Ignore Parent Color": ""
+        },
+        "TYPE_METER_HEALTH_NPC":
+        {
+            "Secondary Color": [0.9, 0.3, 0.1, 0.6]
         }
-    }
+    },
+    "Shader": "meter"
 }

@@ -52,27 +52,41 @@ void DirectionIndicator::Update()
 	}
 
 	// Set color to owner's color.
-	if (mpOwner->getParent() == nullptr)
-		return;
-	GLRect* pParentRect = static_cast<GLRect*>(this->mpOwner->getParent()->GetComponent(ComponentTypes::TYPE_GLRECT));
-	if (pParentRect != nullptr && this->mpGLRect != nullptr)
-		this->mpGLRect->setColor(pParentRect->getColor());
+	if (!mIgnoreParentColor)
+	{
+		if (mpOwner->getParent() == nullptr)
+			return;
+		GLRect* pParentRect = static_cast<GLRect*>(this->mpOwner->getParent()->GetComponent(ComponentTypes::TYPE_GLRECT));
+		if (pParentRect != nullptr && this->mpGLRect != nullptr)
+			this->mpGLRect->setColor(pParentRect->getColor());
+	}
 
 	// Update based on zoom...
 
 	// Color alpha
-	glm::vec4 color = mpGLRect->getColor();
 	float const zoomLevel = pGM->getZoomLevel();
 	float const maxZoomLevel = pGM->getMaxZoomLevel();
 	float const minZoomLevel = pGM->getMinZoomLevel();
-	float const scalefactor = std::log(((zoomLevel - minZoomLevel) / (maxZoomLevel - minZoomLevel))+1.0f) * 2.0f;
-	//std::cout << "DEBUG: scalefactor is " << scalefactor << std::endl;
-	color.a = scalefactor * mIndicatorAlphaFactor;
-	//std::cout << "DEBUG: Alpha is " << color.a << std::endl;
-	mpGLRect->setColor(color);
 
+	float scalefactor = 1.0f; //= std::log(((zoomLevel - minZoomLevel) / (maxZoomLevel - minZoomLevel))+1.0f) * 2.0f;
+	
+	switch (mScaleMode)
+	{
+	case LOG:
+		scalefactor = std::log(((zoomLevel - minZoomLevel) / (maxZoomLevel - minZoomLevel))+1.0f) * 2.0f;
+		break;
+	case LINEAR:
+		scalefactor =  zoomLevel;
+		break;
+	}
+
+	float alpha = std::min(scalefactor * mIndicatorAlphaFactor, 1.0f);
+	mpGLRect->setAlpha(alpha);
+
+	float scale = std::min(std::max(scalefactor * mIndicatorSizeFactor, mScaleMin), mScaleMax);
+	
 	// Scale
-	mpTransform->setScale( scalefactor * mIndicatorSizeFactor);
+	mpTransform->setScale( scale );
 }
 
 void DirectionIndicator::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
@@ -88,4 +102,24 @@ void DirectionIndicator::Serialize(rapidjson::Value::ConstMemberIterator inputMe
 	{
 		this->mIndicatorSizeFactor = inputObj["Scale Factor"].GetFloat();
 	}
+
+	if (inputObj.HasMember("Scale Mode") && inputObj["Scale Mode"].IsString())
+	{
+		std::string mode = inputObj["Scale Mode"].GetString();
+
+		if (mode == "Linear")
+			this->mScaleMode = LINEAR;
+
+		// Log is default otherwise.
+	}
+
+	if (inputObj.HasMember("Scale Min") && inputObj["Scale Min"].IsNumber())
+		this->mScaleMin = inputObj["Scale Min"].GetFloat();
+
+	if (inputObj.HasMember("Scale Max") && inputObj["Scale Max"].IsNumber())
+		this->mScaleMax = inputObj["Scale Max"].GetFloat();
+
+	if (inputObj.HasMember("Ignore Parent Color"))
+		this->mIgnoreParentColor = true;
+
 }

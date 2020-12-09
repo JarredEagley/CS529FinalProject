@@ -20,7 +20,7 @@
 #include "../Managers/GlobalManager.h"
 #include "ShipData.h"
 
-NPCHealthMeter::NPCHealthMeter() : Component(ComponentTypes::TYPE_METER_FUEL),
+NPCHealthMeter::NPCHealthMeter() : Component(ComponentTypes::TYPE_METER_HEALTH_NPC),
 mHealth(100.0f), mSecondaryColor(glm::vec4(1.0f))
 {}
 
@@ -56,7 +56,8 @@ void NPCHealthMeter::handleEvent(Event* pEvent)
 	if (pEvent->mType == EventType::SHIPDATA_UPDATED)
 	{
 		ShipDataUpdatedEvent* pShipDataEvent = static_cast<ShipDataUpdatedEvent*>(pEvent);
-		if (pShipDataEvent->mpShipData->mpOwner->mName.compare("PLAYER") == 0 )
+		// Update if from parent GameObject.
+		if (pShipDataEvent->mpShipData->mpOwner == mpOwner->getParent())
 			this->mHealth = pShipDataEvent->mpShipData->mHealth;
 	}
 }

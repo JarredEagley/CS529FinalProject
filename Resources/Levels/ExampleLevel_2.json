@@ -18,6 +18,11 @@
             }
         },
         {
+            "Name": "SecondShip_Health",
+            "Archetype": "Indicators\\NPCHealthIndicator.json",
+            "Parent": "SecondShip"
+        },
+        {
             "Name": "PLAYER",
             "Archetype": "Player.json",
             "Components":
