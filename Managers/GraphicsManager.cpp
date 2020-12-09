@@ -58,7 +58,8 @@ void GraphicsManager::destroySingleton()
 GraphicsManager::GraphicsManager() : 
 	pCurrentCameraGO(nullptr), 
 	mWindowHeight(0), mWindowWidth(0),
-	vaoIDRect(NULL)
+	vaoIDRect(NULL),
+	vaoIDLine(NULL)
 {
 }
 
@@ -314,6 +315,13 @@ unsigned int GraphicsManager::getVAORect()
 	return vaoIDRect;
 }
 
+unsigned int GraphicsManager::getVAOLine()
+{
+	if (vaoIDLine == NULL)
+		buildVAOLine();
+	return vaoIDLine;
+}
+
 void GraphicsManager::buildVAORect()
 {
 	// VAO
@@ -347,4 +355,28 @@ void GraphicsManager::buildVAORect()
 
 	glBindVertexArray(0); // Set back to default.
 }
+
+// --- GLLine stuff --- //
+void GraphicsManager::buildVAOLine()
+{
+	// VAO
+	glGenVertexArrays(1, &vaoIDLine);
+	glBindVertexArray(vaoIDLine);
+
+	// VBO
+	glGenBuffers(2, &vboIDLine[0]);
+
+	// Position (Will be subbed over as needed, but these are default values, sort of.)
+	glBindBuffer(GL_ARRAY_BUFFER, vboIDRect[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertPosLine), &vertPosRect[0][0], GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindVertexArray(0); // Set back to default.
+}
+
+
 

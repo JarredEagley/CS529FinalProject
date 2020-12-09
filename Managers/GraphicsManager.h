@@ -85,6 +85,7 @@ public:
 	void incrementZoomLevel(float delta);
 
 	unsigned int getVAORect();
+	unsigned int getVAOLine();
 
 public:
 	static std::unordered_map<std::string, ShaderProgram*> mShaderPrograms; // shaderName, ShaderProgram*
@@ -101,6 +102,7 @@ private:
 
 	// GLRect VAO
 	void buildVAORect();
+	void buildVAOLine();
 
 private:
 	static GraphicsManager *instance;
@@ -133,5 +135,17 @@ private:
 		0, 1, 3, // First triangle.
 		1, 2, 3	 // Second triangle.
 	};
+
+
+	// GLLine stuff
+	GLuint vboIDLine[1]; // Line will sub data for the vertex positions.
+	GLuint vaoIDLine; // The OpenGL identifier for the Vertex Array Object for this gameObject.
+	// A 1x1 flat white square with default uv's.
+	glm::vec4 vertPosLine[2] = {
+		// Supporting 3d transfomrations. 
+		glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f),	// Left Top
+		glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f)	// Left Bot
+	};
+
 };
 
