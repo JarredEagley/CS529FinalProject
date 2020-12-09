@@ -15,5 +15,6 @@
             "Fire Rate": 10.0,
             "Fire Force": 300.0
         }
-    }
+    },
+    "Render Pass": "FOREGROUND"
 }
