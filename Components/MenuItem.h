@@ -27,6 +27,14 @@ public:
 	MenuItem();
 	~MenuItem();
 
+	void Initialize();
+	void Update();
+
+	void handleEvent(Event* pEvent);
+	
+	void setUniformData(ShaderProgram* pProgram);
+
+	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
 private:
