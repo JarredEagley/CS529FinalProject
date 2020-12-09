@@ -38,19 +38,35 @@ void GameStateManager::Update()
 
 	if (currentSceneType == sceneType::SCENE_LEVEL)
 	{
-		// Level
+		// --- Level --- //
+
+		// Handle pausing
 		if (pIM->IsKeyTriggered(SDL_SCANCODE_ESCAPE))
 		{
 			mIsGamePaused = !mIsGamePaused;
 		}
 
+
+
+
 	}
 	else
 	{
-		// Menu
+		// --- Menu --- //
 
 
 	}
+
+}
+
+
+void GameStateManager::displayPauseMenu()
+{
+
+}
+
+void GameStateManager::destroyPauseMenu()
+{
 
 }
 

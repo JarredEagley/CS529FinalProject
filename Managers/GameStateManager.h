@@ -33,6 +33,9 @@ public:
 	void destroySingleton();
 
 	void Update();
+
+	void displayPauseMenu();
+	void destroyPauseMenu();
 	
 	float getRandomFloat();
 
