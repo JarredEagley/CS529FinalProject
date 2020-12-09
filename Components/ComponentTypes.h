@@ -28,20 +28,23 @@ public:
 	{
 		// Wish I could do this with a switch case block it would be so much prettier.
 		if (strcmp(str, "TYPE_TRANSFORM") == 0)			return TYPE_TRANSFORM;
-		if (strcmp(str, "TYPE_CONTROLLERSLIDER") == 0)	return TYPE_CONTROLLERSLIDER;
-		if (strcmp(str, "TYPE_CONTROLLERSHIP") == 0)	return TYPE_CONTROLLERSHIP;
+		if (strcmp(str, "TYPE_PHYSICSBODY") == 0)		return TYPE_PHYSICSBODY;
+		if (strcmp(str, "TYPE_SHIPDATA") == 0)			return TYPE_SHIPDATA;
 		if (strcmp(str, "TYPE_GLRECT") == 0)			return TYPE_GLRECT;
 		if (strcmp(str, "TYPE_GLTEXT") == 0)			return TYPE_GLTEXT;
-		if (strcmp(str, "TYPE_CAMERA") == 0)			return TYPE_CAMERA;
-		if (strcmp(str, "TYPE_BACKGROUNDGRID") == 0)	return TYPE_BACKGROUNDGRID;
-		if (strcmp(str, "TYPE_PHYSICSBODY") == 0)		return TYPE_PHYSICSBODY;
-		if (strcmp(str, "TYPE_DIRINDICATOR") == 0)		return TYPE_DIRINDICATOR;
-		if (strcmp(str, "TYPE_SHIPDATA") == 0)			return TYPE_SHIPDATA;
+
+		if (strcmp(str, "TYPE_CONTROLLERSHIP") == 0)	return TYPE_CONTROLLERSHIP;
 		if (strcmp(str, "TYPE_TURRET") == 0)			return TYPE_TURRET;
+
+		if (strcmp(str, "TYPE_CAMERA") == 0)			return TYPE_CAMERA;
+
+		if (strcmp(str, "TYPE_BACKGROUNDGRID") == 0)	return TYPE_BACKGROUNDGRID;
+		if (strcmp(str, "TYPE_DIRINDICATOR") == 0)		return TYPE_DIRINDICATOR;
 		if (strcmp(str, "TYPE_METER_FUEL") == 0)		return TYPE_METER_FUEL;
 		if (strcmp(str, "TYPE_METER_HEALTH") == 0)		return TYPE_METER_HEALTH;
 		if (strcmp(str, "TYPE_MARKER_THROTTLE") == 0)	return TYPE_MARKER_THROTTLE;
 		if (strcmp(str, "TYPE_FOLLOWCURSOR") == 0)		return TYPE_FOLLOWCURSOR;
+
 		if (strcmp(str, "TYPE_EXPLOSION") == 0)			return TYPE_EXPLOSION;
 		if (strcmp(str, "TYPE_METER_HEALTH_NPC") == 0)	return TYPE_METER_HEALTH_NPC;
 		
@@ -54,23 +57,27 @@ public:
 	{
 		TYPE_UNDEFINED,
 		TYPE_TRANSFORM,
-		TYPE_TIMER,
-		TYPE_CONTROLLERSLIDER,
-		TYPE_CONTROLLERSHIP,
+		TYPE_PHYSICSBODY,
+		TYPE_SHIPDATA,
 		TYPE_GLRECT,
 		TYPE_GLTEXT,
-		TYPE_CAMERA,
-		TYPE_BACKGROUNDGRID,
-		TYPE_PHYSICSBODY,
-		TYPE_DIRINDICATOR,
-		TYPE_SHIPDATA,
+
+		TYPE_CONTROLLERSHIP,
 		TYPE_TURRET,
+
+		TYPE_CAMERA,
+		
+		TYPE_BACKGROUNDGRID,
+		TYPE_DIRINDICATOR,
 		TYPE_METER_FUEL,
 		TYPE_METER_HEALTH,
 		TYPE_MARKER_THROTTLE,
 		TYPE_FOLLOWCURSOR,
+		
 		TYPE_EXPLOSION,
 		TYPE_METER_HEALTH_NPC,
+
+		NUM
 	};
 private:
 	// No private methods.

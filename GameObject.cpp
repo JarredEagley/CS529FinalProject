@@ -22,7 +22,6 @@
 #include "Components/ComponentTypes.h"
 
 #include "Components/Transform.h"
-#include "Components/ControllerSlider.h"
 #include "Components/ControllerShip.h"
 #include "Components/GLRect.h"
 #include "Components/GLText.h"
@@ -158,9 +157,6 @@ Component* GameObject::AddComponent(unsigned int Type)
 		return nullptr; // Failed to create component.
 	case (ComponentTypes::TYPE_TRANSFORM):
 		pNewComponent = new Transform();
-		break;
-	case (ComponentTypes::TYPE_CONTROLLERSLIDER):
-		pNewComponent = new ControllerSlider();
 		break;
 	case (ComponentTypes::TYPE_CONTROLLERSHIP):
 		pNewComponent = new ControllerShip();
