@@ -51,6 +51,12 @@ mRenderPassType(RenderPassType::NONE)
 
 GameObject::~GameObject()
 {
+	if (mName == "PLAYER")
+	{
+		PlayerKilledEvent *pKillEvent = new PlayerKilledEvent();
+		GlobalManager::getEventManager()->broadcastEvent(pKillEvent);
+	}
+
 	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGameObjects)
 		std::cout << "Destructor called on " << mName << std::endl;
 	// Remove all my components.
