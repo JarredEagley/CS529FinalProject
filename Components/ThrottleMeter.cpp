@@ -43,6 +43,9 @@ void ThrottleMeter::Update()
 
 void ThrottleMeter::handleEvent(Event* pEvent)
 {
+	if (mpOwner->getParent() == nullptr)
+		return;
+
 	// Get transforms if we don't have them.
 	if (mpTransform == nullptr || mpParentTransform == nullptr)
 	{
