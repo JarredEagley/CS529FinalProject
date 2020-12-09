@@ -130,6 +130,17 @@ void ResourceManager::loadLevel(std::string fileName)
 		return;
 	}
 
+	// Level archetypes wont have a scene type.
+	if (doc.HasMember("Scene Type") && doc["Scene Type"].IsString())
+	{
+		std::string newSceneType = doc["Scene Type"].GetString();
+
+		if (newSceneType == "Level")
+			GlobalManager::getGameStateManager()->currentSceneType = GameStateManager::sceneType::SCENE_LEVEL;
+		if (newSceneType == "Menu")
+			GlobalManager::getGameStateManager()->currentSceneType = GameStateManager::sceneType::SCENE_MENU;
+	}
+
 	// Load in level archetypes first-- so we can overload if needed
 	if (doc.HasMember("Level Archetypes") && doc["Level Archetypes"].IsArray())
 	{

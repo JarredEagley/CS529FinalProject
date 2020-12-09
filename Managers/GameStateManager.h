@@ -42,6 +42,8 @@ public:
 		SCENE_LEVEL,
 		SCENE_MENU
 	};
+	sceneType currentSceneType = SCENE_LEVEL;
+
 	// Debug flags.
 	bool DEBUG_VerboseGameObjects;
 	bool DEBUG_VerboseComponents; // Enable or disable non-vital warnings.
