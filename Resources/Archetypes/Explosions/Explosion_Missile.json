@@ -22,5 +22,6 @@
         {
             "Intensity": 100
         }
-    }
+    },
+    "Render Pass": "FOREGROUND"
 }

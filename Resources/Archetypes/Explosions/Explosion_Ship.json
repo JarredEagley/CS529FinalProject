@@ -21,7 +21,8 @@
         },
         "TYPE_EXPLOSION":
         {
-            "Intensity": 500
+            "Intensity": 1000
         }
-    }
+    },
+    "Render Pass": "FOREGROUND"
 }

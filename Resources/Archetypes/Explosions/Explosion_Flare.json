@@ -11,5 +11,6 @@
             ]
         },
         "TODO:": "Flares will have their own behavior-- just a harmless but very distracting flash that grows then shrinks away then is deleted."
-    }
+    },
+    "Render Pass": "FOREGROUND"
 }
