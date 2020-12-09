@@ -41,7 +41,7 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
-	// No public variables.
+	std::string mCommand;
 private:
 	// No private methods.
 private:

@@ -71,6 +71,8 @@ void MenuItem::Update()
 		mpGLRect->setAlpha(1.0f);
 		if (pIM->isMouseButtonTriggered(SDL_BUTTON_LEFT))
 		{
+			MenuItemClickedEvent* pMenuEvent = new MenuItemClickedEvent(this->mCommand);
+			GlobalManager::getEventManager()->broadcastEvent(pMenuEvent);
 		}
 	}
 	else
@@ -81,9 +83,15 @@ void MenuItem::Update()
 
 void MenuItem::handleEvent(Event* pEvent)
 {
-
 }
 
 void MenuItem::setUniformData(ShaderProgram* pProgram) {}
 
-void MenuItem::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt) {}
+void MenuItem::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt) 
+{
+	auto inputObj = inputMemberIt->value.GetObject();
+	if (inputObj.HasMember("Command") && inputObj["Command"].IsString())
+	{
+		this->mCommand = inputObj["Command"].GetString();
+	}
+}

@@ -37,6 +37,7 @@ enum class EventType
 	MOUSE_SCROLL,
 	CURSOR_WORLD_COORDS,
 	TURRET_COMMAND,
+	MENU_ITEM_CLICKED,
 	
 	DESTROY_PROJETILE,
 	CREATE_PROJECTILE,
@@ -223,4 +224,11 @@ public:
 };
 
 
+class MenuItemClickedEvent : public Event
+{
+public:
+	MenuItemClickedEvent(std::string command) : Event(EventType::MENU_ITEM_CLICKED), mCommand(command) {};
+	~MenuItemClickedEvent() {};
 
+	std::string mCommand;
+};
