@@ -52,12 +52,13 @@ public:
 	GLuint loadTexture(const char* texName); // Returns the id of the texture loaded (or cached) (Default: Wrap texture.)
 	GLuint loadTexture(const char* texName, TexType texType); // Returns the id of the texture loaded (or cached)
 
-	void loadLevel(const char* pFileName);
+	void loadLevel(std::string fileName);
 
 public:
 	const std::string pathResources  = ".\\Resources\\"; // The base-folder for storing resources like configs and textures.
 	const std::string pathTextures	 = pathResources + "Textures\\";
 	const std::string pathLevels	 = pathResources + "Levels\\";
+	const std::string pathLevelArchetypes = "LevelArchetypes\\"; // Gets automatically appended to levels path.
 	const std::string pathArchetypes = pathResources + "Archetypes\\";
 	const std::string pathExplosions = pathArchetypes+ "Explosions\\";
 	const std::string pathProjectiles= pathArchetypes+ "Projectiles\\";

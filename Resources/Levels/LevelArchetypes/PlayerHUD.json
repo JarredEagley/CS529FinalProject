@@ -1,0 +1,22 @@
+{
+    "GameObjects":
+    [
+        {
+            "Name": "HUD_Fuel_Meter",
+            "Archetype": "HUD\\HUD_Fuel_Meter.json"
+        },
+        {
+            "Name": "HUD_Throttle_Meter",
+            "Archetype": "HUD\\HUD_Throttle_Meter.json"
+        },
+        {
+            "Name": "HUD_Throttle_Marker",
+            "Archetype": "HUD\\HUD_Throttle_Marker.json",
+            "Parent": "HUD_Throttle_Meter"
+        },
+        {
+            "Name": "HUD_Health_Meter",
+            "Archetype": "HUD\\HUD_Health_Meter.json"
+        }
+    ]
+}

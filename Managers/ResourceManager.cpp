@@ -115,18 +115,18 @@ GLuint ResourceManager::loadTexture(const char* texName, TexType _texType)
 }
 
 
-void ResourceManager::loadLevel(const char* pFileName)
+void ResourceManager::loadLevel(std::string fileName)
 {
 	// Use serializer to read the json in.
 	//std::ifstream inputStream(pFileName);
 	Serializer* pSer = GlobalManager::getSerializer();
-	std::string filePath = pathLevels + pFileName;
+	std::string filePath = pathLevels + fileName;
 	rapidjson::Document doc = pSer->loadJson(filePath.c_str());
 
 	// Nullcheck.
 	if (doc.IsNull())
 	{
-		std::cerr << "Error: Failed to load level with filename " << pFileName << std::endl;
+		std::cout << "Error::ResourceManager::LoadLevel: Failed to load level with filename " << fileName << std::endl;
 		return;
 	}
 
@@ -134,7 +134,7 @@ void ResourceManager::loadLevel(const char* pFileName)
 	// Note: GameObjects member is an array/list of documents.
 	if (!doc.HasMember("GameObjects") || !doc["GameObjects"].IsArray())
 	{
-		std::cerr << "Warning: File " << pFileName << " did not contain any GameObjects." << std::endl;
+		std::cout << "Warning: File " << fileName << " did not contain any GameObjects." << std::endl;
 		return;
 	}
 
@@ -152,6 +152,27 @@ void ResourceManager::loadLevel(const char* pFileName)
 
 		// Load the object.
 		GlobalManager::getGameObjectFactory()->loadObject(arrItr->GetObject());
+	}
+
+	// Load in level archetypes last.
+	if (doc.HasMember("Level Archetypes") && doc["Level Archetypes"].IsArray())
+	{
+		// Loop through the filenames.
+		for (rapidjson::Value::ConstValueIterator arrItr = doc["Level Archetypes"].GetArray().Begin();
+			arrItr != doc["Level Archetypes"].End();
+			++arrItr)
+		{
+			if (!arrItr->IsString())
+			{
+				std::cout << "Warning: Failed to parse level archetype." << std::endl;
+				continue;
+			}
+
+			// Just call load level on it.
+			std::string filePathCurrent = pathLevelArchetypes + arrItr->GetString();
+			loadLevel(filePathCurrent);
+
+		}
 	}
 }
 
