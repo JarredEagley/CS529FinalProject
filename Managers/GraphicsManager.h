@@ -29,8 +29,10 @@
 enum class RenderPassType
 {
 	NONE,
+	BACKGROUND,
+	MIDGROUND,
+	FOREGROUND,
 	HUD,
-	FINAL,
 
 	NUM
 };
@@ -53,7 +55,7 @@ public:
 	// Performs all draw passes.
 	void Draw();
 	void DrawHUD();
-	void DrawFinal();
+	void drawPass(RenderPassType passType);
 	//void drawAllGameObjects();  // Depricated.
 	void drawGameObject(GameObject *pGO);
 	void drawGameObject_HUD(GameObject* pGO);

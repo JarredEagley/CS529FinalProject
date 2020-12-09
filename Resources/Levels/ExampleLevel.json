@@ -21,6 +21,11 @@
                 }
             }
         },
+        {
+            "Name": "SecondShip_Health",
+            "Archetype": "Indicators\\NPCHealthIndicator.json",
+            "Parent": "SecondShip"
+        },
 
         {
             "Name": "PLAYER",
@@ -29,7 +34,7 @@
             {
                 "TYPE_TRANSFORM":
                 {
-                    "Translation": [7900.0, 1000.0],
+                    "Translation": [6000.0, 1000.0],
                     "Rotation": 0
                 },
                 "TYPE_PHYSICSBODY":

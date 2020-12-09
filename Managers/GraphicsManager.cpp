@@ -118,7 +118,15 @@ void GraphicsManager::drawAllGameObjects()
 // would be a good idea. This should be fine for my game, though.
 void GraphicsManager::Draw()
 {
-	DrawFinal();
+	//DrawFinal();
+	for (int p = 0; p < (float)RenderPassType::NUM; ++p)
+	{
+		RenderPassType pPass = (RenderPassType)p;
+		if (pPass == RenderPassType::HUD || pPass == RenderPassType::NUM)
+			continue;
+
+		drawPass(pPass);
+	}
 	DrawHUD();
 }
 
@@ -133,10 +141,10 @@ void GraphicsManager::DrawHUD()
 	}
 }
 
-void GraphicsManager::DrawFinal()
+void GraphicsManager::drawPass(RenderPassType passType)
 {
 	// Loop through the GO's for this pass...
-	for (auto pGO : mRenderPasses[RenderPassType::FINAL])
+	for (auto pGO : mRenderPasses[passType])
 	{
 		if (pGO == nullptr)
 			continue;
