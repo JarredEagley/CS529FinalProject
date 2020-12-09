@@ -37,6 +37,7 @@
 #include "Components/FollowCursor.h"
 #include "Components/Explosion.h"
 #include "Components/NPCHealthMeter.h"
+#include "Components/MenuItem.h"
 
 GameObject::GameObject() : mName(""),
 mpParentGO(nullptr), mParentGOName(""),
@@ -190,6 +191,9 @@ Component* GameObject::AddComponent(unsigned int Type)
 		break;
 	case (ComponentTypes::TYPE_METER_HEALTH):
 		pNewComponent = new HealthMeter();
+		break;
+	case (ComponentTypes::TYPE_MENUITEM):
+		pNewComponent = new MenuItem();
 		break;
 	case (ComponentTypes::TYPE_TURRET):
 		pNewComponent = new Turret();
