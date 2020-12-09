@@ -53,6 +53,7 @@ public:
 	GLuint loadTexture(const char* texName, TexType texType); // Returns the id of the texture loaded (or cached)
 
 	void loadLevel(std::string fileName);
+	void loadLevelArchetype(std::string fileName);
 
 public:
 	const std::string pathResources  = ".\\Resources\\"; // The base-folder for storing resources like configs and textures.

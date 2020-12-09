@@ -118,6 +118,39 @@ GLuint ResourceManager::loadTexture(const char* texName, TexType _texType)
 void ResourceManager::loadLevel(std::string fileName)
 {
 	// Use serializer to read the json in.
+	Serializer* pSer = GlobalManager::getSerializer();
+	std::string filePath = pathLevels + fileName;
+	rapidjson::Document doc = pSer->loadJson(filePath.c_str());
+
+	// Not the most efficient-- deserializing the name twice, but I don't really mind.
+	loadLevelArchetype(fileName);
+
+	// Nullcheck.
+	if (doc.IsNull())
+	{
+		std::cout << "Error::ResourceManager::LoadLevel: Failed to load level with filename " << fileName << std::endl;
+		return;
+	}
+
+	// Very last step: Inform the gamestate manager of our current scene.
+	GameStateManager* pGSM = GlobalManager::getGameStateManager();
+	pGSM->currentLevelName = fileName;
+	pGSM->currentLevelPath = filePath;
+	if (doc.HasMember("Scene Type") && doc["Scene Type"].IsString())
+	{
+		pGSM->currentSceneType = pGSM->stringToSceneType(doc["Scene Type"].GetString());
+	}
+	else
+	{
+		pGSM->currentSceneType = pGSM->SCENE_LEVEL;
+		if (pGSM->DEBUG_VerboseGOF)
+			std::cout << "Warning: Input level file did not have a 'Scene Type', assuming SCENE_LEVEL" << std::endl;
+	}
+}
+
+void ResourceManager::loadLevelArchetype(std::string fileName)
+{
+	// Use serializer to read the json in.
 	//std::ifstream inputStream(pFileName);
 	Serializer* pSer = GlobalManager::getSerializer();
 	std::string filePath = pathLevels + fileName;
@@ -136,9 +169,9 @@ void ResourceManager::loadLevel(std::string fileName)
 		std::string newSceneType = doc["Scene Type"].GetString();
 
 		if (newSceneType == "Level")
-			GlobalManager::getGameStateManager()->currentSceneType = GameStateManager::sceneType::SCENE_LEVEL;
+			GlobalManager::getGameStateManager()->currentSceneType = GameStateManager::SceneType::SCENE_LEVEL;
 		if (newSceneType == "Menu")
-			GlobalManager::getGameStateManager()->currentSceneType = GameStateManager::sceneType::SCENE_MENU;
+			GlobalManager::getGameStateManager()->currentSceneType = GameStateManager::SceneType::SCENE_MENU;
 	}
 
 	// Load in level archetypes first-- so we can overload if needed
@@ -157,7 +190,7 @@ void ResourceManager::loadLevel(std::string fileName)
 
 			// Just call load level on it.
 			std::string filePathCurrent = pathLevelArchetypes + arrItr->GetString();
-			loadLevel(filePathCurrent);
+			loadLevelArchetype(filePathCurrent);
 
 		}
 	}
