@@ -60,6 +60,9 @@ GraphicsManager::GraphicsManager() :
 	mWindowHeight(0), mWindowWidth(0),
 	vaoIDRect(NULL)
 {
+	// Alpha blend.
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // TO-DO: Where does this actually belong? init?
+	glEnable(GL_BLEND);
 }
 
 // --- Render pass stuff --- //

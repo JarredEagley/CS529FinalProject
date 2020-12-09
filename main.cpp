@@ -135,10 +135,6 @@ int main(int argc, char*argv[])
 	// Load level.
 	GlobalManager::getResourceManager()->loadLevel("ExampleLevel.json");
 
-	// Alpha blend.
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // TO-DO: Where does this actually belong? init?
-	glEnable(GL_BLEND);
-
 	// Run the game loop.
 	gameLoop();
 
