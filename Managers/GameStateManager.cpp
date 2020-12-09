@@ -43,7 +43,18 @@ void GameStateManager::Update()
 		// Handle pausing
 		if (pIM->IsKeyTriggered(SDL_SCANCODE_ESCAPE))
 		{
-			mIsGamePaused = !mIsGamePaused;
+			// Game is paused, and is being unpaused.
+			if (mIsGamePaused)
+			{
+				destroyPauseMenu();
+				mIsGamePaused = false;
+			}
+			// Game is unpaused, and is being paused.
+			else
+			{
+				displayPauseMenu();
+				mIsGamePaused = true;
+			}
 		}
 
 
