@@ -30,7 +30,9 @@ public:
 		if (strcmp(str, "TYPE_TRANSFORM") == 0)			return TYPE_TRANSFORM;
 		if (strcmp(str, "TYPE_PHYSICSBODY") == 0)		return TYPE_PHYSICSBODY;
 		if (strcmp(str, "TYPE_SHIPDATA") == 0)			return TYPE_SHIPDATA;
+
 		if (strcmp(str, "TYPE_GLRECT") == 0)			return TYPE_GLRECT;
+		if (strcmp(str, "TYPE_GLLINE") == 0)			return TYPE_GLLINE;
 		if (strcmp(str, "TYPE_GLTEXT") == 0)			return TYPE_GLTEXT;
 
 		if (strcmp(str, "TYPE_CONTROLLERSHIP") == 0)	return TYPE_CONTROLLERSHIP;
@@ -60,7 +62,9 @@ public:
 		TYPE_TRANSFORM,
 		TYPE_PHYSICSBODY,
 		TYPE_SHIPDATA,
+
 		TYPE_GLRECT,
+		TYPE_GLLINE,
 		TYPE_GLTEXT,
 
 		TYPE_CONTROLLERSHIP,

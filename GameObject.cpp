@@ -23,8 +23,11 @@
 
 #include "Components/Transform.h"
 #include "Components/ControllerShip.h"
+
 #include "Components/GLRect.h"
 #include "Components/GLText.h"
+#include "Components/GLLine.h"
+
 #include "Components/Camera.h"
 #include "Components/BackgroundGrid.h"
 #include "Components/PhysicsBody.h"
@@ -170,7 +173,10 @@ Component* GameObject::AddComponent(unsigned int Type)
 		break;
 	case (ComponentTypes::TYPE_GLRECT):
 		pNewComponent = new GLRect();
-		break;	
+		break;
+	case (ComponentTypes::TYPE_GLLINE):
+		pNewComponent = new GLLine();
+		break;
 	case (ComponentTypes::TYPE_GLTEXT):
 		pNewComponent = new GLText();
 		break;
