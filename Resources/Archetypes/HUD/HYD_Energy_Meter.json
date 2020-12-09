@@ -2,15 +2,16 @@
     "Components":
     {
         "TYPE_TRANSFORM": {
-            "Translation": [-0.85, -0.4],
-            "Scale": [0.25, 1.0]
+            "Translation": [-0.5, 0.9],
+            "Scale": [0.1, -1.0],
+            "Rotation": 90
         },
         "TYPE_GLRECT":
         {
-            "Texture": "HUD\\HUDFuelMeter.png",
-            "Color": [0.9, 0.7, 0.1, 0.6]
+            "Texture": "HUD\\HUDEnergyMeter.png",
+            "Color": [1.0, 1.0, 0.1, 0.6]
         },
-        "TYPE_METER_FUEL": 
+        "TYPE_METER_HEALTH": 
         {
             "Secondary Color": [0.9, 0.3, 0.1, 0.6]
         }

@@ -8,8 +8,8 @@
         },
         "TYPE_GLRECT":
         {
-            "Texture": "HUDHullMeter.png",
-            "Color": [1.0, 1.0, 0.1, 0.6]
+            "Texture": "HUD\\HUDHullMeter.png",
+            "Color": [0.1, 1.0, 0.1, 0.6]
         },
         "TYPE_METER_HEALTH": 
         {
