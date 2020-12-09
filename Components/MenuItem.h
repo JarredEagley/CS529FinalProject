@@ -21,6 +21,10 @@
 #include "Component.h"
 #include "ComponentTypes.h"
 
+// Unfortunatly, forward declaration wont work here. We'll need the full include for the implementation.
+#include "Transform.h"
+#include "GLRect.h"
+
 class MenuItem : public Component
 {
 public:
@@ -37,7 +41,11 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
+	// No public variables.
 private:
+	// No private methods.
 private:
+	Transform* mpTransform;
+	GLRect* mpGLRect;
 };
 
