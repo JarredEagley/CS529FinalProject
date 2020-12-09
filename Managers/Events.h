@@ -26,15 +26,20 @@ enum class EventType
 {
 	COLLIDE,
 	GAMEOBJECT_DESTROYED,
+	PLAYER_KILLED,
+	PLAYER_OUT_OF_BOUNDS,
+
 	TRANSFORM_UPDATED,
 	TRANSFORM_SETPOSITION,
-	SHIPDATA_UPDATED,
 	CAMERA_TRANSFORM_UPDATED,
+
+	SHIPDATA_UPDATED,
 	MOUSE_SCROLL,
+	CURSOR_WORLD_COORDS,
 	TURRET_COMMAND,
+	
 	DESTROY_PROJETILE,
 	CREATE_PROJECTILE,
-	CURSOR_WORLD_COORDS,
 	DO_DAMAGE,
 
 	NUM
@@ -93,6 +98,23 @@ public:
 	float mDistance;
 
 };
+
+class PlayerKilledEvent : public Event
+{
+public:
+	PlayerKilledEvent() : Event(EventType::PLAYER_KILLED) {};
+	~PlayerKilledEvent() {};
+};
+
+class PlayerOutOfBoundsEvent : public Event
+{
+public:
+	PlayerOutOfBoundsEvent(float distance) : Event(EventType::PLAYER_OUT_OF_BOUNDS), mDistance(distance) {};
+	~PlayerOutOfBoundsEvent() {};
+
+	float mDistance;
+};
+
 
 
 class Transform;
