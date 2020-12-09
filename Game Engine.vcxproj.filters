@@ -29,9 +29,6 @@
     <ClCompile Include="Components\ControllerShip.cpp">
       <Filter>Components\Control</Filter>
     </ClCompile>
-    <ClCompile Include="Components\ControllerSlider.cpp">
-      <Filter>Components\Control</Filter>
-    </ClCompile>
     <ClCompile Include="Components\ShipData.cpp">
       <Filter>Components\Data</Filter>
     </ClCompile>
@@ -126,9 +123,6 @@
     </ClInclude>
     <ClInclude Include="Components\PhysicsBody.h">
       <Filter>Components\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\ControllerSlider.h">
-      <Filter>Components\Control</Filter>
     </ClInclude>
     <ClInclude Include="Components\ControllerShip.h">
       <Filter>Components\Control</Filter>

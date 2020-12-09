@@ -63,6 +63,7 @@ void InputManager::Update()
 
 	mouseWheelX = 0;
 	mouseWheelY = 0;
+
 }
 
 bool InputManager::IsKeyPressed(unsigned int keyScanCode)

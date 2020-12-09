@@ -90,7 +90,6 @@
     <ClCompile Include="Components\Camera.cpp" />
     <ClCompile Include="Components\Component.cpp" />
     <ClCompile Include="Components\ControllerShip.cpp" />
-    <ClCompile Include="Components\ControllerSlider.cpp" />
     <ClCompile Include="Components\DirectionIndicator.cpp" />
     <ClCompile Include="Components\Explosion.cpp" />
     <ClCompile Include="Components\FollowCursor.cpp" />
@@ -126,7 +125,6 @@
     <ClInclude Include="Components\Camera.h" />
     <ClInclude Include="Components\Component.h" />
     <ClInclude Include="Components\ControllerShip.h" />
-    <ClInclude Include="Components\ControllerSlider.h" />
     <ClInclude Include="Components\DirectionIndicator.h" />
     <ClInclude Include="Components\Explosion.h" />
     <ClInclude Include="Components\FollowCursor.h" />

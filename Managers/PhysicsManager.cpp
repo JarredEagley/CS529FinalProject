@@ -6,7 +6,7 @@
 
 PhysicsManager* PhysicsManager::instance = nullptr;
 std::list<PhysicsBody*> PhysicsManager::gravityBodies; // Initialize the vector.
-bool PhysicsManager::isPhysicsPaused = true;
+//bool PhysicsManager::isPhysicsPaused = true;
 
 // All of these get replaced by the config reading-- they're only here just in case.
 float PhysicsManager::gameTimeMultiplier = 50.0f; // Game seconds per real life second.
@@ -51,7 +51,7 @@ float PhysicsManager::getGameTime()
 
 void PhysicsManager::Update()
 {
-	if (isPhysicsPaused)
+	if (GlobalManager::getGameStateManager()->mIsGamePaused)
 		return;
 
 	//float frameTime = GlobalManager::getFrameRateController()->getFrameTimeSec();

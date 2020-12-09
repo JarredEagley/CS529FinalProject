@@ -32,6 +32,28 @@ GameStateManager::GameStateManager() :
 	srand(time(NULL));
 }
 
+void GameStateManager::Update()
+{
+	InputManager* pIM = GlobalManager::getInputManager();
+
+	if (currentSceneType == sceneType::SCENE_LEVEL)
+	{
+		// Level
+		if (pIM->IsKeyTriggered(SDL_SCANCODE_ESCAPE))
+		{
+			mIsGamePaused = !mIsGamePaused;
+		}
+
+	}
+	else
+	{
+		// Menu
+
+
+	}
+
+}
+
 
 float GameStateManager::getRandomFloat()
 {

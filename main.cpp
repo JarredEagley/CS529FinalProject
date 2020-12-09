@@ -110,6 +110,10 @@ bool Init()
 	glewExperimental = GL_TRUE;
 	glewInit();
 
+	// Alpha blend.
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // TO-DO: Where does this actually belong? init?
+	glEnable(GL_BLEND);
+
 	return true;
 }
 
@@ -173,6 +177,9 @@ void gameLoop()
 
 		GlobalManager::getEventManager()->Update();
 
+		// --- Game State Updates --- //
+		GlobalManager::getGameStateManager()->Update();
+
 		// ----- Updates ----- //
 
 		// Do physics updates.
@@ -182,8 +189,10 @@ void gameLoop()
 		GlobalManager::getGameObjectManager()->updateGameObjects();
 
 		// TO-DO: Move this somewhere more sensible and make it more flexible.
+		/*
 		if (GlobalManager::getPhysicsManager()->isPhysicsPaused)
 			GlobalManager::getPhysicsManager()->isPhysicsPaused = false;
+		*/
 
 		// ----- Drawing ----- //
 
@@ -197,9 +206,11 @@ void gameLoop()
 
 		SDL_GL_SwapWindow(pWindow); // Swaps the buffered frame to view.
 
+
 		// Mutate mGameObjects for this game loop.
 		GlobalManager::getGameObjectManager()->deleteRemovedGameObjects();
 		GlobalManager::getGameObjectManager()->addCreatedGameObjects();
+
 
 		GlobalManager::getFrameRateController()->frameEnd();
 	}

@@ -32,6 +32,8 @@ public:
 	};
 	void destroySingleton();
 
+	void Update();
+	
 	float getRandomFloat();
 
 	void readGameConfig();
@@ -43,6 +45,8 @@ public:
 		SCENE_MENU
 	};
 	sceneType currentSceneType = SCENE_LEVEL;
+
+	bool mIsGamePaused = false;
 
 	// Debug flags.
 	bool DEBUG_VerboseGameObjects;

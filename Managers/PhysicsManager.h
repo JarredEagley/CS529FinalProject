@@ -22,7 +22,7 @@ public:
 
 public:
 	static std::list<PhysicsBody*> gravityBodies;
-	static bool isPhysicsPaused;
+	//static bool isPhysicsPaused;
 	static float gameTimeMultiplier; // At realistic scale these battles would take place over days. This is a multiplier for the flow of time.
 	static float piercingThreshold;
 	static float piercingDamageMultiplier;

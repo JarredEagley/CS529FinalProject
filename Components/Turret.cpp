@@ -46,6 +46,9 @@ void Turret::Initialize()
 
 void Turret::Update()
 {
+	if (GlobalManager::getGameStateManager()->mIsGamePaused)
+		return;
+
 	if (!mIsShooting)
 		return;
 
@@ -160,7 +163,6 @@ void Turret::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	{
 		this->mFireForce = inputObj["Fire Force"].GetFloat();
 	}
-
 
 }
 
