@@ -59,6 +59,8 @@ public:
 	std::string currentLevelPath;
 	std::string currentLevelName;
 
+	void handleMenuItemCommand(std::string command);
+
 	bool mIsGamePaused = false;
 
 	// The maximum coordinates before a transform component self destructs its game object.

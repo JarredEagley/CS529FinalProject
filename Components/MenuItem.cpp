@@ -73,6 +73,8 @@ void MenuItem::Update()
 		{
 			MenuItemClickedEvent* pMenuEvent = new MenuItemClickedEvent(this->mCommand);
 			GlobalManager::getEventManager()->broadcastEvent(pMenuEvent);
+
+			GlobalManager::getGameStateManager()->handleMenuItemCommand(mCommand);
 		}
 	}
 	else
@@ -83,11 +85,6 @@ void MenuItem::Update()
 
 void MenuItem::handleEvent(Event* pEvent)
 {
-}
-
-void MenuItem::handleItemClick()
-{
-
 }
 
 void MenuItem::setUniformData(ShaderProgram* pProgram) {}

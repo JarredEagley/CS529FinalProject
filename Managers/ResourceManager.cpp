@@ -117,6 +117,9 @@ GLuint ResourceManager::loadTexture(const char* texName, TexType _texType)
 
 void ResourceManager::loadLevel(std::string fileName)
 {
+	// Clear any existing game objects.
+	GlobalManager::getGameObjectManager()->deleteAllGameObjects();
+
 	// Use serializer to read the json in.
 	Serializer* pSer = GlobalManager::getSerializer();
 	std::string filePath = pathLevels + fileName;

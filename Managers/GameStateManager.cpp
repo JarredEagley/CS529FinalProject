@@ -72,6 +72,18 @@ void GameStateManager::Update()
 }
 
 
+void GameStateManager::handleMenuItemCommand(std::string command)
+{
+	if (command == "RESTART_LEVEL")
+	{
+		GlobalManager::getResourceManager()->loadLevel(this->currentLevelName);
+	}
+
+
+
+}
+
+
 void GameStateManager::displayPauseMenu()
 {
 	GameObjectFactory* pGOF = GlobalManager::getGameObjectFactory();
@@ -99,7 +111,9 @@ void GameStateManager::destroyPauseMenu()
 	for (auto name : mMenuItemNames)
 	{
 		// Storing a vector of pointers would be faster, but more dangerous.
-		GlobalManager::getGameObjectManager()->getGameObject(name)->mIsMarkedForDelete = true;
+		GameObject* pGO = GlobalManager::getGameObjectManager()->getGameObject(name);
+		if (pGO != nullptr)
+			pGO->mIsMarkedForDelete = true;
 	}
 }
 

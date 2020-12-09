@@ -43,7 +43,7 @@ public:
 public:
 	std::string mCommand;
 private:
-	void handleItemClick();
+	// No private methods.
 private:
 	Transform* mpTransform;
 	GLRect* mpGLRect;
