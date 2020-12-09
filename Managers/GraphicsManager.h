@@ -58,6 +58,7 @@ public:
 		if (renderTypeName == "MIDGROUND") return RenderPassType::MIDGROUND;
 		if (renderTypeName == "FOREGROUND") return RenderPassType::FOREGROUND;
 		if (renderTypeName == "HUD") return RenderPassType::HUD;
+		std::cout << "Warning: Failed to convert " << renderTypeName << " to a render pass type. GameObject will recieve pass type of NONE." << std::endl;
 		return RenderPassType::NONE; // failed
 	}
 

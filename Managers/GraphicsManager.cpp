@@ -122,7 +122,7 @@ void GraphicsManager::Draw()
 	for (int p = 0; p < (float)RenderPassType::NUM; ++p)
 	{
 		RenderPassType pPass = (RenderPassType)p;
-		if (pPass == RenderPassType::HUD || pPass == RenderPassType::NUM)
+		if (pPass == RenderPassType::HUD || pPass == RenderPassType::NUM || pPass == RenderPassType::NONE)
 			continue;
 
 		drawPass(pPass);

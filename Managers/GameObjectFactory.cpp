@@ -40,16 +40,6 @@ void GameObjectFactory::destroySingleton()
 GameObjectFactory::GameObjectFactory() { }
 
 
-void GameObjectFactory::helper_objectRenderPass(GameObject* pGO, const char* renderPassType)
-{
-	// If this GO Has a render pass aside from final, set its new render pass.
-	if (strcmp(renderPassType, "HUD") == 0)
-		pGO->setRenderPass(RenderPassType::HUD);
-	else
-		pGO->setRenderPass(RenderPassType::FINAL);
-}
-
-
 // Pushes onto the game object manager.
 void GameObjectFactory::helper_initializeObject(GameObject* pGO)
 {
@@ -137,7 +127,10 @@ GameObject* GameObjectFactory::loadArchetype(rapidjson::GenericObject<false, rap
 		inputObj.HasMember("Render Pass")
 		&& inputObj["Render Pass"].IsString()
 		)
-		helper_objectRenderPass(pNewGO, inputObj["Render Pass"].GetString());
+	{
+		std::string passName = inputObj["Render Pass"].GetString();
+		pNewGO->setRenderPass(GlobalManager::getGraphicsManager()->stringToRenderPassType(passName));
+	}
 	// Remain NONE otherwise.
 
 	// Simply return. Archetypes dont touch the game object manager.
@@ -261,9 +254,12 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 			inputObj.HasMember("Render Pass")
 			&& inputObj["Render Pass"].IsString()
 			)
-			helper_objectRenderPass(pCurrentGO, inputObj["Render Pass"].GetString());
+		{
+			std::string passName = inputObj["Render Pass"].GetString();
+			pCurrentGO->setRenderPass(GlobalManager::getGraphicsManager()->stringToRenderPassType(passName));
+		}
 		else
-			pCurrentGO->setRenderPass(RenderPassType::FINAL);
+			pCurrentGO->setRenderPass(RenderPassType::MIDGROUND);
 	}
 
 	// Initialize.
@@ -294,7 +290,7 @@ GameObject* GameObjectFactory::createDynamicGameObject(std::string filePath, std
 	pNewGO->mName = gameObjectName;
 
 	// By default, set it to final render pass.
-	pNewGO->setRenderPass(RenderPassType::FINAL);
+	pNewGO->setRenderPass(RenderPassType::MIDGROUND);
 
 	// Initialize onto the GOM.
 	helper_initializeObject(pNewGO);
@@ -329,8 +325,8 @@ GameObject* GameObjectFactory::generateProjectile(std::string fileName, std::str
 	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
 		std::cout << "GOF::Projectile - Deserializing GameObject '" << newGOName.c_str() <<"'" << std::endl;
 
-	// I'm going to just assume all Dynamic GO's use final render pass.
-	pNewGO->setRenderPass(RenderPassType::FINAL);
+	// I'm going to just assume all Dynamic GO's use midground render pass.
+	pNewGO->setRenderPass(RenderPassType::MIDGROUND);
 
 	// Automatically subscribe this to projectile events.
 	GlobalManager::getEventManager()->Subscribe(EventType::DESTROY_PROJETILE, pNewGO);
@@ -358,7 +354,7 @@ GameObject* GameObjectFactory::generateProjectile(std::string fileName, std::str
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseGOF)
 			std::cout << "GOF::Projectile - Deserializing GameObject '" << newIndicatorGOName.c_str() << "'" << std::endl;
 
-		pNewIndicatorGO->setRenderPass(RenderPassType::FINAL);
+		pNewIndicatorGO->setRenderPass(RenderPassType::MIDGROUND);
 
 		helper_initializeObject(pNewIndicatorGO);
 

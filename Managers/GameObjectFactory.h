@@ -51,7 +51,6 @@ public:
 private:
 	GameObjectFactory();
 
-	void helper_objectRenderPass(GameObject* pGO, const char* renderPassType);
 	void helper_initializeObject(GameObject* pGO);
 
 private:
