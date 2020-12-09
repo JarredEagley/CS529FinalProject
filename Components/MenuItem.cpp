@@ -20,7 +20,7 @@
 #include "MenuItem.h"
 
 
-MenuItem::MenuItem()
+MenuItem::MenuItem() : Component(ComponentTypes::TYPE_MENUITEM)
 {
 
 }
