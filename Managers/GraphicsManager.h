@@ -52,6 +52,15 @@ public:
 	void removeFromAnyRenderPasses(GameObject* pGO);
 	void addToRenderPass(GameObject* pGO, RenderPassType newRenderPassType);
 
+	RenderPassType stringToRenderPassType(std::string renderTypeName)
+	{
+		if (renderTypeName == "BACKGROUND") return RenderPassType::BACKGROUND;
+		if (renderTypeName == "MIDGROUND") return RenderPassType::MIDGROUND;
+		if (renderTypeName == "FOREGROUND") return RenderPassType::FOREGROUND;
+		if (renderTypeName == "HUD") return RenderPassType::HUD;
+		return RenderPassType::NONE; // failed
+	}
+
 	// Performs all draw passes.
 	void Draw();
 	void DrawHUD();
