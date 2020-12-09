@@ -73,11 +73,22 @@ void GameStateManager::Update()
 
 void GameStateManager::displayPauseMenu()
 {
+	GameObjectFactory* pGOF = GlobalManager::getGameObjectFactory();
+	ResourceManager* pRM = GlobalManager::getResourceManager();
+
+	std::string pathName = pRM->pathArchetypes + "Menu\\Pause_Title.json";
+	pGOF->createDynamicGameObject(pathName, "PAUSEMENU_Title");
+
+	//std::cout << pathName << std::endl;
+
+
 
 }
 
 void GameStateManager::destroyPauseMenu()
 {
+	// TO-DO
+
 
 }
 

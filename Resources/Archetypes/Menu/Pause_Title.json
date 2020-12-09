@@ -3,13 +3,13 @@
     {
         "TYPE_TRANSFORM":
         {
-            "Translation": [0.5, 0.5],
-            "Scale": [2,1]
+            "Translation": [0.0, 0.8],
+            "Scale": [0.5,0.125]
         },
         "TYPE_GLRECT":
         {
-            "Texture": "MissileLauncher.png",
-            "Color": [0.0, 0.6, 0.1, 1.0]
+            "Texture": "GamePaused.png",
+            "Color": [0.0, 0.6, 0.1, 0.9]
         },
         "TYPE_MENUITEM":
         {

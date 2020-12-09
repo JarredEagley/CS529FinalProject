@@ -290,7 +290,8 @@ GameObject* GameObjectFactory::createDynamicGameObject(std::string filePath, std
 	pNewGO->mName = gameObjectName;
 
 	// By default, set it to final render pass.
-	pNewGO->setRenderPass(RenderPassType::MIDGROUND);
+	// Update: Not anymore! Watch out for render pass NONE problems though.
+	//pNewGO->setRenderPass(RenderPassType::MIDGROUND);
 
 	// Initialize onto the GOM.
 	helper_initializeObject(pNewGO);
