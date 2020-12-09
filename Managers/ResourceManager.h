@@ -22,6 +22,8 @@
 #include "stb_image.h"
 #include "GL/glew.h" 
 #include "glm/vec2.hpp"
+#include "rapidjson/rapidjson.h"
+#include "rapidjson/document.h"
 
 // Defines a FreeType character glyph.
 struct Character {
@@ -54,6 +56,7 @@ public:
 
 	void loadLevel(std::string fileName);
 	void loadLevelArchetype(std::string fileName);
+	void loadGameObjectArray(rapidjson::Value::ConstValueIterator iteratorBegin, rapidjson::Value::ConstValueIterator iteratorEnd);
 
 public:
 	const std::string pathResources  = ".\\Resources\\"; // The base-folder for storing resources like configs and textures.

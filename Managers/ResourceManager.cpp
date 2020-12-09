@@ -204,6 +204,10 @@ void ResourceManager::loadLevelArchetype(std::string fileName)
 	}
 
 	// Loop through the GameObjects array.
+	auto gameObjectArray = doc["GameObjects"].GetArray();
+	loadGameObjectArray(gameObjectArray.begin(), gameObjectArray.end());
+
+	/*
 	for (rapidjson::Value::ConstValueIterator arrItr = doc["GameObjects"].GetArray().Begin();
 		arrItr != doc["GameObjects"].GetArray().End();
 		++arrItr)
@@ -217,6 +221,26 @@ void ResourceManager::loadLevelArchetype(std::string fileName)
 
 		// Load the object.
 		GlobalManager::getGameObjectFactory()->loadObject(arrItr->GetObject());
+	}
+	*/
+}
+
+void ResourceManager::loadGameObjectArray(rapidjson::Value::ConstValueIterator iteratorBegin, rapidjson::Value::ConstValueIterator iteratorEnd)
+{
+	// Loop through the GameObjects array.
+	for (iteratorBegin;
+		iteratorEnd != iteratorBegin;
+		++iteratorBegin)
+	{
+		// Make sure this arrItr is an object.
+		if (!iteratorBegin->IsObject())
+		{
+			std::cout << "Warning: Failed to parse an object while loading level." << std::endl;
+			continue;
+		}
+
+		// Load the object.
+		GlobalManager::getGameObjectFactory()->loadObject(iteratorBegin->GetObject());
 	}
 }
 
