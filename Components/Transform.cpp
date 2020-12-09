@@ -32,6 +32,21 @@ Transform::~Transform()
 {}
 
 
+void DEBUG_PrintMatrix(glm::mat4 input)
+{
+	std::cout << "Debug print for matrix:" << std::endl;
+	for (int row = 0; row < 4; ++row)
+	{
+		std::cout << "[";
+		for (int col = 0; col < 4; ++col)
+		{
+			std::cout << " " << input[col][row];
+		}
+		std::cout << " ]\n";
+	}
+	std::cout << "-------------------------" << std::endl;
+}
+
 void Transform::Initialize() {}
 
 void Transform::Update()
@@ -59,8 +74,7 @@ void Transform::initTransformationMatrix()
 void Transform::buildTransformationMatrix()
 {
 	// Only proceed if this object isn't parented.
-	GameObject* test = mpOwner->getParent();
-	if (test != nullptr)
+	if (mpOwner->getParent() != nullptr)
 		return;
 
 	//std::cout << "DEBUG - Transform build matrix for " << mpOwner->mName << std::endl;
@@ -70,6 +84,17 @@ void Transform::buildTransformationMatrix()
 	mTransMatrix = glm::translate(mTransMatrix, glm::vec3(mPosition));
 	mTransMatrix = glm::rotate(mTransMatrix, glm::radians(mRotation), glm::vec3(0,0,1));
 	mTransMatrix = glm::scale(mTransMatrix, mScale);
+
+
+	// Most of the time these will just be zeros. A bit inefficient, but that's okay.
+	/*
+	mTransMatrix = glm::translate(mTransMatrix, glm::vec3(mPrevParentPos, 0.0f));
+	mTransMatrix = glm::rotate(mTransMatrix, glm::radians(mPrevParentRot), glm::vec3(0, 0, 1));
+	mPrevParentPos = glm::vec2(0.0f);
+	mPrevParentRot = 0.0f;
+	*/
+
+	mTransMatrix *= mPrevParentedTransform;
 
 	//std::cout << mpOwner->mName << " built transformation matrix. (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
 }
@@ -95,6 +120,9 @@ void Transform::buildTransformationMatrix(Transform* pParentTransform)
 	mTransMatrix = glm::translate(mTransMatrix, glm::vec3(mPosition));
 	mTransMatrix = glm::rotate(mTransMatrix, glm::radians(mRotation), glm::vec3(0, 0, 1));
 	mTransMatrix = glm::scale(mTransMatrix, mScale);
+
+	// Doesnt do anything unless this GO had a parent which died.
+	mPrevParentedTransform = mTransMatrix;
 
 	//std::cout << "built transformation matrix. (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
 }
@@ -145,22 +173,10 @@ void Transform::setScale(glm::vec2 scale)
 	mScale = glm::vec3(scale, 1.0f);
 }
 
-/*
-void Transform::setParent(GameObject* pGO)
-{
-	pParentTransform = static_cast<Transform*>(pGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-}
-
-void Transform::setParent(Transform* pTran)
-{
-	pParentTransform = pTran;
-}
-*/
 
 glm::mat4 Transform::getTransformationMatrix() 
 { 
-	// Do I need to nullcheck here? 
-	return this->mTransMatrix; 
+	return mTransMatrix; 
 };
 
 

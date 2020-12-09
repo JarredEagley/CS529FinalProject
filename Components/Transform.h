@@ -72,6 +72,8 @@ private:
 	glm::vec3 mScale;
 	glm::mat4 mTransMatrix;
 
+	glm::mat4 mPrevParentedTransform = glm::mat4(1.0f); // Comes into play when the parent suddenly dies but we dont want this GO to.
+
 	bool mInheritRotation; // Do I inherit my angle from parent?
 	
 	// Transform* pParentTransform = nullptr; // If a parent is present then all transformations will be based on the parent's transformation matrix.
