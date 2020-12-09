@@ -37,7 +37,7 @@ void GameStateManager::Update()
 {
 	InputManager* pIM = GlobalManager::getInputManager();
 
-	if (currentSceneType == sceneType::SCENE_LEVEL)
+	if (currentSceneType == SceneType::SCENE_LEVEL)
 	{
 		// --- Level --- //
 

@@ -85,6 +85,11 @@ void MenuItem::handleEvent(Event* pEvent)
 {
 }
 
+void MenuItem::handleItemClick()
+{
+
+}
+
 void MenuItem::setUniformData(ShaderProgram* pProgram) {}
 
 void MenuItem::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt) 

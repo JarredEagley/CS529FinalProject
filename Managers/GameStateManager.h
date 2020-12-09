@@ -43,12 +43,21 @@ public:
 	void readGameConfig();
 
 public:
-	enum sceneType
+	enum SceneType
 	{
 		SCENE_LEVEL,
 		SCENE_MENU
 	};
-	sceneType currentSceneType = SCENE_LEVEL;
+	SceneType stringToSceneType(std::string sceneTypeName)
+	{
+		if (sceneTypeName == "Level") return SCENE_LEVEL;
+		if (sceneTypeName == "MENU") return SCENE_MENU;
+		return SCENE_LEVEL;
+	}
+	SceneType currentSceneType = SCENE_LEVEL;
+
+	std::string currentLevelPath;
+	std::string currentLevelName;
 
 	bool mIsGamePaused = false;
 
