@@ -3,13 +3,16 @@
     {
         "TYPE_TRANSFORM":
         {
-            "Translation": [0.0, 0.8],
+            "Translation": [0.0, 0.6],
             "Scale": [0.5,0.125]
         },
         "TYPE_GLRECT":
         {
-            "Texture": "Menu\\GamePaused.png",
+            "Texture": "Menu\\RestartLevel.png",
             "Color": [0.0, 0.6, 0.1, 0.9]
+        },
+        "TYPE_MENUITEM":
+        {
         }
     },
     "Render Pass": "HUD"

@@ -47,14 +47,36 @@ void MenuItem::Update()
 	// Get mouse coordinates.
 	int pX, pY;
 	pIM->getMousePosition(pX, pY);
-	float mouseX = ((float)pX / (float)pGM->mWindowWidth);
-	float mouseY = ((float)pY / (float)pGM->mWindowHeight);
+	// Converted to range -1 to +1
+	float mouseX = ( ((float)pX / (float)pGM->mWindowWidth)*2.0f) - 1.0f ;
+	float mouseY = -(( ((float)pY / (float)pGM->mWindowHeight)*2.0f) - 1.0f) ; // Note: y needs to be inverted
+
+	//std::cout << "Mouse y: " << mouseY << std::endl;
 
 	float scaleX = mpTransform->getScale().x;
 	float scaleY = mpTransform->getScale().y;
 	glm::vec2 pos = mpTransform->getPosition();
 
-
+	// Bounds of the menu item.
+	float xUpper = pos.x + (scaleX/2.0f);
+	float xLower = pos.x - (scaleX/2.0f);
+	float yUpper = pos.y + (scaleY/2.0f);
+	float yLower = pos.y - (scaleY/2.0f);
+	
+	if (
+		mouseX < xUpper && mouseX > xLower
+		&& mouseY < yUpper && mouseY > yLower
+		)
+	{
+		mpGLRect->setAlpha(1.0f);
+		if (pIM->isMouseButtonTriggered(SDL_BUTTON_LEFT))
+		{
+		}
+	}
+	else
+	{
+		mpGLRect->setAlpha(0.6f);
+	}
 }
 
 void MenuItem::handleEvent(Event* pEvent)

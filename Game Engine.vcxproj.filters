@@ -64,20 +64,11 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="FrameBufferObject.cpp" />
-    <ClCompile Include="Components\Turret.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Components\FollowCursor.cpp">
       <Filter>Components\Control</Filter>
     </ClCompile>
-    <ClCompile Include="Components\Explosion.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Components\GLText.cpp">
       <Filter>Components\Data</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\BackgroundGrid.cpp">
-      <Filter>Components\Interface</Filter>
     </ClCompile>
     <ClCompile Include="Components\FuelMeter.cpp">
       <Filter>Components\Interface\HUD</Filter>
@@ -93,6 +84,15 @@
     </ClCompile>
     <ClCompile Include="Components\NPCHealthMeter.cpp">
       <Filter>Components\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Explosion.cpp">
+      <Filter>Components\Behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\Turret.cpp">
+      <Filter>Components\Behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\BackgroundGrid.cpp">
+      <Filter>Components\Behavior</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -162,20 +162,11 @@
     </ClInclude>
     <ClInclude Include="FrameBufferObject.h" />
     <ClInclude Include="ShaderProgram.h" />
-    <ClInclude Include="Components\Turret.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Components\FollowCursor.h">
       <Filter>Components\Control</Filter>
     </ClInclude>
-    <ClInclude Include="Components\Explosion.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Components\GLText.h">
       <Filter>Components\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\BackgroundGrid.h">
-      <Filter>Components\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Managers\Events.h">
       <Filter>Managers</Filter>
@@ -194,6 +185,15 @@
     </ClInclude>
     <ClInclude Include="Components\NPCHealthMeter.h">
       <Filter>Components\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Turret.h">
+      <Filter>Components\Behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Explosion.h">
+      <Filter>Components\Behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\BackgroundGrid.h">
+      <Filter>Components\Behavior</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +232,9 @@
     </Filter>
     <Filter Include="Components\Interface\HUD">
       <UniqueIdentifier>{7f57f9d4-4cc2-46cd-85ff-1fad3f078425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Behavior">
+      <UniqueIdentifier>{30676463-1ba4-4953-ae46-f4388ac643a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
