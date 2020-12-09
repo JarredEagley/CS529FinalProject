@@ -20,25 +20,25 @@
 #include "../Managers/GlobalManager.h"
 #include "ShipData.h"
 
-HealthMeter::HealthMeter() : Component(ComponentTypes::TYPE_METER_FUEL),
+NPCHealthMeter::NPCHealthMeter() : Component(ComponentTypes::TYPE_METER_FUEL),
 mHealth(100.0f), mSecondaryColor(glm::vec4(1.0f))
 {}
 
-HealthMeter::~HealthMeter()
+NPCHealthMeter::~NPCHealthMeter()
 {}
 
 
-void HealthMeter::Initialize()
+void NPCHealthMeter::Initialize()
 {
 	// We want to know when shipdata updates.
 	GlobalManager::getEventManager()->Subscribe(EventType::SHIPDATA_UPDATED, mpOwner);
 }
 
-void HealthMeter::Update() 
+void NPCHealthMeter::Update() 
 {
 }
 
-void HealthMeter::setUniformData(ShaderProgram* pProgram)
+void NPCHealthMeter::setUniformData(ShaderProgram* pProgram)
 {
 	//std::cout << "sending fuel data: " << mFuel << std::endl;
 	unsigned int loc;
@@ -50,7 +50,7 @@ void HealthMeter::setUniformData(ShaderProgram* pProgram)
 }
 
 
-void HealthMeter::handleEvent(Event* pEvent)
+void NPCHealthMeter::handleEvent(Event* pEvent)
 {
 	// Listen for shipdata updates.
 	if (pEvent->mType == EventType::SHIPDATA_UPDATED)
@@ -62,7 +62,7 @@ void HealthMeter::handleEvent(Event* pEvent)
 }
 
 
-void HealthMeter::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
+void NPCHealthMeter::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
 	rapidjson::GenericObject<true, rapidjson::Value> inputObj = inputMemberIt->value.GetObject();
 

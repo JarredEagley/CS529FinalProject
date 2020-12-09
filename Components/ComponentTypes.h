@@ -43,6 +43,7 @@ public:
 		if (strcmp(str, "TYPE_MARKER_THROTTLE") == 0)	return TYPE_MARKER_THROTTLE;
 		if (strcmp(str, "TYPE_FOLLOWCURSOR") == 0)		return TYPE_FOLLOWCURSOR;
 		if (strcmp(str, "TYPE_EXPLOSION") == 0)			return TYPE_EXPLOSION;
+		if (strcmp(str, "TYPE_METER_HEALTH_NPC") == 0)	return TYPE_METER_HEALTH_NPC;
 		
 		
 		return TYPE_UNDEFINED;
@@ -68,7 +69,8 @@ public:
 		TYPE_METER_HEALTH,
 		TYPE_MARKER_THROTTLE,
 		TYPE_FOLLOWCURSOR,
-		TYPE_EXPLOSION
+		TYPE_EXPLOSION,
+		TYPE_METER_HEALTH_NPC,
 	};
 private:
 	// No private methods.

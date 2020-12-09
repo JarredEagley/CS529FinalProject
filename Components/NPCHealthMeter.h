@@ -22,11 +22,11 @@
 
 class GLRect;
 
-class HealthMeter : public Component
+class NPCHealthMeter : public Component
 {
 public:
-	HealthMeter();
-	~HealthMeter();
+	NPCHealthMeter();
+	~NPCHealthMeter();
 
 	void Initialize();
 	void Update();
