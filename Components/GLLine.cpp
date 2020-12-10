@@ -56,6 +56,9 @@ void GLLine::setUniformData(ShaderProgram* pProgram)
 	unsigned int loc;
 	loc = glGetUniformLocation(pProgram->ProgramID, "color");
 	glUniform4fv(loc, 1, &mColor.x);
+
+	loc = glGetUniformLocation(pProgram->ProgramID, "drawType");
+	glUniform1i(loc, 1); // 1 = line.
 }
 
 

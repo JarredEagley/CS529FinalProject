@@ -25,34 +25,39 @@ out vec4 FragColor;
 
 uniform sampler2D ourTexture;
 
-uniform int col_type;
-uniform float col_circleRadius;
-uniform float col_aabbLeft, col_aabbRight, col_aabbTop, col_aabbBottom;
-int COLLISION_NONE = 0;
-int COLLISION_CICLE = 1;
-int COLLISION_AABB = 2;
+uniform int drawType;
+const int DRAW_TYPE_RECT = 0;
+const int DRAW_TYPE_LINE = 1;
+const int DRAW_TYPE_PHYS_AABB = 2;
+const int DRAW_TYPE_PHYS_CIRCLE = 3;
 
 void main()
 {
 	// Render to fragColor based on texture.
-	
-	FragColor = texture(ourTexture, vertTexCoord) * vertColor;
-
-	/*
-	if (col_type == COLLISION_CICLE)
+	switch (drawType)
 	{
-		FragColor = vec4(vertTexCoord,0,1);
+		case DRAW_TYPE_RECT:
+			FragColor = texture(ourTexture, vertTexCoord) * vertColor;
+			break;
+		case DRAW_TYPE_LINE:
+			break;
+
+		case DRAW_TYPE_PHYS_AABB:
+			FragColor = vec4(1,0,0,0.2); // Red transparent
+			break;
+		case DRAW_TYPE_PHYS_CIRCLE:
+			vec2 uv = abs((vertTexCoord-0.5)*2);
+			if (length(uv) < 1)
+				FragColor = vec4(1, 0, 0, 0.2);
+			else
+				FragColor = vec4(0,0,1,0.05);
+			break;
+
+		default:
+			FragColor = texture(ourTexture, vertTexCoord) * vertColor;
+			break;
 	}
-	*/
-	
-	/*
-	if (col_type == 0)
-		FragColor += vec4(1,0,0,0);
-	if (col_type == 1)
-		FragColor += vec4(0,1,0,0);
-	if (col_type ==2 )
-		FragColor += vec4(0,0,1,0);
-	*/
+
 }
 
 

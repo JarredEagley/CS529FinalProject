@@ -20,6 +20,7 @@
 #include "../GameObject.h"
 #include "../Managers/GlobalManager.h"
 #include <limits>
+#include "glm/gtc/type_ptr.hpp"
 
 #define G_CONST 0.0000000000667 // The universal gravitational constant. in N * m^2 / kg^2
 
@@ -283,48 +284,44 @@ void PhysicsBody::handleEvent(Event* pEvent)
 
 void PhysicsBody::setUniformData(ShaderProgram* pProgram)
 {
-	// TO-DO:
-	// 1. Collision type: 0 = none, 1 = aabb, 2 = circle
-	auto myShapeType = this->mpShape->mType;
-
-	unsigned int loc;
-	if (myShapeType == Shape::ShapeType::CIRCLE)
-	{
-		loc = glGetUniformLocation(pProgram->ProgramID, "col_type");
-		glUniform1i(loc, 1);
-
-		loc = glGetUniformLocation(pProgram->ProgramID, "col_circleRadius");
-		//gluniform1f(loc, );
-	}
-	else if (myShapeType == Shape::ShapeType::AABB)
-	{
-		loc = glGetUniformLocation(pProgram->ProgramID, "col_type");
-		glUniform1i(loc, 2);
-	}
-	else
-	{
-		loc = glGetUniformLocation(pProgram->ProgramID, "col_type");
-		glUniform1i(loc, 0);
-	}
-
-	// 2. if aabb, pass in aabb stuff
-	// 3. if circle pass in circle stuff.
-	// 4. -- inside the FRAGMENT shader, Apply red to anything within collider.
 }
 
 
-// TO-DO
-/*
-#include "glm/gtc/type_ptr.hpp"
 void PhysicsBody::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj)
 {
 	// Bind
+	unsigned int vaoID = GlobalManager::getGraphicsManager()->getVAORect();
 	glBindVertexArray(vaoID);
-	glActiveTexture(GL_TEXTURE0);
 
 	// Uniforms.
 	unsigned int loc;
+
+	if (mpShape->mType == Shape::ShapeType::CIRCLE)
+	{
+		loc = glGetUniformLocation(pProgram->ProgramID, "drawType");
+		glUniform1i(loc, 3); // 3 = circle
+	}
+	else if (mpShape->mType == Shape::ShapeType::AABB)
+	{
+		loc = glGetUniformLocation(pProgram->ProgramID, "drawType");
+		glUniform1i(loc, 2); // 2 = aabb
+	}
+
+	// Base model transform on shape's position and params.
 	glm::mat4 myTrans = glm::translate(glm::mat4(1.0f), glm::vec3(this->mPosition, 0.0f) );
+	if (mpShape->mType == Shape::CIRCLE)
+	{
+		ShapeCircle* pTemp = static_cast<ShapeCircle*>(mpShape);
+		myTrans = glm::scale(myTrans, glm::vec3(pTemp->mRadius * 2.0f));
+	}
+	else if (mpShape->mType == Shape::AABB)
+	{
+		ShapeAABB* pTemp = static_cast<ShapeAABB*>(mpShape); 
+		myTrans = glm::scale(myTrans, glm::vec3(pTemp->mLeft + pTemp->mRight, pTemp->mTop+pTemp->mBottom, 0.0f));
+		float offsetX = pTemp->mRight - pTemp->mLeft;
+		float offsetY = pTemp->mTop - pTemp->mBottom;
+		myTrans = glm::translate(myTrans, glm::vec3(offsetX, offsetY, 0.0f));
+	}
 	loc = glGetUniformLocation(pProgram->ProgramID, "modelTrans");
 	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(myTrans) );
 	loc = glGetUniformLocation(pProgram->ProgramID, "viewTrans");
@@ -338,7 +335,6 @@ void PhysicsBody::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 
 	// Unbind
 	glBindVertexArray(0);
 }
-*/
 
 
 void PhysicsBody::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)

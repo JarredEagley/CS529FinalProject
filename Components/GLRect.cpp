@@ -88,6 +88,7 @@ void GLRect::setTexture(const char* imageName)
 void GLRect::setUniformData(ShaderProgram* pProgram)
 {
 	unsigned int loc;
+
 	loc = glGetUniformLocation(pProgram->ProgramID, "uvScale");
 	glUniform1f(loc, getUvScale());
 	loc = glGetUniformLocation(pProgram->ProgramID, "uvOffset");
@@ -107,6 +108,9 @@ void GLRect::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 
 	// Uniforms.
 	unsigned int loc;
+	loc = glGetUniformLocation(pProgram->ProgramID, "drawType");
+	glUniform1i(loc, 0); // 0 = rect.
+
 	loc = glGetUniformLocation(pProgram->ProgramID, "modelTrans");
 	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(modelTrans) );
 	loc = glGetUniformLocation(pProgram->ProgramID, "viewTrans");

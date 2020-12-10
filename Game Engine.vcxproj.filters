@@ -17,9 +17,6 @@
     <ClCompile Include="Components\Transform.cpp">
       <Filter>Components\Data</Filter>
     </ClCompile>
-    <ClCompile Include="Components\GLRect.cpp">
-      <Filter>Components\Data</Filter>
-    </ClCompile>
     <ClCompile Include="Components\DirectionIndicator.cpp">
       <Filter>Components\Interface</Filter>
     </ClCompile>
@@ -67,9 +64,6 @@
     <ClCompile Include="Components\FollowCursor.cpp">
       <Filter>Components\Control</Filter>
     </ClCompile>
-    <ClCompile Include="Components\GLText.cpp">
-      <Filter>Components\Data</Filter>
-    </ClCompile>
     <ClCompile Include="Components\FuelMeter.cpp">
       <Filter>Components\Interface\HUD</Filter>
     </ClCompile>
@@ -94,6 +88,15 @@
     <ClCompile Include="Components\BackgroundGrid.cpp">
       <Filter>Components\Behavior</Filter>
     </ClCompile>
+    <ClCompile Include="Components\GLLine.cpp">
+      <Filter>Components\Drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\GLRect.cpp">
+      <Filter>Components\Drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\GLText.cpp">
+      <Filter>Components\Drawing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -113,9 +116,6 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\Transform.h">
-      <Filter>Components\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\GLRect.h">
       <Filter>Components\Data</Filter>
     </ClInclude>
     <ClInclude Include="Components\DirectionIndicator.h">
@@ -165,9 +165,6 @@
     <ClInclude Include="Components\FollowCursor.h">
       <Filter>Components\Control</Filter>
     </ClInclude>
-    <ClInclude Include="Components\GLText.h">
-      <Filter>Components\Data</Filter>
-    </ClInclude>
     <ClInclude Include="Managers\Events.h">
       <Filter>Managers</Filter>
     </ClInclude>
@@ -194,6 +191,15 @@
     </ClInclude>
     <ClInclude Include="Components\BackgroundGrid.h">
       <Filter>Components\Behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\GLLine.h">
+      <Filter>Components\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\GLRect.h">
+      <Filter>Components\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\GLText.h">
+      <Filter>Components\Drawing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +241,9 @@
     </Filter>
     <Filter Include="Components\Behavior">
       <UniqueIdentifier>{30676463-1ba4-4953-ae46-f4388ac643a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Drawing">
+      <UniqueIdentifier>{9d410d0b-b638-47eb-b193-1cc1a1dfe939}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

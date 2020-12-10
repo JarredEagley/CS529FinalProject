@@ -94,6 +94,7 @@
     <ClCompile Include="Components\Explosion.cpp" />
     <ClCompile Include="Components\FollowCursor.cpp" />
     <ClCompile Include="Components\FuelMeter.cpp" />
+    <ClCompile Include="Components\GLLine.cpp" />
     <ClCompile Include="Components\GLRect.cpp" />
     <ClCompile Include="Components\GLText.cpp" />
     <ClCompile Include="Components\HealthMeter.cpp" />
@@ -129,6 +130,7 @@
     <ClInclude Include="Components\Explosion.h" />
     <ClInclude Include="Components\FollowCursor.h" />
     <ClInclude Include="Components\FuelMeter.h" />
+    <ClInclude Include="Components\GLLine.h" />
     <ClInclude Include="Components\GLRect.h" />
     <ClInclude Include="Components\GLText.h" />
     <ClInclude Include="Components\HealthMeter.h" />

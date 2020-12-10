@@ -67,7 +67,7 @@ public:
 	void handleEvent(Event* pEvent);
 	
 	void setUniformData(ShaderProgram* pProgram);
-	//void Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj);
+	void Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj);
 	
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
@@ -86,9 +86,9 @@ public:
 	Shape* mpShape; 
 	collisionType mCollisionType;
 
-
 private:
 	// No private methods.
+
 private:
 	PhysicsBody* mpIgnoredPhysicsBody;
 	float mIgnorePhysicsBodyTimer;
