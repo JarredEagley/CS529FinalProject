@@ -23,11 +23,32 @@
         },
         "TYPE_AI_MISSILE":
         {
-
+            "Detonation Distance": 100,
+            "Warhead Intensity": 1000
         },
         "TYPE_SHIPDATA":
         {
-            
+            "Health": 50,
+            "Health Max": 50,
+            "Power": 100,
+            "Power Max": 100,
+            "Power Production": 10,
+
+            "Fuel": 100,
+            "Fuel Max": 100,
+            "Fuel Efficiency": 7,
+
+            "Missiles": 0,
+
+            "Side Note": "These aren't acceleration; these control the force applied by the engines",
+            "Main Acceleration": 1200.0,
+            "Secondary Acceleration": 750.0,
+            "Angular Acceleration": 900.0,
+
+            "Throttle Sensitivity": 2.5,
+
+            "Justification for this" : "If a nuclear bomb is destroyed, its conventional explosives are set off, but the nuclear payload doesn't go critical.",
+            "Death Explosion Intensity": 1.0
         }
     }
 }

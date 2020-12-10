@@ -21,6 +21,7 @@
 #include "Component.h"
 #include "ComponentTypes.h"
 #include "../Managers/GlobalManager.h"
+#include "ShipData.h"
 
 class AIMissile : public Component
 {
@@ -47,6 +48,7 @@ private:
 	// No private methods.
 private:
 	float mActivateTimer; // Waits a given amount of time before activating.
+	ShipData* mpShipData;
 
 };
 
