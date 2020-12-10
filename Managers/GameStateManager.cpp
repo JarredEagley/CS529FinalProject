@@ -79,6 +79,13 @@ void GameStateManager::handleMenuItemCommand(std::string command)
 		GlobalManager::getResourceManager()->loadLevel(this->currentLevelName);
 	}
 
+	if (command == "QUIT_TO_DESKTOP")
+	{
+		GlobalManager::getGameObjectManager()->deleteAllGameObjects();
+		SDL_Event* pQuitEvent = new SDL_Event;
+		pQuitEvent->type = SDL_QUIT;
+		SDL_PushEvent(pQuitEvent);
+	}
 
 
 }
