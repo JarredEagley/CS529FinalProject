@@ -50,6 +50,7 @@ void AIMissile::Update()
 	{
 		// Kill this missile.
 		// TO-DO
+		this->mpOwner->mIsMarkedForDelete = true;
 	}
 
 	if (mActivateTimer < 0.0f)
@@ -94,10 +95,7 @@ void AIMissile::Update()
 
 		// Homing behavior.
 		
-		//mForwardDir = glm::vec2(sin(glm::radians(-mAngle)), cos(glm::radians(mAngle)));
-		//mRightDir = glm::vec2(cos(glm::radians(mAngle)), sin(glm::radians(mAngle)));
-		
-		glm::vec2 velocityDifference = pTargetPhysics->mVelocity - mpPhysicsBody->mVelocity;
+		 glm::vec2 velocityDifference = pTargetPhysics->mVelocity - mpPhysicsBody->mVelocity;
 		
 		glm::vec2 alignmentVec = mpPhysicsBody->mForwardDir;
 		glm::vec2 normalVec = mpPhysicsBody->mRightDir;
