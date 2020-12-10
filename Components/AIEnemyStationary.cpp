@@ -15,6 +15,7 @@
 - End Header --------------------------------------------------------*/
 
 #include "AIEnemyStationary.h"
+#include "../Managers/GlobalManager.h"
 
 AIEnemyStationary::AIEnemyStationary() : Component(ComponentTypes::TYPE_UNDEFINED)
 {
@@ -33,6 +34,17 @@ void AIEnemyStationary::Initialize()
 
 void AIEnemyStationary::Update()
 {
+	if (mpShipData == nullptr || mpPhysicsBody == nullptr)
+	{
+		mpShipData = static_cast<ShipData*>(mpOwner->GetComponent(ComponentTypes::TYPE_SHIPDATA));
+		mpPhysicsBody = static_cast<PhysicsBody*>(mpOwner->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+		return;
+	}
+
+
+	// behavior
+
+
 }
 
 void AIEnemyStationary::handleEvent(Event* pEvent)

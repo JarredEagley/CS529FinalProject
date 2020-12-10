@@ -17,8 +17,12 @@
 - End Header --------------------------------------------------------*/
 
 #pragma once
+
 #include "Component.h"
 #include "ComponentTypes.h"
+
+#include "ShipData.h"
+#include "PhysicsBody.h"
 
 class AIEnemyStationary : public Component
 {
@@ -41,6 +45,8 @@ public:
 private:
 	// No private methods.
 private:
-	// No private variables.
+	ShipData* mpShipData;
+	PhysicsBody* mpPhysicsBody;
+
 };
 
