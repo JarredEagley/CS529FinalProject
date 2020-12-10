@@ -36,7 +36,6 @@
             "Fuel Max": 100,
             "Fuel Efficiency": 1.2,
 
-            "Coil Bullets": 500,
             "Missiles": 10,
 
             "Side Note": "These aren't acceleration; these control the force applied by the engines",
@@ -44,7 +43,9 @@
             "Secondary Acceleration": 750.0,
             "Angular Acceleration": 900.0,
 
-            "Throttle Sensitivity": 2.5
+            "Throttle Sensitivity": 2.5,
+
+            "Death Explosion Intensity": 1000.0
         }
     }
 }

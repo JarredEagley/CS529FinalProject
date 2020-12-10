@@ -35,14 +35,15 @@
             "Fuel Max": 100,
             "Fuel Efficiency": 1.2,
 
-            "Coil Bullets": 500,
             "Missiles": 2,
 
             "Main Acceleration": 10.0,
             "Secondary Acceleration": 5.0,
             "Angular Acceleration": 15.0,
 
-            "Throttle Sensitivity": 2.5
+            "Throttle Sensitivity": 2.5,
+
+            "Death Explosion Intensity": 1000.0
         }
     }
 }

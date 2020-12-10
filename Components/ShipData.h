@@ -60,8 +60,9 @@ public:
 	float mMaxFuel;
 	float mFuelEfficiency;	// Basically ISP, but without the real-world math.
 
-	int mCoilBullets;
 	int mMissiles;
+
+	float mDeathExplosionIntensity;
 
 	float mMainAcceleration;		// Main drive
 	float mSecondaryAcceleration;	// Maneuvering thrusters

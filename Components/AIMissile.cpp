@@ -19,7 +19,8 @@
 
 #include "AIMissile.h"
 
-AIMissile::AIMissile() : Component(ComponentTypes::TYPE_UNDEFINED)
+AIMissile::AIMissile() : Component(ComponentTypes::TYPE_UNDEFINED),
+mActivateTimer(1000.0f), mTargetName(""), mWarheadIntensity(1000.0f), mDetonateDistance(100.0f)
 {
 }
 

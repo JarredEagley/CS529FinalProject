@@ -119,7 +119,7 @@ void GraphicsManager::drawAllGameObjects()
 // would be a good idea. This should be fine for my game, though.
 void GraphicsManager::Draw()
 {
-	// Build the camera transform.
+	// Build the camera transform. Inefficient, but squashes an update order bug.
 	Camera* pCamera = nullptr;
 	if (pCurrentCameraGO == nullptr)
 		std::cout << "Error: No camera GameObject currently bound to the GraphicsManager." << std::endl;

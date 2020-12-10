@@ -18,9 +18,11 @@
 #include <iostream>
 #include "../Managers/GlobalManager.h"
 
+#include "Explosion.h"
+
 ShipData::ShipData() : Component(ComponentTypes::TYPE_SHIPDATA),
 mHealth(100.0f), mMaxHealth(100.0f), mPower(100.0f), mMaxPower(100.0f), mPowerProduction(1.0f),
-mFuel(0.0f), mMaxFuel(0.0f), mCoilBullets(0), mMissiles(0),
+mFuel(0.0f), mMaxFuel(0.0f), mMissiles(0),
 mMainAcceleration(0.0f), mSecondaryAcceleration(0.0f), mAngularAcceleration(0.0f),
 mFuelEfficiency(0.0f),
 mThrottle(0.0f), mThrottleDeadzone(0.1f), mThrottleSensitivity(1.0f),
@@ -94,25 +96,32 @@ void ShipData::takeDamage(float dmg)
 	this->mHealth -= dmg;
 	if (this->mHealth < 0.0f)
 	{
-		// Create the explosion GameObject.
-		std::string explosionName = mpOwner->mName + "_Explosion";
-		std::string explosionPath = GlobalManager::getResourceManager()->pathExplosions + "Explosion_Ship.json";
-		GameObject* explosionGO = GlobalManager::getGameObjectFactory()->createDynamicGameObject(explosionPath, explosionName);
-		
-		if (explosionGO == nullptr)
-			return;
-
-		// Send an event to update the trasnform position.
-		//SetTransformPositionEvent* pNewEvent = new SetTransformPositionEvent(this->mpPhysicsBody->mPosition);
-		//explosionGO->handleEvent(pNewEvent);
-		auto pExplosionTransform = static_cast<Transform*>(explosionGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-		auto pExplosionPhysics = static_cast<PhysicsBody*>(explosionGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
-		if (pExplosionPhysics != nullptr && pExplosionTransform != nullptr)
+		if (mDeathExplosionIntensity > 0.0f)
 		{
-			pExplosionTransform->setPosition(this->mpPhysicsBody->mPosition);
-			pExplosionPhysics->mTotalForce = glm::vec2(0.0f);
-			pExplosionPhysics->mVelocity = this->mpPhysicsBody->mVelocity;
-			pExplosionPhysics->mCollisionType = collisionType::NOCLIP;
+			// Create the explosion GameObject.
+			std::string explosionName = mpOwner->mName + "_Explosion";
+			std::string explosionPath = GlobalManager::getResourceManager()->pathExplosions + "Explosion_Ship.json";
+			GameObject* explosionGO = GlobalManager::getGameObjectFactory()->createDynamicGameObject(explosionPath, explosionName);
+		
+			if (explosionGO == nullptr)
+				return;
+
+			// Send an event to update the trasnform position.
+			//SetTransformPositionEvent* pNewEvent = new SetTransformPositionEvent(this->mpPhysicsBody->mPosition);
+			//explosionGO->handleEvent(pNewEvent);
+			auto pExplosionTransform = static_cast<Transform*>(explosionGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+			auto pExplosionPhysics = static_cast<PhysicsBody*>(explosionGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+			auto pExplosionComp = static_cast<Explosion*>(explosionGO->GetComponent(ComponentTypes::TYPE_EXPLOSION));
+			if (pExplosionPhysics != nullptr && pExplosionTransform != nullptr && pExplosionComp != nullptr)
+			{
+				pExplosionTransform->setPosition(this->mpPhysicsBody->mPosition);
+			
+				pExplosionPhysics->mTotalForce = glm::vec2(0.0f);
+				pExplosionPhysics->mVelocity = this->mpPhysicsBody->mVelocity;
+				pExplosionPhysics->mCollisionType = collisionType::NOCLIP;
+
+				pExplosionComp->mIntensity = this->mDeathExplosionIntensity;
+			}
 		}
 
 		mpOwner->mIsMarkedForDelete = true;
@@ -270,17 +279,6 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 			std::cout << "Warning: ShipData 'Fuel Efficiency' parameter was missing or improperly formatted. Default used." << std::endl;
 
 
-	if (inputObj.HasMember("Coil Bullets") && inputObj["Coil Bullets"].IsNumber())
-	{
-		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
-
-		this->mCoilBullets = inputObj["Coil Bullets"].GetInt(); // Integer, not float.
-	}
-	else
-		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
-			std::cout << "Warning: ShipData 'Coil Bullets' parameter was missing or improperly formatted. Default used." << std::endl;
-
-
 	if (inputObj.HasMember("Missiles") && inputObj["Missiles"].IsNumber())
 	{
 		this->mMissiles = inputObj["Missiles"].GetInt(); // Integer, not float.
@@ -333,5 +331,17 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	else
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
 			std::cout << "Warning: ShipData 'Throttle Deadzone' parameter was missing or improperly formatted. Default used." << std::endl;
+
+
+
+	if (inputObj.HasMember("Death Explosion Intensity") && inputObj["Death Explosion Intensity"].IsNumber())
+	{
+		this->mDeathExplosionIntensity = inputObj["Death Explosion Intensity"].GetFloat();
+	}
+	else
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: ShipData 'Death Explosion Intensity' parameter was missing or improperly formatted. Default used." << std::endl;
+
+
 
 }
