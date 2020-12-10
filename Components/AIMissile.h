@@ -21,7 +21,9 @@
 #include "Component.h"
 #include "ComponentTypes.h"
 #include "../Managers/GlobalManager.h"
+
 #include "ShipData.h"
+#include "PhysicsBody.h"
 
 class AIMissile : public Component
 {
@@ -43,12 +45,15 @@ public:
 	std::string mTargetName; // Target. If missile loses its target, it will die.
 	float mDetonateDistance; // Missiles will pretty much never hit directly, so they explode a set distance from their target to wash the target with the explosion.
 	float mWarheadIntensity; // Intensity of this missile's warhead.
+	float mOrthoVelocityCorrection;
 
 private:
 	// No private methods.
 private:
 	float mActivateTimer; // Waits a given amount of time before activating.
+	float mInactiveLifespan;
 	ShipData* mpShipData;
+	PhysicsBody* mpPhysicsBody;
 
 };
 

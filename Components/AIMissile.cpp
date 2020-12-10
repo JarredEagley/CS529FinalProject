@@ -18,9 +18,12 @@
 - End Header --------------------------------------------------------*/
 
 #include "AIMissile.h"
+#include "glm/gtx/projection.hpp"
 
 AIMissile::AIMissile() : Component(ComponentTypes::TYPE_UNDEFINED),
-mActivateTimer(1000.0f), mTargetName(""), mWarheadIntensity(1000.0f), mDetonateDistance(100.0f)
+mActivateTimer(1000.0f), mTargetName(""), mWarheadIntensity(1000.0f), mDetonateDistance(100.0f),
+mInactiveLifespan(100000.0f),
+mOrthoVelocityCorrection(2.0f)
 {
 }
 
@@ -35,17 +38,89 @@ void AIMissile::Initialize()
 
 void AIMissile::Update()
 {
-	if (mpShipData == nullptr)
+	if (mpShipData == nullptr || mpPhysicsBody == nullptr)
 	{
 		mpShipData = static_cast<ShipData*>(mpOwner->GetComponent(ComponentTypes::TYPE_SHIPDATA));
+		mpPhysicsBody = static_cast< PhysicsBody*>(mpOwner->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
 		return;
 	}
 
 	if (mActivateTimer < 0.0f)
 	{
-		// Do seeking logic.
+		// --- Do seeking logic. --- //
+
+		// Try to find our target.
+		GameObject* pTargetGO = GlobalManager::getGameObjectManager()->getGameObject(this->mTargetName);
+		if (pTargetGO == nullptr)
+		{
+			// Tick down the amount of time its allowed to stay idle and alive.
+			mInactiveLifespan -= GlobalManager::getPhysicsManager()->getGameTime();
+			return;
+		}
+		PhysicsBody* pTargetPhysics = static_cast<PhysicsBody*>(pTargetGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+		if (pTargetPhysics == nullptr)
+		{
+			// Tick down the amount of time its allowed to stay idle and alive.
+			mInactiveLifespan -= GlobalManager::getPhysicsManager()->getGameTime();
+			return;
+		}
+
+		// Past here, we have our target. Check fuel level.
+		if (mpShipData->mFuel <= 1.0f)
+		{
+			// Tick down the amount of time its allowed to stay idle and alive.
+			mInactiveLifespan -= GlobalManager::getPhysicsManager()->getGameTime();
+			// Don't return, we're allowed to drift without fuel toward the enemy.
+		}
+
+		// Homing behavior.
+		
+		//mForwardDir = glm::vec2(sin(glm::radians(-mAngle)), cos(glm::radians(mAngle)));
+		//mRightDir = glm::vec2(cos(glm::radians(mAngle)), sin(glm::radians(mAngle)));
+		
+		glm::vec2 velocityDifference = pTargetPhysics->mVelocity - mpPhysicsBody->mVelocity;
+		
+		glm::vec2 alignmentVec = mpPhysicsBody->mForwardDir;
+		glm::vec2 normalVec = mpPhysicsBody->mRightDir;
+
+		glm::vec2 targetRelativePosition = pTargetPhysics->mPosition - mpPhysicsBody->mPosition;
+		glm::vec2 targetRelativePositionNormal = glm::vec2(targetRelativePosition.y, -targetRelativePosition.x);
+
+		// The most important part!
+		glm::vec2 orthoVelocity = glm::proj(velocityDifference, targetRelativePositionNormal);
+
+		orthoVelocity *= mOrthoVelocityCorrection;
+
+		// Finally, the guidance vector.
+		glm::vec2 guidanceVector = targetRelativePosition + orthoVelocity;
+
+		guidanceVector *= 5.0f; // Should probably make this data driven.
+
+		// Figure out our desired throttle.
+		float alignmentAmount = glm::dot(guidanceVector, normalVec);
+		float desiredThrottle;
+		if (alignmentAmount >= 0)
+			desiredThrottle = 30.0f / ((alignmentAmount / 10.0f) + 1.0f);
+		else
+			desiredThrottle = 30.0f / ((-alignmentAmount / 10.0f) + 1.0f);
+
+		// Dot product to get target angle, point at target.
+		float targetAngle = glm::dot(normalVec, guidanceVector);
+		if (targetAngle > 0)
+		{
+			// Might need to give these a bit of PID. hopefully not.
+			mpShipData->applySpin(1.0f);
+		}
+		else
+		{
+			mpShipData->applySpin(-1.0f);
+		}
+
+		mpShipData->setThrottle(desiredThrottle);
 
 
+
+		// TO-DO: Send target a missile lockon event to let them know to shoot at or evade the missile.
 
 	}
 	else
@@ -77,4 +152,24 @@ void AIMissile::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	else
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
 			std::cout << "Warning: Missile component did not find a warhead intensity parameter. Default used." << std::endl;
+
+
+	if (inputObj.HasMember("Inactive Lifespan") && inputObj["Inactive Lifespan"].IsNumber())
+	{
+		this->mDetonateDistance = inputObj["Inactive Lifespan"].GetFloat();
+	}
+	else
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: Missile component did not find a Inactive Lifespan parameter. Default used." << std::endl;
+
+
+	if (inputObj.HasMember("Orthogonal Velocity Correction") && inputObj["Orthogonal Velocity Correction"].IsNumber())
+	{
+		this->mDetonateDistance = inputObj["Orthogonal Velocity Correction"].GetFloat();
+	}
+	else
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: Missile component did not find a Orthogonal Velocity Correction parameter. Default used." << std::endl;
+
+
 }

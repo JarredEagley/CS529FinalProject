@@ -23,6 +23,7 @@
 
 #include "Components/Transform.h"
 #include "Components/ControllerShip.h"
+#include "Components/AIMissile.h"
 
 #include "Components/GLRect.h"
 #include "Components/GLText.h"
@@ -41,6 +42,7 @@
 #include "Components/Explosion.h"
 #include "Components/NPCHealthMeter.h"
 #include "Components/MenuItem.h"
+
 
 GameObject::GameObject() : mName(""),
 mpParentGO(nullptr), mParentGOName(""),
@@ -168,9 +170,14 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_TRANSFORM):
 		pNewComponent = new Transform();
 		break;
+
 	case (ComponentTypes::TYPE_CONTROLLERSHIP):
 		pNewComponent = new ControllerShip();
 		break;
+	case (ComponentTypes::TYPE_AI_MISSILE):
+		pNewComponent = new AIMissile();
+		break;
+
 	case (ComponentTypes::TYPE_GLRECT):
 		pNewComponent = new GLRect();
 		break;
