@@ -3,10 +3,11 @@
     {
         "TYPE_TRANSFORM":
         {
+            "Scale": [2,2]
         },
         "TYPE_GLRECT":
         {
-            "Texture": "Menu\\MissionStart.png",
+            "Texture": "MissionStart.png",
             "Color": [1.0, 1.0, 1.0, 0.9]
         },
         "TYPE_MENUITEM":

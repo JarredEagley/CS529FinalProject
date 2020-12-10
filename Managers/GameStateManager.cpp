@@ -87,6 +87,14 @@ void GameStateManager::handleMenuItemCommand(std::string command)
 		SDL_PushEvent(pQuitEvent);
 	}
 
+	if (command == "BEGIN_LEVEL")
+	{
+		mIsGamePaused = false;
+		auto pGO = GlobalManager::getGameObjectManager()->getGameObject("ClickToBegin");
+		// Would be better to mark it as a menu item and call destroy pause menu, but this is okay for now.
+		if (pGO != nullptr)
+			pGO->mIsMarkedForDelete = true;
+	}
 
 }
 

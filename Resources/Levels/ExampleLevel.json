@@ -49,11 +49,7 @@
             "Archetype": "Mars.json"
         },
 
-        {
-            "Name": "MainCamera",
-            "Archetype": "Camera.json",
-            "Parent": "PLAYER"
-        },
+
 
         {
             "Name": "SecondShip_Indicator_Forward",
@@ -68,6 +64,7 @@
     ],
     "Level Archetypes":
     [
+        "LevelBasics.json",
         "PlayerHUD.json",
         "PlayerShip1.json"
     ]

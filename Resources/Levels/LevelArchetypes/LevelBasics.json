@@ -1,0 +1,19 @@
+{
+    "Description": "The basic things in every non-menu level; so the 'click to begin' and the background grid and camera. Those sorts of things.",
+    "GameObjects":
+    [
+        {
+            "Name": "MainCamera",
+            "Archetype": "Camera.json",
+            "Parent": "PLAYER"
+        },
+        {
+            "Name": "BackgroundGrid",
+            "Archetype":"BackgroundGrid.json"
+        },
+        {
+            "Name": "ClickToBegin",
+            "Archetype": "HUD\\HUD_ClickToBegin.json"
+        }
+    ]
+}

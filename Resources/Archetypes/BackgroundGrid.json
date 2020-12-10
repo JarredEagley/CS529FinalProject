@@ -11,5 +11,6 @@
         {
             "Grid Intensity": 0.1
         }
-    }
+    },
+    "Render Pass": "BACKGROUND"
 }

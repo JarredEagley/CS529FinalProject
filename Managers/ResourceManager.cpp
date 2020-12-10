@@ -116,6 +116,8 @@ GLuint ResourceManager::loadTexture(const char* texName, TexType _texType)
 
 void ResourceManager::loadLevel(std::string fileName)
 {
+	GlobalManager::getGameStateManager()->mIsGamePaused = true;
+
 	// Clear any existing game objects.
 	GlobalManager::getGameObjectManager()->deleteAllGameObjects();
 
