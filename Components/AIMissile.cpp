@@ -19,6 +19,7 @@
 
 #include "AIMissile.h"
 #include "glm/gtx/projection.hpp"
+#include "../Generators.h"
 
 AIMissile::AIMissile() : Component(ComponentTypes::TYPE_UNDEFINED),
 mActivateTimer(1000.0f), mTargetName(""), mWarheadIntensity(1000.0f), mDetonateDistance(100.0f),
@@ -87,9 +88,8 @@ void AIMissile::Update()
 		if (targetDistance < mDetonateDistance)
 		{
 			// Go kaboom!
-
-
-
+			generateExplosion(mpPhysicsBody, mWarheadIntensity, "Explosion_NoDebris.png");
+			this->mpOwner->mIsMarkedForDelete = true;
 		}
 
 		// Homing behavior.
