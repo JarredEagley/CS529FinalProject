@@ -21,7 +21,7 @@
 #include "glm/gtx/projection.hpp"
 #include "../Generators.h"
 
-AIMissile::AIMissile() : Component(ComponentTypes::TYPE_UNDEFINED),
+AIMissile::AIMissile() : Component(ComponentTypes::TYPE_AI_MISSILE),
 mActivateTimer(1000.0f), mTargetName(""), mWarheadIntensity(1000.0f), mDetonateDistance(100.0f),
 mInactiveLifespan(100000.0f),
 mOrthoVelocityCorrection(2.0f)
