@@ -3,7 +3,6 @@
     {
         "TYPE_TRANSFORM":
         {
-            "Translation": [0.0, 0.6],
             "Scale": [0.5,0.125]
         },
         "TYPE_GLRECT":

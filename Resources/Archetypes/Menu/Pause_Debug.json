@@ -7,8 +7,12 @@
         },
         "TYPE_GLRECT":
         {
-            "Texture": "Menu\\GamePaused.png",
+            "Texture": "Menu\\Debug.png",
             "Color": [0.0, 0.6, 0.1, 0.9]
+        },
+        "TYPE_MENUITEM":
+        {
+            "Command": "MENU_DEBUG"
         }
     },
     "Render Pass": "HUD"

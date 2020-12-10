@@ -64,10 +64,6 @@
         {
             "Name": "PLAYER_CURSOR",
             "Archetype": "FollowCursor.json"
-        },
-        {
-            "Name":"TEST TEXT",
-            "Archetype": "TestText.json"
         }
     ],
     "Level Archetypes":

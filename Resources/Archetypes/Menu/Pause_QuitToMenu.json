@@ -7,8 +7,12 @@
         },
         "TYPE_GLRECT":
         {
-            "Texture": "Menu\\GamePaused.png",
+            "Texture": "Menu\\QuitToMenu.png",
             "Color": [0.0, 0.6, 0.1, 0.9]
+        },
+        "TYPE_MENUITEM":
+        {
+            "Command": "QUIT_TO_MAIN_MENU"
         }
     },
     "Render Pass": "HUD"

@@ -56,7 +56,8 @@ public:
 
 	void loadLevel(std::string fileName);
 	void loadLevelArchetype(std::string fileName);
-	void loadGameObjectArray(rapidjson::Value::ConstValueIterator iteratorBegin, rapidjson::Value::ConstValueIterator iteratorEnd);
+	void loadGameObjectArray(rapidjson::Value::ConstValueIterator iteratorBegin, rapidjson::Value::ConstValueIterator iteratorEnd, bool menuItem = false);
+	void loadGameObjectArray(std::string filePath, bool menuItem = false);
 	
 	// Only ever call this once, else you're creating unnecessary textures.
 	void initializeCharacterMap();

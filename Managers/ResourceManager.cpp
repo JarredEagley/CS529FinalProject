@@ -227,7 +227,7 @@ void ResourceManager::loadLevelArchetype(std::string fileName)
 	*/
 }
 
-void ResourceManager::loadGameObjectArray(rapidjson::Value::ConstValueIterator iteratorBegin, rapidjson::Value::ConstValueIterator iteratorEnd)
+void ResourceManager::loadGameObjectArray(rapidjson::Value::ConstValueIterator iteratorBegin, rapidjson::Value::ConstValueIterator iteratorEnd, bool menuItem)
 {
 	// Loop through the GameObjects array.
 	for (iteratorBegin;
@@ -242,9 +242,33 @@ void ResourceManager::loadGameObjectArray(rapidjson::Value::ConstValueIterator i
 		}
 
 		// Load the object.
-		GlobalManager::getGameObjectFactory()->loadObject(iteratorBegin->GetObject());
+		GameObject* pLoadedGO = GlobalManager::getGameObjectFactory()->loadObject(iteratorBegin->GetObject());
+
+		if (menuItem)
+			GlobalManager::getGameStateManager()->mMenuItemNames.push_back(pLoadedGO->mName);
 	}
 }
+
+void ResourceManager::loadGameObjectArray(std::string filePath, bool MenuItem)
+{
+	// Use serializer to read the json in.
+	Serializer* pSer = GlobalManager::getSerializer();
+	rapidjson::Document doc = pSer->loadJson(filePath.c_str());
+
+	// Nullcheck.
+	if (doc.IsNull())
+	{
+		std::cout << "Error::ResourceManager::LoadLevel: Failed to load game object array in file " << filePath << std::endl;
+		return;
+	}
+
+	auto arr = doc.GetArray();
+
+	loadGameObjectArray(
+	arr.begin(), arr.end(), MenuItem
+	);
+}
+
 
 
 void ResourceManager::initializeCharacterMap()

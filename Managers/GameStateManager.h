@@ -74,6 +74,7 @@ public:
 	bool DEBUG_VerboseComponents; // Enable or disable non-vital warnings.
 	bool DEBUG_VerboseGOF; // Enable or disable non-vital logging from the game object factory.
 
+	static std::vector<std::string> mMenuItemNames;
 
 private:
 	GameStateManager();
@@ -81,7 +82,6 @@ private:
 private:
 	static GameStateManager* instance; // The signleton instance.
 
-	static std::vector<std::string> mMenuItemNames;
 
 };
 

@@ -83,12 +83,14 @@ void GameStateManager::handleMenuItemCommand(std::string command)
 
 }
 
-
 void GameStateManager::displayPauseMenu()
 {
 	GameObjectFactory* pGOF = GlobalManager::getGameObjectFactory();
 	ResourceManager* pRM = GlobalManager::getResourceManager();
 
+	GlobalManager::getResourceManager()->loadGameObjectArray("Resources\\Menus\\MENU_Pause.json", true);
+
+	/*
 	{
 		std::string pathName = pRM->pathArchetypes + "Menu\\Pause_Title.json";
 		GameObject* pNewGO = pGOF->createDynamicGameObject(pathName, "PAUSEMENU_Title");
@@ -100,6 +102,7 @@ void GameStateManager::displayPauseMenu()
 		GameObject* pNewGO = pGOF->createDynamicGameObject(pathName, "PAUSEMENU_Restart");
 		mMenuItemNames.push_back(pNewGO->mName);
 	}
+	*/
 
 
 

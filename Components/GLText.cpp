@@ -69,8 +69,8 @@ void GLText::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 	// Borrow the glrect vao.
 	unsigned int VAO = GlobalManager::getGraphicsManager()->getVAORect();
 
-	float x = (mX*2.0f)-1.0f;
-	float y = (mY*2.0f)-1.0f;
+	float x = (mX+15.0f)*0.5f;
+	float y = (mY+15.0f)*0.5f;
 
 	// TEMP
 	//glDisable(GL_BLEND);
