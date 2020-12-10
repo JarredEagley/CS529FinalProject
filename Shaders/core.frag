@@ -50,7 +50,8 @@ void main()
 			if (length(uv) < 1)
 				FragColor = vec4(1, 0, 0, 0.2);
 			else
-				FragColor = vec4(0,0,1,0.05);
+				FragColor = vec4(0);
+				//FragColor = vec4(0,0,1,0.05);
 			break;
 
 		default:

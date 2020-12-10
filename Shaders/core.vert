@@ -32,11 +32,13 @@ uniform vec2 uvOffset;
 // GLRect and line
 uniform vec4 color;
 
+/*
 uniform int drawType;
 const int DRAW_TYPE_RECT = 0;
 const int DRAW_TYPE_LINE = 1;
 const int DRAW_TYPE_PHYS_AABB = 2;
 const int DRAW_TYPE_PHYS_CIRCLE = 3;
+*/
 
 void main()
 {
