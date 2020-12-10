@@ -2,10 +2,7 @@
     "Name": "ExampleLevel",
     "GameObjects":
     [
-        {
-            "Name": "BackgroundGrid",
-            "Archetype":"BackgroundGrid.json"
-        },
+
         {
             "Name": "SecondShip",
             "Archetype": "Enemy.json",
@@ -48,8 +45,6 @@
             "Name":"Mars",
             "Archetype": "Mars.json"
         },
-
-
 
         {
             "Name": "SecondShip_Indicator_Forward",

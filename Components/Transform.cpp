@@ -59,7 +59,8 @@ void Transform::Update()
 		return;
 	}
 
-	buildTransformationMatrix();
+	if (mpOwner->getParent() == nullptr)
+		buildTransformationMatrix();
 	
 	// Send transform update to children.
 	if (this->mpOwner->hasChildren())

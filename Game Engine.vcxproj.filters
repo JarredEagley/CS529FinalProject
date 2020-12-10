@@ -97,6 +97,9 @@
     <ClCompile Include="Components\GLText.cpp">
       <Filter>Components\Drawing</Filter>
     </ClCompile>
+    <ClCompile Include="Components\AIMissile.cpp">
+      <Filter>Components\AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -200,6 +203,9 @@
     </ClInclude>
     <ClInclude Include="Components\GLText.h">
       <Filter>Components\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\AIMissile.h">
+      <Filter>Components\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

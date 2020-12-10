@@ -44,10 +44,10 @@ public:
 	void handleEvent(Event* pEvent);
 
 	virtual void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
+	void buildTransform();
 public:
 	glm::vec3 offset = glm::vec3(0.0f);
 private:
-	void buildTransform();
 private:
 	float mCameraAngle = 0.15f;
 	Transform* mpTransform = nullptr;

@@ -119,6 +119,17 @@ void GraphicsManager::drawAllGameObjects()
 // would be a good idea. This should be fine for my game, though.
 void GraphicsManager::Draw()
 {
+	// Build the camera transform.
+	Camera* pCamera = nullptr;
+	if (pCurrentCameraGO == nullptr)
+		std::cout << "Error: No camera GameObject currently bound to the GraphicsManager." << std::endl;
+	else
+	{
+		pCamera = static_cast<Camera*>(pCurrentCameraGO->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
+		pCamera->buildTransform();
+	}
+
+
 	//DrawFinal();
 	for (int p = 0; p < (float)RenderPassType::NUM; ++p)
 	{
@@ -213,7 +224,6 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 		std::cout << "Error: No camera GameObject currently bound to the GraphicsManager." << std::endl;
 	else
 		pCamera = static_cast<Camera*>(pCurrentCameraGO->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
-
 
 	// --- Draw --- //
 
