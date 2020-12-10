@@ -8,7 +8,7 @@
 	Purpose:			The header file for my engine's GameObject Factory.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
-	Project:			JarredEagley_Milestone2
+	Project:			JarredEagley_FinalProject
 	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
 	Creation date:		10/23/2020
 
@@ -45,6 +45,9 @@ public:
 	// Will generate a new game object using the designated filename.
 	GameObject* generateProjectile(std::string FileName);
 	GameObject* generateProjectile(std::string FileName, std::string indicatorName);
+
+	// Will generate a new explosion game object.
+	//GameObject* generateExplosion(PhysicsBody* pExplodingBody, float intensity, std::string fileName);
 
 public:
 	// No public variables.

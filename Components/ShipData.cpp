@@ -18,6 +18,8 @@
 #include <iostream>
 #include "../Managers/GlobalManager.h"
 
+#include "../Generators.h"
+
 #include "Explosion.h"
 
 ShipData::ShipData() : Component(ComponentTypes::TYPE_SHIPDATA),
@@ -99,29 +101,7 @@ void ShipData::takeDamage(float dmg)
 		if (mDeathExplosionIntensity > 0.0f)
 		{
 			// Create the explosion GameObject.
-			std::string explosionName = mpOwner->mName + "_Explosion";
-			std::string explosionPath = GlobalManager::getResourceManager()->pathExplosions + "Explosion_Ship.json";
-			GameObject* explosionGO = GlobalManager::getGameObjectFactory()->createDynamicGameObject(explosionPath, explosionName);
-		
-			if (explosionGO == nullptr)
-				return;
-
-			// Send an event to update the trasnform position.
-			//SetTransformPositionEvent* pNewEvent = new SetTransformPositionEvent(this->mpPhysicsBody->mPosition);
-			//explosionGO->handleEvent(pNewEvent);
-			auto pExplosionTransform = static_cast<Transform*>(explosionGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-			auto pExplosionPhysics = static_cast<PhysicsBody*>(explosionGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
-			auto pExplosionComp = static_cast<Explosion*>(explosionGO->GetComponent(ComponentTypes::TYPE_EXPLOSION));
-			if (pExplosionPhysics != nullptr && pExplosionTransform != nullptr && pExplosionComp != nullptr)
-			{
-				pExplosionTransform->setPosition(this->mpPhysicsBody->mPosition);
-			
-				pExplosionPhysics->mTotalForce = glm::vec2(0.0f);
-				pExplosionPhysics->mVelocity = this->mpPhysicsBody->mVelocity;
-				pExplosionPhysics->mCollisionType = collisionType::NOCLIP;
-
-				pExplosionComp->mIntensity = this->mDeathExplosionIntensity;
-			}
+			generateExplosion(mpPhysicsBody, mDeathExplosionIntensity, "Explosion_Ship.json");
 		}
 
 		mpOwner->mIsMarkedForDelete = true;

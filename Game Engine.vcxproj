@@ -146,6 +146,7 @@
     <ClInclude Include="Components\Turret.h" />
     <ClInclude Include="FrameBufferObject.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Generators.h" />
     <ClInclude Include="Managers\CollisionManager.h" />
     <ClInclude Include="Managers\EventManager.h" />
     <ClInclude Include="Managers\Events.h" />

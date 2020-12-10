@@ -45,6 +45,12 @@ void AIMissile::Update()
 		return;
 	}
 
+	if (mInactiveLifespan < 0.0f)
+	{
+		// Kill this missile.
+		// TO-DO
+	}
+
 	if (mActivateTimer < 0.0f)
 	{
 		// --- Do seeking logic. --- //
@@ -73,6 +79,19 @@ void AIMissile::Update()
 			// Don't return, we're allowed to drift without fuel toward the enemy.
 		}
 
+		// Used in both homing and detonation behavior.
+		glm::vec2 targetRelativePosition = pTargetPhysics->mPosition - mpPhysicsBody->mPosition;
+		float targetDistance = glm::length(targetRelativePosition);
+
+		// Test for detonation.
+		if (targetDistance < mDetonateDistance)
+		{
+			// Go kaboom!
+
+
+
+		}
+
 		// Homing behavior.
 		
 		//mForwardDir = glm::vec2(sin(glm::radians(-mAngle)), cos(glm::radians(mAngle)));
@@ -83,7 +102,6 @@ void AIMissile::Update()
 		glm::vec2 alignmentVec = mpPhysicsBody->mForwardDir;
 		glm::vec2 normalVec = mpPhysicsBody->mRightDir;
 
-		glm::vec2 targetRelativePosition = pTargetPhysics->mPosition - mpPhysicsBody->mPosition;
 		glm::vec2 targetRelativePositionNormal = glm::vec2(targetRelativePosition.y, -targetRelativePosition.x);
 
 		// The most important part!

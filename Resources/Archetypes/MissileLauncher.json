@@ -1,0 +1,19 @@
+{
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+            "Scale": [1.0, 2.0],
+            "Inherit Rotation": true
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "MissileLauncher.png"
+        },
+        "TYPE_MISSILELAUNCHER":
+        {
+            
+        }
+    },
+    "Render Pass": "FOREGROUND"
+}

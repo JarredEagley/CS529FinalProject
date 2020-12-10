@@ -28,6 +28,7 @@
 #include "../Components/ComponentTypes.h"
 #include "../Components/Component.h"
 
+
 GameObjectFactory* GameObjectFactory::instance = nullptr;
 
 void GameObjectFactory::destroySingleton() 
