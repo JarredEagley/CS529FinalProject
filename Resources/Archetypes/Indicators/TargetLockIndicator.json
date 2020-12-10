@@ -1,0 +1,23 @@
+{
+    "Components":
+    {
+        "TYPE_TRANSFORM": 
+        {
+            "Rotation": -90
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "Target.png",
+            "Color": [0.5, 0.9, 0.1, 0.8]
+        },
+        "TYPE_DIRINDICATOR":
+        {
+            "Scale Factor": 0.1,
+            "Scale Mode": "Linear",
+            "Scale Min": 25,
+            "Scale Max": 900,
+            "Alpha Factor": 10,
+            "Ignore Parent Color": ""
+        }
+    }
+}
