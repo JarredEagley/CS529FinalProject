@@ -21,6 +21,7 @@
 #include <random>
 #include <time.h>
 #include <vector>
+#include <list>
 
 class GameStateManager
 {
@@ -59,12 +60,17 @@ public:
 	std::string currentLevelPath;
 	std::string currentLevelName;
 
+	
 	void handleMenuItemCommand(std::string command);
+
 
 	bool mIsGamePaused = false;
 
+	std::list<std::string> mLivingEnemies;
+
 	// The maximum coordinates before a transform component self destructs its game object.
 	float gameCleanupDistance = 500000.0f;
+
 
 	// Debug flags settable ingame.
 	bool DEBUG_DrawCollision = false;
