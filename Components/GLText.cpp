@@ -23,8 +23,7 @@ GLText::GLText() : Component(ComponentTypes::TYPE_GLTEXT),
 mX(0.0f), mY(0.0f), mScale(0.0f)
 {
 	// Generate and bind our buffers.
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
+	/*
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	// No data to start.
@@ -33,6 +32,7 @@ mX(0.0f), mY(0.0f), mScale(0.0f)
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+	*/
 }
 
 GLText::~GLText()
@@ -52,36 +52,57 @@ void GLText::Update()
 
 // Used for components which draw to openGL.
 void GLText::setUniformData(ShaderProgram* pProgram)
-{}
+{
+	glm::vec4 mColor = glm::vec4(1, 1, 1, 1);
+	unsigned int loc;
+	loc = glGetUniformLocation(pProgram->ProgramID, "color");
+	glUniform4fv(loc, 1, &mColor.x);
+	glm::vec2 uvOffset = glm::vec2(0.0f);
+	loc = glGetUniformLocation(pProgram->ProgramID, "uvScale");
+	glUniform1f(loc, 1.0f);
+	loc = glGetUniformLocation(pProgram->ProgramID, "uvOffset");
+	glUniform2fv(loc, 1, &uvOffset.x);
+}
 
 void GLText::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj)
 {
-	float x = mX;
-	float y = mY;
+	// Borrow the glrect vao.
+	unsigned int VAO = GlobalManager::getGraphicsManager()->getVAORect();
 
-	glDisable(GL_BLEND);
+	float x = (mX*2.0f)-1.0f;
+	float y = (mY*2.0f)-1.0f;
+
+	// TEMP
+	//glDisable(GL_BLEND);
+
+	glBindVertexArray(VAO);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindVertexArray(VAO);
 
 	//glm::mat4 projTest = glm::ortho(0.0f, 1000.0f, 0.0f, 900.0f);
 
-	glm::mat4 testProj = glm::ortho(0.0f, 1200.0f, 0.0f, 900.0f);
+	//glm::mat4 testProj = glm::ortho(0.0f, 1200.0f, -100000.0f, 900.0f);
 
 	unsigned int loc;
+	loc = glGetUniformLocation(pProgram->ProgramID, "drawType");
+	glUniform1i(loc, 4); // 4 = text.
+
 	loc = glGetUniformLocation(pProgram->ProgramID, "viewProj");
-	glUniformMatrix2fv(loc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
+	glUniformMatrix2fv(loc, 1, GL_FALSE, glm::value_ptr(viewProj));
 	
 	loc = glGetUniformLocation(pProgram->ProgramID, "viewTrans");
 	glUniformMatrix2fv(loc, 1, GL_FALSE, glm::value_ptr(viewTrans));
 	loc = glGetUniformLocation(pProgram->ProgramID, "modelTrans");
 	glUniformMatrix2fv(loc, 1, GL_FALSE, glm::value_ptr(modelTrans));
 	
-
+	/*
 	loc = glGetUniformLocation(pProgram->ProgramID, "textColor");
 	glUniform3f(loc, 1.0f, 1.0f, 1.0f);
+	*/
 
-	std::cout << "'" << mTextContent << "'" << std::endl;
+	glEnable(GL_BLEND);
+
+	//std::cout << "'" << mTextContent << "'" << std::endl;
 
 	// Iterate through the string.
 	for (std::string::const_iterator c = mTextContent.begin(); c != mTextContent.end(); ++c)
@@ -94,9 +115,11 @@ void GLText::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 		float w = ch.mSize.x * mScale;
 		float h = ch.mSize.y * mScale;
 
+		/*
 		std::cout << "x is " << xPos << " to " <<xPos+w << std::endl;
 		std::cout << "y is " << yPos << " to " <<yPos+h << std::endl;
 		std::cout << "---\n";
+		*
 
 		// Update the VBO for each character...
 		/*
@@ -110,38 +133,48 @@ void GLText::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 			{ xPos + w, yPos + h,   1.0f, 0.0f }
 		};
 		*/
-		
-		float vertices[6][4] = {
-			{ -1.0,     1.0,   0.0f, 0.0f },
-			{ -1.0,     -1.0,       0.0f, 1.0f },
-			{ 1.0,	   -1.0,       1.0f, 1.0f },
 
-			{ 0.0,     1.0,   0.0f, 0.0f },
-			{ 1.0, 0.0,       1.0f, 1.0f },
-			{ 1.0, 1.0,   1.0f, 0.0f }
+		glm::vec4 newVertPos[4] = {
+			glm::vec4(-xPos, yPos, 0.0f, 1.0f),	// Left Top
+			glm::vec4(-xPos, yPos+h, 0.0f, 1.0f),		// Left Bot
+			glm::vec4(-xPos-w, yPos+h, 0.0f, 1.0f),		// Right bot
+			glm::vec4(-xPos-w, yPos, 0.0f, 1.0f),		// Right top
 		};
-
-
 
 		// Render glyph texture over this quad.
 		glBindTexture(GL_TEXTURE_2D, ch.mTexId);
+
 		// Update content of VBO Memory.
-		glBindBuffer(GL_ARRAY_BUFFER, VBO); 
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); 
+
+		GLuint vbo = GlobalManager::getGraphicsManager()->vboIDRect[0];
+		glBindBuffer(GL_ARRAY_BUFFER, vbo );
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(newVertPos), newVertPos);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		// Draw call.
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		// Advance cursor to next glyph.
 		x += (ch.mAdvance >> 6) * mScale;
 	}
 
+	
+	glm::vec4 oldVertPos[4] = {
+		glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f),		// Left Top
+		glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f),	// Left Bot
+		glm::vec4(0.5f, -0.5f, 0.0f, 1.0f),		// Right bot
+		glm::vec4(0.5f, 0.5f, 0.0f, 1.0f),		// Right top
+	};
+	GLuint vbo = GlobalManager::getGraphicsManager()->vboIDRect[0];
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(oldVertPos), oldVertPos);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
 	// Unbind.
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	glEnable(GL_BLEND);
+	//glEnable(GL_BLEND);
 }
 
 void GLText::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)

@@ -46,7 +46,6 @@ public:
 private:
 	// No private methods.
 private:
-	unsigned int VAO, VBO;
 	float mX, mY, mScale;
 
 };

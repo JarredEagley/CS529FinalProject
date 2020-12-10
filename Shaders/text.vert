@@ -18,6 +18,9 @@
 
 #version 330 core
 layout (location = 0) in vec4 vertex;
+layout (location = 1) in vec2 texCoord;
+
+out vec4 vertColor;
 out vec2 texCoords;
 
 //uniform mat4 modelTrans, viewTrans,
@@ -26,6 +29,9 @@ uniform mat4 viewProj;
 void main()
 {
 	//gl_Position = viewProj * viewTrans * modelTrans * vec4(vertex.xy, 0.0, 1.0);
-	gl_Position = viewProj * vec4(vertex.xy, 0.0, 1.0);
-	texCoords = vertex.zw;
+	
+	gl_Position = viewProj * vertex;
+	texCoords = texCoord;
+	//gl_Position = viewProj * vec4(vertex.xy, 0.0, 1.0);
+	//texCoords = vertex.zw;
 }
