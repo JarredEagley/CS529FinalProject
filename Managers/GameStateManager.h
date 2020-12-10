@@ -66,10 +66,14 @@ public:
 	// The maximum coordinates before a transform component self destructs its game object.
 	float gameCleanupDistance = 500000.0f;
 
-	// Debug flags.
+	// Debug flags settable ingame.
+	bool DEBUG_DrawCollision = false;
+
+	// Debug flags set in config.
 	bool DEBUG_VerboseGameObjects;
 	bool DEBUG_VerboseComponents; // Enable or disable non-vital warnings.
 	bool DEBUG_VerboseGOF; // Enable or disable non-vital logging from the game object factory.
+
 
 private:
 	GameStateManager();

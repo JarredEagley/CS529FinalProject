@@ -289,6 +289,9 @@ void PhysicsBody::setUniformData(ShaderProgram* pProgram)
 
 void PhysicsBody::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj)
 {
+	if (!GlobalManager::getGameStateManager()->DEBUG_DrawCollision)
+		return;
+
 	// Bind
 	unsigned int vaoID = GlobalManager::getGraphicsManager()->getVAORect();
 	glBindVertexArray(vaoID);
