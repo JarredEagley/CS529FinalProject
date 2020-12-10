@@ -20,6 +20,7 @@
 #pragma once
 #include "Component.h"
 #include "ComponentTypes.h"
+#include "../Managers/GlobalManager.h"
 
 class AIMissile : public Component
 {
@@ -38,10 +39,14 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
-	// No public variables.
+	std::string mTargetName; // Target. If missile loses its target, it will die.
+	float mDetonateDistance; // Missiles will pretty much never hit directly, so they explode a set distance from their target to wash the target with the explosion.
+	float mWarheadIntensity; // Intensity of this missile's warhead.
+
 private:
 	// No private methods.
 private:
-	// No private variables.
+	float mActivateTimer; // Waits a given amount of time before activating.
+
 };
 
