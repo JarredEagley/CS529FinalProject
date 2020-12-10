@@ -68,11 +68,6 @@ bool Init()
 		SetConsoleTitle(L"Debug Console");
 	}
 
-	// Init my stuff.
-	// This init function doesnt actually work the way i want it to...
-	GlobalManager::initSingletons();
-	GlobalManager::getGameStateManager()->readGameConfig();
-
 	// Initialize SDL's Video subsystem
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
@@ -80,6 +75,10 @@ bool Init()
 		return false;
 	}
 	
+	// Init my stuff.
+	GlobalManager::initSingletons();
+	GlobalManager::getGameStateManager()->readGameConfig();
+
 	// Create our window.
 	pWindow = SDL_CreateWindow(programName.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
 		GlobalManager::getGraphicsManager()->mWindowWidth, GlobalManager::getGraphicsManager()->mWindowHeight, SDL_WINDOW_OPENGL);
@@ -113,6 +112,10 @@ bool Init()
 	// Alpha blend.
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // TO-DO: Where does this actually belong? init?
 	glEnable(GL_BLEND);
+
+	// Initialize freetype stuff.
+	GlobalManager::getResourceManager()->initializeCharacterMap();
+
 
 	return true;
 }

@@ -95,6 +95,7 @@ public:
 	// HUD objects will be in the hud pass, which is rendered onto an FBO.
 	static std::unordered_map<RenderPassType, std::list<GameObject*>> mRenderPasses;
 
+	GLuint vboIDRect[3];
 private:
 	GraphicsManager();
 
@@ -115,7 +116,6 @@ private:
 
 
 	// GLRect stuff-- We essentially have one quad that we stamp across the scene to save memory.
-	GLuint vboIDRect[3];
 	GLuint vaoIDRect; // The OpenGL identifier for the Vertex Array Object for this gameObject.
 	// A 1x1 flat white square with default uv's.
 	glm::vec4 vertPosRect[4] = {

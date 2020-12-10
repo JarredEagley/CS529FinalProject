@@ -30,6 +30,7 @@ const int DRAW_TYPE_RECT = 0;
 const int DRAW_TYPE_LINE = 1;
 const int DRAW_TYPE_PHYS_AABB = 2;
 const int DRAW_TYPE_PHYS_CIRCLE = 3;
+const int DRAW_TYPE_TEXT = 4;
 
 void main()
 {
@@ -38,6 +39,7 @@ void main()
 	{
 		case DRAW_TYPE_RECT:
 			FragColor = texture(ourTexture, vertTexCoord) * vertColor;
+			//FragColor += vec4(1,0,0,0.1);
 			break;
 		case DRAW_TYPE_LINE:
 			break;
@@ -52,6 +54,10 @@ void main()
 			else
 				FragColor = vec4(0);
 				//FragColor = vec4(0,0,1,0.05);
+			break;
+		case DRAW_TYPE_TEXT:
+			vec4 sampled = vec4(1,1,1,texture(ourTexture, vertTexCoord).r);
+			FragColor = vertColor * sampled;
 			break;
 
 		default:

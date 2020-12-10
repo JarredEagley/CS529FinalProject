@@ -57,6 +57,9 @@ public:
 	void loadLevel(std::string fileName);
 	void loadLevelArchetype(std::string fileName);
 	void loadGameObjectArray(rapidjson::Value::ConstValueIterator iteratorBegin, rapidjson::Value::ConstValueIterator iteratorEnd);
+	
+	// Only ever call this once, else you're creating unnecessary textures.
+	void initializeCharacterMap();
 
 public:
 	const std::string pathResources  = ".\\Resources\\"; // The base-folder for storing resources like configs and textures.
@@ -76,8 +79,6 @@ public:
 
 private:
 	ResourceManager();
-
-	void initializeCharacterMap();
 
 private:
 	static ResourceManager* instance;

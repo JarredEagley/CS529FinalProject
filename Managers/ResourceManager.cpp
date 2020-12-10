@@ -40,7 +40,6 @@ void ResourceManager::destroySingleton()
 ResourceManager::ResourceManager() 
 {
 	stbi_set_flip_vertically_on_load(true);
-	initializeCharacterMap();
 }
 
 GLuint ResourceManager::loadTexture(const char* texName)
@@ -264,44 +263,51 @@ void ResourceManager::initializeCharacterMap()
 		std::cout << "Error::FreeType: Failed to load font '" << font << "'." << std::endl;
 		return;
 	}
-
-	FT_Set_Pixel_Sizes(face, 0, 48);
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Not sure if this'll mess up my existing texture loading... 
-	for (unsigned char c = 0; c < 128; ++c)
+	else
 	{
-		// Load the glyph.
-		if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+		FT_Set_Pixel_Sizes(face, 0, 20);
+
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Not sure if this'll mess up my existing texture loading... 
+		for (unsigned char c = 0; c < 128; ++c)
 		{
-			std::cout << "Error::FreeType: Failed to load glyph '" << c << "'." << std::endl;
-			continue;
+			// Load the glyph.
+			if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+			{
+				std::cout << "Error::FreeType: Failed to load glyph '" << c << "'." << std::endl;
+				continue;
+			}
+
+			// Generate texture.
+			unsigned int newTexId = NULL;
+			glGenTextures(1, &newTexId);
+			glBindTexture(GL_TEXTURE_2D, newTexId);
+			glTexImage2D(
+				GL_TEXTURE_2D, 0, GL_RED,
+				face->glyph->bitmap.width,
+				face->glyph->bitmap.rows,
+				0, GL_RED, GL_UNSIGNED_BYTE,
+				face->glyph->bitmap.buffer
+			);
+
+			// Set texture options.
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+			// Store character in the map to use later.
+			Character character = {
+				newTexId,
+				glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+				glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+				static_cast<unsigned int>(face->glyph->advance.x)
+			};
+			mCharacters.insert(std::pair<char, Character>(c, character));
 		}
-
-		// Generate texture.
-		GLuint texId;
-		glGenTextures(1, &texId);
-		glBindTexture(GL_TEXTURE_2D, texId);
-		glTexImage2D(
-			GL_TEXTURE_2D, 0, GL_RED,
-			face->glyph->bitmap.width,
-			face->glyph->bitmap.rows,
-			0, GL_RED, GL_UNSIGNED_BYTE,
-			face->glyph->bitmap.buffer
-		);
-
-		// Set texture options.
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		// Store character in the map to use later.
-		Character character = {
-			texId,
-			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-			face->glyph->advance.x,
-		};
-		mCharacters.insert(std::pair<char, Character>(c, character));
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
+
+	// Destroy freetype.
+	FT_Done_Face(face);
+	FT_Done_FreeType(ft);
 }
