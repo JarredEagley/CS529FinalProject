@@ -34,13 +34,13 @@
 
             "Fuel": 100,
             "Fuel Max": 100,
-            "Fuel Efficiency": 1.2,
+            "Fuel Efficiency": 5,
 
             "Missiles": 10,
 
             "Side Note": "These aren't acceleration; these control the force applied by the engines",
-            "Main Acceleration": 1200.0,
-            "Secondary Acceleration": 750.0,
+            "Main Acceleration": 2000.0,
+            "Secondary Acceleration": 7500.0,
             "Angular Acceleration": 900.0,
 
             "Throttle Sensitivity": 2.5,

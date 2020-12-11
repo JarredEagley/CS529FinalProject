@@ -21,6 +21,7 @@
 #include "Component.h"
 #include "ComponentTypes.h"
 
+#include <string>
 #include "ShipData.h"
 #include "PhysicsBody.h"
 
@@ -41,12 +42,30 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
-	// No public variables.
+	// Navigation
+	float mDesiredAltitude;
+	
+	// Agro range
+	float mShootRange;
+	float mMissileLaunchRange;
+
+	// Missile launching
+	float mMissileLaunchProbability;
+	float mMissileLaunchTimerMax;
+
+	std::string mOrientationBehvaior = ""; // Options are 'FACE_PLAYER' and 'FACE_PROGRADE'. If none specified, then AI will simply have no preferred orientation unless maneuvering.
+
 private:
 	// No private methods.
 private:
 	ShipData* mpShipData;
 	PhysicsBody* mpPhysicsBody;
+	
+	float mMissileLaunchTimer;
+
+	float mManeuveringSpeedThreshold = 10.0f; // Probably not going to make this data driven...
+
+	std::string mTargetName;
 
 };
 

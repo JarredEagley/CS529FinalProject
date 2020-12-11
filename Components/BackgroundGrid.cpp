@@ -57,8 +57,14 @@ void BackgroundGrid::transformEventUpdate(Event* pEvent)
 
 	// A bit unoptimized right now.
 	GameObject* pCamGO = pGM->getCurrentCameraGO();
+	if (pCamGO == nullptr)
+		return;
 	Camera* pCamComp = static_cast<Camera*>(pCamGO->GetComponent(ComponentTypes::TYPE_CAMERA));
+	if (pCamComp == nullptr)
+		return;
 	Transform* pCamTransformComp = static_cast<Transform*>(pCamGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+	if (pCamTransformComp == nullptr)
+		return;
 
 	glm::vec4 newpos = pCamTransformComp->getTransformationMatrix() * glm::vec4(1.0f) + glm::vec4(pCamComp->offset, 1.0f);
 	mpTransform->setPosition(newpos);
@@ -87,8 +93,14 @@ void BackgroundGrid::scrollEventUpdate(Event* pEvent)
 
 	// A bit unoptimized right now.
 	GameObject* pCamGO = pGM->getCurrentCameraGO();
+	if (pCamGO == nullptr)
+		return;
 	Camera* pCamComp = static_cast<Camera*>(pCamGO->GetComponent(ComponentTypes::TYPE_CAMERA));
+	if (pCamComp == nullptr)
+		return;
 	Transform* pCamTransformComp = static_cast<Transform*>(pCamGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+	if (pCamTransformComp == nullptr)
+		return;
 
 	glm::vec4 newpos = pCamTransformComp->getTransformationMatrix() * glm::vec4(1.0f) + glm::vec4(pCamComp->offset, 1.0f);
 	mpTransform->setPosition(newpos);

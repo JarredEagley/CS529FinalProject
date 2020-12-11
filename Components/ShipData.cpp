@@ -101,7 +101,8 @@ void ShipData::takeDamage(float dmg)
 		if (mDeathExplosionIntensity > 0.0f)
 		{
 			// Create the explosion GameObject.
-			generateExplosion(mpPhysicsBody, mDeathExplosionIntensity, "Explosion_Ship.json");
+			Generator *explosionGenerator = new Generator;
+			explosionGenerator->generateExplosion(mpPhysicsBody, mDeathExplosionIntensity, "Explosion_Ship.json");
 		}
 
 		mpOwner->mIsMarkedForDelete = true;
@@ -142,7 +143,7 @@ void ShipData::applyThrustMain()
 	useFuel();
 }
 
-void ShipData::applyThrustSecondary(glm::vec2 input)
+void ShipData::applyThrustSecondaryLocal(glm::vec2 input)
 {
 	if (mpPhysicsBody == nullptr)
 		return;
@@ -155,9 +156,30 @@ void ShipData::applyThrustSecondary(glm::vec2 input)
 		cos(glm::radians(a))*input.x - sin(glm::radians(a))*input.y,
 		sin(glm::radians(a))*input.x + cos(glm::radians(a))*input.y
 	);
+
+	applyThrustSecondary(thrustResult);
+
+	/*
 	thrustResult = glm::vec2(-thrustResult.y, thrustResult.x);
 
 	thrustResult *= mSecondaryAcceleration; 
+
+	mpPhysicsBody->applyForce(thrustResult);
+
+	*/
+	// usePower( something );
+}
+
+void ShipData::applyThrustSecondary(glm::vec2 input)
+{
+	if (mpPhysicsBody == nullptr)
+		return;
+	if (input == glm::vec2(0.0f))
+		return;
+
+	//glm::vec2 thrustResult = glm::vec2(-input.y, input.x);
+
+	glm::vec2 thrustResult = input * mSecondaryAcceleration;
 
 	mpPhysicsBody->applyForce(thrustResult);
 

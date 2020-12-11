@@ -89,7 +89,8 @@ void AIMissile::Update()
 		if (targetDistance < mDetonateDistance)
 		{
 			// Go kaboom!
-			generateExplosion(mpPhysicsBody, mWarheadIntensity, "Explosion_NoDebris.png");
+			Generator* pExplosionGenerator = new Generator;
+			pExplosionGenerator->generateExplosion(mpPhysicsBody, mWarheadIntensity, "Explosion_NoDebris.png");
 			this->mpOwner->mIsMarkedForDelete = true;
 		}
 
@@ -97,7 +98,7 @@ void AIMissile::Update()
 		
 		 glm::vec2 velocityDifference = pTargetPhysics->mVelocity - mpPhysicsBody->mVelocity;
 		
-		glm::vec2 alignmentVec = mpPhysicsBody->mForwardDir;
+		//glm::vec2 alignmentVec = mpPhysicsBody->mForwardDir;
 		glm::vec2 normalVec = mpPhysicsBody->mRightDir;
 
 		glm::vec2 targetRelativePositionNormal = glm::vec2(targetRelativePosition.y, -targetRelativePosition.x);

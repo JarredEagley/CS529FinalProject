@@ -65,27 +65,27 @@ void ControllerShip::Update()
 	glm::vec2 translationForce = glm::vec2(0.0f);
 	if (pIM->IsKeyPressed(SDL_SCANCODE_W))
 	{
-		translationForce.x += 1;
+		translationForce.y += 1;
 		//mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mpShipData->mSecondaryAcceleration);
 	}
 	if (pIM->IsKeyPressed(SDL_SCANCODE_S))
 	{
-		translationForce.x -= 1;
+		translationForce.y -= 1;
 		//mpPhysicsBody->applyForce(-mpPhysicsBody->mForwardDir * mpShipData->mSecondaryAcceleration);
 	}
 	if (pIM->IsKeyPressed(SDL_SCANCODE_A))
 	{
-		translationForce.y += 1;
+		translationForce.x -= 1;
 		//mpPhysicsBody->applyForce(-mpPhysicsBody->mRightDir * mpShipData->mSecondaryAcceleration);
 	}
 	if (pIM->IsKeyPressed(SDL_SCANCODE_D))
 	{
-		translationForce.y -= 1;
+		translationForce.x += 1;
 		//mpPhysicsBody->applyForce(mpPhysicsBody->mRightDir * mpShipData->mSecondaryAcceleration);
 	}
 	if (translationForce != glm::vec2(0.0f))
 		translationForce = glm::normalize(translationForce);
-	mpShipData->applyThrustSecondary(translationForce);
+	mpShipData->applyThrustSecondaryLocal(translationForce);
 
 	// Main drive
 	if (pIM->IsKeyPressed(SDL_SCANCODE_LSHIFT))

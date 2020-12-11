@@ -125,6 +125,11 @@ void GraphicsManager::Draw()
 		std::cout << "Error: No camera GameObject currently bound to the GraphicsManager." << std::endl;
 	else
 	{
+		if (pCurrentCameraGO == nullptr)
+		{
+			std::cout << "Error: No camera GameObject currently bound to the GraphicsManager." << std::endl;
+			return;
+		}
 		pCamera = static_cast<Camera*>(pCurrentCameraGO->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
 		pCamera->buildTransform();
 	}
@@ -221,7 +226,10 @@ void GraphicsManager::drawGameObject(GameObject* pGO)
 	// Camera needs to exist.
 	Camera* pCamera = nullptr;
 	if (pCurrentCameraGO == nullptr)
+	{
 		std::cout << "Error: No camera GameObject currently bound to the GraphicsManager." << std::endl;
+		return;
+	}
 	else
 		pCamera = static_cast<Camera*>(pCurrentCameraGO->GetComponent(ComponentTypes::TYPE_CAMERA)); // From bound camera game object.
 

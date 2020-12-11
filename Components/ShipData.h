@@ -43,7 +43,8 @@ public:
 	void generatePower();
 
 	void applyThrustMain();
-	void applyThrustSecondary(glm::vec2 input); // Converts input to local coordinates and scales by secondary thrust factor.
+	void applyThrustSecondaryLocal(glm::vec2 input); // Converts input to local coordinates and scales by secondary thrust factor.
+	void applyThrustSecondary(glm::vec2 input);
 	void applySpin(float scaleFactor = 1.0f);
 	void applyAngularDamping();
 

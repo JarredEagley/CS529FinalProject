@@ -17,46 +17,53 @@
 
 - End Header --------------------------------------------------------*/
 
+#pragma once
+
 #include "Managers/GlobalManager.h"
 
 #include "Components/PhysicsBody.h"
 #include "Components/Transform.h"
 #include "Components/Explosion.h"
 
-/// <summary>
-/// Generates an explosion for a physics body using the given input parameters.
-/// Note: Does not mark physics body's game object for deletion. That is the job of the caller.
-/// </summary>
-/// <param name="pExplodingBody">The physics body being told to explode</param>
-/// <param name="fileName">name of the explosion image to use in the explosions directory</param>
-/// <returns>the explosion's game object.</returns>
-GameObject* generateExplosion(PhysicsBody* pExplodingBody, float intensity, std::string fileName)
+class Generator
 {
-	if (pExplodingBody == nullptr)
-		return nullptr;
+public:
 
-	// Create the explosion GameObject.
-	std::string explosionName = pExplodingBody->mpOwner->mName + "_Explosion";
-	std::string explosionPath = GlobalManager::getResourceManager()->pathExplosions + fileName;
-	GameObject* explosionGO = GlobalManager::getGameObjectFactory()->createDynamicGameObject(explosionPath, explosionName);
-
-	if (explosionGO == nullptr)
-		return nullptr;
-
-	// Send an event to update the trasnform position.
-	auto pExplosionTransform = static_cast<Transform*>(explosionGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-	auto pExplosionPhysics = static_cast<PhysicsBody*>(explosionGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
-	auto pExplosionComp = static_cast<Explosion*>(explosionGO->GetComponent(ComponentTypes::TYPE_EXPLOSION));
-	if (pExplosionPhysics != nullptr && pExplosionTransform != nullptr && pExplosionComp != nullptr)
+	/// <summary>
+	/// Generates an explosion for a physics body using the given input parameters.
+	/// Note: Does not mark physics body's game object for deletion. That is the job of the caller.
+	/// </summary>
+	/// <param name="pExplodingBody">The physics body being told to explode</param>
+	/// <param name="fileName">name of the explosion image to use in the explosions directory</param>
+	/// <returns>the explosion's game object.</returns>
+	GameObject* generateExplosion(PhysicsBody* pExplodingBody, float intensity, std::string fileName)
 	{
-		pExplosionTransform->setPosition(pExplodingBody->mPosition);
+		if (pExplodingBody == nullptr)
+			return nullptr;
 
-		pExplosionPhysics->mTotalForce = glm::vec2(0.0f);
-		pExplosionPhysics->mVelocity = pExplodingBody->mVelocity;
-		pExplosionPhysics->mCollisionType = collisionType::NOCLIP;
+		// Create the explosion GameObject.
+		std::string explosionName = pExplodingBody->mpOwner->mName + "_Explosion";
+		std::string explosionPath = GlobalManager::getResourceManager()->pathExplosions + fileName;
+		GameObject* explosionGO = GlobalManager::getGameObjectFactory()->createDynamicGameObject(explosionPath, explosionName);
 
-		pExplosionComp->mIntensity = intensity;
+		if (explosionGO == nullptr)
+			return nullptr;
+
+		// Send an event to update the trasnform position.
+		auto pExplosionTransform = static_cast<Transform*>(explosionGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		auto pExplosionPhysics = static_cast<PhysicsBody*>(explosionGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+		auto pExplosionComp = static_cast<Explosion*>(explosionGO->GetComponent(ComponentTypes::TYPE_EXPLOSION));
+		if (pExplosionPhysics != nullptr && pExplosionTransform != nullptr && pExplosionComp != nullptr)
+		{
+			pExplosionTransform->setPosition(pExplodingBody->mPosition);
+
+			pExplosionPhysics->mTotalForce = glm::vec2(0.0f);
+			pExplosionPhysics->mVelocity = pExplodingBody->mVelocity;
+			pExplosionPhysics->mCollisionType = collisionType::NOCLIP;
+
+			pExplosionComp->mIntensity = intensity;
+		}
+
+		return explosionGO;
 	}
-
-	return explosionGO;
-}
+};

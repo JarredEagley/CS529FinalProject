@@ -1,0 +1,67 @@
+{
+    "Scene Type": "Level",
+    "GameObjects":
+    [
+        {
+            "Name": "SecondShip",
+            "Archetype": "Enemy.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [-100, -200],
+                    "Rotation": 15
+                },
+                "TYPE_PHYSICSBODY":
+                {
+                    "Velocity": [1, 20]
+                }
+
+            }
+        },
+        {
+            "Name": "PLAYER",
+            "Archetype": "Player.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0.0, 0.0],
+                    "Rotation": 0
+                },
+                "TYPE_PHYSICSBODY":
+                {
+                    "Velocity": [0,0]
+                }
+            }
+        },
+
+
+        {
+            "Name": "SecondShip_Health",
+            "Archetype": "Indicators\\NPCHealthIndicator.json",
+            "Parent": "SecondShip"
+        },
+
+        {
+            "Name": "PlayerShip_Indicator_Forward",
+            "Archetype": "Indicators\\ForwardIndicator.json",
+            "Parent":"PLAYER"
+        },
+        {
+            "Name": "SecondShip_Indicator_Forward",
+            "Archetype": "Indicators\\ForwardIndicator.json",
+            "Parent":"SecondShip"
+        },
+        {
+            "Name": "PLAYER_CURSOR",
+            "Archetype": "FollowCursor.json"
+        }
+    ],
+    "Level Archetypes":
+    [
+        "LevelBasics.json",
+        "PlayerHUD.json",
+        "PlayerShip1.json"
+    ]
+}

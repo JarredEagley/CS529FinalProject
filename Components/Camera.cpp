@@ -28,10 +28,18 @@ mCameraTransform(glm::mat4(1.0f)), mCameraProjection(glm::mat4(1.0f))
 
 Camera::~Camera()
 {
+	// Wont work if you have multiple cameras-- but I never will.
+	if (GlobalManager::getGraphicsManager()->getCurrentCameraGO() == this->mpOwner)
+		GlobalManager::getGraphicsManager()->setCurrentCameraGO(nullptr);
 }
 
 
-void Camera::Initialize() {}
+void Camera::Initialize() 
+{
+	// For now, I'll just auto-bind.
+	GlobalManager::getGraphicsManager()->setCurrentCameraGO(this->mpOwner);
+	mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+}
 
 void Camera::Update()
 {
@@ -138,8 +146,5 @@ void Camera::handleEvent(Event* pEvent)
 
 void Camera::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
-	// For now, I'll just auto-bind.
-	GlobalManager::getGraphicsManager()->setCurrentCameraGO(this->mpOwner);
-
-	mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+	
 }
