@@ -140,7 +140,7 @@ int main(int argc, char*argv[])
 		return EXIT_FAILURE;
 
 	// Load level.
-	GlobalManager::getResourceManager()->loadLevel("MarsOrbit.json");
+	GlobalManager::getResourceManager()->loadLevel("MainMenu.json");
 
 	// Run the game loop.
 	gameLoop();

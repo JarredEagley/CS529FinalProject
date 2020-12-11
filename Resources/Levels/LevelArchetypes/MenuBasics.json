@@ -1,0 +1,15 @@
+{
+    "Description": "Menus need a camera just to get the graphics manager not to complain; might as well make it a little interactive too.",
+    "GameObjects":
+    [
+        {
+            "Name": "MainCamera",
+            "Archetype": "Camera.json",
+            "Parent": "PLAYER"
+        },
+        {
+            "Name": "BackgroundGrid",
+            "Archetype":"BackgroundGrid.json"
+        }
+    ]
+}
