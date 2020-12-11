@@ -61,7 +61,8 @@ public:
 	std::string currentLevelName;
 
 	
-	void handleMenuItemCommand(std::string command);
+	// Note: Target only used for GO_TO, so has a default value of ""
+	void handleMenuItemCommand(std::string command, std::string target);
 
 
 	bool mIsGamePaused = false;

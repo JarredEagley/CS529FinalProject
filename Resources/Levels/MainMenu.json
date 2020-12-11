@@ -19,6 +19,33 @@
             },
             "Render Pass": "HUD"
         },
+
+
+
+        {
+            "Name": "Main Menu Levels",
+            "Archetype": "Menu\\Main_Levels.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                { 
+                    "Translation": [-0.45, 0.3],
+                    "Scale": [0.9, 0.25]
+                }
+            }
+        },
+        {
+            "Name": "Main Menu Controls",
+            "Archetype": "Menu\\General_Controls.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                { 
+                    "Translation": [-0.45, 0.0],
+                    "Scale": [0.9, 0.25]
+                }
+            }
+        },
         {
             "Name": "Main Menu Quit to Desktop",
             "Archetype": "Menu\\General_QuitToDesktop.json",
@@ -26,11 +53,15 @@
             {
                 "TYPE_TRANSFORM":
                 { 
-                    "Translation": [-0.2, 0.5],
-                    "Scale": [0.75, 0.35]
+                    "Translation": [-0.45, -0.3],
+                    "Scale": [0.9, 0.25]
                 }
             }
         }
+
+
+
+
     ],
     "Level Archetypes":
     [

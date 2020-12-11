@@ -1,0 +1,20 @@
+{
+    "Note": "You should always override 'Target' when  using this archetype. This setup wont work for pause menus.",
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+            "Scale": [0.5,0.125]
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "Menu\\Back.png",
+            "Color": [0.0, 0.6, 0.1, 0.9]
+        },
+        "TYPE_MENUITEM":
+        {
+            "Command": "GO_TO"
+        }
+    },
+    "Render Pass": "HUD"
+}

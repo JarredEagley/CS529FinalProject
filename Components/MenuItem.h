@@ -47,5 +47,7 @@ private:
 private:
 	Transform* mpTransform;
 	GLRect* mpGLRect;
+	// Used for GO_TO
+	std::string mTarget = "";
 };
 

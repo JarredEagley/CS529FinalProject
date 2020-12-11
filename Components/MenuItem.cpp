@@ -18,18 +18,11 @@
 #include "../Managers/GlobalManager.h"
 
 
-MenuItem::MenuItem() : Component(ComponentTypes::TYPE_MENUITEM)
-{
+MenuItem::MenuItem() : Component(ComponentTypes::TYPE_MENUITEM) {}
 
-}
+MenuItem::~MenuItem() {}
 
-MenuItem::~MenuItem()
-{
-}
-
-void MenuItem::Initialize()
-{
-}
+void MenuItem::Initialize() {}
 
 
 void MenuItem::Update()
@@ -74,7 +67,7 @@ void MenuItem::Update()
 			MenuItemClickedEvent* pMenuEvent = new MenuItemClickedEvent(this->mCommand);
 			GlobalManager::getEventManager()->broadcastEvent(pMenuEvent);
 
-			GlobalManager::getGameStateManager()->handleMenuItemCommand(mCommand);
+			GlobalManager::getGameStateManager()->handleMenuItemCommand(mCommand, mTarget);
 		}
 	}
 	else
@@ -93,7 +86,8 @@ void MenuItem::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
 	auto inputObj = inputMemberIt->value.GetObject();
 	if (inputObj.HasMember("Command") && inputObj["Command"].IsString())
-	{
 		this->mCommand = inputObj["Command"].GetString();
-	}
+
+	if (inputObj.HasMember("Target") && inputObj["Target"].IsString())
+		this->mTarget = inputObj["Target"].GetString();
 }

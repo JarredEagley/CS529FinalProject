@@ -72,7 +72,7 @@ void GameStateManager::Update()
 }
 
 
-void GameStateManager::handleMenuItemCommand(std::string command)
+void GameStateManager::handleMenuItemCommand(std::string command, std::string target = "")
 {
 	if (command == "RESTART_LEVEL")
 	{
@@ -96,6 +96,10 @@ void GameStateManager::handleMenuItemCommand(std::string command)
 			pGO->mIsMarkedForDelete = true;
 	}
 
+	if (command == "GO_TO")
+	{
+		GlobalManager::getResourceManager()->loadLevel(target);
+	}
 }
 
 void GameStateManager::displayPauseMenu()
