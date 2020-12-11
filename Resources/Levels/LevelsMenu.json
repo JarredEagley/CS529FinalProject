@@ -27,8 +27,7 @@
             {
                 "TYPE_TRANSFORM":
                 { 
-                    "Translation": [-0.45, 0.4],
-                    "Scale": [0.9, 0.25]
+                    "Translation": [-0.45, 0.4]
                 },
                 "TYPE_GLRECT":
                 {
@@ -40,6 +39,74 @@
                 }
             }
         },
+
+        {
+            "Name": "Levels Menu - 2",
+            "Archetype": "Menu\\Levels_LevelSelect.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                { 
+                    "Translation": [-0.45, 0.1],
+                    "Scale": [0.9, 0.25]
+                },
+                "TYPE_GLRECT":
+                {
+                    "Texture": "Menu\\Level2.png"
+                },
+                "TYPE_MENUITEM":
+                {
+                    "Target": ""
+                }
+            }
+        },
+
+        {
+            "Name": "Levels Menu - 3",
+            "Archetype": "Menu\\Levels_LevelSelect.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                { 
+                    "Translation": [-0.45, -0.1],
+                    "Scale": [0.9, 0.25]
+                },
+                "TYPE_GLRECT":
+                {
+                    "Texture": "Menu\\Level3.png"
+                },
+                "TYPE_MENUITEM":
+                {
+                    "Target": ""
+                }
+            }
+        },
+
+        {
+            "Name": "Levels Menu - 4",
+            "Archetype": "Menu\\Levels_LevelSelect.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                { 
+                    "Translation": [-0.45, -0.3],
+                    "Scale": [0.9, 0.25]
+                },
+                "TYPE_GLRECT":
+                {
+                    "Texture": "Menu\\Level4.png"
+                },
+                "TYPE_MENUITEM":
+                {
+                    "Target": ""
+                }
+            }
+        },
+
+
+
+
+
 
 
 

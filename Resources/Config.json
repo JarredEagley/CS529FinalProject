@@ -7,7 +7,9 @@
         "Description": "Controls the state of the game, as well as enabling and disabling certain flags useful for debugging..",
         "DEBUG Verbose GameObjects": false,
         "DEBUG Verbose Components": false,
-        "DEBUG Verbose GameObject Factory": false
+        "DEBUG Verbose GameObject Factory": false,
+
+        "Initial Scene": "MainMenu.json"
     }, 
     "Framerate Controller":
     {
