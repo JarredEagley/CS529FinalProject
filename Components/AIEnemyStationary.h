@@ -64,7 +64,7 @@ private:
 	
 	float mMissileLaunchTimer;
 
-	float mManeuveringSpeedThreshold = 10.0f; // Probably not going to make this data driven...
+	float mManeuveringSpeedThreshold = 10.0f;
 
 	std::string mTargetName;
 

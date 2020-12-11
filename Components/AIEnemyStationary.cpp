@@ -145,6 +145,44 @@ void AIEnemyStationary::handleEvent(Event* pEvent)
 void AIEnemyStationary::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
 
+	auto inputObj = inputMemberIt->value.GetObject();
 
+	if (inputObj.HasMember("Desired Altitude") && inputObj["Desired Altitude"].IsNumber())
+	{
+		this->mDesiredAltitude = inputObj["Desired Altitude"].GetFloat();
+	}
+
+	if (inputObj.HasMember("Shoot Range") && inputObj["Shoot Range"].IsNumber())
+	{
+		this->mShootRange = inputObj["Shoot Range"].GetFloat();
+	}
+
+	if (inputObj.HasMember("Missile Launch Range") && inputObj["Missile Launch Range"].IsNumber())
+	{
+		this->mMissileLaunchRange = inputObj["Missile Launch Range"].GetFloat();
+	}
+
+	if (inputObj.HasMember("Missile Launch Probability") && inputObj["Missile Launch Probability"].IsNumber())
+	{
+		this->mMissileLaunchProbability = inputObj["Missile Launch Probability"].GetFloat();
+	}
+
+	if (inputObj.HasMember("Missile Launch Time") && inputObj["Missile Launch Time"].IsNumber())
+	{
+		this->mMissileLaunchTimerMax = inputObj["Missile Launch Time"].GetFloat();
+		this->mMissileLaunchTimer = mMissileLaunchTimerMax;
+	}
+
+
+	if (inputObj.HasMember("Orientation Behavior") && inputObj["Orientation Behavior"].IsString())
+	{
+		this->mOrientationBehvaior = inputObj["Orientation Behavior"].GetString();
+	}
+
+
+	if (inputObj.HasMember("Maneuvering Speed Threshold") && inputObj["Maneuvering Speed Threshold"].IsNumber())
+	{
+		this->mManeuveringSpeedThreshold = inputObj["Maneuvering Speed Threshold"].GetFloat();
+	}
 
 }

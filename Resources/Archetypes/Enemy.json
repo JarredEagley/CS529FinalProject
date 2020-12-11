@@ -47,6 +47,17 @@
         },
         "TYPE_AI_STATIONARY":
         {
+            "Desired Altitude": 7000,
+
+            "Shoot Range": 4000,
+            "Missile Launch Range": 5000,
+            
+            "Missile Launch Probability": 0.5,
+            "Missile Launch Time": 10000,
+
+            "Orientation Behavior":"FACE_PROGRADE",
+            "Maneuvering Speed Threshold": 10
+
         }
     }
 }
