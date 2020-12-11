@@ -116,18 +116,12 @@ GLuint ResourceManager::loadTexture(const char* texName, TexType _texType)
 
 void ResourceManager::loadLevel(std::string fileName)
 {
-	GlobalManager::getGameStateManager()->mIsGamePaused = true;
 
-	// Clear any existing game objects.
-	GlobalManager::getGameObjectManager()->deleteAllGameObjects();
 
 	// Use serializer to read the json in.
 	Serializer* pSer = GlobalManager::getSerializer();
 	std::string filePath = pathLevels + fileName;
 	rapidjson::Document doc = pSer->loadJson(filePath.c_str());
-
-	// Not the most efficient-- deserializing the name twice, but I don't really mind.
-	loadLevelArchetype(fileName);
 
 	// Nullcheck.
 	if (doc.IsNull())
@@ -135,6 +129,16 @@ void ResourceManager::loadLevel(std::string fileName)
 		std::cout << "Error::ResourceManager::LoadLevel: Failed to load level with filename " << fileName << std::endl;
 		return;
 	}
+
+	// Pause
+	GlobalManager::getGameStateManager()->mIsGamePaused = true;
+
+	// Clear any existing game objects.
+	GlobalManager::getGameObjectManager()->deleteAllGameObjects();
+
+	// Not the most efficient-- deserializing the name twice, but I don't really mind.
+	loadLevelArchetype(fileName);
+
 
 	// Very last step: Inform the gamestate manager of our current scene.
 	GameStateManager* pGSM = GlobalManager::getGameStateManager();

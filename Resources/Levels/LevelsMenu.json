@@ -21,8 +21,6 @@
         },
 
 
-
-
         {
             "Name": "Levels Menu Back",
             "Archetype": "Menu\\General_Back.json",
@@ -39,8 +37,6 @@
                 }
             }
         }
-
-
 
 
     ],

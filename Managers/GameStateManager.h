@@ -51,8 +51,8 @@ public:
 	};
 	SceneType stringToSceneType(std::string sceneTypeName)
 	{
-		if (sceneTypeName == "Level") return SCENE_LEVEL;
-		if (sceneTypeName == "MENU") return SCENE_MENU;
+		if (sceneTypeName == "SCENE_LEVEL") return SCENE_LEVEL;
+		if (sceneTypeName == "SCENE_MENU") return SCENE_MENU;
 		return SCENE_LEVEL;
 	}
 	SceneType currentSceneType = SCENE_LEVEL;
