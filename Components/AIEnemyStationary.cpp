@@ -16,6 +16,7 @@
 
 #include "AIEnemyStationary.h"
 #include "../Managers/GlobalManager.h"
+#include "glm/gtx/projection.hpp"
 
 AIEnemyStationary::AIEnemyStationary() : Component(ComponentTypes::TYPE_AI_STATIONARY),
 mpPhysicsBody(nullptr), mpShipData(nullptr),
@@ -60,8 +61,11 @@ void AIEnemyStationary::Update()
 		float thisDistSqr = (thisBodyPos.x-myPosition.x)*(thisBodyPos.x - myPosition.x)
 			+ (thisBodyPos.y - myPosition.y)*(thisBodyPos.y - myPosition.y);
 
-		if (closestDistSqr != -1.0f && closestDistSqr > thisDistSqr)
+		if (closestDistSqr == -1.0f || closestDistSqr > thisDistSqr)
+		{
+			pClosest = pGBody;
 			closestDistSqr = thisDistSqr;
+		}
 	}
 
 
@@ -78,13 +82,14 @@ void AIEnemyStationary::Update()
 		// Use drive if speed above a threshold and fuel not depleted.
 		if (mySpeed > mManeuveringSpeedThreshold && mpShipData->mFuel > 0.1f)
 		{
+			// Align
 			float alignmentAmount = alignToVector(accelVector);
 
+			// Accelerate
 			if (alignmentAmount == 0)
 				mpShipData->setThrottle(100.0f);
 			else
 				mpShipData->setThrottle((1.0f / abs(alignmentAmount) - 1.0f)*1.5f );
-
 		}
 		else
 		{
@@ -97,7 +102,42 @@ void AIEnemyStationary::Update()
 	}
 	else
 	{
+		// I may move this part of the behavior into a 'slow update' function which runs every several ticks to save on calculations.
+
 		// Gravity
+		float const G_CONST = GlobalManager::getPhysicsManager()->universalGravitationalConstant;
+
+		// Unfortunately, orbital mechanics involves quite a few sqrts sometimes.
+		float orbitalRadius = sqrt(closestDistSqr);
+		float orbitalVelocityAtCurrentAltitude = sqrt((G_CONST * pClosest->mMass)/ orbitalRadius);
+
+		glm::vec2 relativeVelocity = mpPhysicsBody->mVelocity - pClosest->mVelocity;
+		glm::vec2 relativePosition = mpPhysicsBody->mPosition - pClosest->mPosition;
+		glm::vec2 relativePositionNormal = glm::vec2(relativePosition.y, -relativePosition.x);
+
+		// More very expensive calculations.
+		glm::vec2 progradeVelocity = glm::proj(relativeVelocity, relativePositionNormal);	// forward/backwards
+		glm::vec2 radialVelocity = glm::proj(relativeVelocity, relativePosition);			// up/down
+
+
+		//std::cout << "Prograde:" << progradeVelocity.x << ", " << progradeVelocity.y << std::endl;
+		//std::cout << "Radial:" << radialVelocity.x << ", " << radialVelocity.y << std::endl;
+
+		// 
+		if (orbitalRadius > mDesiredAltitude)
+		{
+			// Try go down
+
+
+
+		}
+		else
+		{
+			// Try go up
+
+
+
+		}
 	}
 }
 
