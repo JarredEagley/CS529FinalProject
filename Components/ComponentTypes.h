@@ -35,6 +35,8 @@ public:
 		if (strcmp(str, "TYPE_GLLINE") == 0)			return TYPE_GLLINE;
 		if (strcmp(str, "TYPE_GLTEXT") == 0)			return TYPE_GLTEXT;
 
+		if (strcmp(str, "TYPE_FX_PLUME") == 0)			return TYPE_FX_PLUME;
+
 		if (strcmp(str, "TYPE_CONTROLLERSHIP") == 0)	return TYPE_CONTROLLERSHIP;
 		if (strcmp(str, "TYPE_TURRET") == 0)			return TYPE_TURRET;
 		if (strcmp(str, "TYPE_AI_MISSILE") == 0)		return TYPE_AI_MISSILE;
@@ -68,6 +70,8 @@ public:
 		TYPE_GLRECT,
 		TYPE_GLLINE,
 		TYPE_GLTEXT,
+
+		TYPE_FX_PLUME,
 
 		TYPE_CONTROLLERSHIP,
 		TYPE_TURRET,

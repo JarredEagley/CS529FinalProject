@@ -54,6 +54,25 @@
             "Parent":"PLAYER"
         },
         {
+            "Name": "PlayerShip_FX_Plume",
+            "Components":
+            {
+                "TYPE_GLRECT":
+                {
+                    "Texture": "Ship1Plume.png",
+                    "Color": [0.9,0.9,1,0]
+                },
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0,-13.5,0],
+                    "Scale": [10,10]
+                },
+                "TYPE_FX_PLUME": {}
+            },
+            "Parent":"PLAYER",
+            "Render Pass": "FOREGROUND"
+        },
+        {
             "Name": "PlayerShip_Indicator_Forward",
             "Archetype": "Indicators\\ForwardIndicator.json",
             "Parent":"PLAYER"

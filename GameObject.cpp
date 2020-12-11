@@ -30,6 +30,8 @@
 #include "Components/GLText.h"
 #include "Components/GLLine.h"
 
+#include "Components/FXPlume.h"
+
 #include "Components/Camera.h"
 #include "Components/BackgroundGrid.h"
 #include "Components/PhysicsBody.h"
@@ -192,6 +194,11 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_GLTEXT):
 		pNewComponent = new GLText();
 		break;
+		
+	case (ComponentTypes::TYPE_FX_PLUME):
+		pNewComponent = new FXPlume();
+		break;
+
 	case (ComponentTypes::TYPE_CAMERA):
 		pNewComponent = new Camera();
 		break;

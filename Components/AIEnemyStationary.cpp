@@ -115,7 +115,7 @@ void AIEnemyStationary::Update()
 		glm::vec2 relativePosition = mpPhysicsBody->mPosition - pClosest->mPosition;
 		glm::vec2 relativePositionNormal = glm::vec2(relativePosition.y, -relativePosition.x);
 
-		// More very expensive calculations.
+		// More unfortuantely expensive calculations.
 		glm::vec2 progradeVelocity = glm::proj(relativeVelocity, relativePositionNormal);	// forward/backwards
 		glm::vec2 radialVelocity = glm::proj(relativeVelocity, relativePosition);			// up/down
 

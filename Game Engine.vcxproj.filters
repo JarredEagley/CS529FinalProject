@@ -103,6 +103,9 @@
     <ClCompile Include="Components\AIEnemyStationary.cpp">
       <Filter>Components\AI</Filter>
     </ClCompile>
+    <ClCompile Include="Components\FXPlume.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -213,6 +216,9 @@
     <ClInclude Include="Generators.h" />
     <ClInclude Include="Components\AIEnemyStationary.h">
       <Filter>Components\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\FXPlume.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
