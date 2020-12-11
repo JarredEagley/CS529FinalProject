@@ -164,6 +164,9 @@ void GameStateManager::readGameConfig()
 
 		if (currentObj.HasMember("DEBUG Verbose GameObject Factory") && currentObj["DEBUG Verbose GameObject Factory"].IsBool())
 			DEBUG_VerboseGOF = currentObj["DEBUG Verbose GameObject Factory"].GetBool();
+
+		if (currentObj.HasMember("Initial Scene") && currentObj["Initial Scene"].IsString())
+			initialScene = currentObj["Initial Scene"].GetString();
 	}
 
 	if (doc.HasMember("Framerate Controller") && doc["Framerate Controller"].IsObject())

@@ -12,7 +12,8 @@
         },
         "TYPE_MENUITEM":
         {
-            "Command": "QUIT_TO_MAIN_MENU"
+            "Command": "GO_TO",
+            "Target": "MainMenu.json"
         }
     },
     "Render Pass": "HUD"

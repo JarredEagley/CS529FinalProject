@@ -81,6 +81,8 @@ public:
 	bool DEBUG_VerboseComponents; // Enable or disable non-vital warnings.
 	bool DEBUG_VerboseGOF; // Enable or disable non-vital logging from the game object factory.
 
+	std::string initialScene = "MainMenu.json";
+
 	static std::vector<std::string> mMenuItemNames;
 
 private:

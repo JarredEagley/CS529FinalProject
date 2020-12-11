@@ -9,7 +9,7 @@
         "DEBUG Verbose Components": false,
         "DEBUG Verbose GameObject Factory": false,
 
-        "Initial Scene": "MainMenu.json"
+        "Initial Scene": "MarsOrbit.json"
     }, 
     "Framerate Controller":
     {

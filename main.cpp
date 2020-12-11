@@ -140,7 +140,10 @@ int main(int argc, char*argv[])
 		return EXIT_FAILURE;
 
 	// Load level.
-	GlobalManager::getResourceManager()->loadLevel("MainMenu.json");
+	//GlobalManager::getResourceManager()->loadLevel("MainMenu.json");
+	GlobalManager::getResourceManager()->loadLevel(
+		GlobalManager::getGameStateManager()->initialScene
+	);
 
 	// Run the game loop.
 	gameLoop();
