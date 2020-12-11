@@ -138,6 +138,8 @@ void PhysicsBody::Integrate(float deltaTime)
 
 void PhysicsBody::calculateGravityForces()
 {
+	float const G_CONST = GlobalManager::getPhysicsManager()->universalGravitationalConstant;
+
 	for (auto pBody : GlobalManager::getPhysicsManager()->gravityBodies)
 	{
 		if (this == pBody)
