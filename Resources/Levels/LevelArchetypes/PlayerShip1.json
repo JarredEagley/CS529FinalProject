@@ -65,7 +65,8 @@
                 "TYPE_TRANSFORM":
                 {
                     "Translation": [0,-13.5,0],
-                    "Scale": [10,10]
+                    "Scale": [10,10],
+                    "Inherit Rotation": true
                 },
                 "TYPE_FX_PLUME": {}
             },
