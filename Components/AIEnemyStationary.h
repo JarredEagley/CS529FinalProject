@@ -56,7 +56,8 @@ public:
 	std::string mOrientationBehvaior = ""; // Options are 'FACE_PLAYER' and 'FACE_PROGRADE'. If none specified, then AI will simply have no preferred orientation unless maneuvering.
 
 private:
-	// No private methods.
+	void preferredOrientation();
+
 private:
 	ShipData* mpShipData;
 	PhysicsBody* mpPhysicsBody;

@@ -108,28 +108,34 @@ void AIEnemyStationary::Update()
 				mpShipData->setThrottle((1.0f / abs(alignmentAmount) - 1.0f)*1.5f );
 
 		}
+		else
+		{
+			// Do orientation lock.
+			preferredOrientation();
+		}
 		
 		// Use maneuvering thrusters too regardless.
-		// Convert our velocity to local direction vector.
-		
-		/*
-		float x = accelVector.x; float y = accelVector.y; float angle = glm::radians(mpPhysicsBody->mAngle);
-		glm::vec2 acclVectorLocal = glm::vec2(
-			x * cos(angle) - y * sin(angle),
-			x * sin(angle) + y * cos(angle)
-		);
-
-		std::cout << "(" << acclVectorLocal.x << ", " << acclVectorLocal.y << ")" << std::endl;
-		*/
-
 		mpShipData->applyThrustSecondary(-accelVector);
-
 	}
 	else
 	{
 		// Gravity
 	}
 }
+
+void AIEnemyStationary::preferredOrientation()
+{
+	if (mOrientationBehvaior == "FACE_PLAYER")
+	{
+
+	}
+	else if (mOrientationBehvaior == "FACE_PROGRADE")
+	{
+
+	}
+	// By default, no need to do anything else; just use the natural angular damping specified in ship data.
+}
+
 
 void AIEnemyStationary::handleEvent(Event* pEvent)
 {

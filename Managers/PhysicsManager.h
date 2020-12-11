@@ -29,6 +29,8 @@ public:
 	static float deflectDamageMultiplier;
 	static float explosionDamageMultiplier;
 
+	static float universalGravitationalConstant;
+
 private:
 	PhysicsManager();
 private:

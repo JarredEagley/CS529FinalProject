@@ -279,6 +279,14 @@ void GameStateManager::readGameConfig()
 		{
 			pPhyM->explosionDamageMultiplier = currentObj[currentattr.c_str()].GetFloat();
 		}
+
+		currentattr = "Gravitational Constant";
+		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())
+		{
+			pPhyM->universalGravitationalConstant = currentObj[currentattr.c_str()].GetFloat();
+		}
+
+
 	}
 
 

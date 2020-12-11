@@ -57,7 +57,9 @@
         "Piercing Threshold": 40,
         "Deflect Damage Multiplier": 1,
         "Pierce Damage Multiplier": 3,
-        "Explosion Damage Multiplier": 1.0
+        "Explosion Damage Multiplier": 1.0,
+
+        "Gravitational Constant": 0.0000000000667
     },
     "Event Manager":
     {

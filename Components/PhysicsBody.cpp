@@ -22,7 +22,7 @@
 #include <limits>
 #include "glm/gtc/type_ptr.hpp"
 
-#define G_CONST 0.0000000000667 // The universal gravitational constant. in N * m^2 / kg^2
+//#define G_CONST 0.0000000000667 // The universal gravitational constant. in N * m^2 / kg^2
 
 PhysicsBody::PhysicsBody() : Component(ComponentTypes::TYPE_PHYSICSBODY),
 mHasGravity(false),
