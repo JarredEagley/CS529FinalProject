@@ -51,6 +51,10 @@ void ShipData::Update()
 		return;
 	}
 
+	// Don't run further updates if game is paused!
+	if (GlobalManager::getGameStateManager()->mIsGamePaused)
+		return;
+
 	// DEBUG
 	if (GlobalManager::getInputManager()->IsKeyPressed(SDL_SCANCODE_SPACE) && this->mpOwner->mName != "PLAYER")
 		takeDamage(20);
