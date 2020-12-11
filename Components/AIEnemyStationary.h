@@ -57,6 +57,7 @@ public:
 
 private:
 	void preferredOrientation();
+	float alignToVector(glm::vec2 alignmentVector); // Returns alignment amount.
 
 private:
 	ShipData* mpShipData;
