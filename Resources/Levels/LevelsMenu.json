@@ -3,7 +3,7 @@
     "GameObjects":
     [
         {
-            "Name": "temp",
+            "Name": "Levels Menu Title",
             "Components":
             {
                 "TYPE_TRANSFORM":
@@ -13,12 +13,34 @@
                 },
                 "TYPE_GLRECT":
                 {
-                    "Texture": "Menu\\Title.png",
+                    "Texture": "Menu\\TitleLevels.png",
                     "Color": [0.0, 0.6, 0.1, 0.9]
                 }
             },
             "Render Pass": "HUD"
         },
+
+        {
+            "Name": "Levels Menu - 1",
+            "Archetype": "Menu\\Levels_LevelSelect.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                { 
+                    "Translation": [-0.45, 0.4],
+                    "Scale": [0.9, 0.25]
+                },
+                "TYPE_GLRECT":
+                {
+                    "Texture": "Menu\\Level1.png"
+                },
+                "TYPE_MENUITEM":
+                {
+                    "Target": ""
+                }
+            }
+        },
+
 
 
         {
