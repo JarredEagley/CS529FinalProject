@@ -37,6 +37,7 @@ enum class EventType
 	MOUSE_SCROLL,
 	CURSOR_WORLD_COORDS,
 	TURRET_COMMAND,
+	MISSILE_LOCKON,
 	MENU_ITEM_CLICKED,
 	
 	DESTROY_PROJETILE,
@@ -176,6 +177,17 @@ public:
 
 	bool mShoot;
 	glm::vec2 mAimPoint;
+};
+
+// When missiles lock onto a target, they inform that target.
+// Carry the name of the missile game object so AI's can find the game object and shoot it.
+class MissileLockOnEvent : public Event
+{
+public:
+	MissileLockOnEvent(std::string missileGOName) : Event(EventType::MISSILE_LOCKON), mMissileGOName(missileGOName) {};
+	~MissileLockOnEvent() {};
+
+	std::string mMissileGOName;
 };
 
 // For example purposes, this is a timed event.
