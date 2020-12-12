@@ -18,6 +18,9 @@ public:
 
 	float getGameTime(); // In game seconds per real life seconds, multiplier by the game time multiplier.
 
+	// Important note: Result must be multiplied by object mass before force is applied!
+	glm::vec2 calculateGravitationalForces(glm::vec2 position);
+
 	void Update();
 
 public:

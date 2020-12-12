@@ -19,7 +19,7 @@
 #include "ComponentTypes.h"
 #include "../GameObject.h"
 #include "../Managers/GlobalManager.h"
-#include <limits>
+//#include <limits>
 #include "glm/gtc/type_ptr.hpp"
 
 //#define G_CONST 0.0000000000667 // The universal gravitational constant. in N * m^2 / kg^2
@@ -67,7 +67,9 @@ void PhysicsBody::Update()
 
 void PhysicsBody::Integrate(float deltaTime)
 {
-	calculateGravityForces();
+	// Apply gravity.
+	//applyForce( this->calculateGravityForces());
+	this->applyGravityForces();
 
 	// Get the associated transform. 
 	Transform* pT = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM)); // Probably shouldn't get this EVERY integration. Oh well.
@@ -136,9 +138,17 @@ void PhysicsBody::Integrate(float deltaTime)
 }
 
 
-void PhysicsBody::calculateGravityForces()
+glm::vec2 PhysicsBody::applyGravityForces()
 {
+	glm::vec2 result = GlobalManager::getPhysicsManager()->calculateGravitationalForces(this->mPosition) * this->mMass;
+
+	this->applyForce(result);
+	return result;
+
+	/*
 	float const G_CONST = GlobalManager::getPhysicsManager()->universalGravitationalConstant;
+	
+	glm::vec2 result = glm::vec2(0.0f);
 
 	for (auto pBody : GlobalManager::getPhysicsManager()->gravityBodies)
 	{
@@ -150,6 +160,7 @@ void PhysicsBody::calculateGravityForces()
 		float denominator = (pBody->mPosition.x - this->mPosition.x) * (pBody->mPosition.x - this->mPosition.x)
 			+ (pBody->mPosition.y - this->mPosition.y) * (pBody->mPosition.y - this->mPosition.y);
 		
+		// Guard against same position.
 		if (denominator == 0.0f)
 			continue;
 
@@ -170,10 +181,12 @@ void PhysicsBody::calculateGravityForces()
 			|| isinf(gravitationalForce.x)
 			|| isinf(gravitationalForce.y)
 			)
-			return;
+			return glm::vec2(0.0f);
 
-		applyForce(gravitationalForce);
+		//applyForce(gravitationalForce);
+		result += gravitationalForce;
 	}
+	*/
 }
 
 

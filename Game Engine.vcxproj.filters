@@ -106,6 +106,9 @@
     <ClCompile Include="Components\FXPlume.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Components\AIEnemyCore.cpp">
+      <Filter>Components\AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -219,6 +222,9 @@
     </ClInclude>
     <ClInclude Include="Components\FXPlume.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\AIEnemyCore.h">
+      <Filter>Components\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

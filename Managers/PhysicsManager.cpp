@@ -4,6 +4,7 @@
 #include "../Components/PhysicsBody.h"
 #include "../GameObject.h"
 
+
 PhysicsManager* PhysicsManager::instance = nullptr;
 std::list<PhysicsBody*> PhysicsManager::gravityBodies; // Initialize the vector.
 //bool PhysicsManager::isPhysicsPaused = true;
@@ -47,6 +48,53 @@ PhysicsManager::PhysicsManager()
 float PhysicsManager::getGameTime()
 {
 	return GlobalManager::getFrameRateController()->getFrameTimeSec() * gameTimeMultiplier;
+}
+
+
+glm::vec2 PhysicsManager::calculateGravitationalForces(glm::vec2 position)
+{
+	float const G_CONST = universalGravitationalConstant;
+
+	glm::vec2 result = glm::vec2(0.0f);
+
+	for (auto pBody : gravityBodies)
+	{
+		// Technically correct, but I'm removing the this-> mass term. Its negligable anyways.
+		//float numerator = (G_CONST * this->mMass * pBody->mMass);
+		float numerator = (G_CONST * pBody->mMass);
+
+		float denominator = (pBody->mPosition.x - position.x) * (pBody->mPosition.x - position.x)
+			+ (pBody->mPosition.y - position.y) * (pBody->mPosition.y - position.y);
+
+		// Guard against same position.
+		if (denominator == 0.0f)
+			continue;
+
+		// Scale the force.
+		float gravScale = numerator / (denominator);
+		gravScale /= 1000.0 * 1000.0; // Convert m^2 to km^2
+
+		//std::cout << "DEBUG - Grav scale is " << gravScale << "\n";
+
+		// I tried to avoid needing to normalize. I might try again if I have time.
+
+		glm::vec2 gravitationalForce = glm::normalize(pBody->mPosition - position) * gravScale / 1000.0f;
+
+		//std::cout << "DEBUG - grav force: (" << gravitationalForce.x << ", " << gravitationalForce.y << ")" << std::endl;
+		// We do not apply gravitational forces that don't make sense here.
+		if (
+			isnan(gravitationalForce.x)
+			|| isnan(gravitationalForce.y)
+			|| isinf(gravitationalForce.x)
+			|| isinf(gravitationalForce.y)
+			)
+			return glm::vec2(0.0f);
+
+		//applyForce(gravitationalForce);
+		result += gravitationalForce;
+	}
+
+	return result;
 }
 
 
@@ -202,3 +250,6 @@ void PhysicsManager::Update()
 		pBody2->mpOwner->handleEvent(&cEvent2);
 	}
 }
+
+
+
