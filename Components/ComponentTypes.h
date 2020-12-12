@@ -42,6 +42,7 @@ public:
 		if (strcmp(str, "TYPE_AI_MISSILE") == 0)		return TYPE_AI_MISSILE;
 		if (strcmp(str, "TYPE_AI_CORE") == 0)			return TYPE_AI_CORE;
 		if (strcmp(str, "TYPE_AI_STATIONARY") == 0)		return TYPE_AI_STATIONARY;
+		if (strcmp(str, "TYPE_AI_CHASE") == 0)			return TYPE_AI_CHASE;
 
 		if (strcmp(str, "TYPE_CAMERA") == 0)			return TYPE_CAMERA;
 
@@ -81,6 +82,7 @@ public:
 		TYPE_AI_MISSILE,
 		TYPE_AI_CORE,
 		TYPE_AI_STATIONARY,
+		TYPE_AI_CHASE,
 
 		TYPE_CAMERA,
 		

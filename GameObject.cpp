@@ -28,6 +28,7 @@
 #include "Components/AIMissile.h"
 #include "Components/AIEnemyCore.h"
 #include "Components/AIEnemyStationary.h"
+#include "Components/AIEnemyChase.h"
 
 #include "Components/GLRect.h"
 #include "Components/GLText.h"
@@ -190,6 +191,9 @@ Component* GameObject::AddComponent(unsigned int Type)
 		break;
 	case (ComponentTypes::TYPE_AI_STATIONARY):
 		pNewComponent = new AIEnemyStationary();
+		break;
+	case (ComponentTypes::TYPE_AI_CHASE):
+		pNewComponent = new AIEnemyChase();
 		break;
 
 	case (ComponentTypes::TYPE_GLRECT):
