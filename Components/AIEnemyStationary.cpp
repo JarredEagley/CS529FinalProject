@@ -39,11 +39,10 @@ void AIEnemyStationary::Update()
 
 	if (mpAICore == nullptr)
 	{
-		mpAICore = static_cast<AIEnemyCore*>(mpOwner->GetComponent(ComponentTypes::));
+		mpAICore = static_cast<AIEnemyCore*>(mpOwner->GetComponent(ComponentTypes::TYPE_AI_CORE));
 	}
 
 	// --- behavior --- //
-
 	if (mpAICore->isInGravity)
 	{
 		mpAICore->keepOrbit();
@@ -55,8 +54,6 @@ void AIEnemyStationary::Update()
 }
 
 
-
-
 void AIEnemyStationary::handleEvent(Event* pEvent)
 {
 }
@@ -64,7 +61,7 @@ void AIEnemyStationary::handleEvent(Event* pEvent)
 
 void AIEnemyStationary::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
-
+	auto inputObj = inputMemberIt->value.GetObject();
 
 
 

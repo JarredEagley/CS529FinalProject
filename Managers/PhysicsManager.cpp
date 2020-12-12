@@ -176,13 +176,13 @@ void PhysicsManager::Update()
 
 		// Get their relative speed and velocity.
 		glm::vec2 relativeVelocity = pBody1->mVelocity - pBody2->mVelocity;
-		cEvent1.mRelativeVelocity = relativeVelocity;
-		cEvent2.mRelativeVelocity = relativeVelocity;
+		cEvent1.mNGB_RelativeVelocity = relativeVelocity;
+		cEvent2.mNGB_RelativeVelocity = relativeVelocity;
 
 		float relativeSpeedSqr = relativeVelocity.x * relativeVelocity.x + relativeVelocity.y * relativeVelocity.y;
 		float relativeSpeed = sqrt(relativeSpeedSqr);
-		cEvent1.mRelativeSpeed = relativeSpeed;
-		cEvent2.mRelativeSpeed = relativeSpeed;
+		cEvent1.mNGB_RelativeSpeed = relativeSpeed;
+		cEvent2.mNGB_RelativeSpeed = relativeSpeed;
 
 		// Get relative position, since its used in squared distance.
 		glm::vec2 relativePosition = pBody1->mPosition - pBody2->mPosition;

@@ -58,8 +58,8 @@ public:
 
 public:
 	// Data
-	ShipData* mpShipData = nullptr;
-	PhysicsBody* mpPhysicsBody = nullptr;
+	ShipData* mpShipData ;
+	PhysicsBody* mpPhysicsBody ;
 
 	// Gravity data
 	PhysicsBody* mpNearestGravityBody = nullptr;

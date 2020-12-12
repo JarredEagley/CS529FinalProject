@@ -135,6 +135,7 @@ void PhysicsBody::Integrate(float deltaTime)
 
 	//std::cout << "DEBUG - Physics integration position for " 
 	//<< mpOwner->mName << " is (" << mPosition.x << ", " << mPosition.y << ")" << std::endl;
+	mHasRunOnce = true;
 }
 
 
@@ -271,7 +272,7 @@ void PhysicsBody::handleEvent(Event* pEvent)
 				this->mVelocity = pCollideEvent->mNewVelocity;
 
 				// Damage based on relative speed
-				float damage = GlobalManager::getPhysicsManager()->deflectDamageMultiplier * pCollideEvent->mRelativeSpeed;
+				float damage = GlobalManager::getPhysicsManager()->deflectDamageMultiplier * pCollideEvent->mNGB_RelativeSpeed;
 				DoDamageEvent* pNewDamageEvent = new DoDamageEvent(damage);
 				mpOwner->handleEvent(pNewDamageEvent);
 		
@@ -280,11 +281,11 @@ void PhysicsBody::handleEvent(Event* pEvent)
 			else if (pCollideEvent->mResponse == CollideEvent::collisionResponse::PIERCE)
 			{
 				// Very very loosely based on drag formula.
-				glm::vec2 appliedForce = pCollideEvent->mRelativeVelocity * pCollideEvent->mRelativeSpeed * 2.0f;
+				glm::vec2 appliedForce = pCollideEvent->mNGB_RelativeVelocity * pCollideEvent->mNGB_RelativeSpeed * 2.0f;
 				applyForce(appliedForce);
 
 				// Damage based on relative speed
-				float damage = GlobalManager::getPhysicsManager()->piercingDamageMultiplier * pCollideEvent->mRelativeSpeed;
+				float damage = GlobalManager::getPhysicsManager()->piercingDamageMultiplier * pCollideEvent->mNGB_RelativeSpeed;
 				DoDamageEvent* pNewDamageEvent = new DoDamageEvent(damage);
 				mpOwner->handleEvent(pNewDamageEvent);
 			}

@@ -185,7 +185,7 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_AI_MISSILE):
 		pNewComponent = new AIMissile();
 		break;
-	case (ComponentTypes::TYPE_AI_ENEMYCORE):
+	case (ComponentTypes::TYPE_AI_CORE):
 		pNewComponent = new AIEnemyCore();
 		break;
 	case (ComponentTypes::TYPE_AI_STATIONARY):
@@ -255,8 +255,8 @@ Component* GameObject::AddComponent(unsigned int Type)
 		return nullptr; // Failed to create component.
 	}
 
-	// Originally there was a nullcheck here.
-	// It seemed useless... We'll see if I was wrong.
+	if (pNewComponent == nullptr)
+		return nullptr;
 
 	// Add to list
 	pNewComponent->mpOwner = this;

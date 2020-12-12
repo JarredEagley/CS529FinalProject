@@ -86,7 +86,7 @@ public:
 	PhysicsBody * mpOtherBody;
 	collisionResponse mResponse;
 	bool mObjectsAreApproaching = false;
-	float mRelativeSpeed;
+	float mNGB_RelativeSpeed;
 
 	//glm::vec2 mCollisionNormal;
 
@@ -94,7 +94,7 @@ public:
 	glm::vec2 mNewVelocity; // Specifically for bounce.
 
 	// Piercing collision
-	glm::vec2 mRelativeVelocity;
+	glm::vec2 mNGB_RelativeVelocity;
 
 	// Used by explosions.
 	float mDistance;

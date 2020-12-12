@@ -4,7 +4,9 @@
 
 #include "glm/gtx/projection.hpp"
 
-AIEnemyCore::AIEnemyCore() : Component(ComponentTypes::TYPE_AI_ENEMYCORE) {}
+AIEnemyCore::AIEnemyCore() : Component(ComponentTypes::TYPE_AI_CORE),
+mpPhysicsBody(nullptr), mpShipData(nullptr)
+{}
 
 AIEnemyCore::~AIEnemyCore()
 {
@@ -16,10 +18,13 @@ void AIEnemyCore::Initialize()
 {
 	// Register with the enemies list.
 	GlobalManager::getGameStateManager()->mLivingEnemies.push_back(this->mpOwner->mName);
+
+	mpShipData = static_cast<ShipData*>(mpOwner->GetComponent(ComponentTypes::TYPE_SHIPDATA));
+	mpPhysicsBody = static_cast<PhysicsBody*>(mpOwner->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
 }
 
 
-void AIEnemyCore::Update()
+void AIEnemyCore::Update() 
 {
 	if (GlobalManager::getGameStateManager()->mIsGamePaused)
 		return;
@@ -33,17 +38,21 @@ void AIEnemyCore::Update()
 
 	// Find the nearest gravitational body.
 	getNearestGravityBody();
-
 }
 
-void AIEnemyCore::handleEvent(Event* pEvent)
-{
-}
+void AIEnemyCore::handleEvent(Event* pEvent) {}
 
 // AI Functions
 
 void AIEnemyCore::getNearestGravityBody()
 {
+	if (GlobalManager::getGameStateManager()->mIsGamePaused)
+		return;
+	if (mpShipData == nullptr || mpPhysicsBody == nullptr || !mpPhysicsBody->mHasRunOnce )
+		return;
+	if (!mpOwner->mIsAlive)
+		return;
+
 	glm::vec2 myPosition = mpPhysicsBody->mPosition;
 
 	// Get nearest
@@ -119,9 +128,8 @@ void AIEnemyCore::calculateOrbitalParameters()
 //void AIEnemyCore::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
 void AIEnemyCore::keepOrbit()
 {
-	//std::cout << "Prograde:" << progradeVelocity.x << ", " << progradeVelocity.y << std::endl;
-	//std::cout << "Radial:" << radialVelocity.x << ", " << radialVelocity.y << std::endl;
-	//std::cout << "Orbital radius is " << orbitalRadius << " and desired altitiude is " << mDesiredAltitude << std::endl;
+	if (mpNearestGravityBody == nullptr || mpPhysicsBody == nullptr || mpShipData == nullptr)
+		return;
 
 	float orbitalRadius = mNGB_Dist;
 	// Go up or down.
@@ -164,6 +172,9 @@ void AIEnemyCore::keepOrbit()
 
 void AIEnemyCore::matchVelocityVector(glm::vec2 desiredVelocity)
 {
+	if (mpPhysicsBody == nullptr || mpShipData == nullptr)
+		return;
+
 	glm::vec2 currentVelocity = mpPhysicsBody->mVelocity;
 	float speedDiff = glm::distance(desiredVelocity, currentVelocity);
 	glm::vec2 velocityDiff = desiredVelocity - currentVelocity;
@@ -199,6 +210,9 @@ void AIEnemyCore::matchVelocityVector(glm::vec2 desiredVelocity)
 // Best used w hen theres no gravity.
 void AIEnemyCore::tryToStop()
 {
+	if (mpShipData == nullptr || mpPhysicsBody == nullptr)
+		return;
+
 	glm::vec2 myVelocity = mpPhysicsBody->mVelocity;
 
 	glm::vec2 accelVector = glm::normalize(myVelocity);
@@ -230,6 +244,9 @@ void AIEnemyCore::tryToStop()
 
 float AIEnemyCore::alignToVector(glm::vec2 alignmentVector)
 {
+	if (mpPhysicsBody == nullptr || mpShipData == nullptr)
+		return 0.0f;
+
 	glm::vec2 myNormal = mpPhysicsBody->mRightDir;
 	float alignmentAmount = glm::dot(alignmentVector, myNormal);
 
@@ -257,6 +274,9 @@ float AIEnemyCore::alignToVector(glm::vec2 alignmentVector)
 
 void AIEnemyCore::preferredOrientation()
 {
+	if (mpPhysicsBody == nullptr || mpShipData == nullptr)
+		return;
+
 	if (mOrientationBehavior == "FACE_PLAYER")
 	{
 
@@ -267,9 +287,6 @@ void AIEnemyCore::preferredOrientation()
 	}
 	// By default, no need to do anything else; just use the natural angular damping specified in ship data.
 }
-
-
-
 
 
 

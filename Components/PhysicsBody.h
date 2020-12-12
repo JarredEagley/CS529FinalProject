@@ -73,6 +73,7 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
+	bool mHasRunOnce = false;
 	glm::vec2 mForwardDir;
 	glm::vec2 mRightDir;
 
