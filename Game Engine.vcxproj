@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Components\AIEnemyChase.cpp" />
     <ClCompile Include="Components\AIEnemyCore.cpp" />
     <ClCompile Include="Components\AIEnemyStationary.cpp" />
     <ClCompile Include="Components\AIMissile.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="Managers\Serializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Components\AIEnemyChase.h" />
     <ClInclude Include="Components\AIEnemyCore.h" />
     <ClInclude Include="Components\AIEnemyStationary.h" />
     <ClInclude Include="Components\AIMissile.h" />

@@ -112,6 +112,9 @@
     <ClCompile Include="Components\OrbitalLine.cpp">
       <Filter>Components\Interface</Filter>
     </ClCompile>
+    <ClCompile Include="Components\AIEnemyChase.cpp">
+      <Filter>Components\AI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -231,6 +234,9 @@
     </ClInclude>
     <ClInclude Include="Components\OrbitalLine.h">
       <Filter>Components\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\AIEnemyChase.h">
+      <Filter>Components\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
