@@ -44,7 +44,8 @@ void main()
 			//FragColor += vec4(1,0,0,0.1);
 			break;
 		case DRAW_TYPE_LINE:
-			FragColor = color;
+			//FragColor = color;
+			FragColor = vec4(1,0,1,1);
 			break;
 
 		case DRAW_TYPE_PHYS_AABB:

@@ -143,11 +143,12 @@ private:
 
 	// GLLine stuff
 	GLuint vaoIDLine; // The OpenGL identifier for the Vertex Array Object for this gameObject.
-	// A 1x1 flat white square with default uv's.
 	glm::vec4 vertPosLine[2] = {
-		// Supporting 3d transfomrations. 
 		glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f),	// Left Top
-		glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f)	// Left Bot
+		glm::vec4(0.5f, -0.5f, 0.0f, 1.0f)	// right Bot
+	};
+	unsigned int indicesLine[2] = {
+		0,1
 	};
 
 };

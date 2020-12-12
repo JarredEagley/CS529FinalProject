@@ -24,7 +24,7 @@
 
 #include <iostream>
 
-GLLine::GLLine() : Component(ComponentTypes::TYPE_GLRECT)
+GLLine::GLLine() : Component(ComponentTypes::TYPE_GLLINE)
 {
 }
 
@@ -65,7 +65,7 @@ void GLLine::setUniformData(ShaderProgram* pProgram)
 void GLLine::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj)
 {
 	// Bind
-	unsigned int vaoID = GlobalManager::getGraphicsManager()->getVAORect();
+	unsigned int vaoID = GlobalManager::getGraphicsManager()->getVAOLine();
 	glBindVertexArray(vaoID);
 
 	// Uniforms.

@@ -6,6 +6,7 @@
 #include "Component.h"
 #include "ComponentTypes.h"
 #include "GLLine.h"
+#include "PhysicsBody.h"
 
 class OrbitalLine : public Component
 {

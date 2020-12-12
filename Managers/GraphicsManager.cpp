@@ -382,16 +382,20 @@ void GraphicsManager::buildVAOLine()
 	glBindVertexArray(vaoIDLine);
 
 	// VBO
-	glGenBuffers(2, &vboIDLine[0]);
+	glGenBuffers(1, &vboIDLine[0]);
 
 	// Position (Will be subbed over as needed, but these are default values, sort of.)
-	glBindBuffer(GL_ARRAY_BUFFER, vboIDRect[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertPosLine), &vertPosRect[0][0], GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, vboIDLine[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertPosLine), &vertPosLine[0][0], GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	// EBO
+	GLuint eboID;
+	glGenBuffers(1, &eboID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 2, indicesLine, GL_STATIC_DRAW);
 
 	glBindVertexArray(0); // Set back to default.
 }
