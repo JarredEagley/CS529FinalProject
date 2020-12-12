@@ -56,8 +56,11 @@ public:
 	std::string mOrientationBehvaior = ""; // Options are 'FACE_PLAYER' and 'FACE_PROGRADE'. If none specified, then AI will simply have no preferred orientation unless maneuvering.
 
 private:
-	void preferredOrientation();
+	void keepOrbit(float closestDistSqr, PhysicsBody* pClosest);
 	float alignToVector(glm::vec2 alignmentVector); // Returns alignment amount.
+	void preferredOrientation();
+
+	void AIEnemyStationary::matchVelocityVector(glm::vec2 desiredVelocity);
 
 private:
 	ShipData* mpShipData;
@@ -66,6 +69,8 @@ private:
 	float mMissileLaunchTimer;
 
 	float mManeuveringSpeedThreshold = 10.0f;
+
+	float mOrbitalAdjustmentAgression = 0.2f;
 
 	std::string mTargetName;
 

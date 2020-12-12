@@ -154,7 +154,7 @@ void PhysicsBody::calculateGravityForces()
 			continue;
 
 		float gravScale = numerator / (denominator);
-		gravScale /= 1000.0 * 1000.0; // Convert m^2 to km^2
+		gravScale /= 1000.0 *1000.0; // Convert m^2 to km^2
 
 		//std::cout << "DEBUG - Grav scale is " << gravScale << "\n";
 		
