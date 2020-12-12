@@ -115,6 +115,9 @@
     <ClCompile Include="Components\AIEnemyChase.cpp">
       <Filter>Components\AI</Filter>
     </ClCompile>
+    <ClCompile Include="Components\MissileLauncher.cpp">
+      <Filter>Components\Behavior</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -237,6 +240,9 @@
     </ClInclude>
     <ClInclude Include="Components\AIEnemyChase.h">
       <Filter>Components\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MissileLauncher.h">
+      <Filter>Components\Behavior</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
