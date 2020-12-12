@@ -51,9 +51,9 @@ void Explosion::Update()
 
 		float deltaTime = GlobalManager::getPhysicsManager()->getGameTime();
 		// Decrement intensity.
-		mIntensity -= deltaTime;
+		mIntensity -= deltaTime * GlobalManager::getPhysicsManager()->explosionExpansionRate;
 		// Increment size.
-		mSize += deltaTime;
+		mSize += deltaTime * GlobalManager::getPhysicsManager()->explosionExpansionRate;
 	}
 	else
 	{

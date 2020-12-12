@@ -61,6 +61,8 @@
         "Pierce Damage Multiplier": 3,
         "Explosion Damage Multiplier": 1.0,
 
+        "Explosion Expansion Rate": 1.5,
+
         "Note": "This is in N*(m/kg)^2, most of the game uses kilometers.",
         "Gravitational Constant": 0.0000000000667
     },

@@ -16,6 +16,8 @@ float PhysicsManager::piercingDamageMultiplier = 3.0f;
 float PhysicsManager::deflectDamageMultiplier = 1.0f;
 float PhysicsManager::explosionDamageMultiplier = 1.0f;
 
+float PhysicsManager::explosionExpansionRate = 1.0f;
+
 float PhysicsManager::universalGravitationalConstant = 0.0000000000667f;
 
 void PhysicsManager::destroySingleton()
