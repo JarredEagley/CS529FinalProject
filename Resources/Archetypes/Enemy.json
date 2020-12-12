@@ -45,7 +45,7 @@
 
             "Death Explosion Intensity": 1000.0
         },
-        "TYPE_AI_STATIONARY":
+        "TYPE_AI_CORE":
         {
             "Desired Altitude": 5000,
 
@@ -58,7 +58,10 @@
             "Orientation Behavior":"FACE_PROGRADE",
             "Maneuvering Speed Threshold": 10,
             "Orbital Adjustment Agression": 0.1
-
+        },
+        "TYPE_AI_STATIONARY":
+        {
+            
         }
     }
 }

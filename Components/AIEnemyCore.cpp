@@ -116,7 +116,8 @@ void AIEnemyCore::calculateOrbitalParameters()
 	mOrbitalVelocityRadial = glm::proj(mNGB_RelativeVelocity, mNGB_RelativePosition);
 }
 
-void AIEnemyCore::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
+//void AIEnemyCore::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
+void AIEnemyCore::keepOrbit()
 {
 	//std::cout << "Prograde:" << progradeVelocity.x << ", " << progradeVelocity.y << std::endl;
 	//std::cout << "Radial:" << radialVelocity.x << ", " << radialVelocity.y << std::endl;
@@ -136,7 +137,7 @@ void AIEnemyCore::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
 
 		//std::cout << "dvr: " << desiredVelocityRadial.x << ", " << desiredVelocityRadial.y << std::endl;
 
-		matchVelocityVector(desiredVelocityVector + pClosest->mVelocity);
+		matchVelocityVector(desiredVelocityVector + mpNearestGravityBody->mVelocity);
 	}
 	else if (orbitalRadius < mDesiredAltitude - mOrbitThickness)
 	{
@@ -148,7 +149,7 @@ void AIEnemyCore::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
 		glm::vec2 desiredVelocityPrograde = glm::normalize(mOrbitalVelocityPrograde) * mOrbitalSpeedAtCurrentAltitude * (1.0f + mOrbitalAdjustmentAgression);
 		glm::vec2 desiredVelocityVector = desiredVelocityRadial + desiredVelocityPrograde;
 
-		matchVelocityVector(desiredVelocityVector + pClosest->mVelocity);
+		matchVelocityVector(desiredVelocityVector + mpNearestGravityBody->mVelocity);
 	}
 	else
 	{
@@ -156,7 +157,7 @@ void AIEnemyCore::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
 		float desiredSpeed = mOrbitalSpeedAtCurrentAltitude * (1.0f + mOrbitalAdjustmentAgression);
 		glm::vec2 desiredVelocityPrograde = glm::normalize(mOrbitalVelocityPrograde) * mOrbitalSpeedAtCurrentAltitude;
 
-		matchVelocityVector(desiredVelocityPrograde + pClosest->mVelocity);
+		matchVelocityVector(desiredVelocityPrograde + mpNearestGravityBody->mVelocity);
 	}
 }
 
@@ -193,6 +194,38 @@ void AIEnemyCore::matchVelocityVector(glm::vec2 desiredVelocity)
 	// Use maneuvering thrusters regardless.
 	mpShipData->applyThrustSecondary(velocityDiffNormalized);
 
+}
+
+// Best used w hen theres no gravity.
+void AIEnemyCore::tryToStop()
+{
+	glm::vec2 myVelocity = mpPhysicsBody->mVelocity;
+
+	glm::vec2 accelVector = glm::normalize(myVelocity);
+	glm::vec2 accelNormal = glm::vec2(accelVector.y, -accelVector.x);
+
+	float mySpeed = glm::length(myVelocity);
+
+	// Use drive if speed above a threshold and fuel not depleted.
+	if (mySpeed > mManeuveringSpeedThreshold && mpShipData->mFuel > 0.1f)
+	{
+		// Align
+		float alignmentAmount = alignToVector(accelVector);
+
+		// Accelerate
+		if (alignmentAmount == 0)
+			mpShipData->setThrottle(100.0f);
+		else
+			mpShipData->setThrottle((1.0f / abs(alignmentAmount) - 1.0f) * 1.5f);
+	}
+	else
+	{
+		// Do orientation lock.
+		preferredOrientation();
+	}
+
+	// Use maneuvering thrusters too regardless.
+	mpShipData->applyThrustSecondary(-accelVector);
 }
 
 float AIEnemyCore::alignToVector(glm::vec2 alignmentVector)
@@ -242,7 +275,54 @@ void AIEnemyCore::preferredOrientation()
 
 void AIEnemyCore::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
+	auto inputObj = inputMemberIt->value.GetObject();
 
+	if (inputObj.HasMember("Desired Altitude") && inputObj["Desired Altitude"].IsNumber())
+	{
+		this->mDesiredAltitude = inputObj["Desired Altitude"].GetFloat();
+	}
+
+	if (inputObj.HasMember("Shoot Range") && inputObj["Shoot Range"].IsNumber())
+	{
+		this->mShootRange = inputObj["Shoot Range"].GetFloat();
+	}
+
+	if (inputObj.HasMember("Missile Launch Range") && inputObj["Missile Launch Range"].IsNumber())
+	{
+		this->mMissileLaunchRange = inputObj["Missile Launch Range"].GetFloat();
+	}
+
+	if (inputObj.HasMember("Missile Launch Probability") && inputObj["Missile Launch Probability"].IsNumber())
+	{
+		this->mMissileLaunchProbability = inputObj["Missile Launch Probability"].GetFloat();
+	}
+
+	if (inputObj.HasMember("Missile Launch Time") && inputObj["Missile Launch Time"].IsNumber())
+	{
+		this->mMissileLaunchTimerMax = inputObj["Missile Launch Time"].GetFloat();
+		this->mMissileLaunchTimer = mMissileLaunchTimerMax;
+	}
+
+
+	if (inputObj.HasMember("Orientation Behavior") && inputObj["Orientation Behavior"].IsString())
+	{
+		this->mOrientationBehavior = inputObj["Orientation Behavior"].GetString();
+	}
+
+	if (inputObj.HasMember("Maneuvering Speed Threshold") && inputObj["Maneuvering Speed Threshold"].IsNumber())
+	{
+		this->mManeuveringSpeedThreshold = inputObj["Maneuvering Speed Threshold"].GetFloat();
+	}
+
+	if (inputObj.HasMember("Orbital Adjustment Agression") && inputObj["Orbital Adjustment Agression"].IsNumber())
+	{
+		this->mOrbitalAdjustmentAgression = inputObj["Orbital Adjustment Agression"].GetFloat();
+	}
+
+	if (inputObj.HasMember("Orbit Thickness") && inputObj["Orbit Thickness"].IsNumber())
+	{
+		this->mOrbitThickness = inputObj["Orbit Thickness"].GetFloat();
+	}
 
 
 }

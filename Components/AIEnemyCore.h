@@ -13,6 +13,8 @@
 						Note:
 						Does not implement any behvaior on its own. Simply
 						a core for a behvior component.
+						Essentially: Behvior tells Core what to do,
+						core tells shipdata how to move.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
 	Project:			JarredEagley_FinalProject
@@ -45,8 +47,9 @@ public:
 
 	void calculateOrbitalParameters();
 
-	void keepOrbit(float closestDistSqr, PhysicsBody* pClosest);
+	void keepOrbit();
 	void matchVelocityVector(glm::vec2 desiredVelocity);
+	void tryToStop();
 	float alignToVector(glm::vec2 alignmentVector);
 	void preferredOrientation();
 
