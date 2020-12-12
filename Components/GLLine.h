@@ -45,6 +45,7 @@ public:
 public:
 	glm::vec2 mStartPos = glm::vec2(1.0f);
 	glm::vec2 mEndPos = glm::vec2(0.0f);
+	float mWidth = 1.0f;
 
 private:
 	// No private variables.

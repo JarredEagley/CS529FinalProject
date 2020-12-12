@@ -25,6 +25,8 @@ out vec4 FragColor;
 
 uniform sampler2D ourTexture;
 
+uniform vec4 color;
+
 uniform int drawType;
 const int DRAW_TYPE_RECT = 0;
 const int DRAW_TYPE_LINE = 1;
@@ -42,6 +44,7 @@ void main()
 			//FragColor += vec4(1,0,0,0.1);
 			break;
 		case DRAW_TYPE_LINE:
+			FragColor = color;
 			break;
 
 		case DRAW_TYPE_PHYS_AABB:

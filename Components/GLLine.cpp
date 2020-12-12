@@ -88,7 +88,9 @@ void GLLine::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// Draw.
+	glLineWidth(mWidth);
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
+	glLineWidth(1.0f);
 
 	// Unbind
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -106,15 +108,15 @@ void GLLine::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		return;
 	}
 	// Get the GLRect object.
-	rapidjson::GenericObject<true, rapidjson::Value> rectObject = inputMemberIt->value.GetObject();
+	rapidjson::GenericObject<true, rapidjson::Value> inputObj = inputMemberIt->value.GetObject();
 
 	// Try to deserialize color.
-	if (rectObject.HasMember("Color"))
+	if (inputObj.HasMember("Color"))
 	{
-		if (rectObject["Color"].IsArray())
+		if (inputObj["Color"].IsArray())
 		{
 			// Get the array from the JSON...
-			rapidjson::GenericArray<true,rapidjson::Value> colorArray = rectObject["Color"].GetArray();
+			rapidjson::GenericArray<true,rapidjson::Value> colorArray = inputObj["Color"].GetArray();
 
 			// Check array formatting.
 			if (colorArray.Capacity() == 4 && colorArray[0].IsNumber())
@@ -135,4 +137,7 @@ void GLLine::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 				std::cout << "Warning: GLLine had a 'Color' but its value was not an array of numbers!" << std::endl;
 		}
 	}
+
+	if (inputObj.HasMember("Width") && inputObj["Width"].IsNumber())
+		this->mWidth = inputObj["Width"].GetFloat();
 }

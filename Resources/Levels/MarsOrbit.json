@@ -46,7 +46,8 @@
                 "TYPE_TRANSFORM": {},
                 "TYPE_GLLINE": 
                 {
-                    "Color": [1,0,1,1]
+                    "Color": [1,0,1,1],
+                    "Width": 10
                 },
                 "TYPE_ORBITALLINE": {}
             },
