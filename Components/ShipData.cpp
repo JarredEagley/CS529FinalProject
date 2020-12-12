@@ -132,7 +132,7 @@ void ShipData::generatePower()
 
 void ShipData::applyThrustMain()
 {
-	if (mpPhysicsBody == nullptr)
+	if (mpPhysicsBody == nullptr )
 		return;
 
 	if (mThrottle < mThrottleDeadzone)
@@ -142,7 +142,6 @@ void ShipData::applyThrustMain()
 	{
 		mpPhysicsBody->applyForce(mpPhysicsBody->mForwardDir * mMainAcceleration * (mThrottle / 100.0f));
 	}
-
 	
 	useFuel();
 }
