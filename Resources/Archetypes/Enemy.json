@@ -57,7 +57,7 @@
 
             "Orientation Behavior":"FACE_PROGRADE",
             "Maneuvering Speed Threshold": 10,
-            "Orbital Adjustment Agression": 0.3
+            "Orbital Adjustment Agression": 0.1
 
         }
     }

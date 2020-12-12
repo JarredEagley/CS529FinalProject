@@ -137,29 +137,42 @@ void AIEnemyStationary::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
 	//std::cout << "Orbital radius is " << orbitalRadius << " and desired altitiude is " << mDesiredAltitude << std::endl;
 
 	// Go up or down.
-	if (orbitalRadius > mDesiredAltitude)
+	if (orbitalRadius > mDesiredAltitude+mOrbitThickness)
 	{
+		printf("Down\n");
 		// Try go down
 		// Cut our orbital velocity down a little.
 		float desiredSpeed = orbitalSpeedAtCurrentAltitude * (1.0f-mOrbitalAdjustmentAgression);
 		// Aim our velocity vector down a little.
-		glm::vec2 desiredVelocityRadial = glm::normalize(relativePosition) * (0.0f-mOrbitalAdjustmentAgression);
+		glm::vec2 desiredVelocityRadial = glm::normalize(relativePosition) * orbitalSpeedAtCurrentAltitude * (0.0f-mOrbitalAdjustmentAgression);
 		glm::vec2 desiredVelocityPrograde = glm::normalize(progradeVelocity) * orbitalSpeedAtCurrentAltitude * (1.0f-mOrbitalAdjustmentAgression);
+		glm::vec2 desiredVelocityVector = desiredVelocityRadial + desiredVelocityPrograde;
+
+		//std::cout << "dvr: " << desiredVelocityRadial.x << ", " << desiredVelocityRadial.y << std::endl;
+
+		matchVelocityVector(desiredVelocityVector + pClosest->mVelocity);
+	}
+	else if (orbitalRadius < mDesiredAltitude-mOrbitThickness)
+	{
+		printf("Up\n");
+		// Try go up
+		// Increase our velocity a little
+		float desiredSpeed = orbitalSpeedAtCurrentAltitude * (1.0f+mOrbitalAdjustmentAgression);
+		// Aim our velocity vector up a little.
+		glm::vec2 desiredVelocityRadial = glm::normalize(relativePosition) * orbitalSpeedAtCurrentAltitude * (0.0f+mOrbitalAdjustmentAgression);
+		glm::vec2 desiredVelocityPrograde = glm::normalize(progradeVelocity) * orbitalSpeedAtCurrentAltitude * (1.0f+mOrbitalAdjustmentAgression);
 		glm::vec2 desiredVelocityVector = desiredVelocityRadial + desiredVelocityPrograde;
 
 		matchVelocityVector(desiredVelocityVector + pClosest->mVelocity);
 	}
 	else
 	{
-		// Try go up
-		// Increase our velocity a little
-		float desiredSpeed = orbitalSpeedAtCurrentAltitude * (1.0f+mOrbitalAdjustmentAgression);
-		// Aim our velocity vector up a little.
-		glm::vec2 desiredVelocityRadial = glm::normalize(relativePosition) * (0.0f+mOrbitalAdjustmentAgression);
-		glm::vec2 desiredVelocityPrograde = glm::normalize(progradeVelocity) * orbitalSpeedAtCurrentAltitude * (1.0f+mOrbitalAdjustmentAgression);
-		glm::vec2 desiredVelocityVector = desiredVelocityRadial + desiredVelocityPrograde;
+		printf("Good\n");
+		// Try to maintain proper orbital velocity.
+		float desiredSpeed = orbitalSpeedAtCurrentAltitude * (1.0f + mOrbitalAdjustmentAgression);
+		glm::vec2 desiredVelocityPrograde = glm::normalize(progradeVelocity) * orbitalSpeedAtCurrentAltitude;
 
-		matchVelocityVector(desiredVelocityVector + pClosest->mVelocity);
+		matchVelocityVector(desiredVelocityPrograde + pClosest->mVelocity);
 	}
 }
 

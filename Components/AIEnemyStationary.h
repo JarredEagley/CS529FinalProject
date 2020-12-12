@@ -67,10 +67,9 @@ private:
 	PhysicsBody* mpPhysicsBody;
 	
 	float mMissileLaunchTimer;
-
 	float mManeuveringSpeedThreshold = 10.0f;
-
 	float mOrbitalAdjustmentAgression = 0.2f;
+	float mOrbitThickness = 50.0f; // Fudge factor for desired orbit so its not ALWAYS trying to maneuver.
 
 	std::string mTargetName;
 
