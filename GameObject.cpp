@@ -67,10 +67,13 @@ mRenderPassType(RenderPassType::NONE)
 
 GameObject::~GameObject()
 {
-	if (mName == "PLAYER")
+	if (mName == "PLAYER" && this->mIsAlive && !GlobalManager::getGameStateManager()->mIsGamePaused)
 	{
+		// Didn't end up needing this player killed event.
 		PlayerKilledEvent *pKillEvent = new PlayerKilledEvent();
 		GlobalManager::getEventManager()->broadcastEvent(pKillEvent);
+
+		GlobalManager::getGameStateManager()->isPlayerKilled = true;
 	}
 
 	if (GlobalManager::getGameStateManager()->DEBUG_VerboseGameObjects)

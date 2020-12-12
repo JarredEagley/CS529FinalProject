@@ -33,6 +33,9 @@ void Explosion::Initialize()
 
 void Explosion::Update()
 {
+	if (GlobalManager::getGameStateManager()->mIsGamePaused)
+		return;
+
 	// Explosion always starts at 0.1 size.
 	// Input is the intensity.
 	// Rate of change is same for size and intensity.

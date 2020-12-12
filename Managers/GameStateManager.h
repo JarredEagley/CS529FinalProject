@@ -36,8 +36,15 @@ public:
 
 	void Update();
 
+	// Note: Target only used for GO_TO, so has a default value of ""
+	void handleMenuItemCommand(std::string command, std::string target);
+
 	void displayPauseMenu();
 	void destroyPauseMenu();
+	
+	bool testForVictory();
+	void displayVictoryMenu();
+	void displayDefeatMenu();
 	
 	float getRandomFloat();
 
@@ -60,14 +67,17 @@ public:
 	std::string currentLevelPath;
 	std::string currentLevelName;
 
-	
-	// Note: Target only used for GO_TO, so has a default value of ""
-	void handleMenuItemCommand(std::string command, std::string target);
-
-
 	bool mIsGamePaused = false;
+	bool mIsLevelLive = false;
+	
+	// Menu
+	
+	static std::vector<std::string> mMenuItemNames;
 
-	std::list<std::string> mLivingEnemies;
+
+	// Victory condition
+	static std::list<std::string> mLivingEnemies;
+	bool isPlayerKilled = false;
 
 	// The maximum coordinates before a transform component self destructs its game object.
 	float gameCleanupDistance = 500000.0f;
@@ -83,7 +93,6 @@ public:
 
 	std::string initialScene = "MainMenu.json";
 
-	static std::vector<std::string> mMenuItemNames;
 
 private:
 	GameStateManager();

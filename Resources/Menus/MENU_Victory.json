@@ -1,0 +1,38 @@
+[
+    {
+        "Name": "Victory Title",
+        "Archetype": "Menu\\Victory_Title.json",
+        "Components": {
+            "TYPE_TRANSFORM": {
+                "Translation": [
+                    0,
+                    0.7
+                ]
+            }
+        }
+    },
+    {
+        "Name": "Victory Quit Menu",
+        "Archetype": "Menu\\Pause_QuitToMenu.json",
+        "Components": {
+            "TYPE_TRANSFORM": {
+                "Translation": [
+                    0,
+                    0.5
+                ]
+            }
+        }
+    },
+    {
+        "Name": "Victory Quit Desktop",
+        "Archetype": "Menu\\General_QuitToDesktop.json",
+        "Components": {
+            "TYPE_TRANSFORM": {
+                "Translation": [
+                    0,
+                    0.3
+                ]
+            }
+        }
+    }
+]

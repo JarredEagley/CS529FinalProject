@@ -1,0 +1,15 @@
+{
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+            "Scale": [0.5,0.125]
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "MissionFailed.png",
+            "Color": [0.0, 0.6, 0.1, 0.9]
+        }
+    },
+    "Render Pass": "HUD"
+}

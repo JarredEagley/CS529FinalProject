@@ -103,9 +103,6 @@
     <ClCompile Include="Components\AIEnemyStationary.cpp">
       <Filter>Components\AI</Filter>
     </ClCompile>
-    <ClCompile Include="Components\FXPlume.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Components\AIEnemyCore.cpp">
       <Filter>Components\AI</Filter>
     </ClCompile>
@@ -116,6 +113,12 @@
       <Filter>Components\AI</Filter>
     </ClCompile>
     <ClCompile Include="Components\MissileLauncher.cpp">
+      <Filter>Components\Behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\FXPlume.cpp">
+      <Filter>Components\Behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\TargetLock.cpp">
       <Filter>Components\Behavior</Filter>
     </ClCompile>
   </ItemGroup>
@@ -229,9 +232,6 @@
     <ClInclude Include="Components\AIEnemyStationary.h">
       <Filter>Components\AI</Filter>
     </ClInclude>
-    <ClInclude Include="Components\FXPlume.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Components\AIEnemyCore.h">
       <Filter>Components\AI</Filter>
     </ClInclude>
@@ -242,6 +242,12 @@
       <Filter>Components\AI</Filter>
     </ClInclude>
     <ClInclude Include="Components\MissileLauncher.h">
+      <Filter>Components\Behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\FXPlume.h">
+      <Filter>Components\Behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\TargetLock.h">
       <Filter>Components\Behavior</Filter>
     </ClInclude>
   </ItemGroup>

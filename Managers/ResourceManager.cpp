@@ -116,8 +116,6 @@ GLuint ResourceManager::loadTexture(const char* texName, TexType _texType)
 
 void ResourceManager::loadLevel(std::string fileName)
 {
-
-
 	// Use serializer to read the json in.
 	Serializer* pSer = GlobalManager::getSerializer();
 	std::string filePath = pathLevels + fileName;
@@ -154,6 +152,8 @@ void ResourceManager::loadLevel(std::string fileName)
 		if (pGSM->DEBUG_VerboseGOF)
 			std::cout << "Warning: Input level file did not have a 'Scene Type', assuming SCENE_LEVEL" << std::endl;
 	}
+
+	pGSM->mIsLevelLive = true; 
 }
 
 void ResourceManager::loadLevelArchetype(std::string fileName)

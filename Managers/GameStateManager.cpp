@@ -19,6 +19,7 @@
 
 GameStateManager* GameStateManager::instance = nullptr;
 std::vector<std::string> GameStateManager::mMenuItemNames;
+std::list<std::string> GameStateManager::mLivingEnemies;
 
 void GameStateManager::destroySingleton()
 {
@@ -41,32 +42,48 @@ void GameStateManager::Update()
 	{
 		// --- Level --- //
 
-		// Handle pausing
-		if (pIM->IsKeyTriggered(SDL_SCANCODE_ESCAPE))
+		// Handle victory.
+		bool victory = testForVictory();
+		if (victory && !mIsGamePaused)
 		{
-			// Game is paused, and is being unpaused.
-			if (mIsGamePaused)
+			destroyPauseMenu();
+			displayVictoryMenu();
+		}
+		else
+		{
+			// Handle defeat
+			if (isPlayerKilled && !mIsGamePaused)
 			{
 				destroyPauseMenu();
-				mIsGamePaused = false;
+				displayDefeatMenu();
 			}
-			// Game is unpaused, and is being paused.
 			else
 			{
-				displayPauseMenu();
-				mIsGamePaused = true;
+				// Handle pausing
+				if (pIM->IsKeyTriggered(SDL_SCANCODE_ESCAPE))
+				{
+					// Game is paused, and is being unpaused.
+					if (mIsGamePaused)
+					{
+						destroyPauseMenu();
+						mIsGamePaused = false;
+					}
+					// Game is unpaused, and is being paused.
+					else
+					{
+						displayPauseMenu();
+						mIsGamePaused = true;
+					}
+				}
 			}
 		}
 
-
-
+		// Defeat will be tested for when player game object is destroyed. 
 
 	}
 	else
 	{
 		// --- Menu --- //
-
-
 	}
 
 }
@@ -109,23 +126,6 @@ void GameStateManager::displayPauseMenu()
 
 	GlobalManager::getResourceManager()->loadGameObjectArray("Resources\\Menus\\MENU_Pause.json", true);
 
-	/*
-	{
-		std::string pathName = pRM->pathArchetypes + "Menu\\Pause_Title.json";
-		GameObject* pNewGO = pGOF->createDynamicGameObject(pathName, "PAUSEMENU_Title");
-		mMenuItemNames.push_back(pNewGO->mName);
-	}
-
-	{
-		std::string pathName = pRM->pathArchetypes + "Menu\\Pause_Restart.json";
-		GameObject* pNewGO = pGOF->createDynamicGameObject(pathName, "PAUSEMENU_Restart");
-		mMenuItemNames.push_back(pNewGO->mName);
-	}
-	*/
-
-
-
-
 }
 
 void GameStateManager::destroyPauseMenu()
@@ -139,6 +139,26 @@ void GameStateManager::destroyPauseMenu()
 	}
 }
 
+bool GameStateManager::testForVictory()
+{
+	if (mLivingEnemies.size() > 0)
+		return false;
+	return true;
+}
+
+void GameStateManager::displayVictoryMenu()
+{
+	mIsLevelLive = false;
+	mIsGamePaused = true;
+	GlobalManager::getResourceManager()->loadGameObjectArray("Resources\\Menus\\MENU_Victory.json", true);
+}
+
+void GameStateManager::displayDefeatMenu()
+{
+	mIsLevelLive = false;
+	mIsGamePaused = true;
+	GlobalManager::getResourceManager()->loadGameObjectArray("Resources\\Menus\\MENU_Defeat.json",true);
+}
 
 float GameStateManager::getRandomFloat()
 {

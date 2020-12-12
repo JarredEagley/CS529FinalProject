@@ -1,0 +1,50 @@
+[
+    {
+        "Name": "Defeat Title",
+        "Archetype": "Menu\\Defeat_Title.json",
+        "Components": {
+            "TYPE_TRANSFORM": {
+                "Translation": [
+                    0,
+                    0.7
+                ]
+            }
+        }
+    },
+    {
+        "Name": "Defeat Restart",
+        "Archetype": "Menu\\Pause_Restart.json",
+        "Components": {
+            "TYPE_TRANSFORM": {
+                "Translation": [
+                    0,
+                    0.5
+                ]
+            }
+        }
+    },
+    {
+        "Name": "Defeat Quit Menu",
+        "Archetype": "Menu\\Pause_QuitToMenu.json",
+        "Components": {
+            "TYPE_TRANSFORM": {
+                "Translation": [
+                    0,
+                    0.3
+                ]
+            }
+        }
+    },
+    {
+        "Name": "Defeat Quit Desktop",
+        "Archetype": "Menu\\General_QuitToDesktop.json",
+        "Components": {
+            "TYPE_TRANSFORM": {
+                "Translation": [
+                    0,
+                    0.1
+                ]
+            }
+        }
+    }
+]
