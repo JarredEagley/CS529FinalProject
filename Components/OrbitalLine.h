@@ -23,7 +23,9 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
-	// No public variables.
+	int mIterations = 1;
+	float mStepSize = 1.0f;
+
 private:
 	// No private methods.
 private:

@@ -1,6 +1,6 @@
 
 
-#include "CopyPaste.h"
+#include "OrbitalLine.h"
 
 OrbitalLine::OrbitalLine() : Component(ComponentTypes::TYPE_UNDEFINED)
 {
