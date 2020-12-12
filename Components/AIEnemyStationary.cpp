@@ -43,6 +43,7 @@ void AIEnemyStationary::Update()
 	}
 
 	// --- behavior --- //
+
 	if (mpAICore->isInGravity)
 	{
 		mpAICore->keepOrbit();
@@ -61,8 +62,5 @@ void AIEnemyStationary::handleEvent(Event* pEvent)
 
 void AIEnemyStationary::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
-	auto inputObj = inputMemberIt->value.GetObject();
-
-
-
+	// Nothing to deserialize.
 }

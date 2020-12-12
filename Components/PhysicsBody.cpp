@@ -199,8 +199,7 @@ void PhysicsBody::applyForce(glm::vec2 F)
 		|| isnan(F.y)
 		|| isinf(F.x)
 		|| isinf(F.y)
-		|| F.x == 0.0f
-		|| F.y == 0.0f
+		|| (F.x == 0.0f && F.y == 0.0f)
 		)
 		return;
 
