@@ -14,6 +14,23 @@
         {
             "Name": "ClickToBegin",
             "Archetype": "HUD\\HUD_ClickToBegin.json"
+        },
+        {
+            "Name": "Target Lock",
+            "Components":
+            {
+                "TYPE_GLRECT": {
+                    "Texture": "Target.png",
+                    "Color": [1,0,0,0]
+                },
+                "TYPE_TARGETLOCK": {
+                    "Alpha": 0.5
+                },
+                "TYPE_SPINNER": {
+                    "Spin Rate": 0.5
+                }
+            },
+            "Render Pass": "BACKGROUND"
         }
     ]
 }

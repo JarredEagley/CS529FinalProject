@@ -39,6 +39,7 @@ public:
 
 		if (strcmp(str, "TYPE_CONTROLLERSHIP") == 0)	return TYPE_CONTROLLERSHIP;
 		if (strcmp(str, "TYPE_FOLLOWCURSOR") == 0)		return TYPE_FOLLOWCURSOR;
+		if (strcmp(str, "TYPE_SPINNER") == 0)			return TYPE_SPINNER;
 		if (strcmp(str, "TYPE_TARGETLOCK") == 0)		return TYPE_TARGETLOCK;
 		if (strcmp(str, "TYPE_TURRET") == 0)			return TYPE_TURRET;
 		if (strcmp(str, "TYPE_MISSILELAUNCHER") == 0)	return TYPE_MISSILELAUNCHER;
@@ -82,6 +83,7 @@ public:
 
 		TYPE_CONTROLLERSHIP,
 		TYPE_FOLLOWCURSOR,
+		TYPE_SPINNER,
 		TYPE_TARGETLOCK,
 		TYPE_TURRET,
 		TYPE_MISSILELAUNCHER,

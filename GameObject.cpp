@@ -26,6 +26,7 @@
 #include "Components/ControllerShip.h"
 #include "Components/FollowCursor.h"
 #include "Components/TargetLock.h"
+#include "Components/Spinner.h"
 
 #include "Components/Turret.h"
 #include "Components/MissileLauncher.h"
@@ -192,6 +193,10 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_FOLLOWCURSOR):
 		pNewComponent = new FollowCursor();
 		break;
+	case (ComponentTypes::TYPE_SPINNER):
+		pNewComponent = new Spinner();
+		break;
+
 	case (ComponentTypes::TYPE_TARGETLOCK):
 		pNewComponent = new TargetLock();
 		break;
