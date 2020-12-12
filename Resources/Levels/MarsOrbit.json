@@ -44,7 +44,10 @@
             "Components":
             {
                 "TYPE_TRANSFORM": {},
-                "TYPE_GLLINE": {},
+                "TYPE_GLLINE": 
+                {
+                    "Color": [1,0,1,1]
+                },
                 "TYPE_ORBITALLINE": {}
             },
             "Parent":"PLAYER"
@@ -52,7 +55,8 @@
 
         {
             "Name":"Mars",
-            "Archetype": "Mars.json"
+            "Archetype": "Mars.json",
+            "Components":{"TYPE_GLRECT": {"Color": [1,1,1,0.1]}}
         },
 
         {

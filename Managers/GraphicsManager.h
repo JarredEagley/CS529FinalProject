@@ -95,7 +95,11 @@ public:
 	// HUD objects will be in the hud pass, which is rendered onto an FBO.
 	static std::unordered_map<RenderPassType, std::list<GameObject*>> mRenderPasses;
 
+	// Annoying, but for some functionalities I need the vbo's exposed. Just need to be careful with this.
 	GLuint vboIDRect[3];
+	GLuint vboIDLine[1]; // Line will sub data for the vertex positions.
+
+
 private:
 	GraphicsManager();
 
@@ -138,7 +142,6 @@ private:
 
 
 	// GLLine stuff
-	GLuint vboIDLine[1]; // Line will sub data for the vertex positions.
 	GLuint vaoIDLine; // The OpenGL identifier for the Vertex Array Object for this gameObject.
 	// A 1x1 flat white square with default uv's.
 	glm::vec4 vertPosLine[2] = {

@@ -82,7 +82,10 @@ void GLLine::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 		glm::vec4(mStartPos, 0.0f, 1.0f),	// Left Top
 		glm::vec4(mEndPos, 0.0f, 1.0f)	// Left Bot
 	};
+	GLuint VBO = GlobalManager::getGraphicsManager()->vboIDLine[0];
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertPosLine), vertPosLine);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// Draw.
 	glDrawElements(GL_LINES, 2, GL_UNSIGNED_INT, 0);
@@ -104,9 +107,6 @@ void GLLine::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	}
 	// Get the GLRect object.
 	rapidjson::GenericObject<true, rapidjson::Value> rectObject = inputMemberIt->value.GetObject();
-
-	char* storedTexture = nullptr; // TO-DO: Do I need these? Probably not...
-	int storedColor[4]; // RGBA
 
 	// Try to deserialize color.
 	if (rectObject.HasMember("Color"))
