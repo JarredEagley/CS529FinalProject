@@ -38,6 +38,8 @@ public:
 		if (strcmp(str, "TYPE_FX_PLUME") == 0)			return TYPE_FX_PLUME;
 
 		if (strcmp(str, "TYPE_CONTROLLERSHIP") == 0)	return TYPE_CONTROLLERSHIP;
+		if (strcmp(str, "TYPE_FOLLOWCURSOR") == 0)		return TYPE_FOLLOWCURSOR;
+		if (strcmp(str, "TYPE_TARGETLOCK") == 0)		return TYPE_TARGETLOCK;
 		if (strcmp(str, "TYPE_TURRET") == 0)			return TYPE_TURRET;
 		if (strcmp(str, "TYPE_MISSILELAUNCHER") == 0)	return TYPE_MISSILELAUNCHER;
 
@@ -55,7 +57,6 @@ public:
 		if (strcmp(str, "TYPE_METER_FUEL") == 0)		return TYPE_METER_FUEL;
 		if (strcmp(str, "TYPE_METER_HEALTH") == 0)		return TYPE_METER_HEALTH;
 		if (strcmp(str, "TYPE_MARKER_THROTTLE") == 0)	return TYPE_MARKER_THROTTLE;
-		if (strcmp(str, "TYPE_FOLLOWCURSOR") == 0)		return TYPE_FOLLOWCURSOR;
 		if (strcmp(str, "TYPE_MENUITEM") == 0)			return TYPE_MENUITEM;
 
 		if (strcmp(str, "TYPE_EXPLOSION") == 0)			return TYPE_EXPLOSION;
@@ -80,6 +81,8 @@ public:
 		TYPE_FX_PLUME,
 
 		TYPE_CONTROLLERSHIP,
+		TYPE_FOLLOWCURSOR,
+		TYPE_TARGETLOCK,
 		TYPE_TURRET,
 		TYPE_MISSILELAUNCHER,
 
@@ -97,7 +100,6 @@ public:
 		TYPE_METER_FUEL,
 		TYPE_METER_HEALTH,
 		TYPE_MARKER_THROTTLE,
-		TYPE_FOLLOWCURSOR,
 		TYPE_MENUITEM,
 		
 		TYPE_EXPLOSION,

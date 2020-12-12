@@ -24,6 +24,8 @@
 #include "Components/Transform.h"
 
 #include "Components/ControllerShip.h"
+#include "Components/FollowCursor.h"
+#include "Components/TargetLock.h"
 
 #include "Components/Turret.h"
 #include "Components/MissileLauncher.h"
@@ -49,7 +51,6 @@
 #include "Components/ThrottleMeter.h"
 #include "Components/FuelMeter.h"
 #include "Components/HealthMeter.h"
-#include "Components/FollowCursor.h"
 #include "Components/Explosion.h"
 #include "Components/NPCHealthMeter.h"
 #include "Components/MenuItem.h"
@@ -188,6 +189,12 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_CONTROLLERSHIP):
 		pNewComponent = new ControllerShip();
 		break;
+	case (ComponentTypes::TYPE_FOLLOWCURSOR):
+		pNewComponent = new FollowCursor();
+		break;
+	case (ComponentTypes::TYPE_TARGETLOCK):
+		pNewComponent = new TargetLock();
+		break;
 	case (ComponentTypes::TYPE_TURRET):
 		pNewComponent = new Turret();
 		break;
@@ -253,9 +260,7 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_MENUITEM):
 		pNewComponent = new MenuItem();
 		break;
-	case (ComponentTypes::TYPE_FOLLOWCURSOR):
-		pNewComponent = new FollowCursor();
-		break;
+
 	case (ComponentTypes::TYPE_EXPLOSION):
 		pNewComponent = new Explosion();
 		break;

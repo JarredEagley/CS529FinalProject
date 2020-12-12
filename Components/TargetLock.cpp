@@ -16,7 +16,7 @@
 
 #include "TargetLock.h"
 
-TargetLock::TargetLock() : Component(ComponentTypes::TYPE_UNDEFINED) // TO-DO: Define type
+TargetLock::TargetLock() : Component(ComponentTypes::TYPE_TARGETLOCK) 
 {
 }
 
