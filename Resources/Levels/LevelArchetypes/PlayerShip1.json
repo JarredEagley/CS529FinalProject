@@ -77,6 +77,11 @@
             "Name": "PlayerShip_Indicator_Forward",
             "Archetype": "Indicators\\ForwardIndicator.json",
             "Parent":"PLAYER"
+        },
+        {
+            "Name": "PlayerShip_Trajectory",
+            "Archetype": "TrajectoryLine.json",
+            "Parent": "PLAYER"
         }
     ]
 }

@@ -22,6 +22,18 @@
             "Archetype": "Indicators\\NPCHealthIndicator.json",
             "Parent": "SecondShip"
         },
+        {
+            "Name": "SecondShip_Trajectoyr",
+            "Archetype": "TrajectoryLine.json",
+            "Components":
+            {
+                "TYPE_ORBITALLINE":
+                {
+                    "Color": [0.6,0.1,0.1, 1]
+                }
+            },
+            "Parent": "SecondShip"
+        },
 
         {
             "Name": "PLAYER",
@@ -39,20 +51,7 @@
                 }
             }
         },
-        {
-            "Name": "TEST_LINE",
-            "Components":
-            {
-                "TYPE_TRANSFORM": {},
-                "TYPE_GLLINE": 
-                {
-                    "Color": [1,0,1,1],
-                    "Width": 10
-                },
-                "TYPE_ORBITALLINE": {}
-            },
-            "Parent":"PLAYER"
-        },
+
 
         {
             "Name":"Mars",
