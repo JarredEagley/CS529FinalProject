@@ -7,12 +7,12 @@
             ],
             "Rotation": 0,
             "Scale": [
-                20.0,
-                20.0
+                30.0,
+                30.0
             ]
         },
         "TYPE_GLRECT": {
-            "Texture": "Ship1.png",
+            "Texture": "Station1.png",
             "Color": [
                 0.9,
                 0.2,
@@ -24,12 +24,12 @@
             "Mass": 99000.0,
             "Circle": 
             {
-                "Radius": 15
+                "Radius": 17
             }
         },
         "TYPE_SHIPDATA": {
-            "Health": 100,
-            "Health Max": 100,
+            "Health": 200,
+            "Health Max": 200,
             "Power": 100,
             "Power Max": 100,
             "Power Production": 2,
@@ -41,7 +41,7 @@
             "Secondary Acceleration": 500.0,
             "Angular Acceleration": 700.0,
             "Throttle Sensitivity": 2.5,
-            "Death Explosion Intensity": 1500.0
+            "Death Explosion Intensity": 2000.0
         },
         "TYPE_AI_CORE": {
             "Desired Altitude": 5000,

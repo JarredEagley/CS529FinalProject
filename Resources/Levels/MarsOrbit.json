@@ -3,8 +3,40 @@
     [
 
         {
-            "Name": "SecondShip",
-            "Archetype": "Enemy.json",
+            "Name": "Enemy1",
+            "Archetype": "EnemyStation.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [-100, 4050]
+                },
+                "TYPE_PHYSICSBODY":
+                {
+                    "Velocity": [10, 0.5]
+                }
+            }
+        },
+        {
+            "Name": "Enemy1_Health",
+            "Archetype": "Indicators\\NPCHealthIndicator.json",
+            "Parent": "Enemy1"
+        },
+        {
+            "Name": "Enemy1_Trajectoyr",
+            "Archetype": "TrajectoryLine.json",
+            "Components":
+            {
+                "TYPE_ORBITALLINE":
+                {
+                    "Color": [0.6,0.1,0.1, 1]
+                }
+            },
+            "Parent": "Enemy1"
+        },
+        {
+            "Name": "Enemy2",
+            "Archetype": "EnemyShip1.json",
             "Components":
             {
                 "TYPE_TRANSFORM":
@@ -18,12 +50,12 @@
             }
         },
         {
-            "Name": "SecondShip_Health",
+            "Name": "Enemy2_Health",
             "Archetype": "Indicators\\NPCHealthIndicator.json",
-            "Parent": "SecondShip"
+            "Parent": "Enemy2"
         },
         {
-            "Name": "SecondShip_Trajectoyr",
+            "Name": "Enemy2_Trajectoyr",
             "Archetype": "TrajectoryLine.json",
             "Components":
             {
@@ -32,8 +64,9 @@
                     "Color": [0.6,0.1,0.1, 1]
                 }
             },
-            "Parent": "SecondShip"
+            "Parent": "Enemy2"
         },
+
 
         {
             "Name": "PLAYER",
@@ -59,9 +92,9 @@
         },
 
         {
-            "Name": "SecondShip_Indicator_Forward",
+            "Name": "Enemy1_Indicator_Forward",
             "Archetype": "Indicators\\ForwardIndicator.json",
-            "Parent":"SecondShip"
+            "Parent":"Enemy1"
         },
 
         {
