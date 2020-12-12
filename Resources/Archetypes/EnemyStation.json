@@ -1,0 +1,60 @@
+{
+    "Components": {
+        "TYPE_TRANSFORM": {
+            "Translation": [
+                4000.0,
+                1000.0
+            ],
+            "Rotation": 0,
+            "Scale": [
+                20.0,
+                20.0
+            ]
+        },
+        "TYPE_GLRECT": {
+            "Texture": "Ship1.png",
+            "Color": [
+                0.9,
+                0.2,
+                0.1,
+                1.0
+            ]
+        },
+        "TYPE_PHYSICSBODY": {
+            "Mass": 99000.0,
+            "Circle": 
+            {
+                "Radius": 15
+            }
+        },
+        "TYPE_SHIPDATA": {
+            "Health": 100,
+            "Health Max": 100,
+            "Power": 100,
+            "Power Max": 100,
+            "Power Production": 2,
+            "Fuel": 10,
+            "Fuel Max": 100,
+            "Fuel Efficiency": 5,
+            "Missiles": 10,
+            "Main Acceleration": 1.0,
+            "Secondary Acceleration": 500.0,
+            "Angular Acceleration": 700.0,
+            "Throttle Sensitivity": 2.5,
+            "Death Explosion Intensity": 1500.0
+        },
+        "TYPE_AI_CORE": {
+            "Desired Altitude": 5000,
+            "Shoot Range": 4000,
+            "Missile Launch Range": 5000,
+            "Missile Launch Probability": 0.5,
+            "Missile Launch Time": 10000,
+            "Orientation Behavior": "FACE_RADIAL",
+            "Maneuvering Speed Threshold": 100,
+            "Orbital Adjustment Agression": 0.1
+        },
+        "TYPE_AI_STATIONARY": {
+            "Note": "No parameters, The core's altitude setpoint is used."
+        }
+    }
+}
