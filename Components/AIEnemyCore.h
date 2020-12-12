@@ -39,7 +39,8 @@ public:
 
 	// Helper functions.
 	void getNearestGravityBody();
-	void calculateOrbitalVelocity();
+
+	void calculateOrbitalParameters();
 
 	void keepOrbit(float closestDistSqr, PhysicsBody* pClosest);
 	void matchVelocityVector(glm::vec2 desiredVelocity);
@@ -57,15 +58,22 @@ public:
 	// Gravity data
 	PhysicsBody* mpNearestGravityBody = nullptr;
 	bool isInGravity = false;
-	float mNearestGravityBodyDistanceSquared = 0.0f;
-	float mNearestGravityBodyDistance = 0.0f;
+	glm::vec2 mNGB_RelativePosition = glm::vec2(0.0f);
+	glm::vec2 mNGB_RelativePositionNormal = glm::vec2(0.0f);
+	glm::vec2 mNGB_RelativeVelocity = glm::vec2(0.0f);
+	float mNGB_DistSqr = 0.0f;
+	float mNGB_Dist = 0.0f;
 
-	float mOrbitalVelocityAtCurrentAltitude = 0.0f;
+	// Orbital navigation data
+	float mOrbitalSpeedAtCurrentAltitude = 0.0f;
 	glm::vec2 mVelocityPrograde = glm::vec2(0.0f); // Forward/backward
 	glm::vec2 mVelocityRadial = glm::vec2(0.0f); // Up/down
+	float mNGB_RelativeSpeed = 0.0f;
 
+	// General navigational data
+	float mSpeed = 0.0f; // TO-DO
 
-	// Default values for navigation data. AIStationary may override this.
+	// Default values for navigation parameters. AIStationary may override this.
 	float mDesiredAltitude = 5000.0f;
 	float mManeuveringSpeedThreshold = 10.0f;
 	float mOrbitalAdjustmentAgression = 0.2f;
