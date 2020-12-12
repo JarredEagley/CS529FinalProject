@@ -139,8 +139,6 @@ void GLRect::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	// Get the GLRect object.
 	rapidjson::GenericObject<true, rapidjson::Value> rectObject = inputMemberIt->value.GetObject();
 
-	char* storedTexture = nullptr; // TO-DO: Do I need these? Probably not...
-	int storedColor[4]; // RGBA
 
 	// Try to deserialize texture.
 	if (rectObject.HasMember("Texture"))
