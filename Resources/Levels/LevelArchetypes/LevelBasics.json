@@ -19,18 +19,20 @@
             "Name": "Target Lock",
             "Components":
             {
+                "TYPE_TRANSFORM": {},
                 "TYPE_GLRECT": {
                     "Texture": "Target.png",
-                    "Color": [1,0,0,0]
+                    "Color": [1,0,0,1]
                 },
                 "TYPE_TARGETLOCK": {
-                    "Alpha": 0.5
+                    "Alpha": 0.5,
+                    "Scale Factor": 0.1
                 },
                 "TYPE_SPINNER": {
-                    "Spin Rate": 0.5
+                    "Spin Rate": 1.0
                 }
             },
-            "Render Pass": "BACKGROUND"
+            "Render Pass": "FOREGROUND"
         }
     ]
 }

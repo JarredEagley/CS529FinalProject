@@ -43,7 +43,6 @@ void TargetLock::Update()
 	{
 		getNextTarget();
 	}
-
 	// If no target...
 	if (mCurrentTarget == "")
 	{
@@ -72,11 +71,42 @@ void TargetLock::Update()
 	mpTransform->setPosition(pTargetTransf->getPosition());
 	mpGLRect->setAlpha(mLockedAlpha);
 
+	mpTransform->setScale(GlobalManager::getGraphicsManager()->getZoomLevel() * mScaleFactor);
 }
+
 
 void TargetLock::getNextTarget()
 {
+	auto enemies = &GlobalManager::getGameStateManager()->mLivingEnemies;
 
+	if (enemies->empty())
+	{
+		mCurrentTarget = "";
+		return;
+	}
+
+	auto findInList = std::find(enemies->begin(), enemies->end(), mCurrentTarget);
+	if (findInList == enemies->end())
+	{
+		// Current target wasn't in the list. Reset to start.
+		mCurrentTarget = enemies->front();
+	}
+	else
+	{
+		// Current target was in the list.
+		auto nextInList = findInList;
+		++nextInList;
+		if (nextInList == enemies->end())
+		{
+			// Current target was the end of the list. Reset to start.
+			mCurrentTarget = enemies->front();
+		}
+		else
+		{
+			// Get the next target in the list.
+			mCurrentTarget = *nextInList;
+		}
+	}
 }
 
 void TargetLock::handleEvent(Event* pEvent)
@@ -100,4 +130,8 @@ void TargetLock::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 
 	if (inputObj.HasMember("Alpha") && inputObj["Alpha"].IsNumber())
 		this->mLockedAlpha = inputObj["Alpha"].GetFloat();
+
+	if (inputObj.HasMember("Scale Factor") && inputObj["Scale Factor"].IsNumber())
+		this->mScaleFactor = inputObj["Scale Factor"].GetFloat();
+
 }

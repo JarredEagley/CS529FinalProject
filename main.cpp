@@ -233,11 +233,12 @@ void Cleanup()
 	// Destroy the window.
 	SDL_DestroyWindow(pWindow);
 
-	// Shut down SDL.
-	SDL_Quit();  // TO-DO: I think I need to do this after deleting singletons.
-
 	// Destroy all singletons.
 	GlobalManager::destroySingleton();
+
+	// Shut down SDL.
+	SDL_Quit();  
+
 }
 
 /*

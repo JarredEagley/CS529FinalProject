@@ -23,6 +23,9 @@ std::list<std::string> GameStateManager::mLivingEnemies;
 
 void GameStateManager::destroySingleton()
 {
+	mMenuItemNames.clear();
+	mLivingEnemies.clear();
+
 	delete instance;
 }
 

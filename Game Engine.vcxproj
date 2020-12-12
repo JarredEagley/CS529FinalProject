@@ -109,6 +109,7 @@
     <ClCompile Include="Components\OrbitalLine.cpp" />
     <ClCompile Include="Components\PhysicsBody.cpp" />
     <ClCompile Include="Components\ShipData.cpp" />
+    <ClCompile Include="Components\Spinner.cpp" />
     <ClCompile Include="Components\TargetLock.cpp" />
     <ClCompile Include="Components\ThrottleMeter.cpp" />
     <ClCompile Include="Components\Transform.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Components\OrbitalLine.h" />
     <ClInclude Include="Components\PhysicsBody.h" />
     <ClInclude Include="Components\ShipData.h" />
+    <ClInclude Include="Components\Spinner.h" />
     <ClInclude Include="Components\TargetLock.h" />
     <ClInclude Include="Components\ThrottleMeter.h" />
     <ClInclude Include="Components\Transform.h" />

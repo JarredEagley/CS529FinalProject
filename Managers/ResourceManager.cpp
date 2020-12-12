@@ -31,7 +31,17 @@ std::map<char, Character> ResourceManager::mCharacters;
 void ResourceManager::destroySingleton()
 {	
 	// Clear the hashmap.
+	for (auto tex : mTextures)
+	{
+		glDeleteTextures(1, &tex.second);
+		delete tex.first;
+	}
 	mTextures.clear();
+
+	// Clear glyphs
+	for (auto glyph : mCharacters)
+		glDeleteTextures(1, &glyph.second.mTexId);
+	mCharacters.clear();
 	
 	// Delete the singleton.
 	delete instance;

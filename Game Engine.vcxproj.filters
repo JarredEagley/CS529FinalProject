@@ -121,6 +121,9 @@
     <ClCompile Include="Components\TargetLock.cpp">
       <Filter>Components\Behavior</Filter>
     </ClCompile>
+    <ClCompile Include="Components\Spinner.cpp">
+      <Filter>Components\Behavior</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -248,6 +251,9 @@
       <Filter>Components\Behavior</Filter>
     </ClInclude>
     <ClInclude Include="Components\TargetLock.h">
+      <Filter>Components\Behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Spinner.h">
       <Filter>Components\Behavior</Filter>
     </ClInclude>
   </ItemGroup>

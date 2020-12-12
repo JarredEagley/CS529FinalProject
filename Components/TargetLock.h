@@ -39,6 +39,7 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
+	//int mCurrentIndex = 0; // our current index in the living enemies list.
 	std::string mCurrentTarget = "";
 private:
 	// No private methods.
@@ -46,6 +47,7 @@ private:
 	Transform* mpTransform = nullptr;
 	GLRect* mpGLRect = nullptr; 
 	float mLockedAlpha = 1.0f;
+	float mScaleFactor = 1.0f;
 	
 };
 

@@ -40,10 +40,6 @@ void Spinner::Update()
 	mpTransform->incrementRotation(mSpinRate * GlobalManager::getPhysicsManager()->getGameTime());
 }
 
-void Spinner::handleEvent(Event* pEvent)
-{
-}
-
 
 void Spinner::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {

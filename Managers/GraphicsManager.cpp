@@ -37,18 +37,22 @@ void GraphicsManager::destroySingleton()
 	// Destroy all shader programs.
 	for (auto keyValuePair : mShaderPrograms)
 		delete keyValuePair.second;
+	// Clear the hash map.
+	mShaderPrograms.clear();
 
 	// Destroy render pass lists.
 	for (auto rp : mRenderPasses)
 		rp.second.clear();
 	mRenderPasses.clear();
 
-	// Clear the hash map.
-	mShaderPrograms.clear();
-
 	// Destroy Vertex Data.
+
 	glDeleteBuffers(3, &instance->vboIDRect[0]);
 	glDeleteVertexArrays(1, &instance->vaoIDRect);
+
+	glDeleteBuffers(3, &instance->vboIDLine[0]);
+	glDeleteVertexArrays(1, &instance->vaoIDLine);
+
 
 	delete instance;
 }

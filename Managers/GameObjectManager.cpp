@@ -29,9 +29,12 @@ void GameObjectManager::destroySingleton()
 	// Delete the game object instances.
 	for (auto keyValuePair : mGameObjects)
 		delete keyValuePair.second;
-	
 	// Clear the map.
 	mGameObjects.clear();
+	
+	for (auto pGO : mNewGameObjects)
+		delete pGO;
+	mNewGameObjects.clear();
 		
 	// Delete the singleton.
 	delete instance;
