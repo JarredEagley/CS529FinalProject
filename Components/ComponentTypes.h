@@ -46,6 +46,8 @@ public:
 
 		if (strcmp(str, "TYPE_BACKGROUNDGRID") == 0)	return TYPE_BACKGROUNDGRID;
 		if (strcmp(str, "TYPE_DIRINDICATOR") == 0)		return TYPE_DIRINDICATOR;
+		if (strcmp(str, "TYPE_ORBITALLINE") == 0)		return TYPE_ORBITALLINE;
+
 		if (strcmp(str, "TYPE_METER_FUEL") == 0)		return TYPE_METER_FUEL;
 		if (strcmp(str, "TYPE_METER_HEALTH") == 0)		return TYPE_METER_HEALTH;
 		if (strcmp(str, "TYPE_MARKER_THROTTLE") == 0)	return TYPE_MARKER_THROTTLE;
@@ -82,6 +84,8 @@ public:
 		
 		TYPE_BACKGROUNDGRID,
 		TYPE_DIRINDICATOR,
+		TYPE_ORBITALLINE,
+
 		TYPE_METER_FUEL,
 		TYPE_METER_HEALTH,
 		TYPE_MARKER_THROTTLE,

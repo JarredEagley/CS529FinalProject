@@ -36,6 +36,8 @@
 #include "Components/BackgroundGrid.h"
 #include "Components/PhysicsBody.h"
 #include "Components/DirectionIndicator.h"
+#include "Components/OrbitalLine.h"
+
 #include "Components/ShipData.h"
 #include "Components/ThrottleMeter.h"
 #include "Components/FuelMeter.h"
@@ -211,6 +213,10 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_DIRINDICATOR):
 		pNewComponent = new DirectionIndicator();
 		break;
+	case (ComponentTypes::TYPE_ORBITALLINE):
+		pNewComponent = new OrbitalLine();
+		break;
+
 	case (ComponentTypes::TYPE_SHIPDATA):
 		pNewComponent = new ShipData();
 		break;

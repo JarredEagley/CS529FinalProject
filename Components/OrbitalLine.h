@@ -5,6 +5,7 @@
 #pragma once
 #include "Component.h"
 #include "ComponentTypes.h"
+#include "GLLine.h"
 
 class OrbitalLine : public Component
 {
@@ -29,6 +30,7 @@ public:
 private:
 	// No private methods.
 private:
-	// No private variables.
+	GLLine* mpLine = nullptr;
+
 };
 
