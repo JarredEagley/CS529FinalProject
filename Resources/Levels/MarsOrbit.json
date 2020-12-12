@@ -55,8 +55,7 @@
 
         {
             "Name":"Mars",
-            "Archetype": "Mars.json",
-            "Components":{"TYPE_GLRECT": {"Color": [1,1,1,0.1]}}
+            "Archetype": "Mars.json"
         },
 
         {

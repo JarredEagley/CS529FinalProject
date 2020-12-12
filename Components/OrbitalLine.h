@@ -42,7 +42,7 @@ public:
 	float mStepSize = 100.0f;
 
 	float mWidth = 1.0f;
-	glm::vec4 mColor;
+	glm::vec4 mColor = glm::vec4(0.0f);
 	float mAlphaMultiplier = 1.0f;
 
 private:
