@@ -134,7 +134,7 @@ void AIEnemyStationary::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
 	//std::cout << "Prograde:" << progradeVelocity.x << ", " << progradeVelocity.y << std::endl;
 	//std::cout << "Radial:" << radialVelocity.x << ", " << radialVelocity.y << std::endl;
 
-	std::cout << "Orbital radius is " << orbitalRadius << " and desired altitiude is " << mDesiredAltitude << std::endl;
+	//std::cout << "Orbital radius is " << orbitalRadius << " and desired altitiude is " << mDesiredAltitude << std::endl;
 
 	// Go up or down.
 	if (orbitalRadius > mDesiredAltitude)
