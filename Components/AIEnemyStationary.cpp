@@ -46,6 +46,7 @@ void AIEnemyStationary::Update()
 	// --- behavior --- //
 
 	// Find the closest gravity body.
+	/*
 	glm::vec2 myPosition = mpPhysicsBody->mPosition;
 	PhysicsBody *pClosest = nullptr;
 	float closestDistSqr = -1.0f;
@@ -61,6 +62,7 @@ void AIEnemyStationary::Update()
 			closestDistSqr = thisDistSqr;
 		}
 	}
+	*/
 
 	
 	if (pClosest == nullptr)

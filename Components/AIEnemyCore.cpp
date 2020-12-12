@@ -30,6 +30,10 @@ void AIEnemyCore::Update()
 		mpPhysicsBody = static_cast<PhysicsBody*>(mpOwner->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
 		return;
 	}
+
+	// Find the nearest gravitational body.
+	getNearestGravityBody();
+
 }
 
 void AIEnemyCore::handleEvent(Event* pEvent)
@@ -37,6 +41,47 @@ void AIEnemyCore::handleEvent(Event* pEvent)
 }
 
 // AI Functions
+
+void AIEnemyCore::getNearestGravityBody()
+{
+	glm::vec2 myPosition = mpPhysicsBody->mPosition;
+
+	// Get nearest
+	mpNearestGravityBody = nullptr;
+	mNearestGravityBodyDistanceSquared = -1.0f;
+	for (auto pGBody : GlobalManager::getPhysicsManager()->gravityBodies)
+	{
+		glm::vec2 thisBodyPos = pGBody->mPosition;
+		float thisDistSqr = (thisBodyPos.x - myPosition.x) * (thisBodyPos.x - myPosition.x)
+			+ (thisBodyPos.y - myPosition.y) * (thisBodyPos.y - myPosition.y);
+
+		if (mNearestGravityBodyDistanceSquared == -1.0f || mNearestGravityBodyDistanceSquared > thisDistSqr)
+		{
+			mpNearestGravityBody = pGBody;
+			mNearestGravityBodyDistanceSquared = thisDistSqr;
+		}
+	}
+
+	// If we did not find any...
+	if (mpNearestGravityBody == nullptr)
+	{
+		mNearestGravityBodyDistanceSquared = 0.0f;
+		mNearestGravityBodyDistance = 0.0f;
+		isInGravity = false;
+	}
+	// If we found one...
+	else
+	{
+		// Precompute distance.
+		mNearestGravityBodyDistance = sqrt(mNearestGravityBodyDistanceSquared);
+		isInGravity = true;
+	}
+}
+
+void AIEnemyCore::calculateOrbitalParameters()
+{
+
+}
 
 void AIEnemyCore::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
 {
@@ -166,11 +211,11 @@ float AIEnemyCore::alignToVector(glm::vec2 alignmentVector)
 
 void AIEnemyCore::preferredOrientation()
 {
-	if (mOrientationBehvaior == "FACE_PLAYER")
+	if (mOrientationBehavior == "FACE_PLAYER")
 	{
 
 	}
-	else if (mOrientationBehvaior == "FACE_PROGRADE")
+	else if (mOrientationBehavior == "FACE_PROGRADE")
 	{
 
 	}

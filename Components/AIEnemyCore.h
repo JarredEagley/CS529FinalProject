@@ -22,6 +22,7 @@
 #include "Component.h"
 #include "ComponentTypes.h"
 
+#include <string>
 #include "PhysicsBody.h"
 #include "ShipData.h"
 
@@ -37,6 +38,9 @@ public:
 
 
 	// Helper functions.
+	void getNearestGravityBody();
+	void calculateOrbitalVelocity();
+
 	void keepOrbit(float closestDistSqr, PhysicsBody* pClosest);
 	void matchVelocityVector(glm::vec2 desiredVelocity);
 	float alignToVector(glm::vec2 alignmentVector);
@@ -47,27 +51,38 @@ public:
 
 public:
 	// Data
-	ShipData* mpShipData;
-	PhysicsBody* mpPhysicsBody;
+	ShipData* mpShipData = nullptr;
+	PhysicsBody* mpPhysicsBody = nullptr;
 
-	// Navigation
-	float mDesiredAltitude;
+	// Gravity data
+	PhysicsBody* mpNearestGravityBody = nullptr;
+	bool isInGravity = false;
+	float mNearestGravityBodyDistanceSquared = 0.0f;
+	float mNearestGravityBodyDistance = 0.0f;
+
+	float mOrbitalVelocityAtCurrentAltitude = 0.0f;
+	glm::vec2 mVelocityPrograde = glm::vec2(0.0f); // Forward/backward
+	glm::vec2 mVelocityRadial = glm::vec2(0.0f); // Up/down
+
+
+	// Default values for navigation data. AIStationary may override this.
+	float mDesiredAltitude = 5000.0f;
 	float mManeuveringSpeedThreshold = 10.0f;
 	float mOrbitalAdjustmentAgression = 0.2f;
 	float mOrbitThickness = 50.0f; // Fudge factor for desired orbit so its not ALWAYS trying to maneuver.
+	std::string mOrientationBehavior = "";
 
-	// Agro range
-	float mShootRange;
-	float mMissileLaunchRange;
+	// Serialized Agro parameters
+	float mShootRange = 0.0f;
+	float mMissileLaunchRange = 0.0f;
 
-	// Missile launching
-	float mMissileLaunchProbability;
-	float mMissileLaunchTimer;
+	float mMissileLaunchProbability = 0.0f;
+	float mMissileLaunchTimer = 0.0f;
 
 private:
 	// No private methods.
 private:
-	float mMissileLaunchTimerMax;
+	float mMissileLaunchTimerMax = 100.0f;
 
 };
 
