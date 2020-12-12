@@ -22,8 +22,11 @@
 #include "Components/ComponentTypes.h"
 
 #include "Components/Transform.h"
+
 #include "Components/ControllerShip.h"
+
 #include "Components/AIMissile.h"
+#include "Components/AIEnemyCore.h"
 #include "Components/AIEnemyStationary.h"
 
 #include "Components/GLRect.h"
@@ -182,10 +185,12 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_AI_MISSILE):
 		pNewComponent = new AIMissile();
 		break;
+	case (ComponentTypes::TYPE_AI_ENEMYCORE):
+		pNewComponent = new AIEnemyCore();
+		break;
 	case (ComponentTypes::TYPE_AI_STATIONARY):
 		pNewComponent = new AIEnemyStationary();
 		break;
-
 
 	case (ComponentTypes::TYPE_GLRECT):
 		pNewComponent = new GLRect();

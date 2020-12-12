@@ -21,9 +21,7 @@
 #include "Component.h"
 #include "ComponentTypes.h"
 
-#include <string>
-#include "ShipData.h"
-#include "PhysicsBody.h"
+#include "AIEnemyCore.h"
 
 class AIEnemyStationary : public Component
 {
@@ -35,43 +33,14 @@ public:
 	void Update();
 	void handleEvent(Event* pEvent);
 
-	// Used for components which draw to openGL.
-	void setUniformData(ShaderProgram* pProgram) {};
-	void Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewTrans, glm::mat4 viewProj) {};
-
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
-	// Navigation
-	float mDesiredAltitude;
-	
-	// Agro range
-	float mShootRange;
-	float mMissileLaunchRange;
-
-	// Missile launching
-	float mMissileLaunchProbability;
-	float mMissileLaunchTimerMax;
-
-	std::string mOrientationBehvaior = ""; // Options are 'FACE_PLAYER' and 'FACE_PROGRADE'. If none specified, then AI will simply have no preferred orientation unless maneuvering.
-
+	// No public variables.
 private:
-	void keepOrbit(float closestDistSqr, PhysicsBody* pClosest);
-	float alignToVector(glm::vec2 alignmentVector); // Returns alignment amount.
-	void preferredOrientation();
-
-	void AIEnemyStationary::matchVelocityVector(glm::vec2 desiredVelocity);
-
+	// No private functions. 
 private:
-	ShipData* mpShipData;
-	PhysicsBody* mpPhysicsBody;
-	
-	float mMissileLaunchTimer;
-	float mManeuveringSpeedThreshold = 10.0f;
-	float mOrbitalAdjustmentAgression = 0.2f;
-	float mOrbitThickness = 50.0f; // Fudge factor for desired orbit so its not ALWAYS trying to maneuver.
-
-	std::string mTargetName;
+	AIEnemyCore* mpAICore = nullptr;
 
 };
 

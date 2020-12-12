@@ -40,6 +40,7 @@ public:
 		if (strcmp(str, "TYPE_CONTROLLERSHIP") == 0)	return TYPE_CONTROLLERSHIP;
 		if (strcmp(str, "TYPE_TURRET") == 0)			return TYPE_TURRET;
 		if (strcmp(str, "TYPE_AI_MISSILE") == 0)		return TYPE_AI_MISSILE;
+		if (strcmp(str, "TYPE_AI_ENEMYCORE") == 0)		return TYPE_AI_ENEMYCORE;
 		if (strcmp(str, "TYPE_AI_STATIONARY") == 0)		return TYPE_AI_STATIONARY;
 
 		if (strcmp(str, "TYPE_CAMERA") == 0)			return TYPE_CAMERA;
@@ -78,6 +79,7 @@ public:
 		TYPE_CONTROLLERSHIP,
 		TYPE_TURRET,
 		TYPE_AI_MISSILE,
+		TYPE_AI_ENEMYCORE,
 		TYPE_AI_STATIONARY,
 
 		TYPE_CAMERA,
