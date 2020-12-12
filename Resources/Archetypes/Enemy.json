@@ -55,7 +55,7 @@
             "Missile Launch Probability": 0.5,
             "Missile Launch Time": 10000,
 
-            "Orientation Behavior":"FACE_PROGRADE",
+            "Orientation Behavior":"FACE_RADIAL",
             "Maneuvering Speed Threshold": 10,
             "Orbital Adjustment Agression": 0.1
         },

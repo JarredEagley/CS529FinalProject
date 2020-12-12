@@ -279,11 +279,25 @@ void AIEnemyCore::preferredOrientation()
 
 	if (mOrientationBehavior == "FACE_PLAYER")
 	{
+		GameObject* pPlayer = GlobalManager::getGameObjectManager()->getGameObject("PLAYER");
+		if (pPlayer == nullptr)
+			return;
+		PhysicsBody* pPlayerBody = static_cast<PhysicsBody*>(pPlayer->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+		if (pPlayerBody == nullptr)
+			return;
 
+		glm::vec2 alignmentVec = this->mpPhysicsBody->mPosition - pPlayerBody->mPosition;
+		alignmentVec = glm::normalize(alignmentVec);
+
+		this->alignToVector(alignmentVec);
 	}
 	else if (mOrientationBehavior == "FACE_PROGRADE")
 	{
-
+		this->alignToVector(glm::normalize(-mOrbitalVelocityPrograde));
+	}
+	else if (mOrientationBehavior == "FACE_RADIAL")
+	{
+		this->alignToVector(glm::normalize(-mOrbitalVelocityRadial));
 	}
 	// By default, no need to do anything else; just use the natural angular damping specified in ship data.
 }
