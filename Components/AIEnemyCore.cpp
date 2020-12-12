@@ -112,8 +112,8 @@ void AIEnemyCore::calculateOrbitalParameters()
 	mOrbitalSpeedAtCurrentAltitude /= 1000.0f;
 
 	// Find our prograde and radial velocities. Unfortunately pretty expensive.
-	mVelocityPrograde = glm::proj(mNGB_RelativeVelocity, mNGB_RelativePositionNormal);
-	mVelocityRadial = glm::proj(mNGB_RelativeVelocity, mNGB_RelativePosition);
+	mOrbitalVelocityPrograde = glm::proj(mNGB_RelativeVelocity, mNGB_RelativePositionNormal);
+	mOrbitalVelocityRadial = glm::proj(mNGB_RelativeVelocity, mNGB_RelativePosition);
 }
 
 void AIEnemyCore::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
@@ -131,7 +131,7 @@ void AIEnemyCore::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
 		float desiredSpeed = mOrbitalSpeedAtCurrentAltitude * (1.0f - mOrbitalAdjustmentAgression);
 		// Aim our velocity vector down a little.
 		glm::vec2 desiredVelocityRadial = glm::normalize(mNGB_RelativePosition) * mOrbitalSpeedAtCurrentAltitude * (0.0f - mOrbitalAdjustmentAgression);
-		glm::vec2 desiredVelocityPrograde = glm::normalize(mVelocityPrograde) * mOrbitalSpeedAtCurrentAltitude * (1.0f - mOrbitalAdjustmentAgression);
+		glm::vec2 desiredVelocityPrograde = glm::normalize(mOrbitalVelocityPrograde) * mOrbitalSpeedAtCurrentAltitude * (1.0f - mOrbitalAdjustmentAgression);
 		glm::vec2 desiredVelocityVector = desiredVelocityRadial + desiredVelocityPrograde;
 
 		//std::cout << "dvr: " << desiredVelocityRadial.x << ", " << desiredVelocityRadial.y << std::endl;
@@ -145,7 +145,7 @@ void AIEnemyCore::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
 		float desiredSpeed = mOrbitalSpeedAtCurrentAltitude * (1.0f + mOrbitalAdjustmentAgression);
 		// Aim our velocity vector up a little.
 		glm::vec2 desiredVelocityRadial = glm::normalize(mNGB_RelativePosition) * mOrbitalSpeedAtCurrentAltitude * (0.0f + mOrbitalAdjustmentAgression);
-		glm::vec2 desiredVelocityPrograde = glm::normalize(mVelocityPrograde) * mOrbitalSpeedAtCurrentAltitude * (1.0f + mOrbitalAdjustmentAgression);
+		glm::vec2 desiredVelocityPrograde = glm::normalize(mOrbitalVelocityPrograde) * mOrbitalSpeedAtCurrentAltitude * (1.0f + mOrbitalAdjustmentAgression);
 		glm::vec2 desiredVelocityVector = desiredVelocityRadial + desiredVelocityPrograde;
 
 		matchVelocityVector(desiredVelocityVector + pClosest->mVelocity);
@@ -154,7 +154,7 @@ void AIEnemyCore::keepOrbit(float closestDistSqr, PhysicsBody* pClosest)
 	{
 		// Try to maintain proper orbital velocity.
 		float desiredSpeed = mOrbitalSpeedAtCurrentAltitude * (1.0f + mOrbitalAdjustmentAgression);
-		glm::vec2 desiredVelocityPrograde = glm::normalize(mVelocityPrograde) * mOrbitalSpeedAtCurrentAltitude;
+		glm::vec2 desiredVelocityPrograde = glm::normalize(mOrbitalVelocityPrograde) * mOrbitalSpeedAtCurrentAltitude;
 
 		matchVelocityVector(desiredVelocityPrograde + pClosest->mVelocity);
 	}

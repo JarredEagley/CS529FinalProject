@@ -10,6 +10,9 @@
 						to a point in space.
 						Also registers its gameObject as an AI which must
 						be destroyed for player victory.
+						Note:
+						Does not implement any behvaior on its own. Simply
+						a core for a behvior component.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
 	Project:			JarredEagley_FinalProject
@@ -66,12 +69,12 @@ public:
 
 	// Orbital navigation data
 	float mOrbitalSpeedAtCurrentAltitude = 0.0f;
-	glm::vec2 mVelocityPrograde = glm::vec2(0.0f); // Forward/backward
-	glm::vec2 mVelocityRadial = glm::vec2(0.0f); // Up/down
+	glm::vec2 mOrbitalVelocityPrograde = glm::vec2(0.0f); // Forward/backward
+	glm::vec2 mOrbitalVelocityRadial = glm::vec2(0.0f); // Up/down
 	float mNGB_RelativeSpeed = 0.0f;
 
 	// General navigational data
-	float mSpeed = 0.0f; // TO-DO
+	//float mSpeed = 0.0f; 
 
 	// Default values for navigation parameters. AIStationary may override this.
 	float mDesiredAltitude = 5000.0f;
