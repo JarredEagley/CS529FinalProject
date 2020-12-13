@@ -36,7 +36,7 @@
             "Fuel Max": 100,
             "Fuel Efficiency": 5,
 
-            "Missiles": 10,
+            "Missiles": 5,
 
             "Side Note": "These aren't acceleration; these control the force applied by the engines",
             "Main Acceleration": 2000.0,

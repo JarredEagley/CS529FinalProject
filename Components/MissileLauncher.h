@@ -24,6 +24,7 @@
 
 #include <string>
 #include "GLRect.h"
+#include "ShipData.h"
 
 class MissileLauncher : public Component
 {

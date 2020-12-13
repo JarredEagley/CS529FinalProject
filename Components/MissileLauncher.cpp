@@ -39,7 +39,6 @@ void MissileLauncher::Initialize()
 
 void MissileLauncher::Update()
 {
-
 	if (mpGLRect == nullptr || mpTransform == nullptr)
 	{
 		mpGLRect = static_cast<GLRect*>(mpOwner->GetComponent(ComponentTypes::TYPE_GLRECT));
@@ -67,7 +66,14 @@ void MissileLauncher::Update()
 	// We need parent's ship data and physics.
 	ShipData* pParentShipData = static_cast<ShipData*>(pParentGO->GetComponent(ComponentTypes::TYPE_SHIPDATA));
 	Transform* pParentTransform = static_cast<Transform*>(pParentGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
-	PhysicsBody* pParentPhysics = static_cast<PhysicsBody*>(pParentGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY)); 
+	PhysicsBody* pParentPhysics = static_cast<PhysicsBody*>(pParentGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+
+	// Need to have ammo to do anything.
+	if (pParentShipData->mMissiles <= 0)
+	{
+		mFireOnce = false;
+		return;
+	}
 
 	// Launch hotkey is spacebar.
 	if (mFireOnce)
@@ -136,6 +142,9 @@ void MissileLauncher::Update()
 
 		// Target
 		pMissileAI->mTargetName = mTargetGOName;
+
+		// -1 missile.
+		pParentShipData->mMissiles--;
 	}
 
 	mFireOnce = false;
