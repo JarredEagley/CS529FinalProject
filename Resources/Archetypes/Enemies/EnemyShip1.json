@@ -59,9 +59,9 @@
             "Maneuvering Speed Threshold": 10,
             "Orbital Adjustment Agression": 0.1
         },
-        "TYPE_AI_STATIONARY": 
+        "TYPE_AI_CHASE": 
         {
-            "Note": "No parameters, The core's altitude setpoint is used."
+
         }
     }
 }

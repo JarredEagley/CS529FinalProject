@@ -38,7 +38,11 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
-	// No public variables.
+	// Below this distance, even in gravity it will try to move relative to the player.
+	float bruteForceDistance = 1000.0f;
+	// Minimum distance AI is willing to get to the player.
+	float minimumDistance = 500.0f;
+
 private:
 	// No private functions. 
 private:

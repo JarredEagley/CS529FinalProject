@@ -16,6 +16,7 @@
 
 #include "AIEnemyChase.h"
 #include "../Managers/GlobalManager.h"
+#include "glm/gtx/projection.hpp"
 
 
 AIEnemyChase::AIEnemyChase() : Component(ComponentTypes::TYPE_AI_CHASE)
@@ -46,11 +47,64 @@ void AIEnemyChase::Update()
 
 	if (mpAICore->isInGravity)
 	{
-		mpAICore->keepOrbit();
+		float playerdist = mpAICore->mPlayer_Distance;
+
+		// Dangerous, but I'll never have a non-circle gravity body.
+		Shape * pNGBShape = mpAICore->mpNearestGravityBody->mpShape;
+		ShapeCircle* pNGMShapeCircle = static_cast<ShapeCircle*>(pNGBShape);
+			
+		// A little bit big. A warning rather than a hard limit.
+		float minimumOrbitalRadius = pNGMShapeCircle->mRadius*1.2f + 100.0f;
+
+		if (playerdist > bruteForceDistance)
+		{
+
+			// Will be negative if player is in front, positive if player is behind.
+			float playerAltitude = glm::length(mpAICore->mPlayerPosition - mpAICore->mpNearestGravityBody->mPosition);
+			float desiredAltitudeRelativeToPlayer = -glm::dot(mpAICore->mPlayer_RelativePositionNormal, glm::normalize(mpAICore->mNGB_RelativePosition));
+
+			float desiredaltitude = playerAltitude + desiredAltitudeRelativeToPlayer;
+
+			mpAICore->mDesiredAltitude = std::max(desiredaltitude, minimumOrbitalRadius);
+			mpAICore->keepOrbit();
+		}
+		else
+		{
+			// Safety check.
+			if (mpAICore->mNGB_Dist <= minimumOrbitalRadius)
+			{
+				mpAICore->mDesiredAltitude = minimumOrbitalRadius;
+				mpAICore->keepOrbit();
+			}
+			else
+			{
+				// Its safe, Do brute force.
+				if (playerdist > minimumDistance)
+				{
+					// Chase
+					mpAICore->matchVelocityVector(mpAICore->mPlayerVelocity + mpAICore->mPlayer_RelativePosition);
+				}
+				else
+				{
+					// Match
+					mpAICore->matchVelocityVector(mpAICore->mPlayerVelocity);
+				}
+			}
+		}
 	}
 	else
 	{
-		mpAICore->tryToStop();
+		//mpAICore->tryToStop();
+
+
+
+
+
+
+
+
+
+
 	}
 }
 

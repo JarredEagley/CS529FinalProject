@@ -1,39 +1,6 @@
 {
     "GameObjects":
     [
-
-        {
-            "Name": "Enemy1",
-            "Archetype": "Enemies\\EnemyStation.json",
-            "Components":
-            {
-                "TYPE_TRANSFORM":
-                {
-                    "Translation": [-100, 4050]
-                },
-                "TYPE_PHYSICSBODY":
-                {
-                    "Velocity": [10, 0.5]
-                }
-            }
-        },
-        {
-            "Name": "Enemy1_Health",
-            "Archetype": "Indicators\\NPCHealthIndicator.json",
-            "Parent": "Enemy1"
-        },
-        {
-            "Name": "Enemy1_Trajectoyr",
-            "Archetype": "TrajectoryLine.json",
-            "Components":
-            {
-                "TYPE_ORBITALLINE":
-                {
-                    "Color": [0.6,0.1,0.1, 1]
-                }
-            },
-            "Parent": "Enemy1"
-        },
         {
             "Name": "EnemyShip1",
             "Archetype": "Enemies\\EnemyShip1.json",
