@@ -9,7 +9,7 @@
         "DEBUG Verbose Components": false,
         "DEBUG Verbose GameObject Factory": false,
 
-        "Initial Scene": "Level4.json"
+        "Initial Scene": "MainMenu.json"
     }, 
     "Framerate Controller":
     {

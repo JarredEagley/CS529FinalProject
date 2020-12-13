@@ -6,6 +6,8 @@
     ],
     "Level Archetypes":
     [
-        
+        "LevelBasics.json",
+        "PlayerHUD.json",
+        "PlayerShip1.json"
     ]
 }

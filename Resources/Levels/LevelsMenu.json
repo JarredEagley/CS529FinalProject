@@ -20,6 +20,7 @@
             "Render Pass": "HUD"
         },
 
+
         {
             "Name": "Levels Menu - 1",
             "Archetype": "Menu\\Levels_LevelSelect.json",
@@ -27,7 +28,7 @@
             {
                 "TYPE_TRANSFORM":
                 { 
-                    "Translation": [-0.45, 0.4]
+                    "Translation": [-0.65, 0.4]
                 },
                 "TYPE_GLRECT":
                 {
@@ -35,11 +36,10 @@
                 },
                 "TYPE_MENUITEM":
                 {
-                    "Target": ""
+                    "Target": "Level1.json"
                 }
             }
         },
-
         {
             "Name": "Levels Menu - 2",
             "Archetype": "Menu\\Levels_LevelSelect.json",
@@ -47,8 +47,7 @@
             {
                 "TYPE_TRANSFORM":
                 { 
-                    "Translation": [-0.45, 0.1],
-                    "Scale": [0.9, 0.25]
+                    "Translation": [-0.65, 0.2]
                 },
                 "TYPE_GLRECT":
                 {
@@ -56,11 +55,10 @@
                 },
                 "TYPE_MENUITEM":
                 {
-                    "Target": ""
+                    "Target": "Level2"
                 }
             }
         },
-
         {
             "Name": "Levels Menu - 3",
             "Archetype": "Menu\\Levels_LevelSelect.json",
@@ -68,8 +66,7 @@
             {
                 "TYPE_TRANSFORM":
                 { 
-                    "Translation": [-0.45, -0.1],
-                    "Scale": [0.9, 0.25]
+                    "Translation": [-0.65, 0.0]
                 },
                 "TYPE_GLRECT":
                 {
@@ -77,11 +74,10 @@
                 },
                 "TYPE_MENUITEM":
                 {
-                    "Target": ""
+                    "Target": "Level3"
                 }
             }
         },
-
         {
             "Name": "Levels Menu - 4",
             "Archetype": "Menu\\Levels_LevelSelect.json",
@@ -89,8 +85,7 @@
             {
                 "TYPE_TRANSFORM":
                 { 
-                    "Translation": [-0.45, -0.3],
-                    "Scale": [0.9, 0.25]
+                    "Translation": [-0.65, -0.2]
                 },
                 "TYPE_GLRECT":
                 {
@@ -98,15 +93,10 @@
                 },
                 "TYPE_MENUITEM":
                 {
-                    "Target": ""
+                    "Target": "Level4"
                 }
             }
         },
-
-
-
-
-
 
 
 
@@ -117,8 +107,7 @@
             {
                 "TYPE_TRANSFORM":
                 { 
-                    "Translation": [-0.45, -0.7],
-                    "Scale": [0.9, 0.25]
+                    "Translation": [-0.65, -0.7]
                 },
                 "TYPE_MENUITEM":
                 {
