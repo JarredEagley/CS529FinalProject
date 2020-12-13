@@ -3,17 +3,21 @@
     [
         {
             "Name": "PLAYER",
-            "Archetype": "Player.json",
-            "Components":
+            "Archetype": "PlayerBattleship.json",
+            "Components": 
             {
-                "TYPE_TRANSFORM":
-                {
-                    "Translation": [4900.0, 1000.0],
-                    "Rotation": 0
+                "TYPE_TRANSFORM": {
+                    "Translation": [
+                        3000.0,
+                        100.0
+                    ],
+                    "Rotation": -80
                 },
-                "TYPE_PHYSICSBODY":
-                {
-                    "Velocity": [0.3, -9.0]
+                "TYPE_PHYSICSBODY": {
+                    "Velocity": [
+                        -5.0,
+                        0.1
+                    ]
                 }
             }
         },

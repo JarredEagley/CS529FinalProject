@@ -2,17 +2,20 @@
     "GameObjects": [
         {
             "Name": "EnemyShip1",
-            "Archetype": "Enemies\\EnemyDestroyer.json",
+            "Archetype": "Enemies\\EnemyShip1.json",
             "Components": {
                 "TYPE_TRANSFORM": {
                     "Translation": [
-                        100.0,
-                        100.0
+                        4000.0,
+                        1000.0
                     ],
                     "Rotation": 0
                 },
                 "TYPE_PHYSICSBODY": {
-                    "Velocity": [0.0,1.0]
+                    "Velocity": [
+                        0.3,
+                        -9.0
+                    ]
                 }
             }
         },
@@ -21,7 +24,10 @@
             "Archetype": "Turret.json",
             "Components": {
                 "TYPE_TRANSFORM": {
-                    "Translation": [-1, 0]
+                    "Translation": [
+                        0,
+                        -3.5
+                    ]
                 }
             },
             "Parent": "EnemyShip1"
@@ -31,7 +37,23 @@
             "Archetype": "Turret.json",
             "Components": {
                 "TYPE_TRANSFORM": {
-                    "Translation": [ 1, 0]
+                    "Translation": [
+                        -1,
+                        2
+                    ]
+                }
+            },
+            "Parent": "EnemyShip1"
+        },
+        {
+            "Name": "EnemyShip1_MissileLauncher_1",
+            "Archetype": "MissileLauncher.json",
+            "Components": {
+                "TYPE_TRANSFORM": {
+                    "Translation": [
+                        0.9,
+                        2
+                    ]
                 }
             },
             "Parent": "EnemyShip1"
@@ -40,8 +62,13 @@
             "Name": "EnemyShip1_FX_Plume",
             "Components": {
                 "TYPE_GLRECT": {
-                    "Texture": "Ship2Plume.png",
-                    "Color": [0.9,0.4,0.9,0]
+                    "Texture": "Ship1Plume.png",
+                    "Color": [
+                        0.9,
+                        0.9,
+                        1,
+                        0
+                    ]
                 },
                 "TYPE_TRANSFORM": {
                     "Translation": [

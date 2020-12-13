@@ -2,12 +2,14 @@
     "Scene Type": "SCENE_LEVEL",
     "GameObjects":
     [
-
     ],
     "Level Archetypes":
     [
         "LevelBasics.json",
         "PlayerHUD.json",
-        "PlayerShip1.json"
+
+        "Level1\\PlayerShip.json",
+        "Level1\\EnemyShip0.json",
+        "Level1\\EnemyShip1.json"
     ]
 }

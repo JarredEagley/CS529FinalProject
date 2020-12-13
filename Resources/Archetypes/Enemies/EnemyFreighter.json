@@ -23,8 +23,8 @@
         },
         "TYPE_SHIPDATA":
         {
-            "Health": 100,
-            "Health Max": 100,
+            "Health": 200,
+            "Health Max": 200,
 
             "Fuel": 500,
             "Fuel Max": 500,
@@ -47,7 +47,7 @@
             "Shoot Range": 900,
             "Missile Launch Range": 9000,
             
-            "Missile Launch Probability": 0.3,
+            "Missile Launch Probability": 0.2,
             "Missile Launch Time": 300,
 
             "Orientation Behavior":"FACE_RADIAL",
@@ -56,7 +56,7 @@
         },
         "TYPE_AI_CHASE": 
         {
-            "Bruteforce Distance": 2000, 
+            "Bruteforce Distance": 1000, 
             "Minimum Distance": 100,
             "Inverted Behavior": {}
         }

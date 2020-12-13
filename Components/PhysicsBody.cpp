@@ -314,6 +314,9 @@ void PhysicsBody::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 
 	// Uniforms.
 	unsigned int loc;
 
+	if (mpShape == nullptr)
+		return;
+
 	if (mpShape->mType == Shape::ShapeType::CIRCLE)
 	{
 		loc = glGetUniformLocation(pProgram->ProgramID, "drawType");

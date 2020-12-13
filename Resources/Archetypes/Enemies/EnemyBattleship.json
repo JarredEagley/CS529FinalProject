@@ -57,7 +57,7 @@
         "TYPE_AI_CHASE": 
         {
             "Bruteforce Distance": 2000, 
-            "Minimum Distance": 100
+            "Minimum Distance": 1000
         }
     }
 }

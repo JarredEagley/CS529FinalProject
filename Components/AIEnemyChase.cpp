@@ -91,7 +91,7 @@ void AIEnemyChase::Update()
 				if (playerdist > minimumDistance || mInvertedBehavior)
 				{
 					// Chase
-					glm::vec2 chaseVec = mpAICore->mPlayerVelocity - mpAICore->mPlayer_RelativePosition * 10.0f;
+					glm::vec2 chaseVec = glm::normalize(mpAICore->mPlayerVelocity - mpAICore->mPlayer_RelativePosition) * mChaseAgression;
 
 					if (mInvertedBehavior)
 						chaseVec *= -1;
@@ -111,7 +111,7 @@ void AIEnemyChase::Update()
 		// Go toward player.
 		if (playerdist > minimumDistance || mInvertedBehavior)
 		{
-			glm::vec2 chaseVec = mpAICore->mPlayerVelocity - mpAICore->mPlayer_RelativePosition * 10.0f;
+			glm::vec2 chaseVec = glm::normalize(mpAICore->mPlayerVelocity - mpAICore->mPlayer_RelativePosition) * mChaseAgression;
 
 			if (mInvertedBehavior)
 				chaseVec *= -1;
@@ -140,6 +140,11 @@ void AIEnemyChase::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt
 
 	if (inputObj.HasMember("Minimum Distance") && inputObj["Minimum Distance"].IsNumber())
 		this->bruteForceDistance = inputObj["Minimum Distance"].GetFloat();
+
+	if (inputObj.HasMember("Chase Agression") && inputObj["Chase Agression"].IsNumber())
+		this->mChaseAgression = inputObj["Chase Agression"].GetFloat();
+
+
 
 	// Makes the AI run away from the player if they get too close.
 	if (inputObj.HasMember("Inverted Behavior"))

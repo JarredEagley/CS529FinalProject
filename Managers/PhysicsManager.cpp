@@ -142,6 +142,10 @@ void PhysicsManager::Update()
 				|| pPhysicsBody2->getIgnoredPhysicsBody() == pPhysicsBody1)
 				continue;
 
+			// Sanity checks.
+			if (nullptr == pPhysicsBody1->mpShape || nullptr == pPhysicsBody2->mpShape)
+				continue;
+
 			// If we're here, we have two GO's with body components.
 			GlobalManager::getCollisionManager()->checkCollisionAndGenerateContact(pPhysicsBody1->mpShape, pPhysicsBody1->mPosition, pPhysicsBody2->mpShape, pPhysicsBody2->mPosition);
 		}

@@ -23,8 +23,8 @@
         },
         "TYPE_SHIPDATA":
         {
-            "Health": 100,
-            "Health Max": 100,
+            "Health": 80,
+            "Health Max": 80,
 
             "Fuel": 100,
             "Fuel Max": 100,
@@ -57,7 +57,8 @@
         "TYPE_AI_CHASE": 
         {
             "Bruteforce Distance": 2200, 
-            "Minimum Distance": 300
+            "Minimum Distance": 300,
+            "Chase Agression": 10
         }
     }
 }

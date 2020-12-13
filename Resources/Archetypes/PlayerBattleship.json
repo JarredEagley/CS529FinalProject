@@ -47,5 +47,7 @@
 
             "Death Explosion Intensity": 1000.0
         }
-    }
+    },
+    "Render Pass": "MIDGROUND",
+    "Shader": "core"
 }

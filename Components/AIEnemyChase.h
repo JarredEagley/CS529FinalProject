@@ -43,6 +43,8 @@ public:
 	// Minimum distance AI is willing to get to the player.
 	float minimumDistance = 500.0f;
 
+	float mChaseAgression = 10.0f;
+
 private:
 	// No private functions. 
 private:
