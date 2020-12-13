@@ -48,5 +48,8 @@ private:
 private:
 	AIEnemyCore* mpAICore = nullptr;
 
+	// Will make this ship flee from the player.
+	bool mInvertedBehavior = false;
+
 };
 

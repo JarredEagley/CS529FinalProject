@@ -69,6 +69,9 @@ void AIEnemyChase::Update()
 			float playerAltitude = glm::length(mpAICore->mPlayerPosition - mpAICore->mpNearestGravityBody->mPosition);
 			float desiredAltitudeRelativeToPlayer = -glm::dot(mpAICore->mPlayer_RelativePositionNormal, glm::normalize(mpAICore->mNGB_RelativePosition));
 
+			if (mInvertedBehavior)
+				desiredAltitudeRelativeToPlayer *= -1;
+
 			float desiredaltitude = playerAltitude + desiredAltitudeRelativeToPlayer;
 
 			mpAICore->mDesiredAltitude = std::max(desiredaltitude, minimumOrbitalRadius);
@@ -85,10 +88,15 @@ void AIEnemyChase::Update()
 			else
 			{
 				// Its safe, Do brute force.
-				if (playerdist > minimumDistance)
+				if (playerdist > minimumDistance || mInvertedBehavior)
 				{
 					// Chase
-					mpAICore->matchVelocityVector(mpAICore->mPlayerVelocity - mpAICore->mPlayer_RelativePosition*10.0f);
+					glm::vec2 chaseVec = mpAICore->mPlayerVelocity - mpAICore->mPlayer_RelativePosition * 10.0f;
+
+					if (mInvertedBehavior)
+						chaseVec *= -1;
+
+					mpAICore->matchVelocityVector(chaseVec);
 				}
 				else
 				{
@@ -101,10 +109,19 @@ void AIEnemyChase::Update()
 	else
 	{
 		// Go toward player.
-		if (playerdist > minimumDistance)
-			mpAICore->matchVelocityVector(mpAICore->mPlayerVelocity - mpAICore->mPlayer_RelativePosition * 10.0f);
-		else 
+		if (playerdist > minimumDistance || mInvertedBehavior)
+		{
+			glm::vec2 chaseVec = mpAICore->mPlayerVelocity - mpAICore->mPlayer_RelativePosition * 10.0f;
+
+			if (mInvertedBehavior)
+				chaseVec *= -1;
+
+			mpAICore->matchVelocityVector(chaseVec);
+		}
+		else
+		{
 			mpAICore->matchVelocityVector(mpAICore->mPlayerVelocity);
+		}
 	}
 }
 
@@ -124,4 +141,7 @@ void AIEnemyChase::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt
 	if (inputObj.HasMember("Minimum Distance") && inputObj["Minimum Distance"].IsNumber())
 		this->bruteForceDistance = inputObj["Minimum Distance"].GetFloat();
 
+	// Makes the AI run away from the player if they get too close.
+	if (inputObj.HasMember("Inverted Behavior"))
+		this->mInvertedBehavior = true;
 }

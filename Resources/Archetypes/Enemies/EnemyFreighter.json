@@ -3,43 +3,38 @@
     {
         "TYPE_TRANSFORM":
         {
-            "Translation": [4000.0, 1000.0],
-            "Rotation": 0,
-            "Scale": [10.0, 20.0]
+            "Scale": [22.0, 30.0]
         },
         "TYPE_GLRECT":
         {
-            "Texture": "Ship1.png",
+            "Texture": "Ship3.png",
             "Color": [0.9, 0.2, 0.1, 1.0]
         },
         "TYPE_PHYSICSBODY":
         {
-            "Mass": 90000.0,
+            "Mass": 120000.0,
             "AABB":
             {
-                "Left": 25.0,
-                "Right": 25.0,
-                "Top": 25.0,
-                "Bottom":25.0
+                "Left": 30.0,
+                "Right": 30.0,
+                "Top": 30.0,
+                "Bottom":30.0
             }
         },
         "TYPE_SHIPDATA":
         {
             "Health": 100,
             "Health Max": 100,
-            "Power": 100,
-            "Power Max": 100,
-            "Power Production": 2,
 
-            "Fuel": 100,
-            "Fuel Max": 100,
-            "Fuel Efficiency": 5,
+            "Fuel": 500,
+            "Fuel Max": 500,
+            "Fuel Efficiency": 12,
 
-            "Missiles": 5,
+            "Missiles": 15,
 
-            "Main Acceleration": 2000.0,
-            "Secondary Acceleration": 750.0,
-            "Angular Acceleration": 800.0,
+            "Main Acceleration": 1000.0,
+            "Secondary Acceleration": 600.0,
+            "Angular Acceleration": 600.0,
 
             "Throttle Sensitivity": 2.5,
 
@@ -49,20 +44,21 @@
         {
             "Desired Altitude": 4000,
 
-            "Shoot Range": 2000,
+            "Shoot Range": 900,
             "Missile Launch Range": 9000,
             
             "Missile Launch Probability": 0.3,
             "Missile Launch Time": 300,
 
             "Orientation Behavior":"FACE_RADIAL",
-            "Maneuvering Speed Threshold": 10,
+            "Maneuvering Speed Threshold": 5,
             "Orbital Adjustment Agression": 0.1
         },
         "TYPE_AI_CHASE": 
         {
             "Bruteforce Distance": 2000, 
-            "Minimum Distance": 100
+            "Minimum Distance": 100,
+            "Inverted Behavior": {}
         }
     }
 }

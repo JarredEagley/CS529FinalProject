@@ -1,15 +1,8 @@
 {
     "Components": {
         "TYPE_TRANSFORM": {
-            "Translation": [
-                4000.0,
-                1000.0
-            ],
             "Rotation": 0,
-            "Scale": [
-                30.0,
-                30.0
-            ]
+            "Scale": [30.0, 30.0]
         },
         "TYPE_GLRECT": {
             "Texture": "Station1.png",
@@ -30,18 +23,15 @@
         "TYPE_SHIPDATA": {
             "Health": 200,
             "Health Max": 200,
-            "Power": 100,
-            "Power Max": 100,
-            "Power Production": 2,
             "Fuel": 10,
             "Fuel Max": 100,
             "Fuel Efficiency": 5,
-            "Missiles": 10,
+            "Missiles": 15,
             "Main Acceleration": 1.0,
             "Secondary Acceleration": 500.0,
             "Angular Acceleration": 700.0,
             "Throttle Sensitivity": 2.5,
-            "Death Explosion Intensity": 2000.0
+            "Death Explosion Intensity": 1600.0
         },
         "TYPE_AI_CORE": {
             "Desired Altitude": 5000,

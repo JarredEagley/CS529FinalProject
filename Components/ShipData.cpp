@@ -231,6 +231,9 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
 			std::cout << "Warning: ShipData 'Health Max' parameter was missing or improperly formatted. Default used." << std::endl;
 
+	/*
+
+	// I really wanted to implement power, but not enough time.
 
 	if (inputObj.HasMember("Power") && inputObj["Power"].IsNumber())
 	{
@@ -257,6 +260,7 @@ void ShipData::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 	else
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
 			std::cout << "Warning: ShipData 'Power Production' parameter was missing or improperly formatted. Default used." << std::endl;
+	*/
 
 
 	if (inputObj.HasMember("Fuel") && inputObj["Fuel"].IsNumber())
