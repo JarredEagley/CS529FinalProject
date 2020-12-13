@@ -34,6 +34,7 @@ void EventManager::destroySingleton()
 		delete pEv;
 	mEvents.clear();
 
+
 	delete instance;
 }
 

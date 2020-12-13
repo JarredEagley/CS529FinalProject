@@ -37,7 +37,8 @@ enum class EventType
 	MOUSE_SCROLL,
 	CURSOR_WORLD_COORDS,
 	TURRET_COMMAND,
-	MISSILE_LOCKON,
+	MISSILE_LOCKON, // Sent to GO a missile is locked onto
+	TARGET_LOCK, // Sent to the player's missile launchers
 	MENU_ITEM_CLICKED,
 	
 	DESTROY_PROJETILE,
@@ -189,6 +190,20 @@ public:
 
 	std::string mMissileGOName;
 };
+
+// When a player locks onto a target, this is broadcasted to all missile launchers.
+// Missile launchers parented to the player will respond and set their designated target to the
+// provided enemy.
+// If "" is recieved, then there is no targets; missile launchers are inactive.
+class TargetLockEvent : public Event
+{
+public:
+	TargetLockEvent(std::string targetGOName) : Event(EventType::TARGET_LOCK), mTargetGOName(targetGOName) {};
+	~TargetLockEvent() {};
+
+	std::string mTargetGOName;
+};
+
 
 // For example purposes, this is a timed event.
 class DestroyAllProjectilesEvent : public Event

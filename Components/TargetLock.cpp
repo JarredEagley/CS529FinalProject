@@ -107,6 +107,9 @@ void TargetLock::getNextTarget()
 			mCurrentTarget = *nextInList;
 		}
 	}
+
+	TargetLockEvent* pTargetEvent = new TargetLockEvent(mCurrentTarget);
+	GlobalManager::getEventManager()->broadcastEventToSubscribers(pTargetEvent);
 }
 
 void TargetLock::handleEvent(Event* pEvent)

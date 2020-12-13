@@ -39,6 +39,10 @@ public:
 private:
 	// No private methods.
 private:
-	// No private variables.
+	std::string mTargetGOName = "";
+
+	// Serialized:
+	glm::vec2 mLaunchForce;
+
 };
 

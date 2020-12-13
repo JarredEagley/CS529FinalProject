@@ -15,6 +15,7 @@
 - End Header --------------------------------------------------------*/
 
 #include "MissileLauncher.h"
+#include "../Managers/GlobalManager.h"
 
 MissileLauncher::MissileLauncher() : Component(ComponentTypes::TYPE_MISSILELAUNCHER)
 {
@@ -27,6 +28,8 @@ MissileLauncher::~MissileLauncher()
 
 void MissileLauncher::Initialize()
 {
+	// Subscribe to target lock events. Will only be responded to if we're parented to the player.
+	GlobalManager::getEventManager()->Subscribe(EventType::TARGET_LOCK, this->mpOwner);
 }
 
 void MissileLauncher::Update()
@@ -35,6 +38,16 @@ void MissileLauncher::Update()
 
 void MissileLauncher::handleEvent(Event* pEvent)
 {
+	if (pEvent->mType == EventType::TARGET_LOCK)
+	{
+		// Only respond if we're parented to the player.
+		GameObject* pParent = mpOwner->getParent();
+		if (pParent == nullptr || pParent->mName != "PLAYER")
+			return;
+
+		TargetLockEvent* pTargetEvent = static_cast<TargetLockEvent*>(pEvent);
+		this->mTargetGOName = pTargetEvent->mTargetGOName;
+	}
 }
 
 
