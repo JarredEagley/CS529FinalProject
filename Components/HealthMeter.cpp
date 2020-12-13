@@ -57,7 +57,7 @@ void HealthMeter::handleEvent(Event* pEvent)
 	{
 		ShipDataUpdatedEvent* pShipDataEvent = static_cast<ShipDataUpdatedEvent*>(pEvent);
 		if (pShipDataEvent->mpShipData->mpOwner->mName.compare("PLAYER") == 0 )
-			this->mHealth = pShipDataEvent->mpShipData->mHealth;
+			this->mHealth = (pShipDataEvent->mpShipData->mHealth / pShipDataEvent->mpShipData->mMaxHealth) * 100.0f;
 	}
 }
 
