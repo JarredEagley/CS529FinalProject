@@ -52,8 +52,13 @@ void AIEnemyChase::Update()
 
 		// Dangerous, but I'll never have a non-circle gravity body.
 		Shape * pNGBShape = mpAICore->mpNearestGravityBody->mpShape;
+		if (pNGBShape == nullptr)
+			return;
 		ShapeCircle* pNGMShapeCircle = static_cast<ShapeCircle*>(pNGBShape);
+		if (pNGMShapeCircle == nullptr)
+			return;
 			
+		
 		// A little bit big. A warning rather than a hard limit.
 		float minimumOrbitalRadius = pNGMShapeCircle->mRadius*1.2f + 100.0f;
 

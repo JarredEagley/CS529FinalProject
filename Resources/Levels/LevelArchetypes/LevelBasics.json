@@ -17,24 +17,8 @@
         },
         {
             "Name": "Target Lock",
-            "Components":
-            {
-                "TYPE_TRANSFORM": {},
-                "TYPE_GLRECT": {
-                    "Texture": "Target.png",
-                    "Color": [1,0,0,1]
-                },
-                "TYPE_TARGETLOCK": {
-                    "Alpha": 0.5,
-                    "Scale Factor": 0.1
-                },
-                "TYPE_SPINNER": {
-                    "Spin Rate": 1.0
-                }
-            },
-            "Render Pass": "FOREGROUND"
+            "Archetype": "TargetLock.json"
         },
-
         {
             "Name": "PLAYER_CURSOR",
             "Archetype": "FollowCursor.json"

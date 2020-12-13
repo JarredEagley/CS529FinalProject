@@ -1,18 +1,15 @@
 {
     "Components":
     {
-        "TYPE_TRANSFORM": 
-        {
-        },
+        "TYPE_TRANSFORM": {},
         "TYPE_GLTEXT": 
         {
             "Message": "Nuclear Missiles: --",
-            "Position": [0,21],
-            "Scale": 0.025
+            "Position": [0.51, 0.94],
+            "Scale": 1.2
         },
-        "TYPE_MISSILECOUNTER":
-        {
-        }
+        "TYPE_MISSILECOUNTER": {}
     },
-    "Render Pass": "HUD"
+    "Render Pass": "HUD",
+    "Shader": "core"
 }

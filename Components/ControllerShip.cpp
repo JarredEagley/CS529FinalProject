@@ -102,12 +102,14 @@ void ControllerShip::Update()
 	// Get mouse position in world space.
 
 	// EXAMPLE TIMED EVENT.
+	/*
 	if (pIM->isMouseButtonPressed(SDL_BUTTON_RIGHT))
 	{
 		DestroyAllProjectilesEvent* pDestroyEvent = new DestroyAllProjectilesEvent();
 		pDestroyEvent->mTimer = 1000.0f; // Wait 1 second.
 		GlobalManager::getEventManager()->addTimedEvent(pDestroyEvent);
 	}
+	*/
 
 	// Fire a turret command event.
 	TurretCommandEvent* pNewTurretEvent = new TurretCommandEvent(mpOwner->mName);

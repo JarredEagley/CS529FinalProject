@@ -56,9 +56,15 @@ void GLText::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 {
 	// Borrow the glrect vao.
 	unsigned int VAO = GlobalManager::getGraphicsManager()->getVAORect();
+	float winW = GlobalManager::getGraphicsManager()->mWindowWidth;
+	float winH = GlobalManager::getGraphicsManager()->mWindowHeight;
 
-	float x = (mX+15.0f)*0.5f;
-	float y = (mY+15.0f)*0.5f;
+
+	//float x = (mX+15.0f)*0.5f;
+	//float y = (mY+15.0f)*0.5f;
+
+	float x = mX * winW;
+	float y = mY * winH;
 
 	// TEMP
 	//glDisable(GL_BLEND);
@@ -67,27 +73,25 @@ void GLText::Draw(ShaderProgram* pProgram, glm::mat4 modelTrans, glm::mat4 viewT
 
 	glActiveTexture(GL_TEXTURE0);
 
-	//glm::mat4 projTest = glm::ortho(0.0f, 1000.0f, 0.0f, 900.0f);
 
-	//glm::mat4 testProj = glm::ortho(0.0f, 1200.0f, -100000.0f, 900.0f);
+	glm::mat4 textProjection = glm::ortho(0.0f, -winW, 0.0f, winH);
+	//glm::mat4 identity = glm::mat4(1.0f);
 
 	unsigned int loc;
 	loc = glGetUniformLocation(pProgram->ProgramID, "drawType");
 	glUniform1i(loc, 4); // 4 = text.
 
-	loc = glGetUniformLocation(pProgram->ProgramID, "viewProj");
-	glUniformMatrix2fv(loc, 1, GL_FALSE, glm::value_ptr(viewProj));
-	
-	loc = glGetUniformLocation(pProgram->ProgramID, "viewTrans");
-	glUniformMatrix2fv(loc, 1, GL_FALSE, glm::value_ptr(viewTrans));
 	loc = glGetUniformLocation(pProgram->ProgramID, "modelTrans");
-	glUniformMatrix2fv(loc, 1, GL_FALSE, glm::value_ptr(modelTrans));
-	
-	/*
-	loc = glGetUniformLocation(pProgram->ProgramID, "textColor");
-	glUniform3f(loc, 1.0f, 1.0f, 1.0f);
-	*/
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(modelTrans));
 
+	loc = glGetUniformLocation(pProgram->ProgramID, "viewTrans");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(viewTrans));
+
+	loc = glGetUniformLocation(pProgram->ProgramID, "viewProj");
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(textProjection));
+	
+
+	
 	glEnable(GL_BLEND);
 
 	//std::cout << "'" << mTextContent << "'" << std::endl;

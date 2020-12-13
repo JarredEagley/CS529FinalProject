@@ -2,6 +2,10 @@
     "GameObjects":
     [
         {
+            "Name": "HUD_MissileCounter",
+            "Archetype": "HUD\\HUD_MissileCounter.json"
+        },
+        {
             "Name": "HUD_Fuel_Meter",
             "Archetype": "HUD\\HUD_Fuel_Meter.json"
         },
@@ -17,10 +21,6 @@
         {
             "Name": "HUD_Health_Meter",
             "Archetype": "HUD\\HUD_Health_Meter.json"
-        },
-        {
-            "Name": "HUD_MissileCounter",
-            "Archetype": "HUD\\HUD_MissileCounter.json"
         }
     ]
 }
