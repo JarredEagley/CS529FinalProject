@@ -9,7 +9,7 @@
         "DEBUG Verbose Components": false,
         "DEBUG Verbose GameObject Factory": false,
 
-        "Initial Scene": "EmptySpace.json"
+        "Initial Scene": "MarsOrbit.json"
     }, 
     "Framerate Controller":
     {
@@ -62,6 +62,7 @@
         "Explosion Damage Multiplier": 1.0,
 
         "Explosion Expansion Rate": 0.01,
+        "Explosion Decay Rate": 4,
 
         "Note": "This is in N*(m/kg)^2, most of the game uses kilometers.",
         "Gravitational Constant": 0.0000000000667

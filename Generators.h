@@ -61,7 +61,8 @@ public:
 			pExplosionPhysics->mVelocity = pExplodingBody->mVelocity;
 			pExplosionPhysics->mCollisionType = collisionType::NOCLIP;
 
-			pExplosionComp->mIntensity = intensity;
+			pExplosionComp->setIntensity(intensity);
+			//pExplosionComp->mIntensity = intensity;
 		}
 
 		return explosionGO;

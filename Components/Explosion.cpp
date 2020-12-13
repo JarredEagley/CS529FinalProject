@@ -54,7 +54,7 @@ void Explosion::Update()
 
 		float deltaTime = GlobalManager::getPhysicsManager()->getGameTime();
 		// Decrement intensity.
-		mIntensity -= deltaTime;// *GlobalManager::getPhysicsManager()->explosionExpansionRate;
+		mIntensity -= deltaTime * GlobalManager::getPhysicsManager()->explosionDecayRate;// *GlobalManager::getPhysicsManager()->explosionExpansionRate;
 		// Increment size.
 		mSize += deltaTime * GlobalManager::getPhysicsManager()->explosionExpansionRate * mIntensity;
 	}
@@ -65,7 +65,9 @@ void Explosion::Update()
 	}
 
 	mpTransform->setScale(glm::vec2(mSize));
-	mpRect->setAlpha( mIntensity/mStartIntensity );
+	mpRect->setAlpha( (mIntensity/mStartIntensity) );
+	//std::cout << mIntensity << "/" << mStartIntensity << std::endl;
+
 	if (mpPhysicsBody->mpShape->mType == Shape::ShapeType::CIRCLE)
 	{
 		ShapeCircle* pShape = static_cast<ShapeCircle*>(mpPhysicsBody->mpShape);

@@ -47,7 +47,7 @@
         },
         "TYPE_AI_CORE":
         {
-            "Desired Altitude": 5000,
+            "Desired Altitude": 4000,
 
             "Shoot Range": 4000,
             "Missile Launch Range": 5000,

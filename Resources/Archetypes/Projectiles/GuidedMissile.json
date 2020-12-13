@@ -29,15 +29,15 @@
         "TYPE_AI_MISSILE":
         {
             "Activation Timer": 50,
-            "Detonation Distance": 2000.0,
+            "Detonation Distance": 800.0,
             "Warhead Intensity": 1000.0,
             "Inactive Lifespan": 10000.0,
             "Orthogonal Velocity Correction": 100.0
         },
         "TYPE_SHIPDATA":
         {
-            "Health": 50,
-            "Health Max": 50,
+            "Health": 10,
+            "Health Max": 10,
             "Power": 100,
             "Power Max": 100,
             "Power Production": 10,

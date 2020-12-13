@@ -316,6 +316,13 @@ void GameStateManager::readGameConfig()
 			pPhyM->explosionExpansionRate = currentObj[currentattr.c_str()].GetFloat();
 		}
 
+		currentattr = "Explosion Decay Rate";
+		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())
+		{
+			pPhyM->explosionDecayRate = currentObj[currentattr.c_str()].GetFloat();
+		}
+
+
 
 		currentattr = "Gravitational Constant";
 		if (currentObj.HasMember(currentattr.c_str()) && currentObj[currentattr.c_str()].IsNumber())

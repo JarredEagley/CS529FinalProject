@@ -20,7 +20,7 @@
         },
         "TYPE_EXPLOSION":
         {
-            "Intensity": 100
+            "Intensity": 10
         }
     },
     "Render Pass": "FOREGROUND"

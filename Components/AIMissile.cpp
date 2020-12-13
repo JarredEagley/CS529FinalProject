@@ -96,7 +96,6 @@ void AIMissile::Update()
 		// Past here, we have our target. Check fuel level.
 		if (mpShipData->mFuel <= 1.0f)
 		{
-			printf("out of gas\n");
 			// Tick down the amount of time its allowed to stay idle and alive.
 			mInactiveLifespan -= GlobalManager::getPhysicsManager()->getGameTime();
 			// Don't return, we're allowed to drift without fuel toward the enemy.
@@ -132,7 +131,7 @@ void AIMissile::Update()
 		orthoVelocity *= mOrthoVelocityCorrection;
 
 		// Finally, the guidance vector.
-		glm::vec2 guidanceVector = targetRelativePosition + orthoVelocity;
+		glm::vec2 guidanceVector = targetRelativePosition + orthoVelocity * glm::length(orthoVelocity);
 
 		//guidanceVector *= 5.0f; // Should probably make this data driven.
 

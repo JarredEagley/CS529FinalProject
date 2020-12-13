@@ -33,6 +33,13 @@ public:
 	void Initialize();
 	void Update(); 
 
+	float getIntensity() { return mIntensity; }
+	void setIntensity(float intensity) // Sets start intensity too.
+	{
+		mIntensity = intensity;
+		mStartIntensity = intensity;
+	}
+
 	void setUniformData(ShaderProgram* pProgram);
 
 	void handleEvent(Event* pEvent);
@@ -40,12 +47,12 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
-	float mIntensity = 100.0f;
 	float mSize = 0.1f;
 
 private:
 	// No private methods.
 private:
+	float mIntensity = 100.0f;
 	float mStartIntensity = 100.0f;
 	Transform* mpTransform;
 	PhysicsBody* mpPhysicsBody;

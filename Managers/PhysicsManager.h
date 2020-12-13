@@ -33,6 +33,7 @@ public:
 	static float explosionDamageMultiplier;
 
 	static float explosionExpansionRate;
+	static float explosionDecayRate;
 
 	static float universalGravitationalConstant;
 
