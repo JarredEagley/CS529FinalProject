@@ -348,7 +348,7 @@ void AIEnemyCore::calculatePlayerParameters()
 
 void AIEnemyCore::commandTurrets()
 {
-	TurretCommandEvent* pNewTurretCommand = new TurretCommandEvent;
+	TurretCommandEvent* pNewTurretCommand = new TurretCommandEvent(mpOwner->mName);
 	pNewTurretCommand->mAimPoint = mPlayerPosition;
 	pNewTurretCommand->mAimPoint += (mPlayerVelocity + mPlayerAcceleration) * mPlayer_Distance;
 
@@ -358,7 +358,8 @@ void AIEnemyCore::commandTurrets()
 	else
 		pNewTurretCommand->mShoot = false;
 
-	// Inform teh turrets
+	
+	// Inform my turrets
 	GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewTurretCommand);
 }
 

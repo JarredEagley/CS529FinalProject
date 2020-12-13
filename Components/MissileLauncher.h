@@ -38,13 +38,14 @@ public:
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
 public:
-	// No public variables.
+	bool mIsFiring;
 private:
 	// No private methods.
 private:
 	std::string mTargetGOName = "";
 	GLRect* mpGLRect = nullptr;
 	Transform* mpTransform = nullptr;
+	bool mFireOnce = false;
 
 	// Serialized:
 	glm::vec2 mLaunchForce;

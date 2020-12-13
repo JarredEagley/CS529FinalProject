@@ -34,6 +34,7 @@ void MissileLauncher::Initialize()
 {
 	// Subscribe to target lock events. Will only be responded to if we're parented to the player.
 	GlobalManager::getEventManager()->Subscribe(EventType::TARGET_LOCK, this->mpOwner);
+	GlobalManager::getEventManager()->Subscribe(EventType::MISSILELAUNCHER_COMMAND, this->mpOwner);
 }
 
 void MissileLauncher::Update()
@@ -69,7 +70,7 @@ void MissileLauncher::Update()
 	PhysicsBody* pParentPhysics = static_cast<PhysicsBody*>(pParentGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY)); 
 
 	// Launch hotkey is spacebar.
-	if (GlobalManager::getInputManager()->IsKeyTriggered(SDL_SCANCODE_SPACE))
+	if (mFireOnce)
 	{
 		if (mTargetGOName == "")
 			return;
@@ -136,19 +137,36 @@ void MissileLauncher::Update()
 		// Target
 		pMissileAI->mTargetName = mTargetGOName;
 	}
+
+	mFireOnce = false;
 }
 
 void MissileLauncher::handleEvent(Event* pEvent)
 {
+	// Need to know who the order is coming from.
+	GameObject* pParent = mpOwner->getParent();
+	if (pParent == nullptr)
+		return;
+
 	if (pEvent->mType == EventType::TARGET_LOCK)
 	{
 		// Only respond if we're parented to the player.
-		GameObject* pParent = mpOwner->getParent();
-		if (pParent == nullptr || pParent->mName != "PLAYER")
-			return;
+		if (pParent->mName != "PLAYER")
+		return;
 
 		TargetLockEvent* pTargetEvent = static_cast<TargetLockEvent*>(pEvent);
 		this->mTargetGOName = pTargetEvent->mTargetGOName;
+	}
+
+	if (pEvent->mType == EventType::MISSILELAUNCHER_COMMAND)
+	{
+		// Only respond to our parent.
+		MissileLauncherCommandEvent* pCommandEvent = static_cast<MissileLauncherCommandEvent*>(pEvent);
+		if (pCommandEvent->mParentName == pParent->mName)
+		{
+			printf("TEST\n");
+			this->mFireOnce = pCommandEvent->mFire;
+		}
 	}
 }
 
@@ -174,6 +192,5 @@ void MissileLauncher::Serialize(rapidjson::Value::ConstMemberIterator inputMembe
 				std::cout << "Warning: Missile Launcher launch force was improperly formatted. Default used." << std::endl;
 		}
 	}
-
 
 }

@@ -96,6 +96,11 @@ void Turret::handleEvent(Event* pEvent)
 		// Try to get the necessary components to talk to.
 		if (mpOwner->getParent() == nullptr)
 			return;
+		
+		TurretCommandEvent* pTurretEvent = static_cast<TurretCommandEvent*>(pEvent);
+		if (mpOwner->getParent()->mName != pTurretEvent->mParentName)
+			return;
+
 		if (mpTransform == nullptr || mpParentTransform == nullptr || mpGLRect == nullptr || mpParentGLRect == nullptr)
 		{
 			mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
@@ -107,7 +112,6 @@ void Turret::handleEvent(Event* pEvent)
 
 		mpGLRect->setColor(mpParentGLRect->getColor()); // Mirror color.
 
-		TurretCommandEvent* pTurretEvent = static_cast<TurretCommandEvent*>(pEvent);
 		this->mAimPoint = pTurretEvent->mAimPoint ; // Get aimpoint in local coordinates.
 
 		float parentRotation = mpParentTransform->getRotation();

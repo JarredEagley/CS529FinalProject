@@ -39,6 +39,7 @@ enum class EventType
 	TURRET_COMMAND,
 	MISSILE_LOCKON, // Sent to GO a missile is locked onto
 	TARGET_LOCK, // Sent to the player's missile launchers
+	MISSILELAUNCHER_COMMAND, // For telling missile launcher to fire.
 	MENU_ITEM_CLICKED,
 	
 	DESTROY_PROJETILE,
@@ -173,9 +174,10 @@ public:
 class TurretCommandEvent : public Event
 {
 public:
-	TurretCommandEvent() : Event(EventType::TURRET_COMMAND) {}
+	TurretCommandEvent(std::string parentName) : Event(EventType::TURRET_COMMAND), mParentName(parentName)  {}
 	~TurretCommandEvent() {}
 
+	std::string mParentName;
 	bool mShoot;
 	glm::vec2 mAimPoint;
 };
@@ -202,6 +204,18 @@ public:
 	~TargetLockEvent() {};
 
 	std::string mTargetGOName;
+};
+
+
+// Command a missile turret to fire. Only responds if parented.
+class MissileLauncherCommandEvent : public Event
+{
+public:
+	MissileLauncherCommandEvent(std::string parentName) : Event(EventType::MISSILELAUNCHER_COMMAND), mParentName(parentName) {};
+	~MissileLauncherCommandEvent() {};
+
+	std::string mParentName;
+	bool mFire = false;
 };
 
 

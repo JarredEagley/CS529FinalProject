@@ -105,18 +105,26 @@ void ControllerShip::Update()
 	if (pIM->isMouseButtonPressed(SDL_BUTTON_RIGHT))
 	{
 		DestroyAllProjectilesEvent* pDestroyEvent = new DestroyAllProjectilesEvent();
-		pDestroyEvent->mTimer = 2000.0f; // Wait 2 seconds.
+		pDestroyEvent->mTimer = 1000.0f; // Wait 1 second.
 		GlobalManager::getEventManager()->addTimedEvent(pDestroyEvent);
 	}
 
 	// Fire a turret command event.
-	TurretCommandEvent* pNewTurretEvent = new TurretCommandEvent();
+	TurretCommandEvent* pNewTurretEvent = new TurretCommandEvent(mpOwner->mName);
 	if ( pIM->isMouseButtonPressed(SDL_BUTTON_LEFT) )
 		pNewTurretEvent->mShoot = true;
 	else
 		pNewTurretEvent->mShoot = false;
 	pNewTurretEvent->mAimPoint = mPlayerAimPoint;
 	GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewTurretEvent);
+
+	// Fire missiles command event.
+	if (pIM->IsKeyTriggered(SDL_SCANCODE_SPACE))
+	{
+		MissileLauncherCommandEvent* pNewMissileLauncherEvent = new MissileLauncherCommandEvent(mpOwner->mName);
+		pNewMissileLauncherEvent->mFire = true;
+		GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewMissileLauncherEvent);
+	}
 }
 
 
