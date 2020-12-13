@@ -50,6 +50,22 @@ void MissileLauncher::Update()
 
 	// Mirror parent color, like turrets.
 	mpGLRect->setColor(pParentRect->getColor());
+
+	// -- launching -- //
+
+	// Launch hotkey is spacebar.
+	if (GlobalManager::getInputManager()->IsKeyTriggered(SDL_SCANCODE_SPACE))
+	{
+		if (mTargetGOName == "")
+			return;
+
+		GameObject* pTargetGO = GlobalManager::getGameObjectManager()->getGameObject(mTargetGOName);
+		if (pTargetGO == nullptr)
+			return;
+
+		// We have a valid target. Fire the missile!
+
+	}
 }
 
 void MissileLauncher::handleEvent(Event* pEvent)
