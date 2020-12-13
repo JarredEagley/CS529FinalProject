@@ -16,6 +16,9 @@
 
 #include "MissileLauncher.h"
 #include "../Managers/GlobalManager.h"
+#include <time.h>
+#include "AIMissile.h"
+#include "Transform.h"
 
 MissileLauncher::MissileLauncher() : Component(ComponentTypes::TYPE_MISSILELAUNCHER)
 {
@@ -53,6 +56,10 @@ void MissileLauncher::Update()
 
 	// -- launching -- //
 
+	// We need parent's ship data and physics.
+	ShipData* pParentShipData = static_cast<ShipData*>(pParentGO->GetComponent(ComponentTypes::TYPE_SHIPDATA));
+	PhysicsBody* pParentPhysics = static_cast<PhysicsBody*>(pParentGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY)); 
+
 	// Launch hotkey is spacebar.
 	if (GlobalManager::getInputManager()->IsKeyTriggered(SDL_SCANCODE_SPACE))
 	{
@@ -64,6 +71,30 @@ void MissileLauncher::Update()
 			return;
 
 		// We have a valid target. Fire the missile!
+		GameObjectFactory* pGOF = GlobalManager::getGameObjectFactory();
+		time_t currentTime = time(NULL);
+		std::string missileName = "Missile_" + std::to_string(currentTime);
+		std::string missilePath = GlobalManager::getResourceManager()->pathProjectiles + "GuidedMissile.json";
+		
+		GameObject* pNewMissile = pGOF->createDynamicGameObject(missilePath, missileName);
+
+		// Apply transforms, forces, target...
+
+		if (pNewMissile == nullptr)
+			return;
+
+		Transform* pMissileTransform = static_cast<Transform*>(pNewMissile->GetComponent(ComponentTypes::TYPE_TRANSFORM));
+		PhysicsBody* pMissilePhys = static_cast<PhysicsBody*>(pNewMissile->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+		AIMissile* pMissileAI = static_cast<AIMissile*>(pNewMissile->GetComponent(ComponentTypes::TYPE_AI_MISSILE));
+	
+		if (pMissileTransform == nullptr || pMissileAI == nullptr || pMissilePhys == nullptr)
+		{
+			pNewMissile->mIsMarkedForDelete = true;
+			return;
+		}
+
+
+		
 
 	}
 }
