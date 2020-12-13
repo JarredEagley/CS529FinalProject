@@ -20,7 +20,7 @@
         },
         {
             "Name": "EnemyShip1",
-            "Archetype": "EnemyShip1.json",
+            "Archetype": "Enemies\\EnemyShip1.json",
             "Components":
             {
                 "TYPE_TRANSFORM":

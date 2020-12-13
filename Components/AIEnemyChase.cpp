@@ -45,9 +45,10 @@ void AIEnemyChase::Update()
 
 	// --- behavior --- //
 
+	float playerdist = mpAICore->mPlayer_Distance;
+
 	if (mpAICore->isInGravity)
 	{
-		float playerdist = mpAICore->mPlayer_Distance;
 
 		// Dangerous, but I'll never have a non-circle gravity body.
 		Shape * pNGBShape = mpAICore->mpNearestGravityBody->mpShape;
@@ -94,17 +95,11 @@ void AIEnemyChase::Update()
 	}
 	else
 	{
-		//mpAICore->tryToStop();
-
-
-
-
-
-
-
-
-
-
+		// Go toward player.
+		if (playerdist > minimumDistance)
+			mpAICore->matchVelocityVector(mpAICore->mPlayerVelocity - mpAICore->mPlayer_RelativePosition * 10.0f);
+		else 
+			mpAICore->matchVelocityVector(mpAICore->mPlayerVelocity);
 	}
 }
 
