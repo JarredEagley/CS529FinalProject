@@ -39,31 +39,36 @@ void AIMissile::Initialize()
 
 void AIMissile::Update()
 {
-	if (mpShipData == nullptr || mpPhysicsBody == nullptr)
+	if (mpShipData == nullptr || mpPhysicsBody == nullptr || mpGLRect == nullptr)
 	{
 		mpShipData = static_cast<ShipData*>(mpOwner->GetComponent(ComponentTypes::TYPE_SHIPDATA));
 		mpPhysicsBody = static_cast< PhysicsBody*>(mpOwner->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+		mpGLRect = static_cast< GLRect*>(mpOwner->GetComponent(ComponentTypes::TYPE_GLRECT));
 		return;
 	}
 
 	//std::cout << "DEBUG: Target=" << mTargetName << ", pos=" << mpPhysicsBody->mPosition.x << ", " << mpPhysicsBody->mPosition.y << std::endl;
-	return;
 
 	if (mInactiveLifespan < 0.0f)
 	{
 		// Kill this missile.
-		// TO-DO
+		// TO-DO: Maybe make this a little bit cooler.
 		this->mpOwner->mIsMarkedForDelete = true;
 	}
 
 	if (mActivateTimer < 0.0f)
 	{
+		// Get our target.
+		GameObject* pTargetGO = GlobalManager::getGameObjectManager()->getGameObject(this->mTargetName);
+
 		// --- Do seeking logic. --- //
 
+		
 		// Try to find our target.
-		GameObject* pTargetGO = GlobalManager::getGameObjectManager()->getGameObject(this->mTargetName);
 		if (pTargetGO == nullptr)
 		{
+			// Missile is inactive, color yellow.
+			mpGLRect->setColor(glm::vec4(0.8f, 0.8f, 0.1f, 1.0f));
 			// Tick down the amount of time its allowed to stay idle and alive.
 			mInactiveLifespan -= GlobalManager::getPhysicsManager()->getGameTime();
 			return;
@@ -74,6 +79,18 @@ void AIMissile::Update()
 			// Tick down the amount of time its allowed to stay idle and alive.
 			mInactiveLifespan -= GlobalManager::getPhysicsManager()->getGameTime();
 			return;
+		}
+
+		// Target acquired! Set color.
+		if (mTargetName == "PLAYER")
+		{
+			// Color red
+			mpGLRect->setColor(glm::vec4(0.9f, 0.2f, 0.1f, 1.0f));
+		}
+		else
+		{
+			// Color green
+			mpGLRect->setColor(glm::vec4(0.0f, 0.6f, 0.1f, 1.0f));
 		}
 
 		// Past here, we have our target. Check fuel level.
@@ -191,5 +208,12 @@ void AIMissile::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
 			std::cout << "Warning: Missile component did not find a Orthogonal Velocity Correction parameter. Default used." << std::endl;
 
+	if (inputObj.HasMember("Activation Timer") && inputObj["Activation Timer"].IsNumber())
+	{
+		this->mActivateTimer = inputObj["Activation Timer"].GetFloat();
+	}
+	else
+		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+			std::cout << "Warning: Missile component did not find a Activation Timer parameter. Default used." << std::endl;
 
 }

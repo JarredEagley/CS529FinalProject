@@ -28,6 +28,7 @@
         },
         "TYPE_AI_MISSILE":
         {
+            "Activation Timer" :1,
             "Detonation Distance": 100.0,
             "Warhead Intensity": 1000.0,
             "Inactive Lifespan": 10000.0,

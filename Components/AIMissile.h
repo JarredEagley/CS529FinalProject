@@ -24,6 +24,7 @@
 
 #include "ShipData.h"
 #include "PhysicsBody.h"
+#include "GLRect.h"
 
 class AIMissile : public Component
 {
@@ -52,8 +53,9 @@ private:
 private:
 	float mActivateTimer; // Waits a given amount of time before activating.
 	float mInactiveLifespan;
-	ShipData* mpShipData;
-	PhysicsBody* mpPhysicsBody;
+	ShipData* mpShipData = nullptr;
+	PhysicsBody* mpPhysicsBody = nullptr;
+	GLRect* mpGLRect = nullptr;
 
 };
 
