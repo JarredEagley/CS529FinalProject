@@ -37,9 +37,10 @@ void MissileLauncher::Initialize()
 
 void MissileLauncher::Update()
 {
-	if (mpGLRect == nullptr)
+	if (mpGLRect == nullptr || mpTransform == nullptr)
 	{
 		mpGLRect = static_cast<GLRect*>(mpOwner->GetComponent(ComponentTypes::TYPE_GLRECT));
+		mpTransform = static_cast<Transform*>(mpOwner->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 		return;
 	}
 
@@ -58,6 +59,7 @@ void MissileLauncher::Update()
 
 	// We need parent's ship data and physics.
 	ShipData* pParentShipData = static_cast<ShipData*>(pParentGO->GetComponent(ComponentTypes::TYPE_SHIPDATA));
+	Transform* pParentTransform = static_cast<Transform*>(pParentGO->GetComponent(ComponentTypes::TYPE_TRANSFORM));
 	PhysicsBody* pParentPhysics = static_cast<PhysicsBody*>(pParentGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY)); 
 
 	// Launch hotkey is spacebar.
@@ -89,13 +91,26 @@ void MissileLauncher::Update()
 	
 		if (pMissileTransform == nullptr || pMissileAI == nullptr || pMissilePhys == nullptr)
 		{
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+				std::cout << "Error::MissileLauncher: One or more missile gameobject's components were NULL. Deleting missile." << std::endl;
 			pNewMissile->mIsMarkedForDelete = true;
 			return;
 		}
 
+		// Transform.
+		glm::mat4 globalTransform = pParentTransform->getTransformationMatrix() * mpTransform->getTransformationMatrix();
+		pMissileTransform->setPosition(glm::vec4(1.0f)*globalTransform);
+		pMissileTransform->setRotation(pParentTransform->getRotation());
 
-		
+		// Velocity.
+		pMissilePhys->mVelocity = pParentPhysics->mVelocity;
 
+		// Forces.
+		pMissilePhys->mTotalForce = glm::vec2(0.0f);
+		pMissilePhys->applyForce(mLaunchForce); // TO-DO: Launch force relative direction?
+
+		// Target
+		pMissileAI->mTargetName = mTargetGOName;
 	}
 }
 

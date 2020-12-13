@@ -44,6 +44,7 @@ private:
 private:
 	std::string mTargetGOName = "";
 	GLRect* mpGLRect = nullptr;
+	Transform* mpTransform = nullptr;
 
 	// Serialized:
 	glm::vec2 mLaunchForce;
