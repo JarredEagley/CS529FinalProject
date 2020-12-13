@@ -333,9 +333,8 @@ void AIEnemyCore::calculatePlayerParameters()
 
 glm::vec2 AIEnemyCore::getTurretAimAngle()
 {
-
-
-
+	// Temp
+	return mPlayer_RelativePosition;
 
 }
 

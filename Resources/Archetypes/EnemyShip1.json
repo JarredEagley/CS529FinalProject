@@ -5,7 +5,7 @@
         {
             "Translation": [4000.0, 1000.0],
             "Rotation": 0,
-            "Scale": [20.0, 10.0]
+            "Scale": [10.0, 20.0]
         },
         "TYPE_GLRECT":
         {
