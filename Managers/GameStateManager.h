@@ -39,9 +39,12 @@ public:
 	// Note: Target only used for GO_TO, so has a default value of ""
 	void handleMenuItemCommand(std::string command, std::string target);
 
-	void displayPauseMenu();
-	void destroyPauseMenu();
+	void destroyMenus();
 	
+	void displayPauseMenu();
+	
+	void displayDebugMenu();
+
 	bool testForVictory();
 	void displayVictoryMenu();
 	void displayDefeatMenu();

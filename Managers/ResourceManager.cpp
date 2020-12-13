@@ -246,6 +246,9 @@ void ResourceManager::loadGameObjectArray(rapidjson::Value::ConstValueIterator i
 		// Load the object.
 		GameObject* pLoadedGO = GlobalManager::getGameObjectFactory()->loadObject(iteratorBegin->GetObject());
 
+		if (pLoadedGO == nullptr)
+			continue;
+
 		if (menuItem)
 			GlobalManager::getGameStateManager()->mMenuItemNames.push_back(pLoadedGO->mName);
 	}

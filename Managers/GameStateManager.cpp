@@ -49,7 +49,7 @@ void GameStateManager::Update()
 		bool victory = testForVictory();
 		if (victory && !mIsGamePaused)
 		{
-			destroyPauseMenu();
+			destroyMenus();
 			displayVictoryMenu();
 		}
 		else
@@ -57,7 +57,7 @@ void GameStateManager::Update()
 			// Handle defeat
 			if (isPlayerKilled && !mIsGamePaused)
 			{
-				destroyPauseMenu();
+				destroyMenus();
 				displayDefeatMenu();
 			}
 			else
@@ -68,7 +68,7 @@ void GameStateManager::Update()
 					// Game is paused, and is being unpaused.
 					if (mIsGamePaused)
 					{
-						destroyPauseMenu();
+						destroyMenus();
 						mIsGamePaused = false;
 					}
 					// Game is unpaused, and is being paused.
@@ -120,6 +120,30 @@ void GameStateManager::handleMenuItemCommand(std::string command, std::string ta
 	{
 		GlobalManager::getResourceManager()->loadLevel(target);
 	}
+
+
+	if (command == "MENU_DEBUG")
+	{
+		destroyMenus();
+		displayDebugMenu();
+	}
+
+	if (command == "MENU_DEBUG_BACK")
+	{
+		destroyMenus();
+		displayPauseMenu();
+	}
+
+	if (command == "TOGGLE_COLLISION_DRAW")
+	{
+		this->DEBUG_DrawCollision = !this->DEBUG_DrawCollision;
+	}
+
+	if (command == "DESTEROY_ALL_PROJECTILES")
+	{
+		DestroyAllProjectilesEvent* pDestroyEvent = new DestroyAllProjectilesEvent;
+		GlobalManager::getEventManager()->broadcastEventToSubscribers(pDestroyEvent);
+	}
 }
 
 void GameStateManager::displayPauseMenu()
@@ -128,10 +152,9 @@ void GameStateManager::displayPauseMenu()
 	ResourceManager* pRM = GlobalManager::getResourceManager();
 
 	GlobalManager::getResourceManager()->loadGameObjectArray("Resources\\Menus\\MENU_Pause.json", true);
-
 }
 
-void GameStateManager::destroyPauseMenu()
+void GameStateManager::destroyMenus()
 {
 	for (auto name : mMenuItemNames)
 	{
@@ -140,6 +163,14 @@ void GameStateManager::destroyPauseMenu()
 		if (pGO != nullptr)
 			pGO->mIsMarkedForDelete = true;
 	}
+}
+
+void GameStateManager::displayDebugMenu()
+{
+	GameObjectFactory* pGOF = GlobalManager::getGameObjectFactory();
+	ResourceManager* pRM = GlobalManager::getResourceManager();
+
+	GlobalManager::getResourceManager()->loadGameObjectArray("Resources\\Menus\\MENU_Debug_Cheats.json", true);
 }
 
 bool GameStateManager::testForVictory()

@@ -1,0 +1,51 @@
+[
+    {
+        "Name": "Debug Title",
+        "Archetype": "Menu\\Debug_Title.json",
+        "Components": {
+            "TYPE_TRANSFORM": {
+                "Translation": [0,0.7]
+            }
+        }
+    },
+    {
+        "Name": "Debug - Toggle Collision Drawing",
+        "Archetype": "Menu\\Pause_Restart.json",
+        "Components": {
+            "TYPE_TRANSFORM":{ 
+                "Translation": [0,0.5]
+            },
+            "TYPE_GLRECT": {
+                "Texture": "Menu\\ToggleCollisionDrawing.png"
+            },
+            "TYPE_MENUITEM":{"Command": "TOGGLE_COLLISION_DRAW"}
+        }
+    },
+    {
+        "Name": "Debug - Destroy projectiles",
+        "Archetype": "Menu\\Pause_Restart.json",
+        "Components": {
+            "TYPE_TRANSFORM":{ 
+                "Translation": [0,0.3]
+            },
+            "TYPE_GLRECT": {
+                "Texture": "Menu\\DestroyAllProjectiles.png"
+            },
+            "TYPE_MENUITEM":{"Command": "DESTEROY_ALL_PROJECTILES"}
+        }
+    },
+
+    {
+        "Name": "Debug Back",
+        "Archetype": "Menu\\General_Back.json",
+        "Components":
+        {
+            "TYPE_TRANSFORM": {
+                "Translation": [0,-0.1]
+            },
+            "TYPE_MENUITEM": {
+                "Command": "MENU_DEBUG_BACK"
+            }
+        }   
+    }
+]

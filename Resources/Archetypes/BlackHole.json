@@ -1,0 +1,26 @@
+{
+    "Type": "GameObject",
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+            "Translation": [0.0, 0.0],
+            "Rotation": 0,
+            "Scale": [45, 45]
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "BlackHole.png",
+            "Color": [1.0, 1.0, 1.0, 1.0]
+        },
+        "TYPE_PHYSICSBODY":
+        {
+            "Mass": 642000000000000000000000000,
+            "Circle":
+            {
+                "Radius": 90.5
+            },
+            "HasGravity":""
+        }
+    }
+}

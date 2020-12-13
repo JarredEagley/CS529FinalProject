@@ -66,6 +66,7 @@
     [
         "LevelBasics.json",
         "PlayerHUD.json",
-        "PlayerShip1.json"
+        "PlayerShip1.json",
+        "EnemyShip1.json"
     ]
 }

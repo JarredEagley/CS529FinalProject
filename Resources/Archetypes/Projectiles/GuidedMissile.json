@@ -56,7 +56,7 @@
             "Throttle Sensitivity": 2.5,
 
             "Reason for this" : "If a nuclear bomb is destroyed, its conventional explosives are set off, but the nuclear payload doesn't go critical.",
-            "Death Explosion Intensity": 0.1
+            "Death Explosion Intensity": 0.05
         }
     },
     "Render Pass": "MIDGROUND"
