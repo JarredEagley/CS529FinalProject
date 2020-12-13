@@ -23,6 +23,7 @@
 #include "ComponentTypes.h"
 
 #include <string>
+#include "GLRect.h"
 
 class MissileLauncher : public Component
 {
@@ -42,6 +43,7 @@ private:
 	// No private methods.
 private:
 	std::string mTargetGOName = "";
+	GLRect* mpGLRect = nullptr;
 
 	// Serialized:
 	glm::vec2 mLaunchForce;

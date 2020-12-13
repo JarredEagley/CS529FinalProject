@@ -34,6 +34,22 @@ void MissileLauncher::Initialize()
 
 void MissileLauncher::Update()
 {
+	if (mpGLRect == nullptr)
+	{
+		mpGLRect = static_cast<GLRect*>(mpOwner->GetComponent(ComponentTypes::TYPE_GLRECT));
+		return;
+	}
+
+	GameObject* pParentGO = mpOwner->getParent();
+	if (pParentGO == nullptr)
+		return;
+
+	GLRect* pParentRect = static_cast<GLRect*>(pParentGO->GetComponent(ComponentTypes::TYPE_GLRECT));
+	if (pParentRect == nullptr)
+		return;
+
+	// Mirror parent color, like turrets.
+	mpGLRect->setColor(pParentRect->getColor());
 }
 
 void MissileLauncher::handleEvent(Event* pEvent)
