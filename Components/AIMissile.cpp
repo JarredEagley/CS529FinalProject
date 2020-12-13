@@ -96,6 +96,7 @@ void AIMissile::Update()
 		// Past here, we have our target. Check fuel level.
 		if (mpShipData->mFuel <= 1.0f)
 		{
+			printf("out of gas\n");
 			// Tick down the amount of time its allowed to stay idle and alive.
 			mInactiveLifespan -= GlobalManager::getPhysicsManager()->getGameTime();
 			// Don't return, we're allowed to drift without fuel toward the enemy.
@@ -105,12 +106,14 @@ void AIMissile::Update()
 		glm::vec2 targetRelativePosition = pTargetPhysics->mPosition - mpPhysicsBody->mPosition;
 		float targetDistance = glm::length(targetRelativePosition);
 
+		//std::cout << "TRD: " << targetDistance << ", det dist: " << mDetonateDistance << std::endl;
+
 		// Test for detonation.
 		if (targetDistance < mDetonateDistance)
 		{
 			// Go kaboom!
 			Generator* pExplosionGenerator = new Generator;
-			pExplosionGenerator->generateExplosion(mpPhysicsBody, mWarheadIntensity, "Explosion_NoDebris.png");
+			pExplosionGenerator->generateExplosion(mpPhysicsBody, mWarheadIntensity, "Explosion_Missile.json");
 			this->mpOwner->mIsMarkedForDelete = true;
 		}
 
@@ -131,30 +134,13 @@ void AIMissile::Update()
 		// Finally, the guidance vector.
 		glm::vec2 guidanceVector = targetRelativePosition + orthoVelocity;
 
-		guidanceVector *= 5.0f; // Should probably make this data driven.
+		//guidanceVector *= 5.0f; // Should probably make this data driven.
 
-		// Figure out our desired throttle.
-		float alignmentAmount = glm::dot(guidanceVector, normalVec);
-		float desiredThrottle;
-		if (alignmentAmount >= 0)
-			desiredThrottle = 30.0f / ((alignmentAmount / 10.0f) + 1.0f);
+		float alignmentAmount = alignToVector(glm::normalize(-guidanceVector) * 5.0f);
+		if (alignmentAmount == 0)
+			mpShipData->setThrottle(100.0f);
 		else
-			desiredThrottle = 30.0f / ((-alignmentAmount / 10.0f) + 1.0f);
-
-		// Dot product to get target angle, point at target.
-		float targetAngle = glm::dot(normalVec, guidanceVector);
-		if (targetAngle > 0)
-		{
-			// Might need to give these a bit of PID. hopefully not.
-			mpShipData->applySpin(1.0f);
-		}
-		else
-		{
-			mpShipData->applySpin(-1.0f);
-		}
-
-		mpShipData->setThrottle(desiredThrottle);
-
+			mpShipData->setThrottle((1.0f / abs(alignmentAmount) - 1.0f) * 10.0f);
 
 
 		// TO-DO: Send target a missile lockon event to let them know to shoot at or evade the missile.
@@ -166,6 +152,38 @@ void AIMissile::Update()
 
 void AIMissile::handleEvent(Event* pEvent)
 {
+}
+
+
+// Bad form maybe-- but just copied over from AIenemycore.
+float AIMissile::alignToVector(glm::vec2 alignmentVector)
+{
+	if (mpPhysicsBody == nullptr || mpShipData == nullptr)
+		return 0.0f;
+
+	glm::vec2 myNormal = mpPhysicsBody->mRightDir;
+	float alignmentAmount = glm::dot(alignmentVector, myNormal);
+
+	// Turning +
+	if (alignmentAmount > 0)
+	{
+		// Alignment amount = desired turn speed.
+		if (mpPhysicsBody->mAngularVelocity > alignmentAmount)
+			mpShipData->applySpin(-alignmentAmount);
+		else
+			mpShipData->applySpin(alignmentAmount);
+	}
+	// Turning -
+	else
+	{
+		// Alignment amount = desired turn speed.
+		if (mpPhysicsBody->mAngularVelocity < alignmentAmount)
+			mpShipData->applySpin(-alignmentAmount);
+		else
+			mpShipData->applySpin(alignmentAmount);
+	}
+
+	return alignmentAmount;
 }
 
 
@@ -184,7 +202,7 @@ void AIMissile::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 
 	if (inputObj.HasMember("Warhead Intensity") && inputObj["Warhead Intensity"].IsNumber())
 	{
-		this->mDetonateDistance = inputObj["Warhead Intensity"].GetFloat();
+		this->mWarheadIntensity = inputObj["Warhead Intensity"].GetFloat();
 	}
 	else
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
@@ -193,7 +211,7 @@ void AIMissile::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 
 	if (inputObj.HasMember("Inactive Lifespan") && inputObj["Inactive Lifespan"].IsNumber())
 	{
-		this->mDetonateDistance = inputObj["Inactive Lifespan"].GetFloat();
+		this->mInactiveLifespan = inputObj["Inactive Lifespan"].GetFloat();
 	}
 	else
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
@@ -202,7 +220,7 @@ void AIMissile::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 
 	if (inputObj.HasMember("Orthogonal Velocity Correction") && inputObj["Orthogonal Velocity Correction"].IsNumber())
 	{
-		this->mDetonateDistance = inputObj["Orthogonal Velocity Correction"].GetFloat();
+		this->mOrthoVelocityCorrection = inputObj["Orthogonal Velocity Correction"].GetFloat();
 	}
 	else
 		if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)

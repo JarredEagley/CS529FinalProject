@@ -49,7 +49,8 @@ public:
 	float mOrthoVelocityCorrection;
 
 private:
-	// No private methods.
+	float alignToVector(glm::vec2 alignmentVector);
+
 private:
 	float mActivateTimer; // Waits a given amount of time before activating.
 	float mInactiveLifespan;

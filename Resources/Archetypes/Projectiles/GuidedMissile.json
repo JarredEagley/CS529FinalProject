@@ -17,7 +17,7 @@
         },
         "TYPE_PHYSICSBODY":
         {
-            "Mass": 120.0,
+            "Mass": 200.0,
             "AABB":
             {
                 "Left": 2.0,
@@ -28,11 +28,11 @@
         },
         "TYPE_AI_MISSILE":
         {
-            "Activation Timer" :1,
-            "Detonation Distance": 100.0,
+            "Activation Timer": 50,
+            "Detonation Distance": 2000.0,
             "Warhead Intensity": 1000.0,
             "Inactive Lifespan": 10000.0,
-            "Orthogonal Velocity Correction": 2.0
+            "Orthogonal Velocity Correction": 100.0
         },
         "TYPE_SHIPDATA":
         {
@@ -44,14 +44,14 @@
 
             "Fuel": 100,
             "Fuel Max": 100,
-            "Fuel Efficiency": 7,
+            "Fuel Efficiency": 2,
 
             "Missiles": 0,
 
             "Side Note": "These aren't acceleration; these control the force applied by the engines",
-            "Main Acceleration": 1200.0,
-            "Secondary Acceleration": 750.0,
-            "Angular Acceleration": 900.0,
+            "Main Acceleration": 80.0,
+            "Secondary Acceleration": 1.0,
+            "Angular Acceleration": 800.0,
 
             "Throttle Sensitivity": 2.5,
 
