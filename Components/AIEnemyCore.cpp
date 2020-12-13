@@ -43,6 +43,27 @@ void AIEnemyCore::Update()
 		return;
 	}
 
+	// Try a missile launch.
+	if (mMissileLaunchTimer < 0)
+	{
+		//std::cout << "Trying to fire\n";
+		mMissileLaunchTimer = mMissileLaunchTimerMax;
+		float randomFloat = GlobalManager::getGameStateManager()->getRandomFloat();
+		randomFloat = (randomFloat / RAND_MAX);
+		if (randomFloat <= mMissileLaunchProbability)
+		{
+			// Fire!
+			//std::cout << "firing!\n";
+			TargetLockEvent* pNewLockEvent = new TargetLockEvent("PLAYER", this->mpOwner->mName);
+			GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewLockEvent);
+			MissileLauncherCommandEvent* pNewMCEvent = new MissileLauncherCommandEvent(this->mpOwner->mName);
+			pNewMCEvent->mFire = true;
+			GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewMCEvent);
+		}
+	}
+	else
+		mMissileLaunchTimer -= GlobalManager::getPhysicsManager()->getGameTime();
+
 	// Find the nearest gravitational body.
 	getNearestGravityBody();
 

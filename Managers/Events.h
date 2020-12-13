@@ -38,7 +38,7 @@ enum class EventType
 	CURSOR_WORLD_COORDS,
 	TURRET_COMMAND,
 	MISSILE_LOCKON, // Sent to GO a missile is locked onto
-	TARGET_LOCK, // Sent to the player's missile launchers
+	TARGET_LOCK, // Sent to a missile launcher to lock onto a target.
 	MISSILELAUNCHER_COMMAND, // For telling missile launcher to fire.
 	MENU_ITEM_CLICKED,
 	
@@ -200,9 +200,11 @@ public:
 class TargetLockEvent : public Event
 {
 public:
-	TargetLockEvent(std::string targetGOName) : Event(EventType::TARGET_LOCK), mTargetGOName(targetGOName) {};
+	TargetLockEvent(std::string targetGOName, std::string originGOName) : Event(EventType::TARGET_LOCK), 
+		mTargetGOName(targetGOName), mOriginGOName(originGOName) {};
 	~TargetLockEvent() {};
 
+	std::string mOriginGOName;
 	std::string mTargetGOName;
 };
 

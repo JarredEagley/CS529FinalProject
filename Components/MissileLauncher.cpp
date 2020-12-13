@@ -150,12 +150,24 @@ void MissileLauncher::handleEvent(Event* pEvent)
 
 	if (pEvent->mType == EventType::TARGET_LOCK)
 	{
-		// Only respond if we're parented to the player.
-		if (pParent->mName != "PLAYER")
-		return;
-
 		TargetLockEvent* pTargetEvent = static_cast<TargetLockEvent*>(pEvent);
+		if (pTargetEvent->mOriginGOName == pParent->mName)
+		{
+			this->mTargetGOName = pTargetEvent->mTargetGOName;
+		}
+
+		// AI's target the player
+		/*
+		if (pParent->mName != "PLAYER")
+		{
+			this->mTargetGOName = "PLAYER";
+			return;
+		}
+
+		// Otherwise, use the player's chosen target.
 		this->mTargetGOName = pTargetEvent->mTargetGOName;
+		return;
+		*/
 	}
 
 	if (pEvent->mType == EventType::MISSILELAUNCHER_COMMAND)
@@ -164,7 +176,6 @@ void MissileLauncher::handleEvent(Event* pEvent)
 		MissileLauncherCommandEvent* pCommandEvent = static_cast<MissileLauncherCommandEvent*>(pEvent);
 		if (pCommandEvent->mParentName == pParent->mName)
 		{
-			printf("TEST\n");
 			this->mFireOnce = pCommandEvent->mFire;
 		}
 	}

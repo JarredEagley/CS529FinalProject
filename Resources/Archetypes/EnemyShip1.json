@@ -52,8 +52,8 @@
             "Shoot Range": 1500,
             "Missile Launch Range": 5000,
             
-            "Missile Launch Probability": 0.5,
-            "Missile Launch Time": 10000,
+            "Missile Launch Probability": 0.3,
+            "Missile Launch Time": 300,
 
             "Orientation Behavior":"FACE_RADIAL",
             "Maneuvering Speed Threshold": 10,

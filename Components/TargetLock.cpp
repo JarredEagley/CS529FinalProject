@@ -108,7 +108,7 @@ void TargetLock::getNextTarget()
 		}
 	}
 
-	TargetLockEvent* pTargetEvent = new TargetLockEvent(mCurrentTarget);
+	TargetLockEvent* pTargetEvent = new TargetLockEvent(mCurrentTarget, "PLAYER");
 	GlobalManager::getEventManager()->broadcastEventToSubscribers(pTargetEvent);
 }
 
