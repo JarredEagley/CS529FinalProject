@@ -53,7 +53,25 @@ void MissileLauncher::handleEvent(Event* pEvent)
 
 void MissileLauncher::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
+	auto inputObj = inputMemberIt->value.GetObject();
 
+	if (inputObj.HasMember("Launch Force") && inputObj["Launch Force"].IsArray() && inputObj["Launch Force"].GetArray().Size() >= 2)
+	{
+		auto arr = inputObj["Launch Force"].GetArray();
+
+		if (arr[0].IsNumber() && arr[1].IsNumber())
+		{
+			this->mLaunchForce = glm::vec2(
+				arr[0].GetFloat(),
+				arr[1].GetFloat()
+			);
+		}
+		else
+		{
+			if (GlobalManager::getGameStateManager()->DEBUG_VerboseComponents)
+				std::cout << "Warning: Missile Launcher launch force was improperly formatted. Default used." << std::endl;
+		}
+	}
 
 
 }

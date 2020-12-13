@@ -12,7 +12,7 @@
         },
         "TYPE_MISSILELAUNCHER":
         {
-            
+            "Launch Force": [10,0]
         }
     },
     "Render Pass": "FOREGROUND"
