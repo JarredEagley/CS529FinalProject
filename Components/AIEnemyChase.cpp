@@ -82,7 +82,7 @@ void AIEnemyChase::Update()
 				if (playerdist > minimumDistance)
 				{
 					// Chase
-					mpAICore->matchVelocityVector(mpAICore->mPlayerVelocity + mpAICore->mPlayer_RelativePosition);
+					mpAICore->matchVelocityVector(mpAICore->mPlayerVelocity - mpAICore->mPlayer_RelativePosition*10.0f);
 				}
 				else
 				{
@@ -116,5 +116,12 @@ void AIEnemyChase::handleEvent(Event* pEvent)
 
 void AIEnemyChase::Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt)
 {
-	// Nothing to deserialize.
+	auto inputObj = inputMemberIt->value.GetObject();
+
+	if (inputObj.HasMember("Bruteforce Distance") && inputObj["Bruteforce Distance"].IsNumber())
+		this->bruteForceDistance = inputObj["Bruteforce Distance"].GetFloat();
+
+	if (inputObj.HasMember("Minimum Distance") && inputObj["Minimum Distance"].IsNumber())
+		this->bruteForceDistance = inputObj["Minimum Distance"].GetFloat();
+
 }
