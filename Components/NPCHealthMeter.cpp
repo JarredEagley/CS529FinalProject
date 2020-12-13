@@ -58,7 +58,7 @@ void NPCHealthMeter::handleEvent(Event* pEvent)
 		ShipDataUpdatedEvent* pShipDataEvent = static_cast<ShipDataUpdatedEvent*>(pEvent);
 		// Update if from parent GameObject.
 		if (pShipDataEvent->mpShipData->mpOwner == mpOwner->getParent())
-			this->mHealth = pShipDataEvent->mpShipData->mHealth;
+			this->mHealth = (pShipDataEvent->mpShipData->mHealth/pShipDataEvent->mpShipData->mMaxHealth) * 100.0f ;
 	}
 }
 
