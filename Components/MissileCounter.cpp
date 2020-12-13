@@ -49,7 +49,7 @@ void MissileCounter::handleEvent(Event* pEvent)
 			int missileCount = pShipDataEvent->mpShipData->mMissiles;
 			
 			std::string msg = "Nuclear Missiles: ";
-			msg += missileCount;
+			msg += std::to_string( missileCount);
 
 			mpGLText->mTextContent = msg;
 

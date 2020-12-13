@@ -124,6 +124,9 @@
     <ClCompile Include="Components\Spinner.cpp">
       <Filter>Components\Behavior</Filter>
     </ClCompile>
+    <ClCompile Include="Components\MissileCounter.cpp">
+      <Filter>Components\Interface\HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h" />
@@ -255,6 +258,9 @@
     </ClInclude>
     <ClInclude Include="Components\Spinner.h">
       <Filter>Components\Behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MissileCounter.h">
+      <Filter>Components\Interface\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

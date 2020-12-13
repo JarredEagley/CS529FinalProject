@@ -3,16 +3,12 @@
     {
         "TYPE_TRANSFORM": 
         {
-            "Translate": 
-            [
-                0.1,
-                0
-            ]
         },
         "TYPE_GLTEXT": 
         {
-            "Position": [0,0],
-            "Scale": 1
+            "Message": "Nuclear Missiles: --",
+            "Position": [0,21],
+            "Scale": 0.025
         },
         "TYPE_MISSILECOUNTER":
         {
