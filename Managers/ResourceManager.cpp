@@ -166,6 +166,7 @@ void ResourceManager::loadLevel(std::string fileName)
 	}
 
 	pGSM->mIsLevelLive = true; 
+	pGSM->isPlayerKilled = false;
 }
 
 void ResourceManager::loadLevelArchetype(std::string fileName)
