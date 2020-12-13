@@ -174,6 +174,14 @@ GameObject* GameObjectFactory::loadObject(rapidjson::GenericObject<true, rapidjs
 	// Initialize as a nullptr.
 	GameObject* pCurrentGO = nullptr;
 
+	// Complex archetype is a bit of a special case. It's essentially an instantiatable level archetype.
+	if (inputObj.HasMember("Complex Archetype") && inputObj["Complex Archetype"].IsString())
+	{
+
+
+		return pCurrentGO;
+	}
+
 	// Load the archetype if one is provided and ensure its a string.
 	if (inputObj.HasMember("Archetype")
 		&& inputObj["Archetype"].IsString())

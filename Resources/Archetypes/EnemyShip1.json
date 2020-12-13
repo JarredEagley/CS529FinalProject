@@ -17,10 +17,10 @@
             "Mass": 90000.0,
             "AABB":
             {
-                "Left": 50.0,
-                "Right": 50.0,
-                "Top": 50.0,
-                "Bottom":50.0
+                "Left": 25.0,
+                "Right": 25.0,
+                "Top": 25.0,
+                "Bottom":25.0
             }
         },
         "TYPE_SHIPDATA":
@@ -49,7 +49,7 @@
         {
             "Desired Altitude": 4000,
 
-            "Shoot Range": 4000,
+            "Shoot Range": 600,
             "Missile Launch Range": 5000,
             
             "Missile Launch Probability": 0.5,

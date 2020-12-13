@@ -59,7 +59,7 @@
             "Parent": "EnemyShip1"
         },
         {
-            "Name": "PlayerShip_FX_Plume",
+            "Name": "EnemyShip1_FX_Plume",
             "Components": {
                 "TYPE_GLRECT": {
                     "Texture": "Ship1Plume.png",
@@ -95,7 +95,22 @@
         {
             "Name": "EnemyShip1_Trajectory",
             "Archetype": "TrajectoryLine.json",
+            "Components": {
+                "TYPE_ORBITALLINE": {
+                    "Color": [
+                        0.6,
+                        0.1,
+                        0.1,
+                        1
+                    ]
+                }
+            },
             "Parent": "EnemyShip1"
-        }
+        },
+        {
+            "Name": "EnemyShip1_Health",
+            "Archetype": "Indicators\\NPCHealthIndicator.json",
+            "Parent": "EnemyShip1"
+        },
     ]
 }

@@ -45,6 +45,10 @@ void AIEnemyCore::Update()
 
 	// Find the nearest gravitational body.
 	getNearestGravityBody();
+
+	calculatePlayerParameters();
+	//glm::vec2 aimVec = getTurretAimVector();
+	commandTurrets();
 }
 
 void AIEnemyCore::handleEvent(Event* pEvent) {}
@@ -323,6 +327,10 @@ void AIEnemyCore::calculatePlayerParameters()
 	if (pPlayerBody == nullptr)
 		return;
 
+	mPlayerPosition = pPlayerBody->mPosition;
+	mPlayerVelocity = pPlayerBody->mVelocity;
+	mPlayerAcceleration = pPlayerBody->mAcceleration;
+
 	mPlayer_RelativePosition = mpPhysicsBody->mPosition - pPlayerBody->mPosition;
 	mPlayer_DistanceSqr =
 		(mPlayer_RelativePosition.x * mPlayer_RelativePosition.x)
@@ -338,11 +346,20 @@ void AIEnemyCore::calculatePlayerParameters()
 }
 
 
-glm::vec2 AIEnemyCore::getTurretAimAngle()
+void AIEnemyCore::commandTurrets()
 {
-	// Temp
-	return mPlayer_RelativePosition;
+	TurretCommandEvent* pNewTurretCommand = new TurretCommandEvent;
+	pNewTurretCommand->mAimPoint = mPlayerPosition;
+	pNewTurretCommand->mAimPoint += mPlayerVelocity + mPlayerAcceleration;
 
+	// Handles shoot range
+	if (mPlayer_Distance < mShootRange)
+		pNewTurretCommand->mShoot = true;
+	else
+		pNewTurretCommand->mShoot = false;
+
+	// Inform teh turrets
+	GlobalManager::getEventManager()->broadcastEventToSubscribers(pNewTurretCommand);
 }
 
 

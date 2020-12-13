@@ -126,7 +126,7 @@ void AIMissile::Update()
 		glm::vec2 targetRelativePositionNormal = glm::vec2(targetRelativePosition.y, -targetRelativePosition.x);
 
 		// The most important part!
-		glm::vec2 orthoVelocity = glm::proj(velocityDifference, targetRelativePositionNormal);
+		glm::vec2 orthoVelocity = glm::proj(velocityDifference, glm::normalize(targetRelativePositionNormal));
 
 		orthoVelocity *= mOrthoVelocityCorrection;
 

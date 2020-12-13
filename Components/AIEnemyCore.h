@@ -57,7 +57,7 @@ public:
 	void calculatePlayerParameters();
 
 	// Tries to aim at the player. Leads slightly.
-	glm::vec2 getTurretAimAngle();
+	void commandTurrets();
 
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
@@ -86,6 +86,9 @@ public:
 
 	
 	// Player data.
+	glm::vec2 mPlayerPosition = glm::vec2(0.0f);
+	glm::vec2 mPlayerVelocity = glm::vec2(0.0f);
+	glm::vec2 mPlayerAcceleration = glm::vec2(0.0f);
 	glm::vec2 mPlayer_RelativePosition = glm::vec2(0.0f);
 	glm::vec2 mPlayer_RelativePositionNormal = glm::vec2(0.0f);
 	glm::vec2 mPlayer_RelativeVelocity = glm::vec2(0.0f);
