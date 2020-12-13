@@ -58,6 +58,7 @@ public:
 		if (strcmp(str, "TYPE_METER_FUEL") == 0)		return TYPE_METER_FUEL;
 		if (strcmp(str, "TYPE_METER_HEALTH") == 0)		return TYPE_METER_HEALTH;
 		if (strcmp(str, "TYPE_MARKER_THROTTLE") == 0)	return TYPE_MARKER_THROTTLE;
+		if (strcmp(str, "TYPE_MISSILECOUNTER") == 0)	return TYPE_MISSILECOUNTER;
 		if (strcmp(str, "TYPE_MENUITEM") == 0)			return TYPE_MENUITEM;
 
 		if (strcmp(str, "TYPE_EXPLOSION") == 0)			return TYPE_EXPLOSION;
@@ -102,6 +103,8 @@ public:
 		TYPE_METER_FUEL,
 		TYPE_METER_HEALTH,
 		TYPE_MARKER_THROTTLE,
+		TYPE_MISSILECOUNTER,
+
 		TYPE_MENUITEM,
 		
 		TYPE_EXPLOSION,

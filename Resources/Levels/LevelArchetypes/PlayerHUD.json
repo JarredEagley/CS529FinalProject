@@ -17,6 +17,10 @@
         {
             "Name": "HUD_Health_Meter",
             "Archetype": "HUD\\HUD_Health_Meter.json"
+        },
+        {
+            "Name": "HUD_MissileCounter",
+            "Archetype": "HUD\\HUD_MissileCounter.json"
         }
     ]
 }

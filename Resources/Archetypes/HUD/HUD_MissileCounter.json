@@ -1,0 +1,22 @@
+{
+    "Components":
+    {
+        "TYPE_TRANSFORM": 
+        {
+            "Translate": 
+            [
+                0.1,
+                0
+            ]
+        },
+        "TYPE_GLTEXT": 
+        {
+            "Position": [0,0],
+            "Scale": 1
+        },
+        "TYPE_MISSILECOUNTER":
+        {
+        }
+    },
+    "Render Pass": "HUD"
+}

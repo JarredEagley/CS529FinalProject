@@ -22,17 +22,6 @@
 GLText::GLText() : Component(ComponentTypes::TYPE_GLTEXT), 
 mX(0.0f), mY(0.0f), mScale(0.0f)
 {
-	// Generate and bind our buffers.
-	/*
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	// No data to start.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
-	*/
 }
 
 GLText::~GLText()
@@ -53,7 +42,6 @@ void GLText::Update()
 // Used for components which draw to openGL.
 void GLText::setUniformData(ShaderProgram* pProgram)
 {
-	glm::vec4 mColor = glm::vec4(1, 1, 1, 1);
 	unsigned int loc;
 	loc = glGetUniformLocation(pProgram->ProgramID, "color");
 	glUniform4fv(loc, 1, &mColor.x);

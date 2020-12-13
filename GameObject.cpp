@@ -52,6 +52,7 @@
 #include "Components/ThrottleMeter.h"
 #include "Components/FuelMeter.h"
 #include "Components/HealthMeter.h"
+#include "Components/MissileCounter.h"
 #include "Components/Explosion.h"
 #include "Components/NPCHealthMeter.h"
 #include "Components/MenuItem.h"
@@ -262,6 +263,11 @@ Component* GameObject::AddComponent(unsigned int Type)
 	case (ComponentTypes::TYPE_METER_HEALTH):
 		pNewComponent = new HealthMeter();
 		break;
+	case (ComponentTypes::TYPE_MISSILECOUNTER):
+		pNewComponent = new MissileCounter();
+		break;
+
+
 	case (ComponentTypes::TYPE_MENUITEM):
 		pNewComponent = new MenuItem();
 		break;
