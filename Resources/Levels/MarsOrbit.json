@@ -4,7 +4,7 @@
 
         {
             "Name": "Enemy1",
-            "Archetype": "EnemyStation.json",
+            "Archetype": "Enemies\\EnemyStation.json",
             "Components":
             {
                 "TYPE_TRANSFORM":
@@ -35,8 +35,8 @@
             "Parent": "Enemy1"
         },
         {
-            "Name": "Enemy2",
-            "Archetype": "EnemyShip1.json",
+            "Name": "EnemyShip1",
+            "Archetype": "Enemies\\EnemyShip1.json",
             "Components":
             {
                 "TYPE_TRANSFORM":
@@ -52,10 +52,10 @@
         {
             "Name": "Enemy2_Health",
             "Archetype": "Indicators\\NPCHealthIndicator.json",
-            "Parent": "Enemy2"
+            "Parent": "EnemyShip1"
         },
         {
-            "Name": "Enemy2_Trajectoyr",
+            "Name": "Enemy2_Trajectory",
             "Archetype": "TrajectoryLine.json",
             "Components":
             {
@@ -64,7 +64,12 @@
                     "Color": [0.6,0.1,0.1, 1]
                 }
             },
-            "Parent": "Enemy2"
+            "Parent": "EnemyShip1"
+        },
+        {
+            "Name": "Enemy1_Indicator_Forward",
+            "Archetype": "Indicators\\ForwardIndicator.json",
+            "Parent":"EnemyShip1"
         },
 
 
@@ -85,21 +90,9 @@
             }
         },
 
-
         {
             "Name":"Mars",
             "Archetype": "Mars.json"
-        },
-
-        {
-            "Name": "Enemy1_Indicator_Forward",
-            "Archetype": "Indicators\\ForwardIndicator.json",
-            "Parent":"Enemy1"
-        },
-
-        {
-            "Name": "PLAYER_CURSOR",
-            "Archetype": "FollowCursor.json"
         }
     ],
     "Level Archetypes":

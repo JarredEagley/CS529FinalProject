@@ -33,6 +33,11 @@
                 }
             },
             "Render Pass": "FOREGROUND"
+        },
+
+        {
+            "Name": "PLAYER_CURSOR",
+            "Archetype": "FollowCursor.json"
         }
     ]
 }
