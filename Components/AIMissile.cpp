@@ -128,12 +128,11 @@ void AIMissile::Update()
 		// The most important part!
 		glm::vec2 orthoVelocity = glm::proj(velocityDifference, glm::normalize(targetRelativePositionNormal));
 
-		orthoVelocity *= mOrthoVelocityCorrection;
+		//orthoVelocity *= mOrthoVelocityCorrection;
 
 		// Finally, the guidance vector.
-		glm::vec2 guidanceVector = targetRelativePosition + orthoVelocity * glm::length(orthoVelocity);
+		glm::vec2 guidanceVector = targetRelativePosition;// +orthoVelocity;
 
-		//guidanceVector *= 5.0f; // Should probably make this data driven.
 
 		float alignmentAmount = alignToVector(glm::normalize(-guidanceVector) * 5.0f);
 		if (alignmentAmount == 0)
@@ -161,7 +160,12 @@ float AIMissile::alignToVector(glm::vec2 alignmentVector)
 		return 0.0f;
 
 	glm::vec2 myNormal = mpPhysicsBody->mRightDir;
+	glm::vec2 alignmentVectorN = glm::vec2(alignmentVector.y, -alignmentVector.x);
+
 	float alignmentAmount = glm::dot(alignmentVector, myNormal);
+	alignmentAmount += glm::dot(alignmentVectorN, -mpPhysicsBody->mForwardDir);
+
+	//std::cout << "TEST: " << alignmentAmount << std::endl;
 
 	// Turning +
 	if (alignmentAmount > 0)
