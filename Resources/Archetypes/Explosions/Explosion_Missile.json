@@ -4,8 +4,8 @@
         "TYPE_GLRECT": {
             "Texture": "Explosion_NoDebris.png",
             "Color": [
-                1.0,
-                1.0,
+                0.2,
+                0.6,
                 1.0,
                 1.0
             ]
@@ -20,7 +20,7 @@
         },
         "TYPE_EXPLOSION":
         {
-            "Intensity": 1000
+            "Intensity": 100
         }
     },
     "Render Pass": "FOREGROUND"
