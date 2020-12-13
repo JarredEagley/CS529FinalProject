@@ -89,6 +89,8 @@ void MissileLauncher::Update()
 		GameObject* pNewMissileIndicator = pGOF->createDynamicGameObject(indicatorPath, indicatorName);
 		pNewMissileIndicator->setParent(pNewMissile->mName);
 
+		// Maybe do a plume here too someday!
+
 		// Apply transforms, forces, target...
 
 		if (pNewMissile == nullptr)
@@ -106,17 +108,27 @@ void MissileLauncher::Update()
 			return;
 		}
 		
-		// Transform.
-		pMissileTransform->setPosition(pParentTransform->getPosition());
+		float angle = glm::radians(pParentTransform->getRotation());
+		glm::vec2 offset = mpTransform->getPosition();
+		offset = glm::vec2(
+			( cos(angle)*mpTransform->getPosition().x ) - ( sin(angle)*mpTransform->getPosition().y ),
+			( sin(angle)*mpTransform->getPosition().x ) + ( cos(angle)*mpTransform->getPosition().y )
+		);
 
-		//std::cout << "Missile at: " << pMissileTransform->getPosition().x << ", " << pMissileTransform->getPosition().y << std::endl;
+		// Transform.
+		pMissileTransform->setPosition(glm::vec2(pParentTransform->getPosition()) + offset );
+		pMissileTransform->setRotation(pParentTransform->getRotation());
 
 		// Velocity.
 		pMissilePhys->mVelocity = pParentPhysics->mVelocity;
 
 		// Forces.
 		pMissilePhys->mTotalForce = glm::vec2(0.0f);
-		//pMissilePhys->applyForce(mLaunchForce); // TO-DO: Launch force relative direction?
+		glm::vec2 launchForce = glm::vec2(
+			(cos(angle) * mLaunchForce.x) - (sin(angle) * mLaunchForce.y),
+			(sin(angle) * mLaunchForce.x) + (cos(angle) * mLaunchForce.y)
+		);
+		pMissilePhys->applyForce(launchForce); // TO-DO: Launch force relative direction?
 
 		// Target
 		pMissileAI->mTargetName = mTargetGOName;
