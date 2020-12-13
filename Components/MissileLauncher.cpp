@@ -37,6 +37,7 @@ void MissileLauncher::Initialize()
 
 void MissileLauncher::Update()
 {
+
 	if (mpGLRect == nullptr || mpTransform == nullptr)
 	{
 		mpGLRect = static_cast<GLRect*>(mpOwner->GetComponent(ComponentTypes::TYPE_GLRECT));
@@ -54,6 +55,10 @@ void MissileLauncher::Update()
 
 	// Mirror parent color, like turrets.
 	mpGLRect->setColor(pParentRect->getColor());
+
+	// Handle pausing down here so we still get color set correctly.
+	if (GlobalManager::getGameStateManager()->mIsGamePaused)
+		return;
 
 	// -- launching -- //
 
@@ -77,8 +82,12 @@ void MissileLauncher::Update()
 		time_t currentTime = time(NULL);
 		std::string missileName = "Missile_" + std::to_string(currentTime);
 		std::string missilePath = GlobalManager::getResourceManager()->pathProjectiles + "GuidedMissile.json";
-		
+		std::string indicatorName = missileName + "_Indicator";
+		std::string indicatorPath = GlobalManager::getResourceManager()->pathIndicators + "NuclearMissileIndicator.json";
+
 		GameObject* pNewMissile = pGOF->createDynamicGameObject(missilePath, missileName);
+		GameObject* pNewMissileIndicator = pGOF->createDynamicGameObject(indicatorPath, indicatorName);
+		pNewMissileIndicator->setParent(pNewMissile->mName);
 
 		// Apply transforms, forces, target...
 
@@ -96,18 +105,18 @@ void MissileLauncher::Update()
 			pNewMissile->mIsMarkedForDelete = true;
 			return;
 		}
-
+		
 		// Transform.
-		glm::mat4 globalTransform = pParentTransform->getTransformationMatrix() * mpTransform->getTransformationMatrix();
-		pMissileTransform->setPosition(glm::vec4(1.0f)*globalTransform);
-		pMissileTransform->setRotation(pParentTransform->getRotation());
+		pMissileTransform->setPosition(pParentTransform->getPosition());
+
+		//std::cout << "Missile at: " << pMissileTransform->getPosition().x << ", " << pMissileTransform->getPosition().y << std::endl;
 
 		// Velocity.
 		pMissilePhys->mVelocity = pParentPhysics->mVelocity;
 
 		// Forces.
 		pMissilePhys->mTotalForce = glm::vec2(0.0f);
-		pMissilePhys->applyForce(mLaunchForce); // TO-DO: Launch force relative direction?
+		//pMissilePhys->applyForce(mLaunchForce); // TO-DO: Launch force relative direction?
 
 		// Target
 		pMissileAI->mTargetName = mTargetGOName;

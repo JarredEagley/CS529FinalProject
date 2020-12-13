@@ -4,7 +4,7 @@
     [
         {
             "Name": "SecondShip",
-            "Archetype": "Enemy.json",
+            "Archetype": "EnemyShip1.json",
             "Components":
             {
                 "TYPE_TRANSFORM":

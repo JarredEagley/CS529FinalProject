@@ -9,7 +9,7 @@
         "DEBUG Verbose Components": false,
         "DEBUG Verbose GameObject Factory": false,
 
-        "Initial Scene": "MarsOrbit.json"
+        "Initial Scene": "EmptySpace.json"
     }, 
     "Framerate Controller":
     {

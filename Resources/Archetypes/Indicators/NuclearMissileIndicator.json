@@ -1,0 +1,20 @@
+{
+    "Components": {
+        "TYPE_TRANSFORM": {},
+        "TYPE_GLRECT": {
+            "Texture": "IconNuke.png",
+            "Color": [
+                0.0,
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "TYPE_DIRINDICATOR": 
+        {
+            "Scale Factor": 900,
+            "Alpha Factor": 4 
+        }
+    },
+    "Render Pass": "FOREGROUND"
+}

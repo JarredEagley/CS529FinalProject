@@ -46,6 +46,9 @@ void AIMissile::Update()
 		return;
 	}
 
+	//std::cout << "DEBUG: Target=" << mTargetName << ", pos=" << mpPhysicsBody->mPosition.x << ", " << mpPhysicsBody->mPosition.y << std::endl;
+	return;
+
 	if (mInactiveLifespan < 0.0f)
 	{
 		// Kill this missile.

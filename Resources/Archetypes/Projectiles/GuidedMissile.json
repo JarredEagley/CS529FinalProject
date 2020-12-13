@@ -3,7 +3,7 @@
     {
         "TYPE_TRANSFORM":
         {
-            "Scale": [1.2, 1.2]
+            "Scale": [1.2, 2.2]
         },
         "TYPE_GLRECT":
         {
@@ -52,5 +52,6 @@
             "Justification for this" : "If a nuclear bomb is destroyed, its conventional explosives are set off, but the nuclear payload doesn't go critical.",
             "Death Explosion Intensity": 1.0
         }
-    }
+    },
+    "Render Pass": "MIDGROUND"
 }
