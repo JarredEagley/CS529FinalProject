@@ -16,7 +16,8 @@
 
 #include "MissileLauncher.h"
 #include "../Managers/GlobalManager.h"
-#include <time.h>
+//#include <time.h>
+#include "SDL_timer.h"
 #include "AIMissile.h"
 #include "Transform.h"
 
@@ -79,7 +80,9 @@ void MissileLauncher::Update()
 
 		// We have a valid target. Fire the missile!
 		GameObjectFactory* pGOF = GlobalManager::getGameObjectFactory();
-		time_t currentTime = time(NULL);
+		//time_t _currentTime = time(NULL);
+		//float currentTime = _currentTime * 1000.0f;
+		unsigned int currentTime = SDL_GetTicks();
 		std::string missileName = "Missile_" + std::to_string(currentTime);
 		std::string missilePath = GlobalManager::getResourceManager()->pathProjectiles + "GuidedMissile.json";
 		std::string indicatorName = missileName + "_Indicator";
