@@ -8,7 +8,12 @@
         "TYPE_GLRECT":
         {
             "Texture": "GuidedMissile.png",
-            "Color": [1.0, 1.0, 1.0, 1.0]
+            "Color":[
+                0.8,
+                0.8,
+                0.1,
+                1.0
+            ]
         },
         "TYPE_PHYSICSBODY":
         {
