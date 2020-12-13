@@ -22,6 +22,8 @@
 #include "Component.h"
 #include "ComponentTypes.h"
 
+#include <string>
+
 class MissileLauncher : public Component
 {
 public:
