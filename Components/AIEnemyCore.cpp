@@ -11,7 +11,14 @@ mpPhysicsBody(nullptr), mpShipData(nullptr)
 AIEnemyCore::~AIEnemyCore()
 {
 	// Remove from the enemies list.
-	GlobalManager::getGameStateManager()->mLivingEnemies.remove(this->mpOwner->mName);
+	// Slightly mroe complex than expected to account for duplicates during erasure.
+	GameStateManager* pGSM = GlobalManager::getGameStateManager();
+	auto findElement = std::find(pGSM->mLivingEnemies.begin(), pGSM->mLivingEnemies.end(), this->mpOwner->mName);
+	if (findElement != pGSM->mLivingEnemies.end())
+	{
+		pGSM->mLivingEnemies.erase(findElement);
+	}
+	//GlobalManager::getGameStateManager()->mLivingEnemies.remove(this->mpOwner->mName);
 }
 
 void AIEnemyCore::Initialize()

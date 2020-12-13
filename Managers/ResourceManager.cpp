@@ -126,6 +126,9 @@ GLuint ResourceManager::loadTexture(const char* texName, TexType _texType)
 
 void ResourceManager::loadLevel(std::string fileName)
 {
+	GameStateManager* pGSM = GlobalManager::getGameStateManager();
+	pGSM->mIsLevelLive = false;
+
 	// Use serializer to read the json in.
 	Serializer* pSer = GlobalManager::getSerializer();
 	std::string filePath = pathLevels + fileName;
@@ -149,7 +152,6 @@ void ResourceManager::loadLevel(std::string fileName)
 
 
 	// Very last step: Inform the gamestate manager of our current scene.
-	GameStateManager* pGSM = GlobalManager::getGameStateManager();
 	pGSM->currentLevelName = fileName;
 	pGSM->currentLevelPath = filePath;
 	if (doc.HasMember("Scene Type") && doc["Scene Type"].IsString())
