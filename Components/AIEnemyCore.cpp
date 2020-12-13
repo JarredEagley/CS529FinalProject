@@ -207,7 +207,7 @@ void AIEnemyCore::matchVelocityVector(glm::vec2 desiredVelocity)
 
 }
 
-// Best used w hen theres no gravity.
+// Best used when theres no gravity.
 void AIEnemyCore::tryToStop()
 {
 	if (mpShipData == nullptr || mpPhysicsBody == nullptr)
@@ -300,6 +300,43 @@ void AIEnemyCore::preferredOrientation()
 		this->alignToVector(glm::normalize(-mOrbitalVelocityRadial));
 	}
 	// By default, no need to do anything else; just use the natural angular damping specified in ship data.
+}
+
+
+void AIEnemyCore::calculatePlayerParameters()
+{
+	if (mpPhysicsBody == nullptr)
+		return;
+
+	GameObject* pPlayerGO = GlobalManager::getGameObjectManager()->getGameObject("PLAYER");
+	if (pPlayerGO == nullptr)
+		return;
+
+	PhysicsBody* pPlayerBody = static_cast<PhysicsBody*>(pPlayerGO->GetComponent(ComponentTypes::TYPE_PHYSICSBODY));
+	if (pPlayerBody == nullptr)
+		return;
+
+	mPlayer_RelativePosition = mpPhysicsBody->mPosition - pPlayerBody->mPosition;
+	mPlayer_DistanceSqr =
+		(mPlayer_RelativePosition.x * mPlayer_RelativePosition.x)
+		+ (mPlayer_RelativePosition.y * mPlayer_RelativePosition.y);
+	
+	mPlayer_Distance = sqrt(mPlayer_DistanceSqr);
+
+	mPlayer_RelativePositionNormal = glm::vec2(mPlayer_RelativePosition.y, -mPlayer_RelativePosition.x);
+
+	mPlayer_RelativeVelocity = mpPhysicsBody->mVelocity - pPlayerBody->mVelocity;
+
+	mPlayer_OrthogonalVelocity = glm::vec2(mPlayer_RelativeVelocity.y, -mPlayer_RelativeVelocity.x); 
+}
+
+
+glm::vec2 AIEnemyCore::getTurretAimAngle()
+{
+
+
+
+
 }
 
 

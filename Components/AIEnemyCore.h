@@ -53,6 +53,11 @@ public:
 	float alignToVector(glm::vec2 alignmentVector);
 	void preferredOrientation();
 
+	// Calculates things like relative orthogonal velocity to the player.
+	void calculatePlayerParameters();
+
+	// Tries to aim at the player. Leads slightly.
+	glm::vec2 getTurretAimAngle();
 
 	void Serialize(rapidjson::Value::ConstMemberIterator inputMemberIt);
 
@@ -78,6 +83,16 @@ public:
 
 	// General navigational data
 	//float mSpeed = 0.0f; 
+
+	
+	// Player data.
+	glm::vec2 mPlayer_RelativePosition = glm::vec2(0.0f);
+	glm::vec2 mPlayer_RelativePositionNormal = glm::vec2(0.0f);
+	glm::vec2 mPlayer_RelativeVelocity = glm::vec2(0.0f);
+	glm::vec2 mPlayer_OrthogonalVelocity = glm::vec2(0.0f);
+	float mPlayer_DistanceSqr = 0.0f;
+	float mPlayer_Distance = 0.0f;
+
 
 	// Default values for navigation parameters. AIStationary may override this.
 	float mDesiredAltitude = 5000.0f;
