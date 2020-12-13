@@ -111,6 +111,6 @@
             "Name": "EnemyShip1_Health",
             "Archetype": "Indicators\\NPCHealthIndicator.json",
             "Parent": "EnemyShip1"
-        },
+        }
     ]
 }

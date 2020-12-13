@@ -49,7 +49,7 @@
         {
             "Desired Altitude": 4000,
 
-            "Shoot Range": 600,
+            "Shoot Range": 1500,
             "Missile Launch Range": 5000,
             
             "Missile Launch Probability": 0.5,

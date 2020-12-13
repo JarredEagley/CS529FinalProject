@@ -350,7 +350,7 @@ void AIEnemyCore::commandTurrets()
 {
 	TurretCommandEvent* pNewTurretCommand = new TurretCommandEvent;
 	pNewTurretCommand->mAimPoint = mPlayerPosition;
-	pNewTurretCommand->mAimPoint += mPlayerVelocity + mPlayerAcceleration;
+	pNewTurretCommand->mAimPoint += (mPlayerVelocity + mPlayerAcceleration) * mPlayer_Distance;
 
 	// Handles shoot range
 	if (mPlayer_Distance < mShootRange)
