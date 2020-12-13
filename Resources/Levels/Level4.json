@@ -7,7 +7,7 @@
                 "TYPE_TRANSFORM": {
                     "Translation": [
                         -100,
-                        4000
+                        10000
                     ]
                 },
                 "TYPE_PHYSICSBODY": {
@@ -24,12 +24,17 @@
             "Parent": "EnemyShip1"
         },
         {
-            "Name": "Enemy2_Trajectory",
+            "Name": "EnemyShip1_Trajectory",
             "Archetype": "TrajectoryLine.json",
             "Components": {
                 "TYPE_ORBITALLINE": {
-                    "Color": [0.6,0.1,0.1,1],
-                    "Step Size": 1
+                    "Color": [
+                        0.6,
+                        0.1,
+                        0.1,
+                        1
+                    ],
+                    "Step Size": 10
                 }
             },
             "Parent": "EnemyShip1"
@@ -45,7 +50,7 @@
             "Components": {
                 "TYPE_TRANSFORM": {
                     "Translation": [
-                        6000.0,
+                        9000.0,
                         1000.0
                     ],
                     "Rotation": 0
@@ -53,7 +58,7 @@
                 "TYPE_PHYSICSBODY": {
                     "Velocity": [
                         0.3,
-                        -80.0
+                        -60.0
                     ]
                 }
             }
@@ -61,7 +66,7 @@
         {
             "Name": "PlayerShip_Trajectory",
             "Archetype": "TrajectoryLine.json",
-            "Components":{"TYPE_ORBITALLINE":{"Step Size": 1}},
+            "Components":{"TYPE_ORBITALLINE":{"Step Size": 10}},
             "Parent": "PLAYER"
         },
 
