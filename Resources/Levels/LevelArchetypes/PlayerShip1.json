@@ -54,6 +54,18 @@
             "Parent":"PLAYER"
         },
         {
+            "Name": "PLAYER_MissileLauncher_1",
+            "Archetype": "MissileLauncher.json",
+            "Components": 
+            {
+                "TYPE_TRANSFORM": 
+                {
+                    "Translation": [0.9,2]
+                }
+            },
+            "Parent": "PLAYER"
+        },
+        {
             "Name": "PlayerShip_FX_Plume",
             "Components":
             {
