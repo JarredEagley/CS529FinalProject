@@ -39,8 +39,12 @@
                         0.5
                     ]
                 },
+                "TYPE_GLRECT":
+                {
+                    "Texture": "Menu\\Controls.png"
+                },
                 "TYPE_MENUITEM": {
-                    "Target": "TutorialControls.json"
+                    "Target": "Tutorial\\ControlsMenu.json"
                 }
             }
         },
@@ -54,8 +58,11 @@
                         0.3
                     ]
                 },
+                "TYPE_GLRECT": {
+                    "Texture": "Menu\\HowToPlay.png"
+                },
                 "TYPE_MENUITEM": {
-                    "Target": "TutorialControls.json"
+                    "Target": "Tutorial\\TutorialMenu.json"
                 }
             }
         },
@@ -69,8 +76,11 @@
                         0.1
                     ]
                 },
+                "TYPE_GLRECT": {
+                    "Texture": "Menu\\HUDLayout.png"
+                },
                 "TYPE_MENUITEM": {
-                    "Target": "TutorialControls.json"
+                    "Target": "Tutorial\\HUDLayoutMenu.json"
                 }
             }
         },

@@ -1,0 +1,51 @@
+{
+    "Scene Type": "SCENE_MENU",
+    "GameObjects": [
+        {
+            "Name": "Tutorial HUD",
+            "Components": {
+                "TYPE_TRANSFORM": {
+                    "Translation": [
+                        0.0,
+                        0.1
+                    ],
+                    "Scale": [
+                        1.8,
+                        1.8
+                    ]
+                },
+                "TYPE_GLRECT": {
+                    "Texture": "Guide\\TutorialHUD.png",
+                    "Color": [
+                        1,
+                        1,
+                        1,
+                        0.9
+                    ]
+                }
+            },
+            "Render Pass": "HUD"
+        },
+
+
+        {
+            "Name": "Tutorials Menu Back",
+            "Archetype": "Menu\\General_Back.json",
+            "Components": {
+                "TYPE_TRANSFORM": {
+                    "Translation": [
+                        -0.65,
+                        -0.85
+                    ]
+                },
+                "TYPE_MENUITEM": {
+                    "Target": "TutorialSelection.json"
+                }
+            }
+        }
+    ],
+    "Level Archetypes":
+    [
+        "MenuBasics.json"
+    ]
+}
