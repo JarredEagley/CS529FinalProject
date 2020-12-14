@@ -32,8 +32,8 @@
 
             "Missiles": 15,
 
-            "Main Acceleration": 1000.0,
-            "Secondary Acceleration": 600.0,
+            "Main Acceleration": 900.0,
+            "Secondary Acceleration": 500.0,
             "Angular Acceleration": 600.0,
 
             "Throttle Sensitivity": 2.5,

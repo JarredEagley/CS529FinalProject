@@ -10,6 +10,7 @@
 
         "Level1\\PlayerShip.json",
         "Level1\\EnemyShip0.json",
-        "Level1\\EnemyShip1.json"
+        "Level1\\EnemyShip1.json",
+        "Level1\\EnemyShip2.json"
     ]
 }

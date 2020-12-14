@@ -55,7 +55,7 @@
                 },
                 "TYPE_MENUITEM":
                 {
-                    "Target": "Level2"
+                    "Target": "Level2.json"
                 }
             }
         },
@@ -74,7 +74,7 @@
                 },
                 "TYPE_MENUITEM":
                 {
-                    "Target": "Level3"
+                    "Target": "Level3.json"
                 }
             }
         },
@@ -93,7 +93,7 @@
                 },
                 "TYPE_MENUITEM":
                 {
-                    "Target": "Level4"
+                    "Target": "Level4.json"
                 }
             }
         },

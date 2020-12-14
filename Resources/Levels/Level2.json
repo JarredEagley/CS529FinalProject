@@ -2,10 +2,18 @@
     "Scene Type": "SCENE_LEVEL",
     "GameObjects":
     [
-
+        {
+            "Name": "Mars",
+            "Archetype": "Mars.json"
+        }
     ],
     "Level Archetypes":
     [
-        
+       "LevelBasics.json",
+       "PlayerHUD.json",
+       
+       "Level2\\PlayerShip.json",
+       "Level2\\EnemyShip1.json",
+       "Level2\\EnemyStation.json"
     ]
 }

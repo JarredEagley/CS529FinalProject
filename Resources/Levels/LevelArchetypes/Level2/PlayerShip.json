@@ -1,0 +1,100 @@
+{
+    "GameObjects":
+    [
+        {
+            "Name": "PLAYER",
+            "Archetype": "PlayerBattleship.json",
+            "Components": 
+            {
+                "TYPE_TRANSFORM": {
+                    "Translation": [
+                        100.0,
+                        5000.0
+                    ],
+                    "Rotation": 80
+                },
+                "TYPE_PHYSICSBODY": {
+                    "Velocity": [8.0, 1.0]
+                }
+            }
+        },
+        {
+            "Name": "PLAYER_Turret_1",
+            "Archetype":"Turret.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation":[0,-3.5]
+                }
+            },
+            "Parent":"PLAYER"
+        },
+        {
+            "Name": "PLAYER_Turret_2",
+            "Archetype":"Turret.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [2, -2]
+                }
+            },
+            "Parent":"PLAYER"
+        },
+        {
+            "Name": "PLAYER_Turret_3",
+            "Archetype":"Turret.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation":[-1, 2.2]
+                }
+            },
+            "Parent":"PLAYER"
+        },
+        {
+            "Name": "PLAYER_MissileLauncher_1",
+            "Archetype": "MissileLauncher.json",
+            "Components": 
+            {
+                "TYPE_TRANSFORM": 
+                {
+                    "Translation": [0.9,2]
+                }
+            },
+            "Parent": "PLAYER"
+        },
+        {
+            "Name": "PlayerShip_FX_Plume",
+            "Components":
+            {
+                "TYPE_GLRECT":
+                {
+                    "Texture": "Ship1Plume.png",
+                    "Color": [0.9,0.9,1,0]
+                },
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0,-13.5,0],
+                    "Scale": [10,10],
+                    "Inherit Rotation": true
+                },
+                "TYPE_FX_PLUME": {}
+            },
+            "Parent":"PLAYER",
+            "Render Pass": "FOREGROUND"
+        },
+        {
+            "Name": "PlayerShip_Indicator_Forward",
+            "Archetype": "Indicators\\ForwardIndicator.json",
+            "Parent":"PLAYER"
+        },
+        {
+            "Name": "PlayerShip_Trajectory",
+            "Archetype": "TrajectoryLine.json",
+            "Parent": "PLAYER"
+        }
+    ]
+}

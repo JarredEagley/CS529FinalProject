@@ -1,0 +1,17 @@
+{
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "StationIcon.png"
+        },
+        "TYPE_DIRINDICATOR":
+        {
+            "Scale Factor": 2000,
+            "Alpha Factor": 10
+        }
+    }
+}

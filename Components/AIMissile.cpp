@@ -128,10 +128,10 @@ void AIMissile::Update()
 		// The most important part!
 		glm::vec2 orthoVelocity = glm::proj(velocityDifference, glm::normalize(targetRelativePositionNormal));
 
-		orthoVelocity *= mOrthoVelocityCorrection;
+		orthoVelocity *= -mOrthoVelocityCorrection;
 
 		// Finally, the guidance vector.
-		glm::vec2 guidanceVector = targetRelativePosition;// +orthoVelocity;
+		glm::vec2 guidanceVector = targetRelativePosition - orthoVelocity;
 
 
 		float alignmentAmount = alignToVector(glm::normalize(-guidanceVector) * 5.0f);

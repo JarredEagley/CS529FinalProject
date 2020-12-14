@@ -41,6 +41,11 @@ mCollisionType(collisionType::NORMAL)
 
 PhysicsBody::~PhysicsBody()
 {
+	if (this->hasGravity())
+	{
+		GlobalManager::getPhysicsManager()->gravityBodies.remove(this);
+	}
+
 	if (mpShape != nullptr)
 		delete mpShape;
 }
