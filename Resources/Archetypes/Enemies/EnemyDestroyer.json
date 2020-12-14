@@ -45,7 +45,7 @@
             "Desired Altitude": 3700,
 
             "Shoot Range": 1000,
-            "Missile Launch Range": 6000,
+            "Missile Launch Range": 1500,
             
             "Missile Launch Probability": 0.9,
             "Missile Launch Time": 300,

@@ -1,0 +1,103 @@
+{
+    "GameObjects": [
+        {
+            "Name": "EnemyShip3",
+            "Archetype": "Enemies\\EnemyDestroyer.json",
+            "Components": {
+                "TYPE_TRANSFORM": {
+                    "Translation": [
+                        4500.0,
+                        2000.0
+                    ],
+                    "Rotation": 0
+                },
+                "TYPE_PHYSICSBODY": {
+                    "Velocity": [-4.0, 10.0]
+                }
+            }
+        },
+        {
+            "Name": "EnemyShip3_Turret_1",
+            "Archetype": "Turret.json",
+            "Components": {
+                "TYPE_TRANSFORM": {
+                    "Translation": [-1, 0]
+                }
+            },
+            "Parent": "EnemyShip3"
+        },
+        {
+            "Name": "EnemyShip3_Turret_2",
+            "Archetype": "Turret.json",
+            "Components": {
+                "TYPE_TRANSFORM": {
+                    "Translation": [ 1, 0]
+                }
+            },
+            "Parent": "EnemyShip3"
+        },
+        {
+            "Name": "EnemyShip3_MissileLauncher_1",
+            "Archetype": "MissileLauncher.json",
+            "Components": {
+                "TYPE_TRANSFORM": {
+                    "Translation": [
+                        -0.9,
+                        2
+                    ]
+                }
+            },
+            "Parent": "EnemyShip3"
+        },
+
+        {
+            "Name": "EnemyShip3_FX_Plume",
+            "Components": {
+                "TYPE_GLRECT": {
+                    "Texture": "Ship2Plume.png",
+                    "Color": [0.9,0.4,0.9,0]
+                },
+                "TYPE_TRANSFORM": {
+                    "Translation": [
+                        0,
+                        -13.5,
+                        0
+                    ],
+                    "Scale": [
+                        10,
+                        10
+                    ],
+                    "Inherit Rotation": true
+                },
+                "TYPE_FX_PLUME": {}
+            },
+            "Parent": "EnemyShip3",
+            "Render Pass": "FOREGROUND"
+        },
+        {
+            "Name": "EnemyShip3_Indicator_Forward",
+            "Archetype": "Indicators\\ForwardIndicator.json",
+            "Parent": "EnemyShip3"
+        },
+        {
+            "Name": "EnemyShip3_Trajectory",
+            "Archetype": "TrajectoryLine.json",
+            "Components": {
+                "TYPE_ORBITALLINE": {
+                    "Color": [
+                        0.6,
+                        0.1,
+                        0.1,
+                        1
+                    ]
+                }
+            },
+            "Parent": "EnemyShip3"
+        },
+        {
+            "Name": "EnemyShip3_Health",
+            "Archetype": "Indicators\\NPCHealthIndicator.json",
+            "Parent": "EnemyShip3"
+        }
+    ]
+}
