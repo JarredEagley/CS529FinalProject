@@ -8,9 +8,10 @@
 	Purpose:			The game state manager controls the state and
 						flow of the game. This includes level loading,
 						level initialization, pausing, ect.
+						This also handles menu items being clicked on.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
-	Project:			JarredEagley_Milestone1
+	Project:			JarredEagley_FinalProject
 	Author:				Jarred Eagley, jarred.eagley, SID: 400000520
 	Creation date:		11/27/2020
 

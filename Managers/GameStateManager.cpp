@@ -5,7 +5,8 @@
 	prior written consent of DigiPen Institute of Technology is prohibited.
 
 	File Name:			GameStateManager.cpp
-	Purpose:			Implementation of the game state manager
+	Purpose:			Implementation of the game state manager. Check
+						header file for details.
 	Language:			C++, compiled using Microsoft Visual Studio 2019.
 	Platform:			Compiled using Visual Studio 2019, Windows 10.
 	Project:			JarredEagley_Milestone1
