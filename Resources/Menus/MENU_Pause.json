@@ -40,6 +40,10 @@
             "TYPE_TRANSFORM":
             {
                 "Translation": [0,0.1]
+            },
+            "TYPE_MENUITEM":
+            {
+                "Command": "MENU_CONTROLS"
             }
         }
     },

@@ -144,6 +144,12 @@ void GameStateManager::handleMenuItemCommand(std::string command, std::string ta
 		DestroyAllProjectilesEvent* pDestroyEvent = new DestroyAllProjectilesEvent;
 		GlobalManager::getEventManager()->broadcastEventToSubscribers(pDestroyEvent);
 	}
+
+	if (command == "MENU_CONTROLS")
+	{
+		destroyMenus();
+		displayControlsMenu();
+	}
 }
 
 void GameStateManager::displayPauseMenu()
@@ -171,6 +177,14 @@ void GameStateManager::displayDebugMenu()
 	ResourceManager* pRM = GlobalManager::getResourceManager();
 
 	GlobalManager::getResourceManager()->loadGameObjectArray("Resources\\Menus\\MENU_Debug_Cheats.json", true);
+}
+
+void GameStateManager::displayControlsMenu()
+{
+	GameObjectFactory* pGOF = GlobalManager::getGameObjectFactory();
+	ResourceManager* pRM = GlobalManager::getResourceManager();
+
+	GlobalManager::getResourceManager()->loadGameObjectArray("Resources\\Menus\\MENU_Controls.json", true);
 }
 
 bool GameStateManager::testForVictory()

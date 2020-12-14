@@ -44,6 +44,7 @@ public:
 	void displayPauseMenu();
 	
 	void displayDebugMenu();
+	void displayControlsMenu();
 
 	bool testForVictory();
 	void displayVictoryMenu();

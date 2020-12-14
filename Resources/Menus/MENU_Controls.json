@@ -1,0 +1,42 @@
+[
+    {
+        "Name": "Tutorial Controls",
+        "Components": {
+            "TYPE_TRANSFORM": {
+                "Translation": [
+                    0.0,
+                    0.1
+                ],
+                "Scale": [
+                    1.4,
+                    1.4
+                ]
+            },
+            "TYPE_GLRECT": {
+                "Texture": "Guide\\Controls.png",
+                "Color": [
+                    0.0,
+                    0.6,
+                    0.1,
+                    0.9
+                ]
+            }
+        },
+        "Render Pass": "HUD"
+    },
+    {
+        "Name": "Tutorials Menu Back",
+        "Archetype": "Menu\\General_Back.json",
+        "Components": {
+            "TYPE_TRANSFORM": {
+                "Translation": [
+                    -0.65,
+                    -0.85
+                ]
+            },
+            "TYPE_MENUITEM": {
+                "Command": "MENU_DEBUG_BACK"
+            }
+        }
+    }
+]
