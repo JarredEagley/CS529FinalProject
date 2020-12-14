@@ -1,0 +1,50 @@
+{
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+            "Translation": [100.0, 100.0],
+            "Rotation": 0,
+            "Scale": [8.0, 10.0]
+        },
+        "TYPE_CONTROLLERSHIP": "",
+        "TYPE_GLRECT":
+        {
+            "Texture": "Ship2.png",
+            "Color": [0.0, 0.6, 0.1, 1.0]
+        },
+        "TYPE_PHYSICSBODY":
+        {
+            "Mass": 10000.0,
+            "AABB":
+            {
+                "Left": 5.0,
+                "Right": 5.0,
+                "Top": 5.0,
+                "Bottom":5.0
+            }
+        },
+        "TYPE_SHIPDATA":
+        {
+            "Health": 90,
+            "Health Max": 90,
+
+            "Fuel": 100,
+            "Fuel Max": 100,
+            "Fuel Efficiency": 6,
+
+            "Missiles": 3,
+
+            "Side Note": "These aren't acceleration; these control the force applied by the engines",
+            "Main Acceleration": 5000.0,
+            "Secondary Acceleration": 900.0,
+            "Angular Acceleration": 900.0,
+
+            "Throttle Sensitivity": 3.5,
+
+            "Death Explosion Intensity": 1000.0
+        }
+    },
+    "Render Pass": "MIDGROUND",
+    "Shader": "core"
+}

@@ -6,7 +6,7 @@
         {
             "Translation": [0.0, 0.0],
             "Rotation": 0,
-            "Scale": [100, 100]
+            "Scale": [700, 700]
         },
         "TYPE_GLRECT":
         {
@@ -18,7 +18,7 @@
             "Mass": 642000000000000000000000000,
             "Circle":
             {
-                "Radius": 100
+                "Radius": 900
             },
             "HasGravity":""
         }

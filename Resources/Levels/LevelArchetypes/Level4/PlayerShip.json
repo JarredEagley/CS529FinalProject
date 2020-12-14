@@ -1,0 +1,100 @@
+{
+    "GameObjects":
+    [
+        {
+            "Name": "PLAYER",
+            "Archetype": "PlayerDestroyer.json",
+            "Components": 
+            {
+                "TYPE_TRANSFORM": {
+                    "Translation": [
+                        6000.0,
+                        -4000.0
+                    ],
+                    "Rotation": 90
+                },
+                "TYPE_PHYSICSBODY": {
+                    "Velocity": [-50.0, -50.0]
+                }
+            }
+        },
+        {
+            "Name": "PLAYER_Turret_1",
+            "Archetype":"Turret.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation":[0,-1]
+                }
+            },
+            "Parent":"PLAYER"
+        },
+        {
+            "Name": "PLAYER_Turret_2",
+            "Archetype":"Turret.json",
+            "Components":
+            {
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0, 1]
+                }
+            },
+            "Parent":"PLAYER"
+        },
+
+        {
+            "Name": "PLAYER_MissileLauncher_1",
+            "Archetype": "MissileLauncher.json",
+            "Components": 
+            {
+                "TYPE_TRANSFORM": 
+                {
+                    "Translation": [-0.9,1]
+                },
+                "TYPE_MISSILELAUNCHER":
+                {
+                    "Launch Force": [-30, 0]
+                }
+            },
+            "Parent": "PLAYER"
+        },
+        {
+            "Name": "PlayerShip_FX_Plume",
+            "Components":
+            {
+                "TYPE_GLRECT":
+                {
+                    "Texture": "Ship2Plume.png",
+                    "Color": [0.9,0.9,1,0]
+                },
+                "TYPE_TRANSFORM":
+                {
+                    "Translation": [0, -12.55,0],
+                    "Scale": [8,20],
+                    "Inherit Rotation": true
+                },
+                "TYPE_FX_PLUME": {}
+            },
+            "Parent":"PLAYER",
+            "Render Pass": "FOREGROUND"
+        },
+        {
+            "Name": "PlayerShip_Indicator_Forward",
+            "Archetype": "Indicators\\ForwardIndicator.json",
+            "Parent":"PLAYER"
+        },
+        {
+            "Name": "PlayerShip_Trajectory",
+            "Archetype": "TrajectoryLine.json",
+            "Components":
+            {
+                "TYPE_ORBITALLINE":
+                {
+                    "Step Size": 1
+                }
+            },
+            "Parent": "PLAYER"
+        }
+    ]
+}
