@@ -7,7 +7,7 @@
         },
         "TYPE_GLRECT":
         {
-            "Texture": "Ship1.png",
+            "Texture": "Ship2.png",
             "Color": [0.9, 0.2, 0.1, 1.0]
         },
         "TYPE_PHYSICSBODY":
@@ -38,13 +38,13 @@
 
             "Throttle Sensitivity": 5.5,
 
-            "Death Explosion Intensity": 500.0
+            "Death Explosion Intensity": 700.0
         },
         "TYPE_AI_CORE":
         {
             "Desired Altitude": 3700,
 
-            "Shoot Range": 1000,
+            "Shoot Range": 3000,
             "Missile Launch Range": 1500,
             
             "Missile Launch Probability": 0.9,
@@ -56,9 +56,9 @@
         },
         "TYPE_AI_CHASE": 
         {
-            "Bruteforce Distance": 2200, 
+            "Bruteforce Distance": 2500, 
             "Minimum Distance": 1000,
-            "Chase Agression": 10
+            "Chase Agression": 20
         }
     }
 }

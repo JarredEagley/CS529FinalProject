@@ -76,7 +76,7 @@
                         0.1,
                         1
                     ],
-                    "Step Size": 1
+                    "Step Size": 5
                 }
             },
             "Parent": "EnemyShip0"

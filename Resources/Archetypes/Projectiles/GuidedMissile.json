@@ -20,30 +20,30 @@
             "Mass": 200.0,
             "AABB":
             {
-                "Left": 2.0,
-                "Right": 2.0,
-                "Top": 2.0,
-                "Bottom":2.0
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom":6.0
             }
         },
         "TYPE_AI_MISSILE":
         {
             "Activation Timer": 50,
-            "Detonation Distance": 800.0,
-            "Warhead Intensity": 1000.0,
+            "Detonation Distance": 600.0,
+            "Warhead Intensity": 800.0,
             "Inactive Lifespan": 10000.0,
             "Orthogonal Velocity Correction": 900
         },
         "TYPE_SHIPDATA":
         {
-            "Health": 10,
-            "Health Max": 10,
+            "Health": 5,
+            "Health Max": 5,
             "Power": 100,
             "Power Max": 100,
             "Power Production": 10,
 
-            "Fuel": 100,
-            "Fuel Max": 100,
+            "Fuel": 70,
+            "Fuel Max": 70,
             "Fuel Efficiency": 2,
 
             "Missiles": 0,
@@ -56,7 +56,7 @@
             "Throttle Sensitivity": 2.5,
 
             "Reason for this" : "If a nuclear bomb is destroyed, its conventional explosives are set off, but the nuclear payload doesn't go critical.",
-            "Death Explosion Intensity": 0.05
+            "Death Explosion Intensity": 10
         }
     },
     "Render Pass": "MIDGROUND"

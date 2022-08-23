@@ -21,8 +21,8 @@
             }
         },
         "TYPE_SHIPDATA": {
-            "Health": 200,
-            "Health Max": 200,
+            "Health": 300,
+            "Health Max": 300,
             "Fuel": 10,
             "Fuel Max": 100,
             "Fuel Efficiency": 5,

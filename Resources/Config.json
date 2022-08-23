@@ -14,12 +14,12 @@
     "Framerate Controller":
     {
         "Description": "Allows for framerate capping and tracking frametime in seconds and miliseconds.",
-        "Max Framerate": 60
+        "Max Framerate": 120
     },
     "GameObject Manager":
     {
         "Description": "Keeps track of game objects, including how many of a paticular type of game object may exist.",
-        "Max Projectiles": 100,
+        "Max Projectiles": 700,
         "Max Particles": 50,
         "Max Debris": 100
     },
@@ -57,11 +57,11 @@
         "Description": "Values associated with physics-based calculations, as well as gameplay elements like damage.",
         "GameTime Multiplier": 50,
         "Piercing Threshold": 40,
-        "Deflect Damage Multiplier": 1,
-        "Pierce Damage Multiplier": 3,
+        "Deflect Damage Multiplier": 0.3,
+        "Pierce Damage Multiplier": 1,
         "Explosion Damage Multiplier": 1.0,
 
-        "Explosion Expansion Rate": 0.01,
+        "Explosion Expansion Rate": 0.03,
         "Explosion Decay Rate": 4,
 
         "Note": "This is in N*(m/kg)^2, most of the game uses kilometers.",

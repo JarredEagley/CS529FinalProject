@@ -12,8 +12,8 @@
         },
         "TYPE_TURRET": 
         {
-            "Fire Rate": 10.0,
-            "Fire Force": 300.0
+            "Fire Rate": 6,
+            "Fire Force": 200.0
         }
     },
     "Render Pass": "FOREGROUND"

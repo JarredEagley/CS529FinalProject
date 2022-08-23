@@ -91,7 +91,7 @@
             {
                 "TYPE_ORBITALLINE":
                 {
-                    "Step Size": 1
+                    "Step Size": 5
                 }
             },
             "Parent": "PLAYER"
