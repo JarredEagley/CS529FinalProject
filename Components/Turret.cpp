@@ -73,7 +73,7 @@ void Turret::Update()
 
 			// Set trasnform
 			pBulletTransform->setPosition(mpParentTransform->getPosition() + mpTransform->getPosition());
-			pBulletTransform->setRotation(mAimAngle);
+			pBulletTransform->setRotation(mAimAngle + mpParentTransform->getRotation());
 
 			// Set physics
 			pBulletPhys->mVelocity = pParentPhys->mVelocity; // inherit velocity.
