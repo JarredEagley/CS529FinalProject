@@ -1,7 +1,10 @@
 {
     "Scene Type": "SCENE_LEVEL",
-    "GameObjects":
-    [
+    "GameObjects": [
+        {
+            "Name": "Asteroid",
+            "Archetype": "Asteroid.json"
+        }
     ],
     "Level Archetypes":
     [

@@ -1,0 +1,25 @@
+{
+    "Type": "GameObject",
+    "Components":
+    {
+        "TYPE_TRANSFORM":
+        {
+            "Translation": [500.0, 900.0],
+            "Rotation": 10,
+            "Scale": [300, 300]
+        },
+        "TYPE_GLRECT":
+        {
+            "Texture": "Asteroid.png",
+            "Color": [1.0, 1.0, 1.0, 1.0]
+        },
+        "TYPE_PHYSICSBODY":
+        {
+            "Mass": 90000000000000000,
+            "Circle":
+            {
+                "Radius": 300.0
+            }
+        }
+    }
+}

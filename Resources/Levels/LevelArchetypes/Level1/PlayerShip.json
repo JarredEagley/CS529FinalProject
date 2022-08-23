@@ -11,7 +11,7 @@
                         3000.0,
                         100.0
                     ],
-                    "Rotation": -80
+                    "Rotation": -60
                 },
                 "TYPE_PHYSICSBODY": {
                     "Velocity": [
