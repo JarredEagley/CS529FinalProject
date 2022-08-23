@@ -285,7 +285,7 @@ void PhysicsBody::handleEvent(Event* pEvent)
 			else if (pCollideEvent->mResponse == CollideEvent::collisionResponse::PIERCE)
 			{
 				// Very very loosely based on drag formula.
-				glm::vec2 appliedForce = pCollideEvent->mNGB_RelativeVelocity * pCollideEvent->mNGB_RelativeSpeed * 2.0f;
+				glm::vec2 appliedForce = (pCollideEvent->mNGB_RelativeVelocity*2.0f)*mInvMass;
 				applyForce(appliedForce);
 
 				// Damage based on relative speed
